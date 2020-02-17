@@ -1,0 +1,857 @@
+﻿
+=============================================
+EVENTS
+=============================================
+Form: Supplemental Database Setup - W00091A
+Object: HC OK/Select
+Event: Button Clicked
+Event GUID: 90934334-a23d-11d0-a204-0000f6728a56
+=============================================
+// 
+// SAR #3290947 Changed UDC length to a 4 in the Business Function
+// 
+UpdateUDC(B9800150.UpdateUDC)
+     "00" -> szSystemCode [SY]
+     "SD" -> szCodeType [RT]
+     FC Supplemental Database Code [SDB] -> szUDCValue [KY]
+     FC DL01-SuppDBCodeDescription [DL01] -> szUDCDescription1 [DL01]
+     UNDEFINED <> szUDCDescription2 [DL02]
+     UNDEFINED <> szSpecialHandlingCode [SPHD]
+     UNDEFINED <> cUDCOwnershipFlag [UDCO]
+     UNDEFINED <> cHardCodedYN [HRDC]
+     "4" -> mnUDCLength [CDL]
+     UNDEFINED <> cSuppressErrorMessage [EV01]
+     UNDEFINED <> szErrorMessageID [DTAI]
+     UNDEFINED <> szProgramID [PID]
+If FC INT01-Counter [INT01] is greater than "3"
+     Set Edit Control Error(FC SDB Num Flag 2, "2670")
+End If
+If FC Execute Data Selection [FDS] is equal to "1"
+And FC Function Name [FCNM] is equal to or empty <Blank>
+     Set Edit Control Error(FC Function Name, "0003")
+End If
+If FC Generic Alphanumeric Key 1 [SFA1] is equal to "1"
+And FC SAL1-Alpha Alias 1 [SAL1] is equal to or empty <Blank>
+     Set Edit Control Error(FC SAL1-Alpha Alias 1, "0003")
+End If
+If FC Generic Alphanumeric Key 2 [SFA2] is equal to "1"
+And FC SAL2-Alpha Alias 2 [SAL2] is equal to or empty <Blank>
+     Set Edit Control Error(FC SAL2-Alpha Alias 2, "0003")
+End If
+If FC Generic Numeric Key 1 [SFN1] is equal to "1"
+And FC SAL3-Numeric Alias 1 [SAL3] is equal to or empty <Blank>
+     Set Edit Control Error(FC SAL3-Numeric Alias 1, "0003")
+End If
+If FC Generic Numeric Key 2 [SFN2] is equal to "1"
+And FC SAL4-Numeric Alias 2 [SAL4] is equal to or empty <Blank>
+     Set Edit Control Error(FC SAL4-Numeric Alias 2, "0003")
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Supplemental Database Setup - W00091A
+Object: FC Supplemental Database Code
+Event: Control Exited/Changed-Asynch
+Event GUID: 9093447d-a23d-11d0-a204-0000f6728a56
+=============================================
+If SV Form_ Mode is equal to CO UPDATE_MODE
+     GetUDC(X0005.GetUDC)
+          UNDEFINED <> szDataDictionaryItem [DTAI]
+          "00" -> szSystemCode [SY]
+          "SD" -> szRecordTypeCode [RT]
+          FC Supplemental Database Code [SDB] -> szUserDefinedCode [KY]
+          "4.00" -> mnKeyFieldLength [AS]
+          UNDEFINED <> szLanguagePreference [LNGP]
+          FC DL01-SuppDBCodeDescription [DL01] <- szDescription001 [DL01]
+          UNDEFINED <> szDescription002 [DL02]
+          UNDEFINED <> szSpecialHandlingCode [SPHD]
+          UNDEFINED <> cUdcOwnershipFlag [UDCO]
+          UNDEFINED <> cHardCodedYn [HRDC]
+          UNDEFINED <> cSuppressErrorMessage [EV01]
+          UNDEFINED <> szErrorMessageId [DTAI]
+          UNDEFINED <> cUDCOne [EV01]
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Supplemental Database Setup - W00091A
+Object: FC Business Unit
+Event: Selection Changed
+Event GUID: 909343bb-a23d-11d0-a204-0000f6728a56
+=============================================
+If FC Business Unit [FMC6] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+Else
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]-1
+End If
+If FC Business Unit [FMC6] is equal to "0"
+     FC DLMC-Business Unit Description [DLMC] = "  "
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Supplemental Database Setup - W00091A
+Object: FC Company
+Event: Selection Changed
+Event GUID: 909343ba-a23d-11d0-a204-0000f6728a56
+=============================================
+If FC Company [FKCO] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+Else
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]-1
+End If
+If FC Company [FKCO] is equal to "0"
+     FC DLKC-Document Company Description [DLKC] = "  "
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Supplemental Database Setup - W00091A
+Object: FC Generic Alphanumeric Key 1
+Event: Selection Changed
+Event GUID: 90934335-a23d-11d0-a204-0000f6728a56
+=============================================
+If FC Generic Alphanumeric Key 1 [SFA1] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+Else
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]-1
+End If
+If FC Generic Alphanumeric Key 1 [SFA1] is equal to "0"
+     FC SAL1-Alpha Alias 1 [SAL1] = "  "
+     FC SBD1-SDBDescrip1A1 [SBD1] = <Blank>
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Supplemental Database Setup - W00091A
+Object: FC Generic Alphanumeric Key 2
+Event: Selection Changed
+Event GUID: 90934336-a23d-11d0-a204-0000f6728a56
+=============================================
+If FC Generic Alphanumeric Key 2 [SFA2] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+Else
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]-1
+End If
+If FC Generic Alphanumeric Key 2 [SFA2] is equal to "0"
+     FC SAL2-Alpha Alias 2 [SAL2] = "  "
+     FC SBD2-SDBDescrip2A2 [SBD2] = "  "
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Supplemental Database Setup - W00091A
+Object: FC Generic Numeric Key 1
+Event: Selection Changed
+Event GUID: 90934337-a23d-11d0-a204-0000f6728a56
+=============================================
+If FC Generic Numeric Key 1 [SFN1] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+Else
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]-1
+End If
+If FC Generic Numeric Key 1 [SFN1] is equal to "0"
+     FC SAL3-Numeric Alias 1 [SAL3] = "  "
+     FC SBD3-SDBDescrip3N1 [SBD3] = "  "
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Supplemental Database Setup - W00091A
+Object: FC Generic Numeric Key 2
+Event: Selection Changed
+Event GUID: 90934338-a23d-11d0-a204-0000f6728a56
+=============================================
+If FC Generic Numeric Key 2 [SFN2] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+Else
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]-1
+End If
+If FC Generic Numeric Key 2 [SFN2] is equal to "0"
+     FC SAL4-Numeric Alias 2 [SAL4] = "  "
+     FC SBD4-SDBDescrip4N2 [SBD4] = "  "
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Supplemental Database Setup - W00091A
+Event: Post Dialog is Initialized
+Event GUID: 90934333-a23d-11d0-a204-0000f6728a56
+=============================================
+If FC Supplemental Database Code [SDB] is not equal to <Blank>
+     GetUDC(X0005.GetUDC)
+          UNDEFINED <> szDataDictionaryItem [DTAI]
+          "00" -> szSystemCode [SY]
+          "SD" -> szRecordTypeCode [RT]
+          FC Supplemental Database Code [SDB] -> szUserDefinedCode [KY]
+          "4.00" -> mnKeyFieldLength [AS]
+          UNDEFINED <> szLanguagePreference [LNGP]
+          FC DL01-SuppDBCodeDescription [DL01] <- szDescription001 [DL01]
+          UNDEFINED <> szDescription002 [DL02]
+          UNDEFINED <> szSpecialHandlingCode [SPHD]
+          UNDEFINED <> cUdcOwnershipFlag [UDCO]
+          UNDEFINED <> cHardCodedYn [HRDC]
+          UNDEFINED <> cSuppressErrorMessage [EV01]
+          UNDEFINED <> szErrorMessageId [DTAI]
+          UNDEFINED <> cUDCOne [EV01]
+End If
+FC INT01-Counter [INT01] = "0"
+If FC Business Unit [FMC6] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+End If
+If FC Company [FKCO] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+End If
+If FC Generic Numeric Key 1 [SFN1] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+End If
+If FC Generic Numeric Key 2 [SFN2] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+End If
+If FC Generic Alphanumeric Key 1 [SFA1] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+End If
+If FC Generic Alphanumeric Key 2 [SFA2] is equal to "1"
+     FC INT01-Counter [INT01] = [FC INT01-Counter [INT01]]+1
+End If
+
+=============================================
+Form: Supplemental Database Setup - W00091A
+Event: Update Record to DB - Before
+Event GUID: 4a77ba1b-c631-4965-aa5f-f68f73ce7e8d
+=============================================
+BC Synchronize Database (F00090.0) [SYN] = "0"
+BC File Name (F00090.0) [FILE] = <Blank>
+
+
+
+
+=============================================
+Form: Work With Supplemental Database Setup - W00091B
+Event: Form Variables
+Event GUID: 90934615-a23d-11d0-a204-0000f6728a56
+=============================================
+frm_DetailError [EV01]
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Supplemental Database Setup - W00091B
+Object: HC OK/Select
+Event: Button Clicked
+Event GUID: 909342e8-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P00091 Form:W00091A Version: 
+     GC SDB Code [SDB] -> szSupplementalDatabaseCode [SDB]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Supplemental Database Setup - W00091B
+Object: HC Add record
+Event: Button Clicked
+Event GUID: 909342e9-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P00091 Form:W00091A Version: 
+     UNDEFINED <> szSupplementalDatabaseCode [SDB]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Supplemental Database Setup - W00091B
+Object: HC Exit to Work With Data Types
+Event: Button Clicked
+Event GUID: 909342ea-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P00091 Form:W00091G Version: 
+     UNDEFINED <> szTypeofData [TYDT]
+     GC SDB Code [SDB] <> szSupplementalDatabaseCode [SDB]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Supplemental Database Setup - W00091B
+Object: HC Exit to Work With Language Preferences
+Event: Button Clicked
+Event GUID: 909342eb-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P00091 Form:W00091I Version: 
+     GC SDB Code [SDB] -> szSupplementalDatabaseCode [SDB]
+     UNDEFINED <> szLanguagePreference [LNGP]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Supplemental Database Setup - W00091B
+Object: FC Grid
+Event: Delete Grid Rec Verify-Before
+Event GUID: 9093461e-a23d-11d0-a204-0000f6728a56
+=============================================
+VA frm_DetailError [EV01] = "0"
+F00091.Open
+     
+F00091.FetchSingle  [Index 1: SupplDB_DataType]
+     GC SDB Code [SDB] = TK Supplemental Database Code [SDB]
+If SV File_IO_Status is equal to CO SUCCESS
+     VA frm_DetailError [EV01] = "1"
+End If
+If VA frm_DetailError [EV01] is equal to "1"
+     Set Grid Cell Error(FC Grid, <Current Row>, <All Columns>, "043A")
+     Suppress Delete
+End If
+
+
+
+=============================================
+EVENTS
+
+
+
+
+
+
+=============================================
+Form: Data Type Revisions - W00091D
+Event: Form Variables
+Event GUID: c7857c50-a240-11d0-a204-0000f6728a56
+=============================================
+frm_VerifyUDC [DTAI]
+frm_cDemandSchedDelivered_EV01 [EV01]
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: HC OK/Select
+Event: Button Clicked
+Event GUID: 90934339-a23d-11d0-a204-0000f6728a56
+=============================================
+// 
+If FC Product Code [SY] is not equal to <Blank>
+And FC User Defined Codes [RT] is not equal to <Blank>
+     F0004GetUserDefinedCodeType(B9800470.F0004GetUserDefinedCodeType)
+          FC Product Code [SY] <> szSystemCode [SY]
+          FC User Defined Codes [RT] <> szRecordType [RT]
+          UNDEFINED <> szDescription [DL01]
+          "1" <> cCallType [EV01]
+          "0" <> cSuppressErrorMessage [EV01]
+          UNDEFINED <> szErrorMessageID [DTAI]
+          UNDEFINED <> mnCodeSequenceNumber [USEQ]
+          UNDEFINED <> szCategoryClassCode [UCD1]
+          UNDEFINED <> mnUDCCodeLength [CDL]
+          UNDEFINED <> cDesiredLineYN [LN2]
+          UNDEFINED <> cNumericYN [CNUM]
+          UNDEFINED <> cMergeControl [MRCT]
+          UNDEFINED <> szMergeType [MRTY]
+          "1" <> mnIndex [CDL]
+          "2" <> mnKeys [CDL]
+End If
+// 
+// ==============================================================
+// 
+//     Check UDC Table for Remark 1 validation
+// 
+If FC System Code #1 [SY1] is not equal to <Blank>
+And FC User Defined Codes #1 [RT1] is not equal to <Blank>
+     F0004GetUserDefinedCodeType(B9800470.F0004GetUserDefinedCodeType)
+          FC System Code #1 [SY1] <> szSystemCode [SY]
+          FC User Defined Codes #1 [RT1] <> szRecordType [RT]
+          UNDEFINED <> szDescription [DL01]
+          "1" <> cCallType [EV01]
+          "0" <> cSuppressErrorMessage [EV01]
+          UNDEFINED <> szErrorMessageID [DTAI]
+          UNDEFINED <> mnCodeSequenceNumber [USEQ]
+          UNDEFINED <> szCategoryClassCode [UCD1]
+          UNDEFINED <> mnUDCCodeLength [CDL]
+          UNDEFINED <> cDesiredLineYN [LN2]
+          UNDEFINED <> cNumericYN [CNUM]
+          UNDEFINED <> cMergeControl [MRCT]
+          UNDEFINED <> szMergeType [MRTY]
+          "1" <> mnIndex [CDL]
+          "2" <> mnKeys [CDL]
+Else
+     If FC System Code #1 [SY1] is not equal to <Blank>
+     And FC User Defined Codes #1 [RT1] is equal to or empty <Blank>
+          Set Edit Control Error(FC User Defined Codes #1, "0003")
+     Else
+          If FC System Code #1 [SY1] is equal to or empty <Blank>
+          And FC User Defined Codes #1 [RT1] is not equal to <Blank>
+               Set Edit Control Error(FC System Code #1, "0003")
+          End If
+     End If
+End If
+// 
+// ==============================================================
+// 
+//     Check UDC Code for validation of Remark 2
+// 
+If FC System Code #2 [SY2] is not equal to <Blank>
+And FC User Defined Codes #2 [RT2] is not equal to <Blank>
+     F0004GetUserDefinedCodeType(B9800470.F0004GetUserDefinedCodeType)
+          FC System Code #2 [SY2] <> szSystemCode [SY]
+          FC User Defined Codes #2 [RT2] <> szRecordType [RT]
+          UNDEFINED <> szDescription [DL01]
+          "1" <> cCallType [EV01]
+          "0" <> cSuppressErrorMessage [EV01]
+          UNDEFINED <> szErrorMessageID [DTAI]
+          UNDEFINED <> mnCodeSequenceNumber [USEQ]
+          UNDEFINED <> szCategoryClassCode [UCD1]
+          UNDEFINED <> mnUDCCodeLength [CDL]
+          UNDEFINED <> cDesiredLineYN [LN2]
+          UNDEFINED <> cNumericYN [CNUM]
+          UNDEFINED <> cMergeControl [MRCT]
+          UNDEFINED <> szMergeType [MRTY]
+          "1" <> mnIndex [CDL]
+          "2" <> mnKeys [CDL]
+Else
+     If FC System Code #2 [SY2] is equal to or empty <Blank>
+     And FC User Defined Codes #2 [RT2] is not equal to <Blank>
+          Set Edit Control Error(FC System Code #2, "0003")
+     Else
+          If FC System Code #2 [SY2] is not equal to <Blank>
+          And FC User Defined Codes #2 [RT2] is equal to or empty <Blank>
+               Set Edit Control Error(FC User Defined Codes #2, "0003")
+          End If
+     End If
+End If
+// 
+// ==============================================================
+// 
+If FC Display Mode [DSPM] is equal to "P"
+     If FC Application Name [EAP] is equal to or empty <Blank>
+     And FC Form Name [PGM] is equal to or empty <Blank>
+          Set Edit Control Error(FC Application ID, "0003")
+          Set Edit Control Error(FC Program Name, "0003")
+     Else
+     End If
+     If FC Application Name [EAP] is equal to or empty <Blank>
+     And FC Form Name [PGM] is not equal to <Blank>
+          Set Edit Control Error(FC Application ID, "3689")
+     End If
+     If FC Application Name [EAP] is not equal to <Blank>
+     And FC Form Name [PGM] is equal to or empty <Blank>
+          Set Edit Control Error(FC Program Name, "3689")
+     End If
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: HC &Macros Ajuda
+Event: Button Clicked
+Event GUID: 60b8e450-150a-4718-9701-3e0b68bd7c8d
+=============================================
+Call App:P00091 Form:W00091C Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: HC Application Search and Select
+Event: Button Clicked
+Event GUID: 5ef16599-e064-11d1-9ac9-00600832fe19
+=============================================
+Call App:P9865 Form:W9865B Version: 
+     FC Form Name [PGM] <> FormName [FMNM]
+     UNDEFINED <> Formidentifier [FMID]
+     UNDEFINED <> Memberdescription [MD]
+     FC Application Name [EAP] <> Nameobject [OBNM]
+     UNDEFINED <> Application id [APPLID]
+     UNDEFINED <> Entry point [ENTRYPT]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: HC Versions Search and Select
+Event: Button Clicked
+Event GUID: 5ef16598-e064-11d1-9ac9-00600832fe19
+=============================================
+Call App:P983050 Form:W983050B Version: 
+     FC Application Name [EAP] -> ProgramId [PID]
+     FC Version [VERS] <- Version [VERS]
+     UNDEFINED <> VersionId [VERSIONID]
+     UNDEFINED <> ProcOptID [POID]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: HC Exit to User Defined Codes
+Event: Button Clicked
+Event GUID: 90934616-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P0004A Form:W0004AA Version:ZJDE0001
+     UNDEFINED <> SystemCode [SY]
+     UNDEFINED <> UserDefinedCodes [RT]
+     UNDEFINED Could not find member in DSTR
+     UNDEFINED Could not find member in DSTR
+     UNDEFINED Could not find member in DSTR
+     UNDEFINED Could not find member in DSTR
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: FC Display Mode
+Event: Control Exited/Changed-Inline
+Event GUID: c7858254-a240-11d0-a204-0000f6728a56
+=============================================
+If FC Display Mode [DSPM] is equal to "P"
+     Press Button(FC PROCESS : Hide C's)
+Else
+     Press Button(FC PROCESS:Hide P's)
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: FC Type Data
+Event: Control Exited/Changed-Asynch
+Event GUID: 909342f8-a23d-11d0-a204-0000f6728a56
+=============================================
+If FC Type Data [TYDT] is equal to or empty <Blank>
+     Set Edit Control Error(FC Type Data, "0003")
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: FC Search Type
+Event: Control Exited/Changed-Inline
+Event GUID: c7857ba3-a240-11d0-a204-0000f6728a56
+=============================================
+If FC Search Type [AT1] is not equal to <Blank>
+     GetUDC(X0005.GetUDC)
+          "AT1" -> szDataDictionaryItem [DTAI]
+          UNDEFINED <> szSystemCode [SY]
+          UNDEFINED <> szRecordTypeCode [RT]
+          FC Search Type [AT1] -> szUserDefinedCode [KY]
+          UNDEFINED <> mnKeyFieldLength [AS]
+          UNDEFINED <> szLanguagePreference [LNGP]
+          UNDEFINED <> szDescription001 [DL01]
+          UNDEFINED <> szDescription002 [DL02]
+          UNDEFINED <> szSpecialHandlingCode [SPHD]
+          UNDEFINED <> cUdcOwnershipFlag [UDCO]
+          UNDEFINED <> cHardCodedYn [HRDC]
+          "1" -> cSuppressErrorMessage [EV01]
+          VA frm_VerifyUDC [DTAI] <- szErrorMessageId [DTAI]
+          UNDEFINED <> cUDCOne [EV01]
+     If VA frm_VerifyUDC [DTAI] is not equal to <Blank>
+          Set Edit Control Error(FC Search Type, VA frm_VerifyUDC)
+     End If
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: FC User Defined Codes
+Event: Control Exited/Changed-Asynch
+Event GUID: 9093433c-a23d-11d0-a204-0000f6728a56
+=============================================
+If FC Product Code [SY] is not equal to <Blank>
+And FC User Defined Codes [RT] is equal to or empty <Blank>
+     Set Edit Control Error(FC User Defined Codes, "0003")
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: FC PROCESS : Hide C's
+Event: Button Clicked
+Event GUID: c7858251-a240-11d0-a204-0000f6728a56
+=============================================
+// 
+Hide Control(FC Remark 3 Column Title [GDCE])
+Hide Control(FC User Time Column Title [GDCF])
+// 
+// 
+Hide Control(FC UDC Headings/Validation)
+Hide Control(FC User Defined Code Title [GDC1])
+Hide Control(FC Product Code [SY])
+Hide Control(FC User Defined Codes [RT])
+// 
+Hide Control(FC Remark Headings/Validation)
+Hide Control(FC Remark 1 Column Title [GDC3])
+Hide Control(FC System Code #1 [SY1])
+Hide Control(FC User Defined Codes #1 [RT1])
+Hide Control(FC Remark 2 Column Title [GDC4])
+Hide Control(FC System Code #2 [SY2])
+Hide Control(FC User Defined Codes #2 [RT2])
+// 
+Hide Control(FC Column Headings)
+Hide Control(FC User Defined Amount Title [GDC2])
+Hide Control(FC Amount #2 Description [GDC7])
+Hide Control(FC Date Column Title [GDC5])
+Hide Control(FC Date Column Title [GDC6])
+Hide Control(FC User Defined Quantity Title [GDC0])
+Hide Control(FC User Date Column Title [GDCA])
+Hide Control(FC User Days Column Title [GDCC])
+Hide Control(FC User Address Column Title [GDCD])
+Hide Control(FC Order Column Title [GDC8])
+// 
+Show Control(FC Display Mode "P" Only)
+Show Control(FC Application Name [EAP])
+Show Control(FC Form Name [PGM])
+Show Control(FC Version [VERS])
+// 
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Object: FC PROCESS:Hide P's
+Event: Button Clicked
+Event GUID: c7858255-a240-11d0-a204-0000f6728a56
+=============================================
+// 
+VA frm_cDemandSchedDelivered_EV01 [EV01] = "0"
+IsDemandSchedulingDelivered(N40R0940.IsDemandSchedulingDelivered)
+     VA frm_cDemandSchedDelivered_EV01 [EV01] <- cDemandSchedulingReleased [DSRFU]
+If VA frm_cDemandSchedDelivered_EV01 [EV01] is not equal to "1"
+     Hide Control(FC Remark 3 Column Title [GDCE])
+     Hide Control(FC User Time Column Title [GDCF])
+Else
+     Show Control(FC Remark 3 Column Title [GDCE])
+     Show Control(FC User Time Column Title [GDCF])
+End If
+// 
+Hide Control(FC Display Mode "P" Only)
+Hide Control(FC Application Name [EAP])
+Hide Control(FC Form Name [PGM])
+Hide Control(FC Version [VERS])
+// 
+Show Control(FC UDC Headings/Validation)
+Show Control(FC User Defined Code Title [GDC1])
+Show Control(FC Product Code [SY])
+Show Control(FC User Defined Codes [RT])
+// 
+Show Control(FC Remark Headings/Validation)
+Show Control(FC Remark 1 Column Title [GDC3])
+Show Control(FC System Code #1 [SY1])
+Show Control(FC User Defined Codes #1 [RT1])
+Show Control(FC Remark 2 Column Title [GDC4])
+Show Control(FC System Code #2 [SY2])
+Show Control(FC User Defined Codes #2 [RT2])
+// 
+Show Control(FC Column Headings)
+Show Control(FC User Defined Amount Title [GDC2])
+Show Control(FC Amount #2 Description [GDC7])
+Show Control(FC Date Column Title [GDC5])
+Show Control(FC Date Column Title [GDC6])
+Show Control(FC User Defined Quantity Title [GDC0])
+Show Control(FC User Date Column Title [GDCA])
+Show Control(FC User Days Column Title [GDCC])
+Show Control(FC User Address Column Title [GDCD])
+Show Control(FC Order Column Title [GDC8])
+// 
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Data Type Revisions - W00091D
+Event: Post Dialog is Initialized
+Event GUID: 909342ec-a23d-11d0-a204-0000f6728a56
+=============================================
+FC Supplemental Database Code [SDB] = FI szSupplementalDatabaseCode [SDB]
+// 
+If SV Form_ Mode is equal to CO UPDATE_MODE
+     If BC Display Mode - Code or Narrative (F00091.0) [DSPM] is equal to "P"
+          Press Button(FC PROCESS : Hide C's)
+     Else
+          Press Button(FC PROCESS:Hide P's)
+     End If
+Else
+     FC Display Mode [DSPM] = "C"
+     Press Button(FC PROCESS:Hide P's)
+End If
+// 
+
+=============================================
+Form: Data Type Revisions - W00091D
+Event: Add Record to DB - Before
+Event GUID: 909342f7-a23d-11d0-a204-0000f6728a56
+=============================================
+GetAuditInfo(B9800100.GetAuditInfo)
+     BC User ID (F00091.0) [USER] <> szUserName [USER]
+     BC Date - Updated (F00091.0) [UPMJ] <> jdDate [DTE]
+     BC Time of Day (F00091.0) [TDAY] <> mnTime [TME0]
+     UNDEFINED <> szWorkstation_UserId [JOBN]
+     BC Work Station ID (F00091.0) [JOBN] <> szMachineKey [MKEY]
+
+
+
+
+=============================================
+Form: Work With Data Types - W00091G
+Event: Form Variables
+Event GUID: 909343bd-a23d-11d0-a204-0000f6728a56
+=============================================
+frm_StopDelete [EV01]
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Data Types - W00091G
+Object: HC OK/Select
+Event: Button Clicked
+Event GUID: 909342ef-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P00091 Form:W00091D Version: 
+     GC Type Data [TYDT] -> szTypeofData [TYDT]
+     GC SDB Code [SDB] -> szSupplementalDatabaseCode [SDB]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Data Types - W00091G
+Object: HC Add record
+Event: Button Clicked
+Event GUID: 909342f0-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P00091 Form:W00091D Version: 
+     UNDEFINED <> szTypeofData [TYDT]
+     FC Supplemental Database Code [SDB] -> szSupplementalDatabaseCode [SDB]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Data Types - W00091G
+Object: HC Delete record
+Event: Button Clicked
+Event GUID: 909343be-a23d-11d0-a204-0000f6728a56
+=============================================
+F00092.Open
+     
+F00092.FetchSingle  [Index 2: SuppDB]
+     GC SDB Code [SDB] = TK Supplemental Database Code [SDB]
+     GC Type Data [TYDT] = TK Type Data [TYDT]
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Data Types - W00091G
+Event: Post Dialog is Initialized
+Event GUID: 909342ee-a23d-11d0-a204-0000f6728a56
+=============================================
+FC Supplemental Database Code [SDB] = FI szSupplementalDatabaseCode [SDB]
+If FC Supplemental Database Code [SDB] is not equal to <Blank>
+And FC Supplemental Database Code [SDB] is not equal to <NULL>
+     GetUDC(X0005.GetUDC)
+          UNDEFINED <> szDataDictionaryItem [DTAI]
+          "00" -> szSystemCode [SY]
+          "SD" -> szRecordTypeCode [RT]
+          FC Supplemental Database Code [SDB] -> szUserDefinedCode [KY]
+          "4.00" -> mnKeyFieldLength [AS]
+          UNDEFINED <> szLanguagePreference [LNGP]
+          FC SUPPLEMENTAL DATABASE CODE [DL01] <- szDescription001 [DL01]
+          UNDEFINED <> szDescription002 [DL02]
+          UNDEFINED <> szSpecialHandlingCode [SPHD]
+          UNDEFINED <> cUdcOwnershipFlag [UDCO]
+          UNDEFINED <> cHardCodedYn [HRDC]
+          UNDEFINED <> cSuppressErrorMessage [EV01]
+          UNDEFINED <> szErrorMessageId [DTAI]
+          UNDEFINED <> cUDCOne [EV01]
+     Press Button(HC Find)
+End If
+
+=============================================
+Form: Work With Data Types - W00091G
+Event: Undefined 1555
+Event GUID: 909343bc-a23d-11d0-a204-0000f6728a56
+=============================================
+If VA frm_StopDelete [EV01] is equal to "1"
+     Suppress Delete
+End If
+
+
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Language Overrides - W00091I
+Object: HC OK/Select
+Event: Button Clicked
+Event GUID: 9093433d-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P00091 Form:W00091H Version: 
+     GC SDB Code [SDB] -> szSupplementalDatabaseCode [SDB]
+     GC Lang Code [LNGP] -> szLanguagePreference [LNGP]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Language Overrides - W00091I
+Object: HC Add record
+Event: Button Clicked
+Event GUID: 9093433e-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P00091 Form:W00091H Version: 
+     UNDEFINED <> szSupplementalDatabaseCode [SDB]
+     UNDEFINED <> szLanguagePreference [LNGP]
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Language Overrides - W00091I
+Event: Post Dialog is Initialized
+Event GUID: c7858650-a240-11d0-a204-0000f6728a56
+=============================================
+If FI szSupplementalDatabaseCode [SDB] is not equal to <Blank>
+And FI szSupplementalDatabaseCode [SDB] is not equal to "0"
+     FC Supplemental Database Code [SDB] = FI szSupplementalDatabaseCode [SDB]
+     Press Button(HC Find)
+End If
+
+
+
+
