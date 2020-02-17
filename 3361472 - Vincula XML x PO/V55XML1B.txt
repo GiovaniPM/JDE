@@ -1,0 +1,49 @@
+﻿---------------------------------------------------------------------------------
+Business View: V55XML1B (BSVW XML Pedidos em Aberto)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F4311 - Purchase Order Detail File
+  F0101 - Address Book Master
+  F0101 - Address Book Master
+  F76411 - Item Master Regional Information - Brazil             - 41
+  F4301 - Purchase Order Header
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+AN8        Address Number                           Math Numeric    8(0)       F0101(0)     
+AN8        Address Number                           Math Numeric    8(0)       F4311(0)     
+AN8        Address Number                           Math Numeric    8(0)       F0101(1)     
+SHAN       Address Number - Ship To                 Math Numeric    8(0)       F4311(0)     
+ITM        Item Number - Short                      Math Numeric    8(0)       F4311(0)     
+ITM        Item Number - Short                      Math Numeric    8(0)       F76411(0)    
+KCOO       Order Company (Order Number)             String          5(0)       F4311(0)     X
+DOCO       Document (Order No, Invoice, etc.)       Math Numeric    8(0)       F4311(0)     X
+DCTO       Order Type                               String          2(0)       F4311(0)     X
+SFXO       Order Suffix                             String          3(0)       F4311(0)     X
+LNID       Line Number                              Math Numeric    6(3)       F4311(0)     X
+TAX        Tax ID                                   String          20(0)      F0101(0)     
+TAX        Tax ID                                   String          20(0)      F0101(1)     
+BCLF       Fiscal Classification                    String          10(0)      F76411(0)    
+LITM       2nd Item Number                          String          25(0)      F4311(0)     
+LTTR       Status Code - Last                       String          3(0)       F4311(0)     
+NXTR       Status Code - Next                       String          3(0)       F4311(0)     
+UOPN       Units - Open                             Math Numeric    15(0)      F4311(0)     
+AOPN       Amount - Open                            Math Numeric    15(2)      F4311(0)     
+PRRC       Amount - Unit Cost                       Math Numeric    15(4)      F4311(0)     
+UOM        Unit of Measure as Input                 String          2(0)       F4311(0)     
+DRQJ       Date - Requested                         Date            6(0)       F4311(0)     
+KCOO       Order Company (Order Number)             String          5(0)       F4301(0)     
+DOCO       Document (Order No, Invoice, etc.)       Math Numeric    8(0)       F4301(0)     
+DCTO       Order Type                               String          2(0)       F4301(0)     
+SFXO       Order Suffix                             String          3(0)       F4301(0)     
+MCU        Business Unit                            String          12(0)      F4301(0)     
+
+Joins:
+F0101.AN8 Simple(==) = F4311.AN8
+F0101.AN8 Simple(==) = F4311.SHAN
+F4311.ITM Simple(==) = F76411.ITM
+F4301.KCOO Simple(==) = F4311.KCOO
+F4301.DOCO Simple(==) = F4311.DOCO
+F4301.DCTO Simple(==) = F4311.DCTO
+F4301.SFXO Simple(==) = F4311.SFXO
+

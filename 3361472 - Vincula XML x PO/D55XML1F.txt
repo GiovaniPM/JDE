@@ -1,0 +1,18 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D55XML1F DS XML Inclui Valor
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     mnQtdXML                            ACQTY        Input    Yes  
+2     mnUniXML                            UPRC         Input    Yes  
+3     mnVlrXML                            AEXP         Input    Yes  
+4     mnQtdPed                            ACQTY        Input    Yes  
+5     mnUniPed                            UPRC         Input    Yes  
+6     mnVlrPed                            AEXP         Input    Yes  
+7     mnQtdIncluir                        ACQTY        Output   Yes  
+8     mnUniIncluir                        UPRC         Output   Yes  
+9     mnVlrIncluir                        AEXP         Output   Yes  
+10    mnConversionFactor                  CONV         Input    Yes  
+11    mnQtdSaldo                          ACQTY        Output   Yes  
+12    mnUniSaldo                          UPRC         Output   Yes  
+13    mnVlrSaldo                          AEXP         Output   Yes  
+

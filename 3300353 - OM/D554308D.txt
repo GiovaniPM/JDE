@@ -1,0 +1,8 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D554308D DS Organiza Regra
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     szSupplementalDatabaseCode          SDB          Input    Yes  
+2     szTypeofData                        TYDT         Input    Yes  
+3     jdData                              UPMJ         Input    Yes  
+

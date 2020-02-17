@@ -1,0 +1,31 @@
+﻿---------------------------------------------------------------------------------
+Table: F55XML06 XML Transações
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   Z55XML01   ID XML de NF                             IDXMLNF                   Math Numeric    15(0)      X
+2   55ESTC     NFE Document Status Code                 NFEDocumentStatusCode     String          10(0)      X
+3   ACTDATE    Date - Last Task                         DateLastActivityOW        Date            6(0)       
+4   TDAY       Time of Day                              TimeOfDay                 Math Numeric    6(0)       
+5   XMLCMPST   XML Data Composite                       XMLDataComposite          String          32000(0)   
+6   USER       User ID                                  UserId                    String          10(0)      
+7   PID        Program ID                               ProgramId                 String          10(0)      
+8   VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+9   JOBN       Work Station ID                          WorkStationId             String          10(0)      
+10  UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+11  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+Z44XML01,55ESTC                          1      PRIMARY UNIQUE
+                                         Z55XML01  
+                                         55ESTC    
+
+ACTDATE,TDAY                             2     
+                                         ACTDATE   
+                                         TDAY      
+
+55ESTC,ACTDATE,TDAY                      3     
+                                         55ESTC    
+                                         ACTDATE   
+                                         TDAY      
+

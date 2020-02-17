@@ -1,0 +1,133 @@
+﻿
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55UDCB
+Object: FC F0004
+Event: Button Clicked
+Event GUID: 67376923-3e49-4bec-90e6-308016c3f966
+=============================================
+Call App:P55UDC Form:W55UDCL Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55UDCB
+Object: FC F0004D
+Event: Button Clicked
+Event GUID: 5292d6aa-c3d2-4088-b0d1-2ef54248dd55
+=============================================
+Call App:P55UDC Form:W55UDCN Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55UDCB
+Object: FC F0005
+Event: Button Clicked
+Event GUID: ed64a9ec-6e6d-4ace-a84c-de90aadb00ac
+=============================================
+Call App:P55UDC Form:W55UDCO Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55UDCB
+Object: FC F0005D
+Event: Button Clicked
+Event GUID: d804c7ad-381c-4fee-8faf-87acd67369c0
+=============================================
+Call App:P55UDC Form:W55UDCP Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55UDCB
+Object: FC F00090
+Event: Button Clicked
+Event GUID: c89c9c3c-1639-4e32-857f-265aef1ea30c
+=============================================
+Call App:P55UDC Form:W55UDCM Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55UDCB
+Object: FC F00090D
+Event: Button Clicked
+Event GUID: 6417c838-8f55-4e30-bafc-8d081a92aec5
+=============================================
+Call App:P55UDC Form:W55UDCQ Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55UDCB
+Object: FC F00091
+Event: Button Clicked
+Event GUID: 46aabe8c-2150-4054-a5ef-4b7ccdc73a99
+=============================================
+Call App:P55UDC Form:W55UDCR Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55UDCB
+Object: FC F00092
+Event: Button Clicked
+Event GUID: 817e52e4-8212-4f87-bb91-a010ac1dbd37
+=============================================
+Call App:P55UDC Form:W55UDCS Version:Undefined
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: F00092 - W55UDCS
+Object: GC Unique Key ID
+Event: Col is Exited
+Event GUID: bab168a6-1480-42de-bd59-8319cd11e6ac
+=============================================
+If GC Unique Key ID [UKID] is equal to <Blank>
+Or GC Unique Key ID [UKID] is equal to <NULL>
+Or GC Unique Key ID [UKID] is equal to "0"
+     GetNextUniqueKeyID(X00022.GetNextUniqueKeyID)
+          "F00092" -> szObjectName [OBNM]
+          GC Unique Key ID [UKID] <> mnUniqueKeyID [UKID]
+End If
+
+
+
+
+

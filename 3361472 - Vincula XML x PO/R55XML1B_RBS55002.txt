@@ -1,0 +1,760 @@
+﻿=============================================
+EVENTS
+=============================================
+UBE: R55XML1B
+Event: Report Variables
+Event GUID: 2692e33b-2928-408b-8414-ab02f8c0e6af
+=============================================
+rpt_jdDataPedido_DRQJ [DRQJ]
+rpt_szCGCTaxIDShipFrom_BCGF [BCGF]
+rpt_szCGCTaxIDShipTo_BCGT [BCGT]
+rpt_szIdentifier2ndItem_LITM [LITM]
+rpt_cPega_EV01 [EV01]
+rpt_mnTamanho_IA04 [IA04]
+rpt_szInicio_LITM [LITM]
+rpt_szReferencia_LITM [LITM]
+rpt_szDataItem_DTAI [DTAI]
+rpt_mnConversionFactor_CONV [CONV]
+rpt_szXML_SDB [SDB]
+rpt_szXML_TYDT [TYDT]
+rpt_szXML_RMK [RMK]
+rpt_szXML_RMK2 [RMK2]
+rpt_szXML_RMK3 [RMK3]
+rpt_MCU [MCU]
+rpt_KCOO [KCOO]
+rpt_DOCO [DOCO]
+rpt_DCTO [DCTO]
+rpt_SFXO [SFXO]
+rpt_LNID [LNID]
+rpt_UOM [UOM]
+rpt_UORG [UORG]
+rpt_AEXP [AEXP]
+rpt_ITM [ITM]
+rpt_UPRC [UPRC]
+rpt_mnPedidoReferencia_DOCO [DOCO]
+rpt_szModo_AA02 [AA02]
+rpt_szMensagem_DL011 [DL011]
+rpt_cErroQtd_EV01 [EV01]
+rpt_cErroUni_EV01 [EV01]
+rpt_cErroVlr_EV01 [EV01]
+rpt_szStatusXML_Z55XML04 [Z55XML04]
+
+
+=============================================
+EVENTS
+=============================================
+Section: BSVW XML Pedidos Vinculados                                  [7] 
+Event: Initialize Section
+Event GUID: ad511055-38ba-4a75-85a3-631b7c4d2075
+=============================================
+Set Selection Append Flag( <Yes>)
+Set User Selection(BC ID XML de NF (F55XML05)(Z55XML01),  <Equal To>, RV ID XML de NF,  <And>)
+Set User Selection(BC Item no XML da NF (F55XML05)(Z55XML02), <Equal To>, RV Item no XML da NF, <And>)
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: BSVW XML Pedidos em Aberto                                   [4] 
+Event: Initialize Section
+Event GUID: 2731d5bf-6c7e-4c29-8b27-9a2d0073e48f
+=============================================
+Set Selection Append Flag( <No>)
+Set User Selection(BC Status Code - Last (F4311)(LTTR), <Greater Than>, PO szStatusCodeLast, <And>)
+Set User Selection(BC Status Code - Next (F4311)(NXTR),  <Less Than>, PO szStatusCodeNext, <And>)
+Set User Selection(BC Date - Requested (F4311)(DRQJ), <Greater Than or Equal To>, VA rpt_jdDataPedido_DRQJ, <And>)
+Set User Selection(BC Tax ID (F0101)(TAX), <Equal To>, VA rpt_szCGCTaxIDShipFrom_BCGF, <And>)
+Set User Selection(BC Tax ID (F0101)(TAX), <Equal To>, VA rpt_szCGCTaxIDShipTo_BCGT, <And>)
+Set User Selection(BC 2nd Item Number (F4311)(LITM), <Greater Than or Equal To>, VA rpt_szIdentifier2ndItem_LITM, <And>)
+//
+If VA rpt_szModo_AA02 [AA02] is equal to "01"
+     Set User Selection(BC Document (Order No, Invoice, etc.) (F4301)(DOCO), <Equal To>, VA rpt_mnPedidoReferencia_DOCO, <And>)
+End If
+
+=============================================
+Section: BSVW XML Pedidos em Aberto                                   [4] 
+Event: Do Section
+Event GUID: f2d155c0-0d54-46d7-8e7f-12f7fcbc498b
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnValor_AEXP [AEXP]
+----------------------------------------
+VA rpt_cPega_EV01 [EV01] = "N"
+XMLItemValido(N55XML01.XMLItemValido)
+     VA rpt_szIdentifier2ndItem_LITM [LITM] -> szItemReferencia [LITM]
+     BC 2nd Item Number (F4311.0) [LITM] -> szItem [LITM]
+     VA rpt_cPega_EV01 [EV01] <- cAchou [EV01]
+//
+If VA rpt_cPega_EV01 [EV01] is equal to "S"
+     RV LinhaQtd [UOPN] = BC Units - Open (F4311.0) [UOPN]
+     RV LinhaUni [PRRC] = BC Amount - Unit Cost (F4311.0) [PRRC]
+     RV LinhaVlr [AOPN] = BC Amount - Open (F4311.0) [AOPN]
+     //
+     // Diminuo do pedido valores vinculados e não recebidos
+     XMLSaldoPedido(N55XML01.XMLSaldoPedido)
+          BC Order Company (Order Number) (F4311.0) [KCOO] -> szCiaPedido [KCOO]
+          BC Document (Order No, Invoice, etc.) (F4311.0) [DOCO] -> mnDocumentoPedido [DOCO]
+          BC Order Type (F4311.0) [DCTO] -> szTipoPedido [DCTO]
+          BC Order Suffix (F4311.0) [SFXO] -> szSufixoPedido [SFXO]
+          BC Line Number (F4311.0) [LNID] -> mnLinhaPedido [LNID]
+          VA rpt_UORG [UORG] <- mnQtd [UORG]
+          VA rpt_UPRC [UPRC] <- mnUni [UPRC]
+          VA rpt_AEXP [AEXP] <- mnVlr [AEXP]
+     RV LinhaQtd [UOPN] = [RV LinhaQtd [UOPN]]-[VA rpt_UORG [UORG]]
+     RV LinhaVlr [AOPN] = [RV LinhaVlr [AOPN]]-[VA rpt_AEXP [AEXP]]
+     //
+     If RV LinhaQtd [UOPN] is greater than "0"
+          //
+          If VA rpt_szModo_AA02 [AA02] is equal to ("01","02")
+               VA rpt_cErroQtd_EV01 [EV01] = "N"
+               VA rpt_cErroUni_EV01 [EV01] = "N"
+               VA rpt_cErroVlr_EV01 [EV01] = "N"
+               If PO cAtivaQtd [EV01] is equal to "S"
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         PO mnPercentQtd [74UTOLP] -> mnPercentual [74UTOLP]
+                         PO mnValorQtd [AEXP] -> mnValorMaximo [UPRC]
+                         RV LinhaQtd [UOPN] -> mnValorReferencia [UPRC]
+                         RV Saldo Qtd [ACQTY] -> mnValorUsado [UPRC]
+                         VA rpt_cErroQtd_EV01 [EV01] <- cErro [EV01]
+               Else
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         "0" -> mnPercentual [74UTOLP]
+                         "0" -> mnValorMaximo [UPRC]
+                         RV LinhaQtd [UOPN] -> mnValorReferencia [UPRC]
+                         RV Saldo Qtd [ACQTY] -> mnValorUsado [UPRC]
+                         VA rpt_cErroQtd_EV01 [EV01] <- cErro [EV01]
+               End If
+               If PO cAtivaUni [EV01] is equal to "S"
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         PO mnPercentUni [74UTOLP] -> mnPercentual [74UTOLP]
+                         PO mnValorUni [AEXP] -> mnValorMaximo [UPRC]
+                         RV LinhaUni [PRRC] -> mnValorReferencia [UPRC]
+                         RV Saldo Unit [UPRC] -> mnValorUsado [UPRC]
+                         VA rpt_cErroUni_EV01 [EV01] <- cErro [EV01]
+               Else
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         "0" -> mnPercentual [74UTOLP]
+                         "0" -> mnValorMaximo [UPRC]
+                         RV LinhaUni [PRRC] -> mnValorReferencia [UPRC]
+                         RV Saldo Unit [UPRC] -> mnValorUsado [UPRC]
+                         VA rpt_cErroUni_EV01 [EV01] <- cErro [EV01]
+               End If
+               If PO cAtivaVlr [EV01] is equal to "S"
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         PO mnPercentVlr [74UTOLP] -> mnPercentual [74UTOLP]
+                         PO mnValorVlr [AEXP] -> mnValorMaximo [UPRC]
+                         RV LinhaVlr [AOPN] -> mnValorReferencia [UPRC]
+                         RV Saldo [AEXP] -> mnValorUsado [UPRC]
+                         VA rpt_cErroVlr_EV01 [EV01] <- cErro [EV01]
+               Else
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         "0" -> mnPercentual [74UTOLP]
+                         "0" -> mnValorMaximo [UPRC]
+                         RV LinhaVlr [AOPN] -> mnValorReferencia [UPRC]
+                         RV Saldo [AEXP] -> mnValorUsado [UPRC]
+                         VA rpt_cErroVlr_EV01 [EV01] <- cErro [EV01]
+               End If
+               If VA rpt_cErroQtd_EV01 [EV01] is equal to "N"
+               And VA rpt_cErroUni_EV01 [EV01] is equal to "N"
+               And VA rpt_cErroVlr_EV01 [EV01] is equal to "N"
+                    GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+                         BC Business Unit (F4301.0) [MCU] -> szBranchPlant [MCU]
+                         BC Unit of Measure as Input (F4311.0) [UOM] -> szFromUnitOfMeasure [UOM]
+                         RV U/M [UOM] -> szToUnitOfMeasure [RUM]
+                         VA rpt_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+                         VA rpt_szDataItem_DTAI [DTAI] <- szErrorMessageID [DTAI]
+                         BC Item Number - Short (F4311.0) [ITM] -> mnShortItemNumber [ITM]
+                    If VA rpt_szDataItem_DTAI [DTAI] is equal to <Blank>
+                    Or VA rpt_szDataItem_DTAI [DTAI] is equal to <NULL>
+                    Or VA rpt_szDataItem_DTAI [DTAI] is equal to "0"
+                         XMLValorIncluir(N55XML01.XMLValorIncluir)
+                              RV Saldo Qtd [ACQTY] -> mnQtdXML [ACQTY]
+                              RV Saldo Unit [UPRC] -> mnUniXML [UPRC]
+                              RV Saldo [AEXP] -> mnVlrXML [AEXP]
+                              RV LinhaQtd [UOPN] -> mnQtdPed [ACQTY]
+                              RV LinhaUni [PRRC] -> mnUniPed [UPRC]
+                              RV LinhaVlr [AOPN] -> mnVlrPed [AEXP]
+                              VA rpt_UORG [UORG] <- mnQtdIncluir [ACQTY]
+                              VA rpt_UPRC [UPRC] <- mnUniIncluir [UPRC]
+                              VA rpt_AEXP [AEXP] <- mnVlrIncluir [AEXP]
+                              VA rpt_mnConversionFactor_CONV [CONV] -> mnConversionFactor [CONV]
+                              RV Saldo Qtd [ACQTY] <- mnQtdSaldo [ACQTY]
+                              RV Saldo Unit [UPRC] <- mnUniSaldo [UPRC]
+                              RV Saldo [AEXP] <- mnVlrSaldo [AEXP]
+                         F55XML05.Insert  [Index 1: Z55XML01.Z55XML02]
+                              RV ID XML de NF [Z55XML01] -> TK ID XML de NF [Z55XML01]
+                              RV Item no XML da NF [Z55XML02] -> TK Item no XML da NF [Z55XML02]
+                              BC Business Unit (F4301.0) [MCU] -> TK Business Unit [MCU]
+                              BC Order Company (Order Number) (F4301.0) [KCOO] -> TK Order Company (Order Number) [KCOO]
+                              BC Document (Order No, Invoice, etc.) (F4301.0) [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+                              BC Order Type (F4301.0) [DCTO] -> TK Order Type [DCTO]
+                              BC Order Suffix (F4301.0) [SFXO] -> TK Order Suffix [SFXO]
+                              BC Line Number (F4311.0) [LNID] -> TK Line Number [LNID]
+                              BC Unit of Measure as Input (F4311.0) [UOM] -> TK Unit of Measure as Input [UOM]
+                              VA rpt_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+                              VA rpt_UPRC [UPRC] -> TK Amount - Price per Unit [UPRC]
+                              VA rpt_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+                              RV User ID [USER] -> TK User ID [USER]
+                              RV Program ID [PID] -> TK Program ID [PID]
+                              RV Selection Values 01 [VL01] -> TK Selection Values 01 [VL01]
+                              RV Work Station ID [JOBN] -> TK Work Station ID [JOBN]
+                              RV Date Updated [UPMJ] -> TK Date - Updated [UPMJ]
+                              RV Time Last Updated [UPMT] -> TK Time - Last Updated [UPMT]
+                    Else
+                         VA rpt_szMensagem_DL011 [DL011] = VA rpt_szDataItem_DTAI [DTAI]
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " - Não foi encontrada conversão de UM de ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [RV U/M [UOM]])
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " para ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [BC Unit of Measure as Input (F4311.0) [UOM]])
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " no ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [BC 2nd Item Number (F4311.0) [LITM]])
+                         XMLLogErro(N55XML01.XMLLogErro)
+                              RV ID XML de NF [Z55XML01] -> mnIDXMLNF [Z55XML01]
+                              RV Item no XML da NF [Z55XML02] -> mnItemXMLNF [Z55XML02]
+                              VA rpt_szMensagem_DL011 [DL011] -> szMensagem [DL011]
+                              RV User ID [USER] -> szUserId [USER]
+                              RV Program ID [PID] -> szProgramId [PID]
+                              RV Selection Values 01 [VL01] -> szSelectionValues001 [VL01]
+                              RV Work Station ID [JOBN] -> szWorkStationId [JOBN]
+                              RV Date Updated [UPMJ] -> jdDateUpdated [UPMJ]
+                              RV Time Last Updated [UPMT] -> mnTimeLastUpdated [UPMT]
+                    End If
+               End If
+          End If
+          //
+          If VA rpt_szModo_AA02 [AA02] is equal to "03"
+               VA rpt_cErroQtd_EV01 [EV01] = "N"
+               VA rpt_cErroUni_EV01 [EV01] = "N"
+               VA rpt_cErroVlr_EV01 [EV01] = "N"
+               XMLTolerancia(N55XML01.XMLTolerancia)
+                    "0" -> mnPercentual [74UTOLP]
+                    "0" -> mnValorMaximo [UPRC]
+                    RV LinhaQtd [UOPN] -> mnValorReferencia [UPRC]
+                    RV Saldo Qtd [ACQTY] -> mnValorUsado [UPRC]
+                    VA rpt_cErroQtd_EV01 [EV01] <- cErro [EV01]
+               XMLTolerancia(N55XML01.XMLTolerancia)
+                    "0" -> mnPercentual [74UTOLP]
+                    "0" -> mnValorMaximo [UPRC]
+                    RV LinhaUni [PRRC] -> mnValorReferencia [UPRC]
+                    RV Saldo Unit [UPRC] -> mnValorUsado [UPRC]
+                    VA rpt_cErroUni_EV01 [EV01] <- cErro [EV01]
+               XMLTolerancia(N55XML01.XMLTolerancia)
+                    "0" -> mnPercentual [74UTOLP]
+                    "0" -> mnValorMaximo [UPRC]
+                    RV LinhaVlr [AOPN] -> mnValorReferencia [UPRC]
+                    RV Saldo [AEXP] -> mnValorUsado [UPRC]
+                    VA rpt_cErroVlr_EV01 [EV01] <- cErro [EV01]
+               If VA rpt_cErroQtd_EV01 [EV01] is equal to "N"
+               And VA rpt_cErroUni_EV01 [EV01] is equal to "N"
+               And VA rpt_cErroVlr_EV01 [EV01] is equal to "N"
+                    GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+                         BC Business Unit (F4301.0) [MCU] -> szBranchPlant [MCU]
+                         BC Unit of Measure as Input (F4311.0) [UOM] -> szFromUnitOfMeasure [UOM]
+                         RV U/M [UOM] -> szToUnitOfMeasure [RUM]
+                         VA rpt_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+                         VA rpt_szDataItem_DTAI [DTAI] <- szErrorMessageID [DTAI]
+                         BC Item Number - Short (F4311.0) [ITM] -> mnShortItemNumber [ITM]
+                    If VA rpt_szDataItem_DTAI [DTAI] is equal to <Blank>
+                    Or VA rpt_szDataItem_DTAI [DTAI] is equal to <NULL>
+                    Or VA rpt_szDataItem_DTAI [DTAI] is equal to "0"
+                         XMLValorIncluir(N55XML01.XMLValorIncluir)
+                              RV Saldo Qtd [ACQTY] -> mnQtdXML [ACQTY]
+                              RV Saldo Unit [UPRC] -> mnUniXML [UPRC]
+                              RV Saldo [AEXP] -> mnVlrXML [AEXP]
+                              RV LinhaQtd [UOPN] -> mnQtdPed [ACQTY]
+                              RV LinhaUni [PRRC] -> mnUniPed [UPRC]
+                              RV LinhaVlr [AOPN] -> mnVlrPed [AEXP]
+                              VA rpt_UORG [UORG] <- mnQtdIncluir [ACQTY]
+                              VA rpt_UPRC [UPRC] <- mnUniIncluir [UPRC]
+                              VA rpt_AEXP [AEXP] <- mnVlrIncluir [AEXP]
+                              VA rpt_mnConversionFactor_CONV [CONV] -> mnConversionFactor [CONV]
+                              RV Saldo Qtd [ACQTY] <- mnQtdSaldo [ACQTY]
+                              RV Saldo Unit [UPRC] <- mnUniSaldo [UPRC]
+                              RV Saldo [AEXP] <- mnVlrSaldo [AEXP]
+                         F55XML05.Insert  [Index 1: Z55XML01.Z55XML02]
+                              RV ID XML de NF [Z55XML01] -> TK ID XML de NF [Z55XML01]
+                              RV Item no XML da NF [Z55XML02] -> TK Item no XML da NF [Z55XML02]
+                              BC Business Unit (F4301.0) [MCU] -> TK Business Unit [MCU]
+                              BC Order Company (Order Number) (F4301.0) [KCOO] -> TK Order Company (Order Number) [KCOO]
+                              BC Document (Order No, Invoice, etc.) (F4301.0) [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+                              BC Order Type (F4301.0) [DCTO] -> TK Order Type [DCTO]
+                              BC Order Suffix (F4301.0) [SFXO] -> TK Order Suffix [SFXO]
+                              BC Line Number (F4311.0) [LNID] -> TK Line Number [LNID]
+                              BC Unit of Measure as Input (F4311.0) [UOM] -> TK Unit of Measure as Input [UOM]
+                              VA rpt_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+                              VA rpt_UPRC [UPRC] -> TK Amount - Price per Unit [UPRC]
+                              VA rpt_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+                              RV User ID [USER] -> TK User ID [USER]
+                              RV Program ID [PID] -> TK Program ID [PID]
+                              RV Selection Values 01 [VL01] -> TK Selection Values 01 [VL01]
+                              RV Work Station ID [JOBN] -> TK Work Station ID [JOBN]
+                              RV Date Updated [UPMJ] -> TK Date - Updated [UPMJ]
+                              RV Time Last Updated [UPMT] -> TK Time - Last Updated [UPMT]
+                    Else
+                         VA rpt_szMensagem_DL011 [DL011] = VA rpt_szDataItem_DTAI [DTAI]
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " - Não foi encontrada conversão de UM de ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [RV U/M [UOM]])
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " para ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [BC Unit of Measure as Input (F4311.0) [UOM]])
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " no ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [BC 2nd Item Number (F4311.0) [LITM]])
+                         XMLLogErro(N55XML01.XMLLogErro)
+                              RV ID XML de NF [Z55XML01] -> mnIDXMLNF [Z55XML01]
+                              RV Item no XML da NF [Z55XML02] -> mnItemXMLNF [Z55XML02]
+                              VA rpt_szMensagem_DL011 [DL011] -> szMensagem [DL011]
+                              RV User ID [USER] -> szUserId [USER]
+                              RV Program ID [PID] -> szProgramId [PID]
+                              RV Selection Values 01 [VL01] -> szSelectionValues001 [VL01]
+                              RV Work Station ID [JOBN] -> szWorkStationId [JOBN]
+                              RV Date Updated [UPMJ] -> jdDateUpdated [UPMJ]
+                              RV Time Last Updated [UPMT] -> mnTimeLastUpdated [UPMT]
+                    End If
+               End If
+          End If
+          //
+          If VA rpt_szModo_AA02 [AA02] is equal to "04"
+               VA rpt_cErroQtd_EV01 [EV01] = "N"
+               VA rpt_cErroUni_EV01 [EV01] = "N"
+               VA rpt_cErroVlr_EV01 [EV01] = "N"
+               If PO cAtivaUni [EV01] is equal to "S"
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         PO mnPercentUni [74UTOLP] -> mnPercentual [74UTOLP]
+                         PO mnValorUni [AEXP] -> mnValorMaximo [UPRC]
+                         RV LinhaUni [PRRC] -> mnValorReferencia [UPRC]
+                         RV Saldo Unit [UPRC] -> mnValorUsado [UPRC]
+                         VA rpt_cErroUni_EV01 [EV01] <- cErro [EV01]
+               Else
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         "0" -> mnPercentual [74UTOLP]
+                         "0" -> mnValorMaximo [UPRC]
+                         RV LinhaUni [PRRC] -> mnValorReferencia [UPRC]
+                         RV Saldo Unit [UPRC] -> mnValorUsado [UPRC]
+                         VA rpt_cErroUni_EV01 [EV01] <- cErro [EV01]
+               End If
+               If VA rpt_cErroQtd_EV01 [EV01] is equal to "N"
+               And VA rpt_cErroUni_EV01 [EV01] is equal to "N"
+               And VA rpt_cErroVlr_EV01 [EV01] is equal to "N"
+                    GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+                         BC Business Unit (F4301.0) [MCU] -> szBranchPlant [MCU]
+                         BC Unit of Measure as Input (F4311.0) [UOM] -> szFromUnitOfMeasure [UOM]
+                         RV U/M [UOM] -> szToUnitOfMeasure [RUM]
+                         VA rpt_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+                         VA rpt_szDataItem_DTAI [DTAI] <- szErrorMessageID [DTAI]
+                         BC Item Number - Short (F4311.0) [ITM] -> mnShortItemNumber [ITM]
+                    If VA rpt_szDataItem_DTAI [DTAI] is equal to <Blank>
+                    Or VA rpt_szDataItem_DTAI [DTAI] is equal to <NULL>
+                    Or VA rpt_szDataItem_DTAI [DTAI] is equal to "0"
+                         If RV LinhaVlr [AOPN] is greater than or equal to RV Saldo [AEXP]
+                              XMLValorIncluir(N55XML01.XMLValorIncluir)
+                                   RV Saldo Qtd [ACQTY] -> mnQtdXML [ACQTY]
+                                   RV Saldo Unit [UPRC] -> mnUniXML [UPRC]
+                                   RV Saldo [AEXP] -> mnVlrXML [AEXP]
+                                   RV LinhaQtd [UOPN] -> mnQtdPed [ACQTY]
+                                   RV LinhaUni [PRRC] -> mnUniPed [UPRC]
+                                   RV LinhaVlr [AOPN] -> mnVlrPed [AEXP]
+                                   VA rpt_UORG [UORG] <- mnQtdIncluir [ACQTY]
+                                   VA rpt_UPRC [UPRC] <- mnUniIncluir [UPRC]
+                                   VA rpt_AEXP [AEXP] <- mnVlrIncluir [AEXP]
+                                   VA rpt_mnConversionFactor_CONV [CONV] -> mnConversionFactor [CONV]
+                                   RV Saldo Qtd [ACQTY] <- mnQtdSaldo [ACQTY]
+                                   RV Saldo Unit [UPRC] <- mnUniSaldo [UPRC]
+                                   RV Saldo [AEXP] <- mnVlrSaldo [AEXP]
+                              F55XML05.Insert  [Index 1: Z55XML01.Z55XML02]
+                                   RV ID XML de NF [Z55XML01] -> TK ID XML de NF [Z55XML01]
+                                   RV Item no XML da NF [Z55XML02] -> TK Item no XML da NF [Z55XML02]
+                                   BC Business Unit (F4301.0) [MCU] -> TK Business Unit [MCU]
+                                   BC Order Company (Order Number) (F4301.0) [KCOO] -> TK Order Company (Order Number) [KCOO]
+                                   BC Document (Order No, Invoice, etc.) (F4301.0) [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+                                   BC Order Type (F4301.0) [DCTO] -> TK Order Type [DCTO]
+                                   BC Order Suffix (F4301.0) [SFXO] -> TK Order Suffix [SFXO]
+                                   BC Line Number (F4311.0) [LNID] -> TK Line Number [LNID]
+                                   BC Unit of Measure as Input (F4311.0) [UOM] -> TK Unit of Measure as Input [UOM]
+                                   VA rpt_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+                                   VA rpt_UPRC [UPRC] -> TK Amount - Price per Unit [UPRC]
+                                   VA rpt_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+                                   RV User ID [USER] -> TK User ID [USER]
+                                   RV Program ID [PID] -> TK Program ID [PID]
+                                   RV Selection Values 01 [VL01] -> TK Selection Values 01 [VL01]
+                                   RV Work Station ID [JOBN] -> TK Work Station ID [JOBN]
+                                   RV Date Updated [UPMJ] -> TK Date - Updated [UPMJ]
+                                   RV Time Last Updated [UPMT] -> TK Time - Last Updated [UPMT]
+                         End If
+                    Else
+                         VA rpt_szMensagem_DL011 [DL011] = VA rpt_szDataItem_DTAI [DTAI]
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " - Não foi encontrada conversão de UM de ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [RV U/M [UOM]])
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " para ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [BC Unit of Measure as Input (F4311.0) [UOM]])
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " no ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [BC 2nd Item Number (F4311.0) [LITM]])
+                         XMLLogErro(N55XML01.XMLLogErro)
+                              RV ID XML de NF [Z55XML01] -> mnIDXMLNF [Z55XML01]
+                              RV Item no XML da NF [Z55XML02] -> mnItemXMLNF [Z55XML02]
+                              VA rpt_szMensagem_DL011 [DL011] -> szMensagem [DL011]
+                              RV User ID [USER] -> szUserId [USER]
+                              RV Program ID [PID] -> szProgramId [PID]
+                              RV Selection Values 01 [VL01] -> szSelectionValues001 [VL01]
+                              RV Work Station ID [JOBN] -> szWorkStationId [JOBN]
+                              RV Date Updated [UPMJ] -> jdDateUpdated [UPMJ]
+                              RV Time Last Updated [UPMT] -> mnTimeLastUpdated [UPMT]
+                    End If
+               End If
+          End If
+          //
+          If VA rpt_szModo_AA02 [AA02] is equal to "05"
+               VA rpt_cErroQtd_EV01 [EV01] = "N"
+               VA rpt_cErroUni_EV01 [EV01] = "N"
+               VA rpt_cErroVlr_EV01 [EV01] = "N"
+               If PO cAtivaUni [EV01] is equal to "S"
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         PO mnPercentUni [74UTOLP] -> mnPercentual [74UTOLP]
+                         PO mnValorUni [AEXP] -> mnValorMaximo [UPRC]
+                         RV LinhaUni [PRRC] -> mnValorReferencia [UPRC]
+                         RV Saldo Unit [UPRC] -> mnValorUsado [UPRC]
+                         VA rpt_cErroUni_EV01 [EV01] <- cErro [EV01]
+               Else
+                    XMLTolerancia(N55XML01.XMLTolerancia)
+                         "0" -> mnPercentual [74UTOLP]
+                         "0" -> mnValorMaximo [UPRC]
+                         RV LinhaUni [PRRC] -> mnValorReferencia [UPRC]
+                         RV Saldo Unit [UPRC] -> mnValorUsado [UPRC]
+                         VA rpt_cErroUni_EV01 [EV01] <- cErro [EV01]
+               End If
+               If VA rpt_cErroQtd_EV01 [EV01] is equal to "N"
+               And VA rpt_cErroUni_EV01 [EV01] is equal to "N"
+               And VA rpt_cErroVlr_EV01 [EV01] is equal to "N"
+                    GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+                         BC Business Unit (F4301.0) [MCU] -> szBranchPlant [MCU]
+                         BC Unit of Measure as Input (F4311.0) [UOM] -> szFromUnitOfMeasure [UOM]
+                         RV U/M [UOM] -> szToUnitOfMeasure [RUM]
+                         VA rpt_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+                         VA rpt_szDataItem_DTAI [DTAI] <- szErrorMessageID [DTAI]
+                         BC Item Number - Short (F4311.0) [ITM] -> mnShortItemNumber [ITM]
+                    If VA rpt_szDataItem_DTAI [DTAI] is equal to <Blank>
+                    Or VA rpt_szDataItem_DTAI [DTAI] is equal to <NULL>
+                    Or VA rpt_szDataItem_DTAI [DTAI] is equal to "0"
+                         XMLValorIncluir(N55XML01.XMLValorIncluir)
+                              RV Saldo Qtd [ACQTY] -> mnQtdXML [ACQTY]
+                              RV Saldo Unit [UPRC] -> mnUniXML [UPRC]
+                              RV Saldo [AEXP] -> mnVlrXML [AEXP]
+                              RV LinhaQtd [UOPN] -> mnQtdPed [ACQTY]
+                              RV LinhaUni [PRRC] -> mnUniPed [UPRC]
+                              RV LinhaVlr [AOPN] -> mnVlrPed [AEXP]
+                              VA rpt_UORG [UORG] <- mnQtdIncluir [ACQTY]
+                              VA rpt_UPRC [UPRC] <- mnUniIncluir [UPRC]
+                              VA rpt_AEXP [AEXP] <- mnVlrIncluir [AEXP]
+                              VA rpt_mnConversionFactor_CONV [CONV] -> mnConversionFactor [CONV]
+                              RV Saldo Qtd [ACQTY] <- mnQtdSaldo [ACQTY]
+                              RV Saldo Unit [UPRC] <- mnUniSaldo [UPRC]
+                              RV Saldo [AEXP] <- mnVlrSaldo [AEXP]
+                         F55XML05.Insert  [Index 1: Z55XML01.Z55XML02]
+                              RV ID XML de NF [Z55XML01] -> TK ID XML de NF [Z55XML01]
+                              RV Item no XML da NF [Z55XML02] -> TK Item no XML da NF [Z55XML02]
+                              BC Business Unit (F4301.0) [MCU] -> TK Business Unit [MCU]
+                              BC Order Company (Order Number) (F4301.0) [KCOO] -> TK Order Company (Order Number) [KCOO]
+                              BC Document (Order No, Invoice, etc.) (F4301.0) [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+                              BC Order Type (F4301.0) [DCTO] -> TK Order Type [DCTO]
+                              BC Order Suffix (F4301.0) [SFXO] -> TK Order Suffix [SFXO]
+                              BC Line Number (F4311.0) [LNID] -> TK Line Number [LNID]
+                              BC Unit of Measure as Input (F4311.0) [UOM] -> TK Unit of Measure as Input [UOM]
+                              VA rpt_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+                              VA rpt_UPRC [UPRC] -> TK Amount - Price per Unit [UPRC]
+                              VA rpt_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+                              RV User ID [USER] -> TK User ID [USER]
+                              RV Program ID [PID] -> TK Program ID [PID]
+                              RV Selection Values 01 [VL01] -> TK Selection Values 01 [VL01]
+                              RV Work Station ID [JOBN] -> TK Work Station ID [JOBN]
+                              RV Date Updated [UPMJ] -> TK Date - Updated [UPMJ]
+                              RV Time Last Updated [UPMT] -> TK Time - Last Updated [UPMT]
+                    Else
+                         VA rpt_szMensagem_DL011 [DL011] = VA rpt_szDataItem_DTAI [DTAI]
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " - Não foi encontrada conversão de UM de ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [RV U/M [UOM]])
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " para ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [BC Unit of Measure as Input (F4311.0) [UOM]])
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " no ")
+                         VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [BC 2nd Item Number (F4311.0) [LITM]])
+                         XMLLogErro(N55XML01.XMLLogErro)
+                              RV ID XML de NF [Z55XML01] -> mnIDXMLNF [Z55XML01]
+                              RV Item no XML da NF [Z55XML02] -> mnItemXMLNF [Z55XML02]
+                              VA rpt_szMensagem_DL011 [DL011] -> szMensagem [DL011]
+                              RV User ID [USER] -> szUserId [USER]
+                              RV Program ID [PID] -> szProgramId [PID]
+                              RV Selection Values 01 [VL01] -> szSelectionValues001 [VL01]
+                              RV Work Station ID [JOBN] -> szWorkStationId [JOBN]
+                              RV Date Updated [UPMJ] -> jdDateUpdated [UPMJ]
+                              RV Time Last Updated [UPMT] -> mnTimeLastUpdated [UPMT]
+                    End If
+               End If
+          End If
+          //
+     End If
+     //
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: BSVW XML's para recebimento                                  [3] 
+Event: Initialize Section
+Event GUID: ae0cc3aa-cc71-415c-87df-3c9e97753462
+=============================================
+If PO szStatusCodeLast [LTTR] is equal to <Blank>
+Or PO szStatusCodeLast [LTTR] is equal to <NULL>
+Or PO szStatusCodeLast [LTTR] is equal to "0"
+     PO szStatusCodeLast [LTTR] = "200"
+End If
+If PO szStatusCodeNext [NXTR] is equal to <Blank>
+Or PO szStatusCodeNext [NXTR] is equal to <NULL>
+Or PO szStatusCodeNext [NXTR] is equal to "0"
+     PO szStatusCodeNext [NXTR] = "999"
+End If
+If PO mnMesesRetroativos [IA04] is equal to <Blank>
+Or PO mnMesesRetroativos [IA04] is equal to <Blank>
+Or PO mnMesesRetroativos [IA04] is equal to "0"
+     PO mnMesesRetroativos [IA04] = 24
+End If
+PO mnMesesRetroativos [IA04] = [PO mnMesesRetroativos [IA04]]*-1
+VA rpt_jdDataPedido_DRQJ [DRQJ] = add_months([SL DateToday], [PO mnMesesRetroativos [IA04]])
+//
+If PO cVinculoParcial [EV01] is equal to <Blank>
+Or PO cVinculoParcial [EV01] is equal to <NULL>
+Or PO cVinculoParcial [EV01] is equal to "0"
+     PO cVinculoParcial [EV01] = "N"
+Else
+     PO cVinculoParcial [EV01] = upper([PO cVinculoParcial [EV01]])
+End If
+//
+Set Selection Append Flag( <Yes>)
+Set User Selection(BC Status XML (F55XML03)(Z55XML04), <Less Than or Equal To>, "200", <And>)
+//
+GetAuditInfo(B9800100.GetAuditInfo)
+     RV User ID [USER] <> szUserName [USER]
+     RV Date Updated [UPMJ] <> jdDate [DTE]
+     RV Time Last Updated [UPMT] <> mnTime [TME0]
+     RV Work Station ID [JOBN] <> szWorkstation_UserId [JOBN]
+RV Program ID [PID] = "R55XML1B"
+RV Selection Values 01 [VL01] = SL VersionName
+RV TotErro [IA06] = 0
+RV TotVinculados [IA06] = 0
+
+=============================================
+Section: BSVW XML's para recebimento                                  [3] 
+Event: Do Section
+Event GUID: 9101bc5f-bda8-42fc-8816-72f57435eb70
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_cAcho_EV01 [EV01]
+----------------------------------------
+VA rpt_szIdentifier2ndItem_LITM [LITM] = BC Fiscal Classification (F55XML03.0) [BCLF]
+VA rpt_szCGCTaxIDShipFrom_BCGF [BCGF] = BC CGC Tax ID - Ship From (F55XML02.0) [BCGF]
+VA rpt_szCGCTaxIDShipTo_BCGT [BCGT] = BC CGC Tax ID - Ship To (F55XML02.0) [BCGT]
+//
+// Apago os erros anteriores do XML
+F55XML04.Delete  [Index 1: Z55XML01, Z55XML02, LNID]
+     BC ID XML de NF (F55XML03.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+     BC Item no XML da NF (F55XML03.0) [Z55XML02] = TK Item no XML da NF [Z55XML02]
+//
+// Verifico se existe de/para de UM para o fornecedor
+XMLUOMFornecedor(N55XML01.XMLUOMFornecedor)
+     BC CGC Tax ID - Ship From (F55XML02.0) [BCGF] -> szCNPJFornecedor [RMK]
+     BC Unit of Measure (F55XML03.0) [CMARTMES] -> szUOMFornecedor [RMK3]
+     RV U/M [UOM] <- szUOMRBS [RMK2]
+     VA evt_cAcho_EV01 [EV01] <- cAchou [EV01]
+If VA evt_cAcho_EV01 [EV01] is not equal to "S"
+     RV U/M [UOM] = BC Unit of Measure as Input (F55XML03.0) [UOM]
+End If
+GetUDC(X0005.GetUDC)
+     "00" -> szSystemCode [SY]
+     "UM" -> szRecordTypeCode [RT]
+     RV U/M [UOM] -> szUserDefinedCode [KY]
+     VA rpt_szDataItem_DTAI [DTAI] <> szErrorMessageId [DTAI]
+If VA rpt_szDataItem_DTAI [DTAI] is not equal to <Blank>
+And VA rpt_szDataItem_DTAI [DTAI] is not equal to <NULL>
+And VA rpt_szDataItem_DTAI [DTAI] is not equal to "0"
+     VA rpt_szMensagem_DL011 [DL011] = VA rpt_szDataItem_DTAI [DTAI]
+     VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], " - Não foi encontrada UM ")
+     VA rpt_szMensagem_DL011 [DL011] = concat([VA rpt_szMensagem_DL011 [DL011]], [RV U/M [UOM]])
+     XMLLogErro(N55XML01.XMLLogErro)
+          RV ID XML de NF [Z55XML01] -> mnIDXMLNF [Z55XML01]
+          RV Item no XML da NF [Z55XML02] -> mnItemXMLNF [Z55XML02]
+          VA rpt_szMensagem_DL011 [DL011] -> szMensagem [DL011]
+          RV User ID [USER] -> szUserId [USER]
+          RV Program ID [PID] -> szProgramId [PID]
+          RV Selection Values 01 [VL01] -> szSelectionValues001 [VL01]
+          RV Work Station ID [JOBN] -> szWorkStationId [JOBN]
+          RV Date Updated [UPMJ] -> jdDateUpdated [UPMJ]
+          RV Time Last Updated [UPMT] -> mnTimeLastUpdated [UPMT]
+End If
+//
+// Abato do saldo do XML os pedidos já vinculados
+RV ID XML de NF [Z55XML01] = BC ID XML de NF (F55XML03.0) [Z55XML01]
+RV Item no XML da NF [Z55XML02] = BC Item no XML da NF (F55XML03.0) [Z55XML02]
+RV Active Additive Quantity [ACQTY] = BC Units - Order/Transaction Quantity (F55XML03.0) [UORG]
+RV Unit Price [UPRC] = BC Amount - Price per Unit (F55XML03.0) [UPRC]
+RV Extended Price [AEXP] = BC Amount - Extended Price (F55XML03.0) [AEXP]
+XMLSaldoVinculado(N55XML01.XMLSaldoVinculado)
+     BC ID XML de NF (F55XML03.0) [Z55XML01] -> mnIDXMLNF [Z55XML01]
+     BC Item no XML da NF (F55XML03.0) [Z55XML02] -> mnItemXMLNF [Z55XML02]
+     VA rpt_UORG [UORG] <- mnQuantidade [ACQTY]
+     VA rpt_UPRC [UPRC] <- mnValorUnitario [UPRC]
+     VA rpt_AEXP [AEXP] <- mnValorTotal [AEXP]
+RV Saldo Qtd [ACQTY] = [RV Active Additive Quantity [ACQTY]]-[VA rpt_UORG [UORG]]
+RV Saldo [AEXP] = [RV Extended Price [AEXP]]-[VA rpt_AEXP [AEXP]]
+If RV Saldo Qtd [ACQTY] is not equal to "0"
+     RV Saldo Unit [UPRC] = [RV Saldo [AEXP]]/[RV Saldo Qtd [ACQTY]]
+Else
+     RV Saldo Unit [UPRC] = RV Unit Price [UPRC]
+End If
+//
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// Tentativa - busco pelo numero do pedido
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+VA rpt_szModo_AA02 [AA02] = "01"
+VA rpt_mnPedidoReferencia_DOCO [DOCO] = [BC Número da PO no XML (F55XML03.0) [Z55XML03]]
+Do Custom Section(RS BSVW XML Pedidos em Aberto                                  )
+//
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// Tentativa - busco pelos valores exatos
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+VA rpt_szModo_AA02 [AA02] = "03"
+Do Custom Section(RS BSVW XML Pedidos em Aberto                                  )
+//
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// Tentativa - busco pelos valores com tolerância
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+VA rpt_szModo_AA02 [AA02] = "02"
+Do Custom Section(RS BSVW XML Pedidos em Aberto                                  )
+//
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// Tentativa - busco pelo custo unitário com tolerância, com valor total do
+// pedido superior ao XML
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+VA rpt_szModo_AA02 [AA02] = "04"
+Do Custom Section(RS BSVW XML Pedidos em Aberto                                  )
+//
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// Tentativa - busco pelo custo unitário com tolerância
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+VA rpt_szModo_AA02 [AA02] = "05"
+Do Custom Section(RS BSVW XML Pedidos em Aberto                                  )
+//
+RV Q1 [ACQTY] = RV Active Additive Quantity [ACQTY]
+RV Q2 [ACQTY] = RV Saldo Qtd [ACQTY]
+RV U1 [UPRC] = RV Unit Price [UPRC]
+RV U2 [UPRC] = RV Saldo Unit [UPRC]
+RV V1 [AEXP] = RV Extended Price [AEXP]
+RV V2 [AEXP] = RV Saldo [AEXP]
+//
+// Verifica se XML foi totalmente vinculado
+VA rpt_cErroQtd_EV01 [EV01] = "N"
+VA rpt_cErroUni_EV01 [EV01] = "N"
+VA rpt_cErroVlr_EV01 [EV01] = "N"
+If PO cAtivaQtd [EV01] is equal to "S"
+     XMLTolerancia(N55XML01.XMLTolerancia)
+          PO mnPercentQtd [74UTOLP] -> mnPercentual [74UTOLP]
+          PO mnValorQtd [AEXP] -> mnValorMaximo [UPRC]
+          "0" -> mnValorReferencia [UPRC]
+          RV Saldo Qtd [ACQTY] -> mnValorUsado [UPRC]
+          VA rpt_cErroQtd_EV01 [EV01] <- cErro [EV01]
+Else
+     XMLTolerancia(N55XML01.XMLTolerancia)
+          "0" -> mnPercentual [74UTOLP]
+          "0" -> mnValorMaximo [UPRC]
+          "0" -> mnValorReferencia [UPRC]
+          RV Saldo Qtd [ACQTY] -> mnValorUsado [UPRC]
+          VA rpt_cErroQtd_EV01 [EV01] <- cErro [EV01]
+End If
+// Para o total do XML, é melhor considerar apenas a quantidade como
+// verificador de finalização.
+! If PO cAtivaUni [EV01] is equal to "S"
+     ! XMLTolerancia(N55XML01.XMLTolerancia)
+     !      PO mnPercentUni [74UTOLP] -> mnPercentual [74UTOLP]
+     !      PO mnValorUni [AEXP] -> mnValorMaximo [UPRC]
+     !      "0" -> mnValorReferencia [UPRC]
+     !      RV Saldo Unit [UPRC] -> mnValorUsado [UPRC]
+     !      VA rpt_cErroUni_EV01 [EV01] <- cErro [EV01]
+! Else
+     ! XMLTolerancia(N55XML01.XMLTolerancia)
+     !      "0" -> mnPercentual [74UTOLP]
+     !      "0" -> mnValorMaximo [UPRC]
+     !      "0" -> mnValorReferencia [UPRC]
+     !      RV Saldo Unit [UPRC] -> mnValorUsado [UPRC]
+     !      VA rpt_cErroUni_EV01 [EV01] <- cErro [EV01]
+! End If
+! If PO cAtivaVlr [EV01] is equal to "S"
+     ! XMLTolerancia(N55XML01.XMLTolerancia)
+     !      PO mnPercentVlr [74UTOLP] -> mnPercentual [74UTOLP]
+     !      PO mnValorVlr [AEXP] -> mnValorMaximo [UPRC]
+     !      "0" -> mnValorReferencia [UPRC]
+     !      RV Saldo [AEXP] -> mnValorUsado [UPRC]
+     !      VA rpt_cErroVlr_EV01 [EV01] <- cErro [EV01]
+! Else
+     ! XMLTolerancia(N55XML01.XMLTolerancia)
+     !      "0" -> mnPercentual [74UTOLP]
+     !      "0" -> mnValorMaximo [UPRC]
+     !      "0" -> mnValorReferencia [UPRC]
+     !      RV Saldo [AEXP] -> mnValorUsado [UPRC]
+     !      VA rpt_cErroVlr_EV01 [EV01] <- cErro [EV01]
+! End If
+If VA rpt_cErroQtd_EV01 [EV01] is equal to "S"
+Or VA rpt_cErroUni_EV01 [EV01] is equal to "S"
+Or VA rpt_cErroVlr_EV01 [EV01] is equal to "S"
+     VA rpt_szStatusXML_Z55XML04 [Z55XML04] = "200"
+     F55XML03.Update  [Index 1: Z55XML01, Z55XML02]
+          BC ID XML de NF (F55XML03.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+          BC Item no XML da NF (F55XML03.0) [Z55XML02] = TK Item no XML da NF [Z55XML02]
+          VA rpt_szStatusXML_Z55XML04 [Z55XML04] -> TK Status XML [Z55XML04]
+     VA rpt_szMensagem_DL011 [DL011] = "Não foi possível realizar o vinculo!"
+     XMLLogErro(N55XML01.XMLLogErro)
+          RV ID XML de NF [Z55XML01] -> mnIDXMLNF [Z55XML01]
+          RV Item no XML da NF [Z55XML02] -> mnItemXMLNF [Z55XML02]
+          VA rpt_szMensagem_DL011 [DL011] -> szMensagem [DL011]
+          RV User ID [USER] -> szUserId [USER]
+          RV Program ID [PID] -> szProgramId [PID]
+          RV Selection Values 01 [VL01] -> szSelectionValues001 [VL01]
+          RV Work Station ID [JOBN] -> szWorkStationId [JOBN]
+          RV Date Updated [UPMJ] -> jdDateUpdated [UPMJ]
+          RV Time Last Updated [UPMT] -> mnTimeLastUpdated [UPMT]
+     If PO cVinculoParcial [EV01] is equal to "N"
+          F55XML05.Delete  [Index 1: Z55XML01.Z55XML02]
+               BC ID XML de NF (F55XML03.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+               BC Item no XML da NF (F55XML03.0) [Z55XML02] = TK Item no XML da NF [Z55XML02]
+     End If
+     RV TotErro [IA06] = [RV TotErro [IA06]]+1
+Else
+     VA rpt_szStatusXML_Z55XML04 [Z55XML04] = "500"
+     F55XML03.Update  [Index 1: Z55XML01, Z55XML02]
+          BC ID XML de NF (F55XML03.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+          BC Item no XML da NF (F55XML03.0) [Z55XML02] = TK Item no XML da NF [Z55XML02]
+          VA rpt_szStatusXML_Z55XML04 [Z55XML04] -> TK Status XML [Z55XML04]
+     RV TotVinculados [IA06] = [RV TotVinculados [IA06]]+1
+End If
+RV Status XML [Z55XML04] = VA rpt_szStatusXML_Z55XML04 [Z55XML04]
+
+=============================================
+Section: BSVW XML's para recebimento                                  [3] 
+Event: End Section
+Event GUID: cb966648-ad6e-4458-89d7-935e1dff725d
+=============================================
+Do Custom Section(RS Totais)
+
+=============================================
+Section: BSVW XML's para recebimento                                  [3] 
+Event: After Last Object Printed
+Event GUID: b52b880f-1dd4-4a6e-bbd6-0b51522fa2ed
+=============================================
+Do Custom Section(RS BSVW XML Pedidos Vinculados                                 )
+
+
+
+

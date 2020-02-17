@@ -1,0 +1,42 @@
+﻿---------------------------------------------------------------------------------
+Table: F55XML05 XML PO
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   Z55XML01   ID XML de NF                             IDXMLNF                   Math Numeric    15(0)      X
+2   Z55XML02   Item no XML da NF                        ItemXMLNF                 Math Numeric    15(0)      X
+3   MCU        Business Unit                            CostCenter                String          12(0)      X
+4   KCOO       Order Company (Order Number)             CompanyKeyOrderNo         String          5(0)       X
+5   DOCO       Document (Order No, Invoice, etc.)       DocumentOrderInvoiceE     Math Numeric    8(0)       X
+6   DCTO       Order Type                               OrderType                 String          2(0)       X
+7   SFXO       Order Suffix                             OrderSuffix               String          3(0)       X
+8   LNID       Line Number                              LineNumber                Math Numeric    6(3)       X
+9   UOM        Unit of Measure as Input                 UnitOfMeasureAsInput      String          2(0)       
+10  UORG       Units - Order/Transaction Quantity       UnitsTransactionQty       Math Numeric    15(0)      
+11  UPRC       Amount - Price per Unit                  AmtPricePerUnit2          Math Numeric    15(4)      
+12  AEXP       Amount - Extended Price                  AmountExtendedPrice       Math Numeric    15(2)      
+13  USER       User ID                                  UserId                    String          10(0)      
+14  PID        Program ID                               ProgramId                 String          10(0)      
+15  VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+16  JOBN       Work Station ID                          WorkStationId             String          10(0)      
+17  UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+18  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+Z55XML01.Z55XML02                        1      PRIMARY UNIQUE
+                                         Z55XML01  
+                                         Z55XML02  
+                                         MCU       
+                                         KCOO      
+                                         DOCO      
+                                         DCTO      
+                                         SFXO      
+                                         LNID      
+
+KCOO,DOCO,DCTO,SFXO,LNID                 2     
+                                         KCOO      
+                                         DOCO      
+                                         DCTO      
+                                         SFXO      
+                                         LNID      
+

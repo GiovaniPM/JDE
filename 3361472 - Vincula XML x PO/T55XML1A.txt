@@ -1,0 +1,59 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: T55XML1A PO XML's vinculados
+Type: Processing Options
+---------------------------------------------------------------------------------
+PAGE: 0                                - Parâmetros                    
+                                 []
+    1. Status
+    VALUE: []
+  szStatusCodeLast               [LTTR]
+    	1.1. Último Status  	Default - 200
+    VALUE: []
+  szStatusCodeNext               [NXTR]
+    	1.2. Próximo Status  	Default - 999
+    VALUE: []
+  mnMesesRetroativos             [IA04]
+    2. Meses retroativos para pedido de compra  Default - 24 meses
+    VALUE: []
+PAGE: 1                                - Tolerância                    
+                                 []
+    1. Quantidade
+    VALUE: []
+  cAtivaQtd                      [EV01]
+    	1.1. Ativar tolerância (S/N)  	Default - N
+    VALUE: []
+  mnPercentQtd                   [74UTOLP]
+    	1.2. Percentual
+    VALUE: []
+  mnValorQtd                     [AEXP]
+    	1.3. Valor máximo
+    VALUE: []
+                                 []
+    2. Valor
+    VALUE: []
+  cAtivaVlr                      [EV01]
+    	2.1. Ativar tolerância (S/N)  	Default - N
+    VALUE: []
+  mnPercentVlr                   [74UTOLP]
+    	2.2. Percentual
+    VALUE: []
+  mnValorVlr                     [AEXP]
+    	2.3. Valor máximo
+    VALUE: []
+                                 []
+    3. Valor Unitário
+    VALUE: []
+  cAtivaUni                      [EV01]
+    	3.1. Ativar tolerância (S/N)  	Default - N
+    VALUE: []
+  mnPercentUni                   [74UTOLP]
+    	3.2. Percentual
+    VALUE: []
+  mnValorUni                     [AEXP]
+    	3.3 Valor máximo
+    VALUE: []
+PAGE: 2                                - Funcionalidades               
+  szStatusFiltro                 [AA03]
+    1. Status filtro inicial  	1 - Tudo  	2 - Incluidas  	3 - Erradas  	4 - Vinculadas  	5 - Aceitas  	6 - Recebidas  	7 - A Vincular  	8 - A Aceitar  	9 - A Receber  	Default - Tudo
+    VALUE: []
+

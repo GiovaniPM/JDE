@@ -1,0 +1,46 @@
+﻿---------------------------------------------------------------------------------
+Business View: V55UI2AA (BSVW F55UI29A - All columns)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F55UI20A - Workfile Documents To Approve - Header - View Grupo
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+JOBS       Job Number                               Math Numeric    8(0)       F55UI20A(0)  X
+DOC        Document (Voucher, Invoice, etc.)        Math Numeric    8(0)       F55UI20A(0)  X
+DCT        Document Type                            String          2(0)       F55UI20A(0)  X
+KCO        Document Company                         String          5(0)       F55UI20A(0)  X
+C75LNID    Line Number                              Math Numeric    15(3)      F55UI20A(0)  X
+GLC        G/L Offset                               String          4(0)       F55UI20A(0)  
+AN8        Address Number                           Math Numeric    8(0)       F55UI20A(0)  
+AN81       Address Number - 1st                     Math Numeric    8(0)       F55UI20A(0)  
+TRDJ       Date - Order/Transaction                 Date            6(0)       F55UI20A(0)  
+PST        Pay Status Code                          Char            1(0)       F55UI20A(0)  
+NXTR       Status Code - Next                       String          3(0)       F55UI20A(0)  
+AN8GCA1    Address Number1                          Math Numeric    8(0)       F55UI20A(0)  
+AN8GCA2    Address Number2                          Math Numeric    8(0)       F55UI20A(0)  
+OTOT       Amount - Order Gross                     Math Numeric    15(2)      F55UI20A(0)  
+Q150       Vertex Filler 150 Long                   String          150(0)     F55UI20A(0)  
+EV01       J.D. EnterpriseOne Event Point 01        Char            1(0)       F55UI20A(0)  
+URRF       User Reserved Reference                  String          15(0)      F55UI20A(0)  
+URCD       User Reserved Code                       String          2(0)       F55UI20A(0)  
+URDT       User Reserved Date                       Date            6(0)       F55UI20A(0)  
+URAB       User Reserved Number                     Math Numeric    8(0)       F55UI20A(0)  
+URAT       User Reserved Amount                     Math Numeric    15(2)      F55UI20A(0)  
+EV02       J.D. EnterpriseOne Event Point 02        Char            1(0)       F55UI20A(0)  
+EV03       J.D. EnterpriseOne Point 03              Char            1(0)       F55UI20A(0)  
+A301       Generic String 01                        String          3(0)       F55UI20A(0)  
+A302       Generic String 02                        String          3(0)       F55UI20A(0)  
+EV04       EnterpriseOne Point 04                   Char            1(0)       F55UI20A(0)  
+DATE01     Date 01                                  Date            6(0)       F55UI20A(0)  
+DATE02     Date 02                                  Date            6(0)       F55UI20A(0)  
+DATE03     Date 03                                  Date            6(0)       F55UI20A(0)  
+DATE04     Date 04                                  Date            6(0)       F55UI20A(0)  
+UKID       Unique Key ID (Internal)                 Math Numeric    15(0)      F55UI20A(0)  
+USER       User ID                                  String          10(0)      F55UI20A(0)  
+JOBN       Work Station ID                          String          10(0)      F55UI20A(0)  
+PID        Program ID                               String          10(0)      F55UI20A(0)  
+UPMJ       Date - Updated                           Date            6(0)       F55UI20A(0)  
+UPMT       Time - Last Updated                      Math Numeric    6(0)       F55UI20A(0)  
+
+

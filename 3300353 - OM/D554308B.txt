@@ -1,0 +1,8 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D554308B DS Resolve Expressao
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     szObjeto                            OBNM         Input    Yes  
+2     mnIndice                            TDAY         Input    Yes  
+3     cResultado                          EV01         Output   Yes  
+

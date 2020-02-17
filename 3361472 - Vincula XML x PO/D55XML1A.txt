@@ -1,0 +1,16 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D55XML1A DS XML Log
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     mnIDXMLNF                           Z55XML01     Both     Yes  
+2     mnItemXMLNF                         Z55XML02     Both     Yes  
+3     szNameObject                        OBNM         Both     Yes  
+4     szDataItem                          DTAI         Both     Yes  
+5     szKwText                            KW21         Both     Yes  
+6     szUserId                            USER         Both     Yes  
+7     szProgramId                         PID          Both     Yes  
+8     szSelectionValues001                VL01         Both     Yes  
+9     szWorkStationId                     JOBN         Both     Yes  
+10    jdDateUpdated                       UPMJ         Both     Yes  
+11    mnTimeLastUpdated                   UPMT         Both     Yes  
+

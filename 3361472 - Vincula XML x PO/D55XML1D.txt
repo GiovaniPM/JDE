@@ -1,0 +1,9 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D55XML1D DS XML UOM Fornecedor
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     szCNPJFornecedor                    RMK          Input    Yes  
+2     szUOMFornecedor                     RMK3         Input    Yes  
+3     szUOMRBS                            RMK2         Output   Yes  
+4     cAchou                              EV01         Output   Yes  
+

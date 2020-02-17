@@ -1,0 +1,1115 @@
+﻿=============================================
+EVENTS
+=============================================
+UBE: R554308A
+Event: Report Variables
+Event GUID: 65a4dc2d-0f11-428e-a671-d783504224b0
+=============================================
+rpt_mnV_PEDIDO_OTOT [OTOT]
+rpt_jdD_PEDIDO_TRDJ [TRDJ]
+rpt_szF_PEDIDO_MCU [MCU]
+rpt_szP_FORNECED_CTR [CTR]
+rpt_jdD_ENTREGA_PDDJ [PDDJ]
+rpt_szL_POR_ORBY [ORBY]
+rpt_szT_FRETE_FRTH [FRTH]
+rpt_szSupplementalDatabase_SDB [SDB]
+rpt_szTypeofData_TYDT [TYDT]
+rpt_szC_CUSTO_MCU [MCU]
+rpt_szC_PEDIDO_OBJ [OBJ]
+rpt_mnN_ALOCACAO_N001 [N001]
+rpt_szR_PEDIDO_ADD2 [ADD2]
+rpt_szS_PEDIDO_SUB [SUB]
+rpt_szT_LINHA_LNTY [LNTY]
+rpt_szT_PEDIDO_DCTO [DCTO]
+rpt_mnV_LINHA_AEXP [AEXP]
+rpt_mnN_ITEM_ITM [ITM]
+rpt_cO_ITEM_BORI [BORI]
+rpt_szRegra_DL011 [DL011]
+rpt_szCAMPO_RMK [RMK]
+rpt_szOPERACAO_KY [KY]
+rpt_szVALOR_RMK2 [RMK2]
+rpt_cSuprimentos [EV01]
+rpt_szChave_KCOO [KCOO]
+rpt_mnChave_DOCO [DOCO]
+rpt_szChave_DCTO [DCTO]
+rpt_szChave_SFXO [SFXO]
+rpt_szLote_EDBT [EDBT]
+rpt_mnLote_UKID [UKID]
+rpt_szLOG_USER [USER]
+rpt_szLOG_PID [PID]
+rpt_szLOG_JOBN [JOBN]
+rpt_jdLOG_UPMJ [UPMJ]
+rpt_mnLOG_UPMT [UPMT]
+rpt_mnNOVO_DOCO [DOCO]
+rpt_mnC_FORNECED_AN8 [AN8]
+rpt_mnR_ENTREGA_SHAN [SHAN]
+
+
+=============================================
+EVENTS
+=============================================
+Section: F5543ICO - up [15] 
+Event: Initialize Section
+Event GUID: 90d778e6-e9a3-4db1-a71e-2c99250af64b
+=============================================
+Set Selection Append Flag( <No>)
+Set User Selection(BC Order Company (Order Number) (F5543ICO)(KCOO),  <Equal To>, VA rpt_szChave_KCOO,  <And>)
+Set User Selection(BC Document (Order No, Invoice, etc.) (F5543ICO)(DOCO), <Equal To>, VA rpt_mnChave_DOCO, <And>)
+Set User Selection(BC Order Type (F5543ICO)(DCTO), <Equal To>, VA rpt_szChave_DCTO, <And>)
+Set User Selection(BC Order Suffix (F5543ICO)(SFXO), <Equal To>, VA rpt_szChave_SFXO, <And>)
+
+=============================================
+Section: F5543ICO - up [15] 
+Event: Do Section
+Event GUID: 2b1ce9c5-f810-4c99-bcbd-ffe424a070b3
+=============================================
+F5543ICO.Insert  [Index 1: kcoo,Doco,Dcto,Sfxo,Lnid]
+     BC Order Company (Order Number) (F5543ICO.0) [KCOO] -> TK Order Company (Order Number) [KCOO]
+     VA rpt_mnNOVO_DOCO [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+     PO szTipoPedido [DCTO] -> TK Order Type [DCTO]
+     BC Order Suffix (F5543ICO.0) [SFXO] -> TK Order Suffix [SFXO]
+     BC Line Number (F5543ICO.0) [LNID] -> TK Line Number [LNID]
+     BC Address Line 1 (F5543ICO.0) [ADD1] -> TK Address Line 1 [ADD1]
+     BC Address Line 2 (F5543ICO.0) [ADD2] -> TK Address Line 2 [ADD2]
+     BC Character Data (F5543ICO.0) [CHR] -> TK Character Data [CHR]
+     BC Address Number - Ship To (F5543ICO.0) [SHAN] -> TK Address Number - Ship To [SHAN]
+     BC Description (F5543ICO.0) [DS40] -> TK Description [DS40]
+     BC User Based Pricing Message Description (F5543ICO.0) [MDSC] -> TK User Based Pricing Message Description [MDSC]
+     BC Descrição  de Pedido (F5543ICO.0) [DSCPED] -> TK Descrição  de Pedido [DSCPED]
+     BC User Reserved Code (F5543ICO.0) [URCD] -> TK User Reserved Code [URCD]
+     BC User Reserved Date (F5543ICO.0) [URDT] -> TK User Reserved Date [URDT]
+     BC User Reserved Amount (F5543ICO.0) [URAT] -> TK User Reserved Amount [URAT]
+     BC User Reserved Number (F5543ICO.0) [URAB] -> TK User Reserved Number [URAB]
+     BC User Reserved Reference (F5543ICO.0) [URRF] -> TK User Reserved Reference [URRF]
+     BC Transaction Originator (F5543ICO.0) [TORG] -> TK Transaction Originator [TORG]
+     BC Address Number (F5543ICO.0) [AN8] -> TK Address Number [AN8]
+     BC Address Number - 1st (F5543ICO.0) [AN81] -> TK Address Number - 1st [AN81]
+     BC Name - Remark Explanation (F5543ICO.0) [EXR] -> TK Name - Remark Explanation [EXR]
+     BC Next Number Range 1 (F5543ICO.0) [N001] -> TK Next Number Range 1 [N001]
+     BC Amount - Foreign Unit Price (F5543ICO.0) [FRRC] -> TK Amount - Foreign Unit Price [FRRC]
+     BC Sample Application - Amount - Unit Cost (F5543ICO.0) [SAPRRC] -> TK Sample Application - Amount - Unit Cost [SAPRRC]
+     BC Type - Base Price Code Flag (F5543ICO.0) [BPRC] -> TK Type - Base Price Code Flag [BPRC]
+     BC Action Flag (F5543ICO.0) [ACFL] -> TK Action Flag [ACFL]
+     BC Currency Code - Originating Country (F5543ICO.0) [CCOC] -> TK Currency Code - Originating Country [CCOC]
+     BC Percentage - Withholding Tax (F5543ICO.0) [IRPR] -> TK Percentage - Withholding Tax [IRPR]
+     BC Amount - Customer Freight Charge Foreign (F5543ICO.0) [FRCF] -> TK Amount - Customer Freight Charge Foreign [FRCF]
+     BC Percentage of Shipping (F5543ICO.0) [PSHIP] -> TK Percentage of Shipping [PSHIP]
+     BC Amount - Unit Cost (F5543ICO.0) [PRRC] -> TK Amount - Unit Cost [PRRC]
+     BC Description (F5543ICO.0) [DSE2] -> TK Description [DSE2]
+     BC User ID (F5543ICO.0) [USER] -> TK User ID [USER]
+     BC Program ID (F5543ICO.0) [PID] -> TK Program ID [PID]
+     BC Work Station ID (F5543ICO.0) [JOBN] -> TK Work Station ID [JOBN]
+     BC Date - Updated (F5543ICO.0) [UPMJ] -> TK Date - Updated [UPMJ]
+     BC Time of Day (F5543ICO.0) [TDAY] -> TK Time of Day [TDAY]
+     BC J.D. EnterpriseOne Event Point 01 (F5543ICO.0) [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+     BC Electronic Address (F5543ICO.0) [EMAL] -> TK Electronic Address [EMAL]
+     BC J.D. EnterpriseOne Event Point 02 (F5543ICO.0) [EV02] -> TK J.D. EnterpriseOne Event Point 02 [EV02]
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: PC - cabeçalho [14] 
+Event: Initialize Section
+Event GUID: 9ff78627-8251-43b5-b410-31407a63a1dd
+=============================================
+Set Selection Append Flag( <No>)
+Set User Selection(BC Order Company (Order Number) (F4301)(KCOO),  <Equal To>, VA rpt_szChave_KCOO,  <And>)
+Set User Selection(BC Document (Order No, Invoice, etc.) (F4301)(DOCO), <Equal To>, VA rpt_mnChave_DOCO, <And>)
+Set User Selection(BC Order Type (F4301)(DCTO), <Equal To>, VA rpt_szChave_DCTO, <And>)
+Set User Selection(BC Order Suffix (F4301)(SFXO), <Equal To>, VA rpt_szChave_SFXO, <And>)
+
+=============================================
+Section: PC - cabeçalho [14] 
+Event: Do Section
+Event GUID: c42bafed-499a-428b-8f2a-82738a00d65d
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnOriginalPoSoNumber_OORN [OORN]
+evt_mnRelatedPoSoNumber_RORN [RORN]
+----------------------------------------
+VA evt_mnOriginalPoSoNumber_OORN [OORN] = [BC Document (Order No, Invoice, etc.) (F4301.0) [DOCO]]
+F4301Z1.Insert  [Index 1: EdiUserID, EdiBatchNo, a+]
+     PO szUsuarioTransacao [EDUS] -> TK EDI - User ID [EDUS]
+     VA rpt_szLote_EDBT [EDBT] -> TK EDI - Batch Number [EDBT]
+     VA rpt_szLote_EDBT [EDBT] -> TK EDI - Transaction Number [EDTN]
+     BC Order Company (Order Number) (F4301.0) [KCOO] -> TK Order Company (Order Number) [KCOO]
+     VA rpt_mnNOVO_DOCO [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+     PO szTipoPedido [DCTO] -> TK Order Type [DCTO]
+     BC Order Suffix (F4301.0) [SFXO] -> TK Order Suffix [SFXO]
+     BC Business Unit (F4301.0) [MCU] -> TK Business Unit [MCU]
+     BC Order Company (Order Number) (F4301.0) [KCOO] -> TK Document Company (Original Order) [OKCO]
+     VA evt_mnOriginalPoSoNumber_OORN [OORN] -> TK Original Order Number [OORN]
+     BC Order Type (F4301.0) [DCTO] -> TK Original Order Type [OCTO]
+     BC Address Number (F4301.0) [AN8] -> TK Address Number [AN8]
+     BC Address Number - Ship To (F4301.0) [SHAN] -> TK Address Number - Ship To [SHAN]
+     BC Date - Requested (F4301.0) [DRQJ] -> TK Date - Requested [DRQJ]
+     BC Date - Order/Transaction (F4301.0) [TRDJ] -> TK Date - Order/Transaction [TRDJ]
+     BC Date - Scheduled Pick (F4301.0) [PDDJ] -> TK Date - Scheduled Pick [PDDJ]
+     BC Date - Original Promised Delivery (F4301.0) [OPDJ] -> TK Date - Original Promised Delivery [OPDJ]
+     BC Date - Actual Ship Date (F4301.0) [ADDJ] -> TK Date - Actual Ship Date [ADDJ]
+     BC Date - Cancel (F4301.0) [CNDJ] -> TK Date - Cancel [CNDJ]
+     BC Date - Price Effective Date (F4301.0) [PEFJ] -> TK Date - Price Effective Date [PEFJ]
+     BC Date - Promised Shipment (F4301.0) [PPDJ] -> TK Date - Promised Shipment [PPDJ]
+     BC Date - Future Date 2 (F4301.0) [PSDJ] -> TK Date - Future Date 2 [PSDJ]
+     BC Reference (F4301.0) [VR01] -> TK Reference [VR01]
+     BC Reference 2 (F4301.0) [VR02] -> TK Reference 2 [VR02]
+     BC Delivery Instructions Line 1 (F4301.0) [DEL1] -> TK Delivery Instructions Line 1 [DEL1]
+     BC Delivery Instructions Line 2 (F4301.0) [DEL2] -> TK Delivery Instructions Line 2 [DEL2]
+     BC Name - Remark (F4301.0) [RMK] -> TK Name - Remark [RMK]
+     BC Description (F4301.0) [DESC] -> TK Description [DESC]
+     BC Print Message (F4301.0) [INMG] -> TK Print Message [INMG]
+     BC Price and Adjustment Schedule (F4301.0) [ASN] -> TK Price and Adjustment Schedule [ASN]
+     BC Pricing Group (F4301.0) [PRGP] -> TK Pricing Group [PRGP]
+     BC Payment Terms Code (F4301.0) [PTC] -> TK Payment Terms Code [PTC]
+     BC Tax Expl Code 1 (F4301.0) [EXR1] -> TK Tax Expl Code 1 [EXR1]
+     BC Tax Rate/Area (F4301.0) [TXA1] -> TK Tax Rate/Area [TXA1]
+     BC Certificate, Tax Exemption (F4301.0) [TXCT] -> TK Certificate, Tax Exemption [TXCT]
+     BC Hold Orders Code (F4301.0) [HOLD] -> TK Hold Orders Code [HOLD]
+     BC Associated Text (F4301.0) [ATXT] -> TK Associated Text [ATXT]
+     BC Invoice Copies (F4301.0) [INVC] -> TK Invoice Copies [INVC]
+     BC Nature of Transaction (F4301.0) [NTR] -> TK Nature of Transaction [NTR]
+     BC Container I.D. (F4301.0) [CNID] -> TK Container I.D. [CNID]
+     BC Freight Handling Code (F4301.0) [FRTH] -> TK Freight Handling Code [FRTH]
+     BC Zone Number (F4301.0) [ZON] -> TK Zone Number [ZON]
+     BC Buyer Number (F4301.0) [ANBY] -> TK Buyer Number [ANBY]
+     BC Carrier Number (F4301.0) [ANCR] -> TK Carrier Number [ANCR]
+     BC Mode of Transport (F4301.0) [MOT] -> TK Mode of Transport [MOT]
+     BC Conditions of Transport (F4301.0) [COT] -> TK Conditions of Transport [COT]
+     BC Reason Code (F4301.0) [RCD] -> TK Reason Code [RCD]
+     BC Freight Calculated (Y/N) (F4301.0) [FRTC] -> TK Freight Calculated (Y/N) [FRTC]
+     BC AIA Document Flag (F4301.0) [FUF1] -> TK AIA Document Flag [FUF1]
+     BC Post Quantities (F4301.0) [FUF2] -> TK Post Quantities [FUF2]
+     BC Amount - Order Gross (F4301.0) [OTOT] -> TK Amount - Order Gross [OTOT]
+     BC Percent - Retainage (F4301.0) [PCRT] -> TK Percent - Retainage [PCRT]
+     BC Retainage Rule (F4301.0) [RTNR] -> TK Retainage Rule [RTNR]
+     BC Unit of Measure - Weight Display (F4301.0) [WUMD] -> TK Unit of Measure - Weight Display [WUMD]
+     BC Unit of Measure - Volume Display (F4301.0) [VUMD] -> TK Unit of Measure - Volume Display [VUMD]
+     BC Purge Code (F4301.0) [PURG] -> TK Purge Code [PURG]
+     BC Logic Control (F4301.0) [LGCT] -> TK Logic Control [LGCT]
+     BC Processing Mode (F4301.0) [PROM] -> TK Processing Mode [PROM]
+     BC Type - Match Type (F4301.0) [MATY] -> TK Type - Match Type [MATY]
+     BC Status - Purchase Order (F4301.0) [OSTS] -> TK Status - Purchase Order [OSTS]
+     BC Code - Evaluated Receipt Settlement (F4301.0) [AVCH] -> TK Code - Evaluated Receipt Settlement [AVCH]
+     BC Pre-Payment (Y/N) (F4301.0) [PRPY] -> TK Pre-Payment (Y/N) [PRPY]
+     BC Send Method (F4301.0) [CRMD] -> TK Send Method [CRMD]
+     BC Purchasing Category Code 5 (F4301.0) [PRP5] -> TK Purchasing Category Code 5 [PRP5]
+     BC Change Order Number (F4301.0) [CORD] -> TK Change Order Number [CORD]
+     BC Currency Mode-Foreign or Domestic Entry (F4301.0) [CRRM] -> TK Currency Mode-Foreign or Domestic Entry [CRRM]
+     BC Currency Code - From (F4301.0) [CRCD] -> TK Currency Code - From [CRCD]
+     BC Currency Conversion Rate - Spot Rate (F4301.0) [CRR] -> TK Currency Conversion Rate - Spot Rate [CRR]
+     BC Language (F4301.0) [LNGP] -> TK Language [LNGP]
+     BC Amount - Foreign Open (F4301.0) [FAP] -> TK Amount - Foreign Open [FAP]
+     BC Ordered By (F4301.0) [ORBY] -> TK Ordered By [ORBY]
+     BC Order Taken By (F4301.0) [TKBY] -> TK Order Taken By [TKBY]
+     BC User Reserved Code (F4301.0) [URCD] -> TK User Reserved Code [URCD]
+     BC User Reserved Date (F4301.0) [URDT] -> TK User Reserved Date [URDT]
+     BC User Reserved Amount (F4301.0) [URAT] -> TK User Reserved Amount [URAT]
+     BC User Reserved Number (F4301.0) [URAB] -> TK User Reserved Number [URAB]
+     BC User Reserved Reference (F4301.0) [URRF] -> TK User Reserved Reference [URRF]
+     BC User ID (F4301.0) [USER] -> TK User ID [USER]
+     BC Program ID (F4301.0) [PID] -> TK Program ID [PID]
+     BC Work Station ID (F4301.0) [JOBN] -> TK Work Station ID [JOBN]
+     BC Date - Updated (F4301.0) [UPMJ] -> TK Date - Updated [UPMJ]
+     BC Time of Day (F4301.0) [TDAY] -> TK Time of Day [TDAY]
+     BC Requested Ship Time (F4301.0) [RSHT] -> TK Requested Ship Time [RSHT]
+     BC Requested Delivery Time (F4301.0) [DRQT] -> TK Requested Delivery Time [DRQT]
+     BC Document (Order #, Invoice, etc.) (F4301.0) [DOC1] -> TK Document (Order #, Invoice, etc.) [DOC1]
+     BC Document Type (F4301.0) [DCT4] -> TK Document Type [DCT4]
+     BC Currency Code - Base (F4301.0) [BCRC] -> TK Currency Code - Base [BCRC]
+//
+VA evt_mnRelatedPoSoNumber_RORN [RORN] = [VA rpt_mnNOVO_DOCO [DOCO]]
+F4301.Update  [Index 1: Doc. No, Doc Type, + 1]
+     BC Order Company (Order Number) (F4301.0) [KCOO] = TK Order Company (Order Number) [KCOO]
+     BC Document (Order No, Invoice, etc.) (F4301.0) [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO]
+     BC Order Type (F4301.0) [DCTO] = TK Order Type [DCTO]
+     BC Order Suffix (F4301.0) [SFXO] = TK Order Suffix [SFXO]
+     BC Order Company (Order Number) (F4301.0) [KCOO] -> TK Company - Key (Related Order) [RKCO]
+     VA evt_mnRelatedPoSoNumber_RORN [RORN] -> TK Related PO/SO/WO Number [RORN]
+     PO szTipoPedido [DCTO] -> TK Related PO/SO/WO Order Type [RCTO]
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: On Order Number [13] 
+Event: Do Section
+Event GUID: 0f756d29-5a2a-4ad8-9a20-c47671217e8e
+=============================================
+Do Custom Section(RS PC - cabeçalho)
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: PC - detalhe [11] 
+Event: Initialize Section
+Event GUID: 0c9e061b-abf9-4348-ab4c-e94287a354f9
+=============================================
+Set Selection Append Flag( <No>)
+Set User Selection(BC Order Company (Order Number) (F4311)(KCOO),  <Equal To>, VA rpt_szChave_KCOO,  <And>)
+Set User Selection(BC Document (Order No, Invoice, etc.) (F4311)(DOCO), <Equal To>, VA rpt_mnChave_DOCO, <And>)
+Set User Selection(BC Order Type (F4311)(DCTO), <Equal To>, VA rpt_szChave_DCTO, <And>)
+Set User Selection(BC Order Suffix (F4311)(SFXO), <Equal To>, VA rpt_szChave_SFXO, <And>)
+//
+GetNextUniqueKeyID(X00022.GetNextUniqueKeyID)
+     PO szUsuarioTransacao [EDUS] -> szObjectName [OBNM]
+     VA rpt_mnLote_UKID [UKID] <> mnUniqueKeyID [UKID]
+VA rpt_szLote_EDBT [EDBT] = [VA rpt_mnLote_UKID [UKID]]
+GetAuditInfo(B9800100.GetAuditInfo)
+     VA rpt_szLOG_USER [USER] <> szUserName [USER]
+     VA rpt_jdLOG_UPMJ [UPMJ] <> jdDate [DTE]
+     VA rpt_mnLOG_UPMT [UPMT] <> mnTime [TME0]
+     VA rpt_szLOG_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+VA rpt_szLOG_PID [PID] = "R554308A"
+
+=============================================
+Section: PC - detalhe [11] 
+Event: Do Section
+Event GUID: 7548b252-d9bc-42b4-bbe2-dddc777f2be4
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szOriginalPoSoNumber_OORN [OORN]
+evt_mnRelatedPoSoNumber_RORN [RORN]
+evt_szStatusCodeLast_LTTR [LTTR]
+evt_szStatusCodeNext_NXTR [NXTR]
+----------------------------------------
+! VA evt_szOriginalPoSoNumber_OORN [OORN] = [BC Document (Order No, Invoice, etc.) (F4311.0) [DOCO]]
+VA evt_szOriginalPoSoNumber_OORN [OORN] = lpad([BC Document (Order No, Invoice, etc.) (F4311.0) [DOCO]], "0", "8")
+F4311Z1.Insert  [Index 1: EdiUserID, EdiBatchNo., a+]
+     PO szUsuarioTransacao [EDUS] -> TK EDI - User ID [EDUS]
+     VA rpt_szLote_EDBT [EDBT] -> TK EDI - Batch Number [EDBT]
+     VA rpt_szLote_EDBT [EDBT] -> TK EDI - Transaction Number [EDTN]
+     BC Line Number (F4311.0) [LNID] -> TK EDI - Line Number [EDLN]
+     BC Order Company (Order Number) (F4311.0) [KCOO] -> TK Order Company (Order Number) [KCOO]
+     VA rpt_mnNOVO_DOCO [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+     PO szTipoPedido [DCTO] -> TK Order Type [DCTO]
+     BC Order Suffix (F4311.0) [SFXO] -> TK Order Suffix [SFXO]
+     BC Line Number (F4311.0) [LNID] -> TK Line Number [LNID]
+     BC Business Unit (F4311.0) [MCU] -> TK Business Unit [MCU]
+     BC Company (F4311.0) [CO] -> TK Company [CO]
+     BC Order Company (Order Number) (F4311.0) [KCOO] -> TK Document Company (Original Order) [OKCO]
+     VA evt_szOriginalPoSoNumber_OORN [OORN] -> TK Original Order Number [OORN]
+     BC Order Type (F4311.0) [DCTO] -> TK Original Order Type [OCTO]
+     BC Line Number (F4311.0) [LNID] -> TK Original Line Number [OGNO]
+     BC Address Number (F4311.0) [AN8] -> TK Address Number [AN8]
+     BC Address Number - Ship To (F4311.0) [SHAN] -> TK Address Number - Ship To [SHAN]
+     BC Date - Requested (F4311.0) [DRQJ] -> TK Date - Requested [DRQJ]
+     BC Date - Order/Transaction (F4311.0) [TRDJ] -> TK Date - Order/Transaction [TRDJ]
+     BC Date - Scheduled Pick (F4311.0) [PDDJ] -> TK Date - Scheduled Pick [PDDJ]
+     BC Date - Original Promised Delivery (F4311.0) [OPDJ] -> TK Date - Original Promised Delivery [OPDJ]
+     BC Date - Actual Ship Date (F4311.0) [ADDJ] -> TK Date - Actual Ship Date [ADDJ]
+     BC Date - Cancel (F4311.0) [CNDJ] -> TK Date - Cancel [CNDJ]
+     BC Date - Price Effective Date (F4311.0) [PEFJ] -> TK Date - Price Effective Date [PEFJ]
+     BC Date - Promised Shipment (F4311.0) [PPDJ] -> TK Date - Promised Shipment [PPDJ]
+     BC Date - Future Date 2 (F4311.0) [PSDJ] -> TK Date - Future Date 2 [PSDJ]
+     BC Date - Service/Tax (F4311.0) [DSVJ] -> TK Date - Service/Tax [DSVJ]
+     BC Date - For G/L (and Voucher) (F4311.0) [DGL] -> TK Date - For G/L (and Voucher) [DGL]
+     BC Period Number - General Ledger (F4311.0) [PN] -> TK Period Number - General Ledger [PN]
+     BC Reference (F4311.0) [VR01] -> TK Reference [VR01]
+     BC Reference 2 (F4311.0) [VR02] -> TK Reference 2 [VR02]
+     BC Item Number - Short (F4311.0) [ITM] -> TK Item Number - Short [ITM]
+     BC 2nd Item Number (F4311.0) [LITM] -> TK 2nd Item Number [LITM]
+     BC 3rd Item Number (F4311.0) [AITM] -> TK 3rd Item Number [AITM]
+     BC Location (F4311.0) [LOCN] -> TK Location [LOCN]
+     BC Lot/Serial Number (F4311.0) [LOTN] -> TK Lot/Serial Number [LOTN]
+     BC From Grade (F4311.0) [FRGD] -> TK From Grade [FRGD]
+     BC Thru Grade (F4311.0) [THGD] -> TK Thru Grade [THGD]
+     BC From Potency (F4311.0) [FRMP] -> TK From Potency [FRMP]
+     BC Thru Potency (F4311.0) [THRP] -> TK Thru Potency [THRP]
+     BC Description (F4311.0) [DSC1] -> TK Description [DSC1]
+     BC Description - Line 2 (F4311.0) [DSC2] -> TK Description - Line 2 [DSC2]
+     BC Line Type (F4311.0) [LNTY] -> TK Line Type [LNTY]
+     BC Item Number - Related (Kit) (F4311.0) [RLIT] -> TK Item Number - Related (Kit) [RLIT]
+     BC Reporting Code 1 - Sales (F4311.0) [PDS1] -> TK Reporting Code 1 - Sales [PDS1]
+     BC Reporting Code 2 - Sales (F4311.0) [PDS2] -> TK Reporting Code 2 - Sales [PDS2]
+     BC Reporting Code 3 - Sales (F4311.0) [PDS3] -> TK Reporting Code 3 - Sales [PDS3]
+     BC Reporting Code 4 - Sales (F4311.0) [PDS4] -> TK Reporting Code 4 - Sales [PDS4]
+     BC Reporting Code 5 - Sales (F4311.0) [PDS5] -> TK Reporting Code 5 - Sales [PDS5]
+     BC Reporting Code 1 - Purchasing (F4311.0) [PDP1] -> TK Reporting Code 1 - Purchasing [PDP1]
+     BC Reporting Code 2 - Purchasing (F4311.0) [PDP2] -> TK Reporting Code 2 - Purchasing [PDP2]
+     BC Reporting Code 3 - Purchasing (F4311.0) [PDP3] -> TK Reporting Code 3 - Purchasing [PDP3]
+     BC Reporting Code 4 - Purchasing (F4311.0) [PDP4] -> TK Reporting Code 4 - Purchasing [PDP4]
+     BC Reporting Code 5 - Purchasing (F4311.0) [PDP5] -> TK Reporting Code 5 - Purchasing [PDP5]
+     BC Unit of Measure as Input (F4311.0) [UOM] -> TK Unit of Measure as Input [UOM]
+     BC Units - Order/Transaction Quantity (F4311.0) [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+     BC Units - On Hold (F4311.0) [UCHG] -> TK Units - On Hold [UCHG]
+     BC Units - Open (F4311.0) [UOPN] -> TK Units - Open [UOPN]
+     BC Units - Received (F4311.0) [UREC] -> TK Units - Received [UREC]
+     BC Units - Cumulative Received (F4311.0) [CREC] -> TK Units - Cumulative Received [CREC]
+     BC Units - Relieved (F4311.0) [URLV] -> TK Units - Relieved [URLV]
+     BC Other Quantity (1/2) (F4311.0) [OTQY] -> TK Other Quantity (1/2) [OTQY]
+     BC Amount - Unit Cost (F4311.0) [PRRC] -> TK Amount - Unit Cost [PRRC]
+     BC Amount - Extended Price (F4311.0) [AEXP] -> TK Amount - Extended Price [AEXP]
+     BC Amount - On Hold (F4311.0) [ACHG] -> TK Amount - On Hold [ACHG]
+     BC Amount - Open (F4311.0) [AOPN] -> TK Amount - Open [AOPN]
+     BC Amount - Received (F4311.0) [AREC] -> TK Amount - Received [AREC]
+     BC Amount - Relieved (F4311.0) [ARLV] -> TK Amount - Relieved [ARLV]
+     BC Amount - Tax Commitment (F4311.0) [FTN1] -> TK Amount - Tax Commitment [FTN1]
+     BC Amount - Tax Relieved (F4311.0) [TRLV] -> TK Amount - Tax Relieved [TRLV]
+     BC Price Override Code (F4311.0) [PROV] -> TK Price Override Code [PROV]
+     BC Unit Cost - Purchasing (F4311.0) [AMC3] -> TK Unit Cost - Purchasing [AMC3]
+     BC Amount - Extended Cost (F4311.0) [ECST] -> TK Amount - Extended Cost [ECST]
+     BC Cost Override Code (F4311.0) [CSTO] -> TK Cost Override Code [CSTO]
+     BC Costing Method - Purchasing (F4311.0) [CSMP] -> TK Costing Method - Purchasing [CSMP]
+     BC Print Message (F4311.0) [INMG] -> TK Print Message [INMG]
+     BC Price and Adjustment Schedule (F4311.0) [ASN] -> TK Price and Adjustment Schedule [ASN]
+     BC Item Price Group (F4311.0) [PRGR] -> TK Item Price Group [PRGR]
+     BC Pricing Category Level (F4311.0) [CLVL] -> TK Pricing Category Level [CLVL]
+     BC Catalog (F4311.0) [CATN] -> TK Catalog [CATN]
+     BC Discount Factor (F4311.0) [DSPR] -> TK Discount Factor [DSPR]
+     BC Payment Terms Code (F4311.0) [PTC] -> TK Payment Terms Code [PTC]
+     BC Purchasing Taxable (Y/N) (F4311.0) [TX] -> TK Purchasing Taxable (Y/N) [TX]
+     BC Tax Expl Code 1 (F4311.0) [EXR1] -> TK Tax Expl Code 1 [EXR1]
+     BC Tax Rate/Area (F4311.0) [TXA1] -> TK Tax Rate/Area [TXA1]
+     BC Associated Text (F4311.0) [ATXT] -> TK Associated Text [ATXT]
+     BC Container I.D. (F4311.0) [CNID] -> TK Container I.D. [CNID]
+     BC Commodity Code (F4311.0) [CDCD] -> TK Commodity Code [CDCD]
+     BC Nature of Transaction (F4311.0) [NTR] -> TK Nature of Transaction [NTR]
+     BC Freight Handling Code (F4311.0) [FRTH] -> TK Freight Handling Code [FRTH]
+     BC Freight Calculated (Y/N) (F4311.0) [FRTC] -> TK Freight Calculated (Y/N) [FRTC]
+     BC Zone Number (F4311.0) [ZON] -> TK Zone Number [ZON]
+     BC Rate Code - Frieght/Misc (F4311.0) [FRAT] -> TK Rate Code - Frieght/Misc [FRAT]
+     BC Rate Type - Freight/Misc (F4311.0) [RATT] -> TK Rate Type - Freight/Misc [RATT]
+     BC Buyer Number (F4311.0) [ANBY] -> TK Buyer Number [ANBY]
+     BC Carrier Number (F4311.0) [ANCR] -> TK Carrier Number [ANCR]
+     BC Mode of Transport (F4311.0) [MOT] -> TK Mode of Transport [MOT]
+     BC Conditions of Transport (F4311.0) [COT] -> TK Conditions of Transport [COT]
+     BC Shipping Commodity Class (F4311.0) [SHCM] -> TK Shipping Commodity Class [SHCM]
+     BC Shipping Conditions Code (F4311.0) [SHCN] -> TK Shipping Conditions Code [SHCN]
+     BC Unit of Measure - Primary (F4311.0) [UOM1] -> TK Unit of Measure - Primary [UOM1]
+     BC Units - Primary Quantity Ordered (F4311.0) [PQOR] -> TK Units - Primary Quantity Ordered [PQOR]
+     BC Unit of Measure - Secondary (F4311.0) [UOM2] -> TK Unit of Measure - Secondary [UOM2]
+     BC Units - Secondary Quantity Ordered (F4311.0) [SQOR] -> TK Units - Secondary Quantity Ordered [SQOR]
+     BC Unit of Measure - Purchasing (F4311.0) [UOM3] -> TK Unit of Measure - Purchasing [UOM3]
+     BC Unit Weight (F4311.0) [ITWT] -> TK Unit Weight [ITWT]
+     BC Weight Unit of Measure (F4311.0) [WTUM] -> TK Weight Unit of Measure [WTUM]
+     BC Unit Volume (F4311.0) [ITVL] -> TK Unit Volume [ITVL]
+     BC Volume Unit of Measure (F4311.0) [VLUM] -> TK Volume Unit of Measure [VLUM]
+     BC G/L Offset (F4311.0) [GLC] -> TK G/L Offset [GLC]
+     BC Century (F4311.0) [CTRY] -> TK Century [CTRY]
+     BC Fiscal Year (F4311.0) [FY] -> TK Fiscal Year [FY]
+     BC Line Status (F4311.0) [STTS] -> TK Line Status [STTS]
+     BC Reason Code (F4311.0) [RCD] -> TK Reason Code [RCD]
+     BC AIA Document Flag (F4311.0) [FUF1] -> TK AIA Document Flag [FUF1]
+     BC Post Quantities (F4311.0) [FUF2] -> TK Post Quantities [FUF2]
+     BC Gross Weight (F4311.0) [GRWT] -> TK Gross Weight [GRWT]
+     BC Gross Weight Unit of Measure (F4311.0) [GWUM] -> TK Gross Weight Unit of Measure [GWUM]
+     BC Ledger Types (F4311.0) [LT] -> TK Ledger Types [LT]
+     BC Account Number - Input (Mode Unknown) (F4311.0) [ANI] -> TK Account Number - Input (Mode Unknown) [ANI]
+     BC Account ID (F4311.0) [AID] -> TK Account ID [AID]
+     BC Project Business Unit (F4311.0) [OMCU] -> TK Project Business Unit [OMCU]
+     BC Object Account (F4311.0) [OBJ] -> TK Object Account [OBJ]
+     BC Subsidiary (F4311.0) [SUB] -> TK Subsidiary [SUB]
+     BC Subledger Type (F4311.0) [SBLT] -> TK Subledger Type [SBLT]
+     BC Subledger - G/L (F4311.0) [SBL] -> TK Subledger - G/L [SBL]
+     BC Serial Number (F4311.0) [ASID] -> TK Serial Number [ASID]
+     BC Cost Component Number (F4311.0) [CCMP] -> TK Cost Component Number [CCMP]
+     BC Tag - Reference (F4311.0) [TAG] -> TK Tag - Reference [TAG]
+     BC Categories - Work Order 01 (F4311.0) [WR01] -> TK Categories - Work Order 01 [WR01]
+     BC Plan Number (F4311.0) [PL] -> TK Plan Number [PL]
+     BC Elevation (F4311.0) [ELEV] -> TK Elevation [ELEV]
+     BC Category Code - G/L1 (F4311.0) [R001] -> TK Category Code - G/L1 [R001]
+     BC Retainage Rule (F4311.0) [RTNR] -> TK Retainage Rule [RTNR]
+     BC Code - Location Tax Status (F4311.0) [LCOD] -> TK Code - Location Tax Status [LCOD]
+     BC Purge Code (F4311.0) [PURG] -> TK Purge Code [PURG]
+     BC Processing Mode (F4311.0) [PROM] -> TK Processing Mode [PROM]
+     BC Closed Item - As Of Processing (F4311.0) [FNLP] -> TK Closed Item - As Of Processing [FNLP]
+     BC Code - Evaluated Receipt Settlement (F4311.0) [AVCH] -> TK Code - Evaluated Receipt Settlement [AVCH]
+     BC Pre-Payment (Y/N) (F4311.0) [PRPY] -> TK Pre-Payment (Y/N) [PRPY]
+     BC Work Order Freeze Code (F4311.0) [UNCD] -> TK Work Order Freeze Code [UNCD]
+     BC Type - Match Type (F4311.0) [MATY] -> TK Type - Match Type [MATY]
+     BC Routing Process (Y/N) (F4311.0) [RTGC] -> TK Routing Process (Y/N) [RTGC]
+     BC Leadtime Recalculated (Y/N) (F4311.0) [RCPF] -> TK Leadtime Recalculated (Y/N) [RCPF]
+     BC Transfer/Direct Ship Flag (F4311.0) [PS01] -> TK Transfer/Direct Ship Flag [PS01]
+     BC Purchase Order Status 02 (F4311.0) [PS02] -> TK Purchase Order Status 02 [PS02]
+     BC Purchase Order Status 03 (F4311.0) [PS03] -> TK Purchase Order Status 03 [PS03]
+     BC Purchase Order Status 04 (F4311.0) [PS04] -> TK Purchase Order Status 04 [PS04]
+     BC Purchase Order Status 05 (F4311.0) [PS05] -> TK Purchase Order Status 05 [PS05]
+     BC Purchase Order Status 06 (F4311.0) [PS06] -> TK Purchase Order Status 06 [PS06]
+     BC Purchase Order Status 07 (F4311.0) [PS07] -> TK Purchase Order Status 07 [PS07]
+     BC Purchase Order Status 08 (F4311.0) [PS08] -> TK Purchase Order Status 08 [PS08]
+     BC Purchase Order Status 09 (F4311.0) [PS09] -> TK Purchase Order Status 09 [PS09]
+     BC Purchase Order Status 10 (F4311.0) [PS10] -> TK Purchase Order Status 10 [PS10]
+     BC Send Method (F4311.0) [CRMD] -> TK Send Method [CRMD]
+     BC Code - Approval Routing (F4311.0) [ARTG] -> TK Code - Approval Routing [ARTG]
+     BC Change Order Number (F4311.0) [CORD] -> TK Change Order Number [CORD]
+     BC Change Order Type (F4311.0) [CHDT] -> TK Change Order Type [CHDT]
+     BC Document (Change Order #) (F4311.0) [DOCC] -> TK Document (Change Order #) [DOCC]
+     BC Change Order Line Number (F4311.0) [CHLN] -> TK Change Order Line Number [CHLN]
+     BC Currency Code - From (F4311.0) [CRCD] -> TK Currency Code - From [CRCD]
+     BC Currency Conversion Rate - Spot Rate (F4311.0) [CRR] -> TK Currency Conversion Rate - Spot Rate [CRR]
+     BC Amount - Foreign Unit Price (F4311.0) [FRRC] -> TK Amount - Foreign Unit Price [FRRC]
+     BC Amount - Foreign Extended Price (F4311.0) [FEA] -> TK Amount - Foreign Extended Price [FEA]
+     BC Amount - Foreign Unit Cost (F4311.0) [FUC] -> TK Amount - Foreign Unit Cost [FUC]
+     BC Amount - Foreign Extended Cost (F4311.0) [FEC] -> TK Amount - Foreign Extended Cost [FEC]
+     BC Amount - Foreign Changed Amount (F4311.0) [FCHG] -> TK Amount - Foreign Changed Amount [FCHG]
+     BC Amount - Foreign Open (F4311.0) [FAP] -> TK Amount - Foreign Open [FAP]
+     BC Amount - Received Foreign (F4311.0) [FREC] -> TK Amount - Received Foreign [FREC]
+     BC User Reserved Code (F4311.0) [URCD] -> TK User Reserved Code [URCD]
+     BC User Reserved Date (F4311.0) [URDT] -> TK User Reserved Date [URDT]
+     BC User Reserved Amount (F4311.0) [URAT] -> TK User Reserved Amount [URAT]
+     BC User Reserved Number (F4311.0) [URAB] -> TK User Reserved Number [URAB]
+     BC User Reserved Reference (F4311.0) [URRF] -> TK User Reserved Reference [URRF]
+     BC Transaction Originator (F4311.0) [TORG] -> TK Transaction Originator [TORG]
+     VA rpt_szLOG_USER [USER] -> TK User ID [USER]
+     VA rpt_szLOG_PID [PID] -> TK Program ID [PID]
+     VA rpt_szLOG_JOBN [JOBN] -> TK Work Station ID [JOBN]
+     VA rpt_jdLOG_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+     VA rpt_mnLOG_UPMT [UPMT] -> TK Time of Day [TDAY]
+     BC Outside Reference 2 (F4311.0) [VR05] -> TK Outside Reference 2 [VR05]
+     BC Outside Reference 1 (F4311.0) [VR04] -> TK Outside Reference 1 [VR04]
+     BC Reference (F4311.0) [VR03] -> TK Reference [VR03]
+     BC Shipment Number (F4311.0) [SHPN] -> TK Shipment Number [SHPN]
+     BC Requested Ship Time (F4311.0) [RSHT] -> TK Requested Ship Time [RSHT]
+     BC Project Number (F4311.0) [PRJM] -> TK Project Number [PRJM]
+     BC Document Pay Item - Original (F4311.0) [OSFX] -> TK Document Pay Item - Original [OSFX]
+     BC Item Revision Level (F4311.0) [MERL] -> TK Item Revision Level [MERL]
+     BC Matrix Control Line Number (F4311.0) [MCLN] -> TK Matrix Control Line Number [MCLN]
+     BC Multiple Accounts (F4311.0) [MACT] -> TK Multiple Accounts [MACT]
+     BC Load Number (F4311.0) [LDNM] -> TK Load Number [LDNM]
+     BC Kit Master Line Number (F4311.0) [KTLN] -> TK Kit Master Line Number [KTLN]
+     BC Amount - Foreign Tax Relieved (F4311.0) [FTRL] -> TK Amount - Foreign Tax Relieved [FTRL]
+     BC Dual Unit  Of Measure Item (F4311.0) [DUAL] -> TK Dual Unit  Of Measure Item [DUAL]
+     BC Requested Delivery Time (F4311.0) [DRQT] -> TK Requested Delivery Time [DRQT]
+     BC Lot Effectivity Date (F4311.0) [DLEJ] -> TK Lot Effectivity Date [DLEJ]
+     BC Amount - Foreign Tax (F4311.0) [CTAM] -> TK Amount - Foreign Tax [CTAM]
+     BC Component Line Number (F4311.0) [CPNT] -> TK Component Line Number [CPNT]
+     BC Change Order Time of Day (F4311.0) [CHT] -> TK Change Order Time of Day [CHT]
+     BC Time - Scheduled Required (HH/MM/SS) (F4311.0) [CHRT] -> TK Time - Scheduled Required (HH/MM/SS) [CHRT]
+     BC Shift Code - Scheduled Required (F4311.0) [CHRS] -> TK Shift Code - Scheduled Required [CHRS]
+     BC Change Order Date - Updated (F4311.0) [CHMJ] -> TK Change Order Date - Updated [CHMJ]
+     BC Currency Code - Base (F4311.0) [BCRC] -> TK Currency Code - Base [BCRC]
+     BC Promotion ID (F4311.0) [PMTN] -> TK Promotion ID [PMTN]
+//
+If PO szStatusCodeLast [LTTR] is equal to <Blank>
+Or PO szStatusCodeLast [LTTR] is equal to <NULL>
+Or PO szStatusCodeLast [LTTR] is equal to "0"
+     VA evt_szStatusCodeLast_LTTR [LTTR] = "120"
+End If
+VerifyActivityRuleStatusCode(B4000260.VerifyActivityRuleStatusCode)
+     BC Order Type (F4311.0) [DCTO] -> szOrderType [DCTO]
+     BC Line Type (F4311.0) [LNTY] -> szLineType [LNTY]
+     VA evt_szStatusCodeLast_LTTR [LTTR] -> szLineStatusCode [TRTY]
+     VA evt_szStatusCodeNext_NXTR [NXTR] <> szNextStatus [NXTR]
+//
+VA evt_mnRelatedPoSoNumber_RORN [RORN] = lpad([VA rpt_mnNOVO_DOCO [DOCO]], "0", "8")
+F4311.Update  [Index 1: Doc No, Order Type, + 1]
+     BC Order Company (Order Number) (F4311.0) [KCOO] = TK Order Company (Order Number) [KCOO]
+     BC Document (Order No, Invoice, etc.) (F4311.0) [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO]
+     BC Order Type (F4311.0) [DCTO] = TK Order Type [DCTO]
+     BC Order Suffix (F4311.0) [SFXO] = TK Order Suffix [SFXO]
+     BC Line Number (F4311.0) [LNID] = TK Line Number [LNID]
+     BC Order Company (Order Number) (F4311.0) [KCOO] -> TK Company - Key (Related Order) [RKCO]
+     VA evt_mnRelatedPoSoNumber_RORN [RORN] -> TK Related PO/SO/WO Number [RORN]
+     PO szTipoPedido [DCTO] -> TK Related PO/SO/WO Order Type [RCTO]
+     BC Line Number (F4311.0) [LNID] -> TK Related PO/SO Line Number [RLLN]
+     VA evt_szStatusCodeNext_NXTR [NXTR] -> TK Status Code - Next [NXTR]
+     VA evt_szStatusCodeLast_LTTR [LTTR] -> TK Status Code - Last [LTTR]
+
+=============================================
+Section: PC - detalhe [11] 
+Event: End Section
+Event GUID: a83b2a22-da2c-401c-a695-3b73d5b211ce
+=============================================
+Do Custom Section(RS F4330 - up)
+Do Custom Section(RS F5543ICO - up)
+Do Custom Section(RS F55UI020 - up)
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: RQ - update [10] 
+Event: Do Section
+Event GUID: 1acbb034-3a8a-4284-a6bc-9a6c7c411423
+=============================================
+F4301.Update  [Index 1: Doc. No, Doc Type, + 1]
+     VA rpt_szChave_KCOO [KCOO] = TK Order Company (Order Number) [KCOO]
+     VA rpt_mnChave_DOCO [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO]
+     VA rpt_szChave_DCTO [DCTO] = TK Order Type [DCTO]
+     VA rpt_szChave_SFXO [SFXO] = TK Order Suffix [SFXO]
+     PO mnUsuarioSuprimentos [AN8] -> TK Address Number [AN8]
+F4311.Update  [Index 1: Doc No, Order Type, + 1]
+     VA rpt_szChave_KCOO [KCOO] = TK Order Company (Order Number) [KCOO]
+     VA rpt_mnChave_DOCO [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO]
+     VA rpt_szChave_DCTO [DCTO] = TK Order Type [DCTO]
+     VA rpt_szChave_SFXO [SFXO] = TK Order Suffix [SFXO]
+     PO mnUsuarioSuprimentos [AN8] -> TK Address Number [AN8]
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Regra [8] 
+Event: Do Section
+Event GUID: 4c2112f4-423f-4cb2-8c00-a6377bf21fd2
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szRegra_APTA [APTA]
+----------------------------------------
+VA evt_szRegra_APTA [APTA] = <NULL>
+F00092.Select  [Index 2: SuppDB]
+     VA rpt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+     VA rpt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+     SL DateToday >= TK Date - Effective [EFT]
+     SL DateToday <= TK Date - Ending Effective [EFTE]
+F00092.FetchNext  [Index 2: SuppDB]
+     VA rpt_szOPERACAO_KY [KY] <- TK User Defined Code [KY]
+     VA rpt_szCAMPO_RMK [RMK] <- TK Name - Remark [RMK]
+     VA rpt_szVALOR_RMK2 [RMK2] <- TK Name - Remark [RMK2]
+While SV File_IO_Status is equal to CO SUCCESS
+     VA evt_szRegra_APTA [APTA] = concat([VA evt_szRegra_APTA [APTA]], concat(<Blank>, rtrim([VA rpt_szCAMPO_RMK [RMK]], <Blank>)))
+     VA evt_szRegra_APTA [APTA] = concat([VA evt_szRegra_APTA [APTA]], concat(<Blank>, rtrim([VA rpt_szOPERACAO_KY [KY]], <Blank>)))
+     VA evt_szRegra_APTA [APTA] = concat([VA evt_szRegra_APTA [APTA]], concat(<Blank>, rtrim([VA rpt_szVALOR_RMK2 [RMK2]], <Blank>)))
+     F00092.FetchNext  [Index 2: SuppDB]
+          VA rpt_szOPERACAO_KY [KY] <- TK User Defined Code [KY]
+          VA rpt_szCAMPO_RMK [RMK] <- TK Name - Remark [RMK]
+          VA rpt_szVALOR_RMK2 [RMK2] <- TK Name - Remark [RMK2]
+End While
+RV Linha01 [D240] = substr([VA evt_szRegra_APTA [APTA]], "0", "239")
+RV Linha02 [D240] = substr([VA evt_szRegra_APTA [APTA]], "240", "240")
+RV Linha03 [D240] = substr([VA evt_szRegra_APTA [APTA]], "480", "240")
+RV Linha04 [D240] = substr([VA evt_szRegra_APTA [APTA]], "720", "240")
+RV Linha05 [D240] = substr([VA evt_szRegra_APTA [APTA]], "960", "240")
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Page Header [6] 
+Event: Do Section
+Event GUID: 974589f4-9ed5-42e7-a1c6-d3f7a773aeeb
+=============================================
+RV Variable 000015 = PO jdDataCorte [UPMJ]
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: On Order Number [4] 
+Event: Initialize Section
+Event GUID: 562ccc05-daf3-4b5d-8c4c-1eb92e24f772
+=============================================
+VA rpt_cSuprimentos [EV01] = "N"
+RV Regra [DL011] = <NULL>
+
+=============================================
+Section: On Order Number [4] 
+Event: Do Section
+Event GUID: 82fe1471-8824-4b78-913c-96a90d6f7d34
+=============================================
+VA rpt_cSuprimentos [EV01] = "N"
+F4301.Select  [Index 1: Doc. No, Doc Type, + 1]
+     BC Order Company (Order Number) (F4311.0) [KCOO] = TK Order Company (Order Number) [KCOO]
+     BC Document (Order No, Invoice, etc.) (F4311.0) [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO]
+     BC Order Type (F4311.0) [DCTO] = TK Order Type [DCTO]
+F4301.FetchNext  [Index 1: Doc. No, Doc Type, + 1]
+     VA rpt_szF_PEDIDO_MCU [MCU] <- TK Business Unit [MCU]
+     VA rpt_mnC_FORNECED_AN8 [AN8] <- TK Address Number [AN8]
+     VA rpt_mnR_ENTREGA_SHAN [SHAN] <- TK Address Number - Ship To [SHAN]
+     VA rpt_jdD_PEDIDO_TRDJ [TRDJ] <- TK Date - Order/Transaction [TRDJ]
+     VA rpt_jdD_ENTREGA_PDDJ [PDDJ] <- TK Date - Scheduled Pick [PDDJ]
+     VA rpt_szT_FRETE_FRTH [FRTH] <- TK Freight Handling Code [FRTH]
+     VA rpt_mnV_PEDIDO_OTOT [OTOT] <- TK Amount - Order Gross [OTOT]
+     VA rpt_szL_POR_ORBY [ORBY] <- TK Ordered By [ORBY]
+//
+F0116.Select  [Index 1: Address #, Date Eff]
+     VA rpt_mnC_FORNECED_AN8 [AN8] = TK Address Number [AN8]
+F0116.FetchNext  [Index 1: Address #, Date Eff]
+     VA rpt_szP_FORNECED_CTR [CTR] <- TK Country [CTR]
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: On Order Number [9] 
+Event: Do Section
+Event GUID: 10589fab-8f8c-43eb-9f63-6a5f972d4d75
+=============================================
+If VA rpt_cSuprimentos [EV01] is equal to "S"
+     RV Mensagem = "Enviar suprimentos - "
+     RV Mensagem = concat([RV Mensagem], [PO mnUsuarioSuprimentos [AN8]])
+     Do Custom Section(RS RQ - update)
+Else
+     X0010GetNextNumber(X0010.X0010GetNextNumber)
+          "43" -> szSystemCode [SY]
+          "1" -> mnNextNumberingIndexNo [NNIX]
+          VA rpt_szChave_KCOO [KCOO] -> szCompanyKey [KCO]
+          PO szTipoPedido [DCTO] -> szDocumentType [DCT]
+          VA rpt_mnNOVO_DOCO [DOCO] <> mnNextNumber001 [N001]
+     RV Mensagem = "Gerar PC - "
+     RV Mensagem = concat([RV Mensagem], [VA rpt_mnNOVO_DOCO [DOCO]])
+     RV Mensagem = concat([RV Mensagem], <Blank>)
+     RV Mensagem = concat([RV Mensagem], [PO szTipoPedido [DCTO]])
+     Do Custom Section(RS PC - detalhe)
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Drive [2] 
+Event: Initialize Section
+Event GUID: f5736ab5-9b30-43f4-8260-25a33fc74463
+=============================================
+If PO szTipoRequisicao [DCTO] is equal to <Blank>
+Or PO szTipoRequisicao [DCTO] is equal to <NULL>
+Or PO szTipoRequisicao [DCTO] is equal to "0"
+     PO szTipoRequisicao [DCTO] = "OM"
+End If
+If PO jdDataCorte [UPMJ] is equal to Null Date
+     PO jdDataCorte [UPMJ] = add_days(date_today(), "-5")
+End If
+If PO szStatusRequisicao [LTTR] is equal to <Blank>
+Or PO szStatusRequisicao [LTTR] is equal to <NULL>
+Or PO szStatusRequisicao [LTTR] is equal to "0"
+     PO szStatusRequisicao [LTTR] = "120"
+End If
+If PO szTipoPedido [DCTO] is equal to <Blank>
+Or PO szTipoPedido [DCTO] is equal to <NULL>
+Or PO szTipoPedido [DCTO] is equal to "0"
+     PO szTipoPedido [DCTO] = "O3"
+End If
+If PO szSupplementalDatabaseCode_SDB [SDB] is equal to <Blank>
+Or PO szSupplementalDatabaseCode_SDB [SDB] is equal to <NULL>
+Or PO szSupplementalDatabaseCode_SDB [SDB] is equal to "0"
+     VA rpt_szSupplementalDatabase_SDB [SDB] = "REQ"
+Else
+     VA rpt_szSupplementalDatabase_SDB [SDB] = PO szSupplementalDatabaseCode_SDB [SDB]
+End If
+If PO szTypeofData_TYDT [TYDT] is equal to <Blank>
+Or PO szTypeofData_TYDT [TYDT] is equal to <NULL>
+Or PO szTypeofData_TYDT [TYDT] is equal to "0"
+     VA rpt_szTypeofData_TYDT [TYDT] = "OM"
+Else
+     VA rpt_szTypeofData_TYDT [TYDT] = PO szTypeofData_TYDT [TYDT]
+End If
+//
+OrganizaRegra(N554308.OrganizaRegra)
+     VA rpt_szSupplementalDatabase_SDB [SDB] -> szSupplementalDatabaseCode [SDB]
+     VA rpt_szTypeofData_TYDT [TYDT] -> szTypeofData [TYDT]
+     SL DateToday -> jdData [UPMJ]
+//
+Set Selection Append Flag( <Yes>)
+Set User Selection(BC Order Type (F4311)(DCTO), <Equal To>, PO szTipoRequisicao, <And>)
+Set User Selection(BC Date - Order/Transaction (F4311)(TRDJ), <Greater Than or Equal To>, PO jdDataCorte, <And>)
+Set User Selection(BC Status Code - Next (F4311)(NXTR), <Equal To>, PO szStatusRequisicao, <And>)
+Set User Selection(BC Address Number (F4311)(AN8), <Not Equal To>, PO mnUsuarioSuprimentos, <And>)
+If RI szCompanyKeyOrderNo [KCOO] is not equal to <Blank>
+And RI szCompanyKeyOrderNo [KCOO] is not equal to <NULL>
+And RI szCompanyKeyOrderNo [KCOO] is not equal to "0"
+     Set User Selection(BC Order Company (Order Number) (F4311)(KCOO),  <Equal To>, RI mnDocumentOrderInvoiceE, <And>)
+End If
+If RI mnDocumentOrderInvoiceE [DOCO] is not equal to <Blank>
+And RI mnDocumentOrderInvoiceE [DOCO] is not equal to <NULL>
+And RI mnDocumentOrderInvoiceE [DOCO] is not equal to "0"
+     Set User Selection(BC Document (Order No, Invoice, etc.) (F4311)(DOCO),  <Equal To>, RI mnDocumentOrderInvoiceE, <And>)
+End If
+If RI szOrderType [DCTO] is not equal to <Blank>
+And RI szOrderType [DCTO] is not equal to <NULL>
+And RI szOrderType [DCTO] is not equal to "0"
+     Set User Selection(BC Order Type (F4311)(DCTO), <Equal To>, RI szOrderType, <And>)
+End If
+If RI szOrderSuffix [SFXO] is not equal to <Blank>
+And RI szOrderSuffix [SFXO] is not equal to <NULL>
+And RI szOrderSuffix [SFXO] is not equal to "0"
+     Set User Selection(BC Order Suffix (F4311)(SFXO), <Equal To>, RI szOrderSuffix, <And>)
+End If
+
+=============================================
+Section: Drive [2] 
+Event: Do Section
+Event GUID: 44281e7b-ef2d-43b6-842d-114953fa6ffb
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szTipoDado_SPHD [SPHD]
+evt_cRetorno_EV01 [EV01]
+evt_szCaracter_DL01 [DL01]
+----------------------------------------
+VA rpt_szRegra_DL011 [DL011] = <NULL>
+VA rpt_szChave_KCOO [KCOO] = BC Order Company (Order Number) (F4311.0) [KCOO]
+VA rpt_mnChave_DOCO [DOCO] = BC Document (Order No, Invoice, etc.) (F4311.0) [DOCO]
+VA rpt_szChave_DCTO [DCTO] = BC Order Type (F4311.0) [DCTO]
+VA rpt_szChave_SFXO [SFXO] = BC Order Suffix (F4311.0) [SFXO]
+//
+If PO mnUsuarioSuprimentos [AN8] is equal to <Blank>
+Or PO mnUsuarioSuprimentos [AN8] is equal to <NULL>
+Or PO mnUsuarioSuprimentos [AN8] is equal to "0"
+     RV Mensagem de erro = "É necessário informar o usuário de suprimentos!"
+     Do Custom Section(RS Erro)
+     Stop Batch Processing
+End If
+If PO szVersaoR4311Z1I [VL01] is equal to <Blank>
+Or PO szVersaoR4311Z1I [VL01] is equal to <NULL>
+Or PO szVersaoR4311Z1I [VL01] is equal to "0"
+     RV Mensagem de erro = "É necessário informar a versão R554311Z1I!"
+     Do Custom Section(RS Erro)
+     Stop Batch Processing
+End If
+If PO szUsuarioTransacao [EDUS] is equal to <Blank>
+Or PO szUsuarioTransacao [EDUS] is equal to <NULL>
+Or PO szUsuarioTransacao [EDUS] is equal to "0"
+     RV Mensagem de erro = "É necessário informar o nome da transacao!"
+     Do Custom Section(RS Erro)
+     Stop Batch Processing
+End If
+// Busco valores
+VA rpt_szC_CUSTO_MCU [MCU] = BC Business Unit (F4311.0) [MCU]
+VA rpt_szC_PEDIDO_OBJ [OBJ] = BC Object Account (F4311.0) [OBJ]
+VA rpt_szS_PEDIDO_SUB [SUB] = BC Subsidiary (F4311.0) [SUB]
+VA rpt_szT_LINHA_LNTY [LNTY] = BC Line Type (F4311.0) [LNTY]
+VA rpt_szT_PEDIDO_DCTO [DCTO] = BC Order Type (F4311.0) [DCTO]
+VA rpt_mnV_LINHA_AEXP [AEXP] = BC Amount - Extended Price (F4311.0) [AEXP]
+// Numero curto do item
+F4101.Select  [Index 2: 2nd Item Number]
+     BC 2nd Item Number (F4311.0) [LITM] = TK 2nd Item Number [LITM]
+F4101.FetchNext  [Index 2: 2nd Item Number]
+     VA rpt_mnN_ITEM_ITM [ITM] <- TK Item Number - Short [ITM]
+// Busco O_ITEM
+F76411.Select  [Index 1: IdentifierShortItem]
+     VA rpt_mnN_ITEM_ITM [ITM] = TK Item Number - Short [ITM]
+F76411.FetchNext  [Index 1: IdentifierShortItem]
+     VA rpt_cO_ITEM_BORI [BORI] <- TK Item Origin [BORI]
+// Busco N_ALOCACAO e R_PEDIDO
+F5543ICO.Select  [Index 1: kcoo,Doco,Dcto,Sfxo,Lnid]
+     BC Order Company (Order Number) (F4311.0) [KCOO] = TK Order Company (Order Number) [KCOO]
+     BC Document (Order No, Invoice, etc.) (F4311.0) [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO]
+     BC Order Type (F4311.0) [DCTO] = TK Order Type [DCTO]
+     BC Order Suffix (F4311.0) [SFXO] = TK Order Suffix [SFXO]
+     BC Line Number (F4311.0) [LNID] = TK Line Number [LNID]
+F5543ICO.FetchNext  [Index 1: kcoo,Doco,Dcto,Sfxo,Lnid]
+     VA rpt_szR_PEDIDO_ADD2 [ADD2] <- TK Address Line 2 [ADD2]
+     VA rpt_mnN_ALOCACAO_N001 [N001] <- TK Next Number Range 1 [N001]
+//
+F00092.Select  [Index 2: SuppDB]
+     VA rpt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+     VA rpt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+     SL DateToday >= TK Date - Effective [EFT]
+     SL DateToday <= TK Date - Ending Effective [EFTE]
+F00092.FetchNext  [Index 2: SuppDB]
+     VA rpt_szOPERACAO_KY [KY] <- TK User Defined Code [KY]
+     VA rpt_szCAMPO_RMK [RMK] <- TK Name - Remark [RMK]
+     VA rpt_szVALOR_RMK2 [RMK2] <- TK Name - Remark [RMK2]
+While SV File_IO_Status is equal to CO SUCCESS
+     VA evt_cRetorno_EV01 [EV01] = <NULL>
+     If VA rpt_szOPERACAO_KY [KY] is equal to "("
+          VA evt_cRetorno_EV01 [EV01] = "("
+     Else
+          If VA rpt_szOPERACAO_KY [KY] is equal to ")"
+               VA evt_cRetorno_EV01 [EV01] = ")"
+          Else
+               If VA rpt_szOPERACAO_KY [KY] is equal to "AND"
+                    VA evt_cRetorno_EV01 [EV01] = "A"
+               Else
+                    If VA rpt_szOPERACAO_KY [KY] is equal to "OR"
+                         VA evt_cRetorno_EV01 [EV01] = "O"
+                    Else
+                         // UDC 57/RC
+                         GetUDC(X0005.GetUDC)
+                              "57" -> szSystemCode [SY]
+                              "RC" -> szRecordTypeCode [RT]
+                              VA rpt_szCAMPO_RMK [RMK] -> szUserDefinedCode [KY]
+                              VA evt_szTipoDado_SPHD [SPHD] <> szSpecialHandlingCode [SPHD]
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "C_CUSTO"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szC_CUSTO_MCU [MCU] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "C_FORNECED"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_mnC_FORNECED_AN8 [AN8] -> mnEntradaNumerico [AEXP]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "C_PEDIDO"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szC_PEDIDO_OBJ [OBJ] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "D_ENTREGA"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_jdD_ENTREGA_PDDJ [PDDJ] -> jdEntradaData [UPMJ]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "D_PEDIDO"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_jdD_PEDIDO_TRDJ [TRDJ] -> jdEntradaData [UPMJ]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "F_PEDIDO"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szF_PEDIDO_MCU [MCU] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "L_POR"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szL_POR_ORBY [ORBY] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "N_ALOCACAO"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_mnN_ALOCACAO_N001 [N001] -> mnEntradaNumerico [AEXP]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "O_ITEM"
+                              VA evt_szCaracter_DL01 [DL01] = [VA rpt_cO_ITEM_BORI [BORI]]
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA evt_szCaracter_DL01 [DL01] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "P_FORNECED"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szP_FORNECED_CTR [CTR] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "R_ENTREGA"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_mnR_ENTREGA_SHAN [SHAN] -> mnEntradaNumerico [AEXP]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "R_PEDIDO"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szR_PEDIDO_ADD2 [ADD2] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "S_PEDIDO"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szS_PEDIDO_SUB [SUB] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "T_LINHA"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szT_LINHA_LNTY [LNTY] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "T_PEDIDO"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szT_PEDIDO_DCTO [DCTO] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "T_FRETE"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_szT_FRETE_FRTH [FRTH] -> szEntradaString [DL011]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "V_LINHA"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_mnV_LINHA_AEXP [AEXP] -> mnEntradaNumerico [AEXP]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                         If VA rpt_szCAMPO_RMK [RMK] is equal to "V_PEDIDO"
+                              InterpretaRegra(N554308.InterpretaRegra)
+                                   VA rpt_mnV_PEDIDO_OTOT [OTOT] -> mnEntradaNumerico [AEXP]
+                                   VA rpt_szOPERACAO_KY [KY] -> szOperador [RMK]
+                                   VA rpt_szVALOR_RMK2 [RMK2] -> szValor [RMK]
+                                   VA evt_cRetorno_EV01 [EV01] <- cRetorno [EV01]
+                                   VA evt_szTipoDado_SPHD [SPHD] -> szTipo [SPHD]
+                         End If
+                    End If
+               End If
+          End If
+     End If
+     If VA evt_cRetorno_EV01 [EV01] is not equal to <Blank>
+     And VA evt_cRetorno_EV01 [EV01] is not equal to <NULL>
+          VA rpt_szRegra_DL011 [DL011] = concat([VA rpt_szRegra_DL011 [DL011]], [VA evt_cRetorno_EV01 [EV01]])
+     End If
+     F00092.FetchNext  [Index 2: SuppDB]
+          VA rpt_szOPERACAO_KY [KY] <- TK User Defined Code [KY]
+          VA rpt_szCAMPO_RMK [RMK] <- TK Name - Remark [RMK]
+          VA rpt_szVALOR_RMK2 [RMK2] <- TK Name - Remark [RMK2]
+End While
+//
+RV Regra [DL011] = VA rpt_szRegra_DL011 [DL011]
+ResolveRegra(N554308.ResolveRegra)
+     VA rpt_szRegra_DL011 [DL011] <> szRegra [DL011]
+     VA evt_cRetorno_EV01 [EV01] <- cResultado [EV01]
+If VA evt_cRetorno_EV01 [EV01] is equal to "1"
+     VA rpt_cSuprimentos [EV01] = "S"
+     RV Regra [DL011] = concat(concat([RV Regra [DL011]], " = "), [VA evt_cRetorno_EV01 [EV01]])
+Else
+     If VA evt_cRetorno_EV01 [EV01] is equal to "E"
+          RV Regra [DL011] = concat([RV Regra [DL011]], " -- Erro!!! ")
+     Else
+          If VA evt_cRetorno_EV01 [EV01] is equal to "0"
+               RV Regra [DL011] = concat(concat([RV Regra [DL011]], " = "), [VA evt_cRetorno_EV01 [EV01]])
+          End If
+     End If
+End If
+
+=============================================
+Section: Drive [2] 
+Event: End Section
+Event GUID: da7f6f7a-0025-4740-b483-5aa8ebf074fe
+=============================================
+Do Custom Section(RS Regra)
+Call UBE:R4311Z1I Version:PO szVersaoR4311Z1I
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: F55UI020 - up [19] 
+Event: Initialize Section
+Event GUID: 3f5d17ad-10bb-4ac4-8627-4e13b1bc1223
+=============================================
+Set Selection Append Flag( <No>)
+Set User Selection(BC Document Company (F55UI020)(KCO),  <Equal To>, VA rpt_szChave_KCOO,  <And>)
+Set User Selection(BC Document (Voucher, Invoice, etc.) (F55UI020)(DOC), <Equal To>, VA rpt_mnChave_DOCO, <And>)
+Set User Selection(BC Document Type (F55UI020)(DCT), <Equal To>, VA rpt_szChave_DCTO, <And>)
+
+=============================================
+Section: F55UI020 - up [19] 
+Event: Do Section
+Event GUID: 9e95ddf2-94da-4d53-9cc3-33ddb08b6c1f
+=============================================
+F55UI020.Insert  [Index 1: Primary]
+     BC Job Number (F55UI020.0) [JOBS] -> TK Job Number [JOBS]
+     VA rpt_mnNOVO_DOCO [DOCO] -> TK Document (Voucher, Invoice, etc.) [DOC]
+     PO szTipoPedido [DCTO] -> TK Document Type [DCT]
+     BC Document Company (F55UI020.0) [KCO] -> TK Document Company [KCO]
+     BC G/L Offset (F55UI020.0) [GLC] -> TK G/L Offset [GLC]
+     BC Address Number (F55UI020.0) [AN8] -> TK Address Number [AN8]
+     BC Address Number - 1st (F55UI020.0) [AN81] -> TK Address Number - 1st [AN81]
+     BC Date - Order/Transaction (F55UI020.0) [TRDJ] -> TK Date - Order/Transaction [TRDJ]
+     BC Pay Status Code (F55UI020.0) [PST] -> TK Pay Status Code [PST]
+     BC Status Code - Next (F55UI020.0) [NXTR] -> TK Status Code - Next [NXTR]
+     BC Address Number1 (F55UI020.0) [AN8GCA1] -> TK Address Number1 [AN8GCA1]
+     BC Address Number2 (F55UI020.0) [AN8GCA2] -> TK Address Number2 [AN8GCA2]
+     BC Amount - Order Gross (F55UI020.0) [OTOT] -> TK Amount - Order Gross [OTOT]
+     BC Vertex Filler 150 Long (F55UI020.0) [Q150] -> TK Vertex Filler 150 Long [Q150]
+     BC J.D. EnterpriseOne Event Point 01 (F55UI020.0) [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+     BC User Reserved Reference (F55UI020.0) [URRF] -> TK User Reserved Reference [URRF]
+     BC User Reserved Code (F55UI020.0) [URCD] -> TK User Reserved Code [URCD]
+     BC User Reserved Date (F55UI020.0) [URDT] -> TK User Reserved Date [URDT]
+     BC User Reserved Number (F55UI020.0) [URAB] -> TK User Reserved Number [URAB]
+     BC User Reserved Amount (F55UI020.0) [URAT] -> TK User Reserved Amount [URAT]
+     BC J.D. EnterpriseOne Event Point 02 (F55UI020.0) [EV02] -> TK J.D. EnterpriseOne Event Point 02 [EV02]
+     BC J.D. EnterpriseOne Point 03 (F55UI020.0) [EV03] -> TK J.D. EnterpriseOne Point 03 [EV03]
+     BC Generic String 01 (F55UI020.0) [A301] -> TK Generic String 01 [A301]
+     BC Generic String 02 (F55UI020.0) [A302] -> TK Generic String 02 [A302]
+     BC EnterpriseOne Point 04 (F55UI020.0) [EV04] -> TK EnterpriseOne Point 04 [EV04]
+     BC Date 01 (F55UI020.0) [DATE01] -> TK Date 01 [DATE01]
+     BC Date 02 (F55UI020.0) [DATE02] -> TK Date 02 [DATE02]
+     BC Date 03 (F55UI020.0) [DATE03] -> TK Date 03 [DATE03]
+     BC Date 04 (F55UI020.0) [DATE04] -> TK Date 04 [DATE04]
+     BC Unique Key ID (Internal) (F55UI020.0) [UKID] -> TK Unique Key ID (Internal) [UKID]
+     BC User ID (F55UI020.0) [USER] -> TK User ID [USER]
+     BC Work Station ID (F55UI020.0) [JOBN] -> TK Work Station ID [JOBN]
+     BC Program ID (F55UI020.0) [PID] -> TK Program ID [PID]
+     BC Date - Updated (F55UI020.0) [UPMJ] -> TK Date - Updated [UPMJ]
+     BC Time - Last Updated (F55UI020.0) [UPMT] -> TK Time - Last Updated [UPMT]
+     BC Business Unit (F55UI020.0) [MCU] -> TK Business Unit [MCU]
+F55UI020.Delete  [Index 1: Primary]
+     BC Job Number (F55UI020.0) [JOBS] = TK Job Number [JOBS]
+     BC Document (Voucher, Invoice, etc.) (F55UI020.0) [DOC] = TK Document (Voucher, Invoice, etc.) [DOC]
+     BC Document Type (F55UI020.0) [DCT] = TK Document Type [DCT]
+     BC Document Company (F55UI020.0) [KCO] = TK Document Company [KCO]
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: F4330 - up [18] 
+Event: Initialize Section
+Event GUID: 05384ffe-8ef1-458c-9dbf-71a356582c2a
+=============================================
+Set Selection Append Flag( <No>)
+Set User Selection(BC Order Company (Order Number) (F4330)(KCOO),  <Equal To>, VA rpt_szChave_KCOO,  <And>)
+Set User Selection(BC Document (Order No, Invoice, etc.) (F4330)(DOCO), <Equal To>, VA rpt_mnChave_DOCO, <And>)
+Set User Selection(BC Order Type (F4330)(DCTO), <Equal To>, VA rpt_szChave_DCTO, <And>)
+Set User Selection(BC Order Suffix (F4330)(SFXO), <Equal To>, VA rpt_szChave_SFXO, <And>)
+
+=============================================
+Section: F4330 - up [18] 
+Event: Do Section
+Event GUID: a7ccda5d-2c3e-42c9-9fe8-8c3bbacdc34b
+=============================================
+F4330.Insert  [Index 1: OrderNumber, Order Type +A]
+     BC Order Company (Order Number) (F4330.0) [KCOO] -> TK Order Company (Order Number) [KCOO]
+     VA rpt_mnNOVO_DOCO [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+     PO szTipoPedido [DCTO] -> TK Order Type [DCTO]
+     BC Line Number (F4330.0) [LNID] -> TK Line Number [LNID]
+     BC Address Number (F4330.0) [AN8] -> TK Address Number [AN8]
+     BC Quote Printed Flag (F4330.0) [QPRT] -> TK Quote Printed Flag [QPRT]
+     BC Date - Order/Transaction (F4330.0) [TRDJ] -> TK Date - Order/Transaction [TRDJ]
+     BC Response Function (F4330.0) [RSPO] -> TK Response Function [RSPO]
+     BC Date - Required Reponse Date (F4330.0) [RQQJ] -> TK Date - Required Reponse Date [RQQJ]
+     BC Date - Reponse Date (F4330.0) [QRDJ] -> TK Date - Reponse Date [QRDJ]
+     BC Date - Scheduled Pick (F4330.0) [PDDJ] -> TK Date - Scheduled Pick [PDDJ]
+     BC Units - Released (F4330.0) [UREL] -> TK Units - Released [UREL]
+     BC Amount - Released (F4330.0) [AREL] -> TK Amount - Released [AREL]
+     BC Order Suffix (F4330.0) [SFXO] -> TK Order Suffix [SFXO]
+
+
+

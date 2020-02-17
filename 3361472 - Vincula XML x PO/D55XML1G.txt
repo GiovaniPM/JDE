@@ -1,0 +1,14 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D55XML1G DS XML Log Erro
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     mnIDXMLNF                           Z55XML01     Input    Yes  
+2     mnItemXMLNF                         Z55XML02     Input    Yes  
+3     szMensagem                          DL011        Input    Yes  
+4     szUserId                            USER         Input    Yes  
+5     szProgramId                         PID          Input    Yes  
+6     szSelectionValues001                VL01         Input    Yes  
+7     szWorkStationId                     JOBN         Input    Yes  
+8     jdDateUpdated                       UPMJ         Input    Yes  
+9     mnTimeLastUpdated                   UPMT         Input    Yes  
+

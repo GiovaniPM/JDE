@@ -1,0 +1,1266 @@
+﻿
+=============================================
+Form: XML's Capturados - W55XML1AA
+Event: Form Variables
+Event GUID: f7f362f5-8b46-4a96-a109-467cb2a605a7
+=============================================
+frm_szCostCenter_MCU [MCU]
+frm_szCompanyKeyOrderNo_KCOO [KCOO]
+frm_mnDocumentOrderInvoic_DOCO [DOCO]
+frm_szOrderSuffix_SFXO [SFXO]
+frm_mnLineNumber_LNID [LNID]
+frm_szOrderType_DCTO [DCTO]
+frm_cPrimerio_EV01 [EV01]
+frm_szLineType_LNTY [LNTY]
+frm_cPega_EV01 [EV01]
+frm_szDL02 [DL02]
+frm_szSigla_AA02 [AA02]
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC OK/Select
+Event: Button Clicked
+Event GUID: a2be9992-8e2d-46a0-8d5b-0de559ec92d0
+=============================================
+Call App:P55XML1A Form:W55XML1AB Version:Undefined
+     GC ID XML [Z55XML01] <> mnIDXMLNF [Z55XML01]
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC De/Para UM
+Event: Button Clicked
+Event GUID: 02556fdc-43b2-4c58-a397-633968f3a8fd
+=============================================
+Call App:P00092 Form:W00092C Version:ZJDE0001
+     "UM" -> szType_Data [TYDT]
+     "XML" -> szSupplementalDatabaseCode [SDB]
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC Histórico
+Event: Button Clicked
+Event GUID: ca0ee994-2a81-479d-b3da-9ad8b5d382c0
+=============================================
+Call App:P55XML1A Form:W55XML1AH Version:SL VersionName
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC Verificar XML
+Event: Button Clicked
+Event GUID: b402c4c0-1187-4932-885f-70c40969b917
+=============================================
+Call App:P55XML01 Form:W55XML01B Version:Undefined
+     GC ID XML [Z55XML01] <> mnIDXMLNF [Z55XML01]
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC Visualizar NF
+Event: Button Clicked
+Event GUID: 1c3ca5ed-b0c1-4ea6-922a-f68c702a4396
+=============================================
+Call App:P55XML1A Form:W55XML1AB Version:SL VersionName
+     GC ID XML [Z55XML01] -> mnIDXMLNF [Z55XML01]
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC Vincula PO
+Event: Button Clicked
+Event GUID: 0a34cf97-9a26-4dbe-9117-1d4220e3e7cc
+=============================================
+If GC Status Sefaz [55ESTC] is not equal to "CAN"
+     VA frm_szSigla_AA02 [AA02] = substr([GC Modelo XML [55XTG]], "0", "2")
+     VA frm_szSigla_AA02 [AA02] = upper([VA frm_szSigla_AA02 [AA02]])
+     If VA frm_szSigla_AA02 [AA02] is not equal to "LF"
+          If GC Status XML [Z55XML04] is less than "500"
+               Call App:P55XML1A Form:W55XML1AE Version:Undefined
+                    GC CNPJ/CPF Emtitente [BCGF] <> szTax_Emitente [TAX]
+                    GC CNPJ/CPF Destinatário [BCGT] <> szTax_Destinatario [TAX]
+                    GC NCM [BCLF] <> szNCM [BCLF]
+                    GC ID XML [Z55XML01] <> mnIDXMLNF [Z55XML01]
+                    GC Item XML [Z55XML02] <> mnItemXMLNF [Z55XML02]
+               Press Button(HC Find)
+          End If
+     End If
+Else
+     Call App:P55XML1A Form:W55XML1AC Version:Undefined
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC Desvincula PO
+Event: Button Clicked
+Event GUID: 2f5554df-2b32-42d0-bb54-ac0d56c644aa
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_StatusXML [Z55XML04]
+evt_cRetorno_EV01 [EV01]
+----------------------------------------
+If GC Status XML [Z55XML04] is less than or equal to "500"
+     VA frm_szSigla_AA02 [AA02] = substr([GC Modelo XML [55XTG]], "0", "2")
+     VA frm_szSigla_AA02 [AA02] = upper([VA frm_szSigla_AA02 [AA02]])
+     If VA frm_szSigla_AA02 [AA02] is not equal to "LF"
+          VA evt_cRetorno_EV01 [EV01] = "N"
+          Call App:P55XML1A Form:W55XML1AF Version:SL VersionName
+               VA evt_cRetorno_EV01 [EV01] <> cRetorno [EV01]
+          If VA evt_cRetorno_EV01 [EV01] is equal to "S"
+               F55XML05.Delete  [Index 1: Z55XML01.Z55XML02]
+                    GC ID XML [Z55XML01] = TK ID XML de NF [Z55XML01]
+                    GC Item XML [Z55XML02] = TK Item no XML da NF [Z55XML02]
+               VA evt_StatusXML [Z55XML04] = <NULL>
+               F55XML03.Update  [Index 1: Z55XML01, Z55XML02]
+                    GC ID XML [Z55XML01] = TK ID XML de NF [Z55XML01]
+                    GC Item XML [Z55XML02] = TK Item no XML da NF [Z55XML02]
+                    VA evt_StatusXML [Z55XML04] -> TK Status XML [Z55XML04]
+               Press Button(HC Find)
+          End If
+     End If
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC Erro Log
+Event: Button Clicked
+Event GUID: f2196017-4b43-4c89-981e-6c63dd5226b7
+=============================================
+Call App:P55XML1A Form:W55XML1AD Version:Undefined
+     GC ID XML [Z55XML01] <> mnIDXMLNF [Z55XML01]
+     GC Item XML [Z55XML02] <> mnItemXMLNF [Z55XML02]
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC PO Vinculados
+Event: Button Clicked
+Event GUID: 4c242e2c-9600-4af4-814d-cecd6a7bd671
+=============================================
+Call App:P55XML1A Form:W55XML1AG Version:SL VersionName
+     GC ID XML [Z55XML01] -> mnIDXMLNF [Z55XML01]
+     GC Item XML [Z55XML02] -> mnItemXMLNF [Z55XML02]
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: HC Histórico
+Event: Button Clicked
+Event GUID: d4d638b0-b781-4814-bd19-cef40a86418c
+=============================================
+Call App:P55XML1A Form:W55XML1AH Version:SL VersionName
+     GC ID XML [Z55XML01] -> mnIDXMLNF [Z55XML01]
+     GC Item XML [Z55XML02] -> mnItemXMLNF [Z55XML02]
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Object: FC aaa
+Event: Button Clicked
+Event GUID: f68d9ce5-caaa-412a-b4e6-fa0c7c6b5ea3
+=============================================
+Call App:P55XML1A Form:W55XML1AE Version:RBS55001
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML's Capturados - W55XML1AA
+Event: Post Dialog is Initialized
+Event GUID: 8036caed-f635-45c2-a4e3-0a5bfb8972b4
+=============================================
+If PO szStatusFiltro [AA03] is equal to <Blank>
+Or PO szStatusFiltro [AA03] is equal to <NULL>
+Or PO szStatusFiltro [AA03] is equal to "0"
+Or PO szStatusFiltro [AA03] is equal to "1"
+     Set Control Focus(FC Tudo [Z55XML04])
+End If
+If PO szStatusFiltro [AA03] is equal to "2"
+     Set Control Focus(FC Incluidas [Z55XML04])
+End If
+If PO szStatusFiltro [AA03] is equal to "3"
+     Set Control Focus(FC Erradas [Z55XML04])
+End If
+If PO szStatusFiltro [AA03] is equal to "4"
+     Set Control Focus(FC Vinculadas [Z55XML04])
+End If
+If PO szStatusFiltro [AA03] is equal to "5"
+     Set Control Focus(FC Aceitas [Z55XML04])
+End If
+If PO szStatusFiltro [AA03] is equal to "6"
+     Set Control Focus(FC Recebidas [Z55XML04])
+End If
+If PO szStatusFiltro [AA03] is equal to "7"
+     Set Control Focus(FC A Vincular [Z55XML04])
+End If
+If PO szStatusFiltro [AA03] is equal to "8"
+     Set Control Focus(FC A Aceitar [Z55XML04])
+End If
+If PO szStatusFiltro [AA03] is equal to "9"
+     Set Control Focus(FC A Receber [Z55XML04])
+End If
+
+=============================================
+Form: XML's Capturados - W55XML1AA
+Event: Grid Record is Fetched
+Event GUID: b50ccd00-a98a-48c4-8b9a-4a999d361f60
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szCFOP_CO [CO]
+----------------------------------------
+F55XML02.FetchSingle  [Index 1: Z55XML01]
+     BC ID XML de NF (F55XML02.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+     GC Texto Adicional XML [ADDTEXT] <- TK Additional Text [ADDTEXT]
+F55XML03.FetchSingle  [Index 1: Z55XML01, Z55XML02]
+     BC ID XML de NF (F55XML02.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+     BC Item no XML da NF (F55XML03.0) [Z55XML02] = TK Item no XML da NF [Z55XML02]
+     GC Descrição do Item [DESC2000] <- TK Version Description [DESC2000]
+//
+F0101.Select  [Index 4: Tax Id]
+     BC CGC Tax ID - Ship From (F55XML02.0) [BCGF] = TK Tax ID [TAX]
+F0101.FetchNext  [Index 4: Tax Id]
+     GC Nome Emitente [ALPH] <- TK Name - Alpha [ALPH]
+F0101.Select  [Index 4: Tax Id]
+     BC CGC Tax ID - Ship To (F55XML02.0) [BCGT] = TK Tax ID [TAX]
+F0101.FetchNext  [Index 4: Tax Id]
+     GC Nome Destinatário [ALPH] <- TK Name - Alpha [ALPH]
+If BC CGC Tax ID - Carrier (F55XML02.0) [BCGC] is not equal to <Blank>
+And BC CGC Tax ID - Carrier (F55XML02.0) [BCGC] is not equal to <NULL>
+And BC CGC Tax ID - Carrier (F55XML02.0) [BCGC] is not equal to "0"
+     F0101.Select  [Index 4: Tax Id]
+          BC CGC Tax ID - Carrier (F55XML02.0) [BCGC] = TK Tax ID [TAX]
+     F0101.FetchNext  [Index 4: Tax Id]
+          GC Nome Transportador [ALPH] <- TK Name - Alpha [ALPH]
+End If
+//
+F76B200.Select  [Index 2: NovoCFOP, Sufixo]
+     BC Code - Transaction Nature (F55XML03.0) [BRNOP] = TK Code - Transaction Nature [BRNOP]
+F76B200.FetchNext  [Index 2: NovoCFOP, Sufixo]
+     GC Descrição Nat Oper [DL01] <- TK Description [DSC1]
+//
+VA frm_szCostCenter_MCU [MCU] = <NULL>
+VA frm_szCompanyKeyOrderNo_KCOO [KCOO] = <NULL>
+VA frm_mnDocumentOrderInvoic_DOCO [DOCO] = <NULL>
+VA frm_szOrderType_DCTO [DCTO] = <NULL>
+VA frm_szOrderSuffix_SFXO [SFXO] = <NULL>
+VA frm_mnLineNumber_LNID [LNID] = <NULL>
+VA frm_szLineType_LNTY [LNTY] = <NULL>
+//
+F55XML05.Select  [Index 1: Z55XML01.Z55XML02]
+     BC ID XML de NF (F55XML03.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+     BC Item no XML da NF (F55XML03.0) [Z55XML02] = TK Item no XML da NF [Z55XML02]
+F55XML05.FetchNext  [Index 1: Z55XML01.Z55XML02]
+     VA frm_szCostCenter_MCU [MCU] <- TK Business Unit [MCU]
+     VA frm_szCompanyKeyOrderNo_KCOO [KCOO] <- TK Order Company (Order Number) [KCOO]
+     VA frm_mnDocumentOrderInvoic_DOCO [DOCO] <- TK Document (Order No, Invoice, etc.) [DOCO]
+     VA frm_szOrderType_DCTO [DCTO] <- TK Order Type [DCTO]
+     VA frm_szOrderSuffix_SFXO [SFXO] <- TK Order Suffix [SFXO]
+     VA frm_mnLineNumber_LNID [LNID] <- TK Line Number [LNID]
+If SV File_IO_Status is not equal to CO SUCCESS
+     If FC Business Unit [MCU] is not equal to <Blank>
+     And FC Business Unit [MCU] is not equal to <NULL>
+     And FC Business Unit [MCU] is not equal to "0"
+          Suppress Grid Line(FC Grid)
+     End If
+     If FC Line Type [LNTY] is not equal to <Blank>
+     And FC Line Type [LNTY] is not equal to <NULL>
+     And FC Line Type [LNTY] is not equal to "0"
+          Suppress Grid Line(FC Grid)
+     End If
+     If FC Order Company [KCOO] is not equal to <Blank>
+     And FC Order Company [KCOO] is not equal to <NULL>
+     And FC Order Company [KCOO] is not equal to "0"
+          Suppress Grid Line(FC Grid)
+     End If
+End If
+
+=============================================
+Form: XML's Capturados - W55XML1AA
+Event: Write Grid Line-After
+Event GUID: 80e17328-7420-4702-a730-b09a97185f26
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szXML_SDB [SDB]
+evt_szXML_TYDT [TYDT]
+evt_szXML_RMK [RMK]
+evt_szXML_RMK2 [RMK2]
+evt_szXML_RMK3 [RMK3]
+evt_mnPosicao_IA04 [IA04]
+----------------------------------------
+VA frm_cPrimerio_EV01 [EV01] = "S"
+//
+! VA evt_szXML_SDB [SDB] = "XML"
+! VA evt_szXML_TYDT [TYDT] = "CT"
+! VA evt_szXML_RMK [RMK] = GC NCM [BCLF]
+! Copy Grid Row To Grid Buffer(FC Grid, <Currently Selected Row>)
+! F00092.Select  [Index 2: SuppDB]
+!      VA evt_szXML_SDB [SDB] = TK Supplemental Database Code [SDB]
+!      VA evt_szXML_TYDT [TYDT] = TK Type Data [TYDT]
+!      VA evt_szXML_RMK [RMK] = TK Name - Remark [RMK]
+! F00092.FetchNext  [Index 2: SuppDB]
+!      GB Ln Ty [LNTY] <- TK Name - Remark [RMK2]
+! If SV File_IO_Status is equal to CO SUCCESS
+     ! Delete Grid Row(FC Grid, <Currently Selected Row>)
+     ! Insert Grid Buffer Row(FC Grid, <After Last Row>, <Yes>, <Yes>,  <Yes>, <Yes>,  <Yes>)
+! End If
+//
+VA evt_szXML_SDB [SDB] = "XML"
+VA evt_szXML_TYDT [TYDT] = "UM"
+VA evt_szXML_RMK [RMK] = BC CGC Tax ID - Ship From (F55XML02.0) [BCGF]
+VA evt_szXML_RMK3 [RMK3] = BC Unit of Measure (F55XML03.0) [CMARTMES]
+F00092.Select  [Index 2: SuppDB]
+     VA evt_szXML_SDB [SDB] = TK Supplemental Database Code [SDB]
+     VA evt_szXML_TYDT [TYDT] = TK Type Data [TYDT]
+     VA evt_szXML_RMK [RMK] = TK Name - Remark [RMK]
+     VA evt_szXML_RMK3 [RMK3] = TK Text Remark [RMK3]
+F00092.FetchNext  [Index 2: SuppDB]
+     VA evt_szXML_RMK2 [RMK2] <- TK Name - Remark [RMK2]
+If SV File_IO_Status is equal to CO SUCCESS
+     GC UM  [UOM] = VA evt_szXML_RMK2 [RMK2]
+End If
+//
+F55XML05.Select  [Index 1: Z55XML01.Z55XML02]
+     GC ID XML [Z55XML01] = TK ID XML de NF [Z55XML01]
+     GC Item XML [Z55XML02] = TK Item no XML da NF [Z55XML02]
+F55XML05.FetchNext  [Index 1: Z55XML01.Z55XML02]
+     VA frm_szCostCenter_MCU [MCU] <- TK Business Unit [MCU]
+     VA frm_szCompanyKeyOrderNo_KCOO [KCOO] <- TK Order Company (Order Number) [KCOO]
+     VA frm_mnDocumentOrderInvoic_DOCO [DOCO] <- TK Document (Order No, Invoice, etc.) [DOCO]
+     VA frm_szOrderType_DCTO [DCTO] <- TK Order Type [DCTO]
+     VA frm_szOrderSuffix_SFXO [SFXO] <- TK Order Suffix [SFXO]
+     VA frm_mnLineNumber_LNID [LNID] <- TK Line Number [LNID]
+While SV File_IO_Status is equal to CO SUCCESS
+     VA frm_cPega_EV01 [EV01] = "S"
+     Copy Grid Row To Grid Buffer(FC Grid, <Currently Selected Row>)
+     If VA frm_cPrimerio_EV01 [EV01] is equal to "S"
+          Delete Grid Row(FC Grid, <Currently Selected Row>)
+          VA frm_cPrimerio_EV01 [EV01] = "N"
+     End If
+     //
+     F4311.FetchSingle  [Index 1: Doc No, Order Type, + 1]
+          VA frm_szCompanyKeyOrderNo_KCOO [KCOO] = TK Order Company (Order Number) [KCOO]
+          VA frm_mnDocumentOrderInvoic_DOCO [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO]
+          VA frm_szOrderType_DCTO [DCTO] = TK Order Type [DCTO]
+          VA frm_szOrderSuffix_SFXO [SFXO] = TK Order Suffix [SFXO]
+          VA frm_mnLineNumber_LNID [LNID] = TK Line Number [LNID]
+          VA frm_szLineType_LNTY [LNTY] <- TK Line Type [LNTY]
+     GB Unidade [MCU] = VA frm_szCostCenter_MCU [MCU]
+     GB Cia Pedido [KCOO] = VA frm_szCompanyKeyOrderNo_KCOO [KCOO]
+     GB Número Pedido [DOCO] = VA frm_mnDocumentOrderInvoic_DOCO [DOCO]
+     GB Tp Ped [DCTO] = VA frm_szOrderType_DCTO [DCTO]
+     GB Sfx Ped [SFXO] = VA frm_szOrderSuffix_SFXO [SFXO]
+     GB Line Number [LNID] = VA frm_mnLineNumber_LNID [LNID]
+     GB Ln Ty [LNTY] = VA frm_szLineType_LNTY [LNTY]
+     //
+     If FC Business Unit [MCU] is not equal to <Blank>
+     And FC Business Unit [MCU] is not equal to <NULL>
+     And FC Business Unit [MCU] is not equal to "0"
+     And FC Business Unit [MCU] is not equal to GB Unidade [MCU]
+          VA frm_cPega_EV01 [EV01] = "N"
+     End If
+     If FC Line Type [LNTY] is not equal to <Blank>
+     And FC Line Type [LNTY] is not equal to <NULL>
+     And FC Line Type [LNTY] is not equal to "0"
+     And FC Line Type [LNTY] is not equal to GB Ln Ty [LNTY]
+          VA frm_cPega_EV01 [EV01] = "N"
+     End If
+     If FC Order Company [KCOO] is not equal to <Blank>
+     And FC Order Company [KCOO] is not equal to <NULL>
+     And FC Order Company [KCOO] is not equal to "0"
+     And FC Order Company [KCOO] is not equal to GB Cia Pedido [KCOO]
+          VA frm_cPega_EV01 [EV01] = "N"
+     End If
+     If VA frm_cPega_EV01 [EV01] is equal to "S"
+          Insert Grid Buffer Row(FC Grid, <After Last Row>, <Yes>, <Yes>,  <Yes>, <Yes>,  <Yes>)
+     End If
+     Clear Grid Buffer(FC Grid)
+     F55XML05.FetchNext  [Index 1: Z55XML01.Z55XML02]
+          VA frm_szCostCenter_MCU [MCU] <- TK Business Unit [MCU]
+          VA frm_szCompanyKeyOrderNo_KCOO [KCOO] <- TK Order Company (Order Number) [KCOO]
+          VA frm_mnDocumentOrderInvoic_DOCO [DOCO] <- TK Document (Order No, Invoice, etc.) [DOCO]
+          VA frm_szOrderType_DCTO [DCTO] <- TK Order Type [DCTO]
+          VA frm_szOrderSuffix_SFXO [SFXO] <- TK Order Suffix [SFXO]
+          VA frm_mnLineNumber_LNID [LNID] <- TK Line Number [LNID]
+End While
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML Capturado - W55XML1AB
+Event: Dialog is Initialized
+Event GUID: 13e83aeb-9a1c-4351-8160-aac0e36c85c6
+=============================================
+FC ID XML de NF [Z55XML01] = FI mnIDXMLNF [Z55XML01]
+F55XML02.FetchSingle  [Index 1: Z55XML01]
+     FI mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     FC NFE Reference [55EREF] <- TK NFE Reference [55EREF]
+     FC Transaction Group [55XTG] <- TK XML Transaction Group [55XTG]
+     FC N.F. Total [BVTN] <- TK Amount - Nota Fiscal Total [BVTN]
+     FC Issue Date [ISSU] <- TK Date - Issue [ISSU]
+     FC CGC Tax ID E [BCGF] <- TK CGC Tax ID - Ship From [BCGF]
+     FC CGC Tax ID D [BCGT] <- TK CGC Tax ID - Ship To [BCGT]
+     FC Carrier CGC Tax ID [BCGC] <- TK CGC Tax ID - Carrier [BCGC]
+     FC Additional Text [ADDTEXT] <- TK Additional Text [ADDTEXT]
+     FC NFE Document Status Code [55ESTC] <- TK NFE Document Status Code [55ESTC]
+     FC N.F. Number XML [Z55XML05] <- TK Nota Fiscal Number XML [Z55XML05]
+     FC N.F. Series XML [Z55XML06] <- TK Nota Fiscal Series XML [Z55XML06]
+     FC N.F. Number [BNNF] <- TK Nota Fiscal Number [BNNF]
+     FC N.F. Series [BSER] <- TK Nota Fiscal Series [BSER]
+     FC Next Number Range 1 [N001] <- TK Next Number Range 1 [N001]
+     FC Document Type [DCT] <- TK Document Type [DCT]
+
+=============================================
+Form: XML Capturado - W55XML1AB
+Event: Post Dialog is Initialized
+Event GUID: 1c4fd299-194f-4065-ad0a-cde855901fbd
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szNameAlpha_ALPH [ALPH]
+----------------------------------------
+Press Button(HC Find)
+Disable Control(HC Find)
+F0101.Select  [Index 4: Tax Id]
+     FC CGC Tax ID E [BCGF] = TK Tax ID [TAX]
+F0101.FetchNext  [Index 1: Address #]
+     VA evt_szNameAlpha_ALPH [ALPH] <- TK Name - Alpha [ALPH]
+Set Control Text(FC Static Text 165, VA evt_szNameAlpha_ALPH)
+F0101.Select  [Index 4: Tax Id]
+     FC CGC Tax ID D [BCGT] = TK Tax ID [TAX]
+F0101.FetchNext  [Index 1: Address #]
+     VA evt_szNameAlpha_ALPH [ALPH] <- TK Name - Alpha [ALPH]
+Set Control Text(FC Static Text 166, VA evt_szNameAlpha_ALPH)
+If FC Carrier CGC Tax ID [BCGC] is not equal to <Blank>
+And FC Carrier CGC Tax ID [BCGC] is not equal to <NULL>
+And FC Carrier CGC Tax ID [BCGC] is not equal to "0"
+     F0101.Select  [Index 4: Tax Id]
+          FC Carrier CGC Tax ID [BCGC] = TK Tax ID [TAX]
+     F0101.FetchNext  [Index 1: Address #]
+          VA evt_szNameAlpha_ALPH [ALPH] <- TK Name - Alpha [ALPH]
+     Set Control Text(FC Static Text 167, VA evt_szNameAlpha_ALPH)
+Else
+     VA evt_szNameAlpha_ALPH [ALPH] = <NULL>
+     Set Control Text(FC Static Text 167, VA evt_szNameAlpha_ALPH)
+End If
+//
+If FI cModo [EV01] is not equal to "I"
+     Disable Control(HC &OK/&Select)
+     Disable Control(FC Additional Text [ADDTEXT])
+     Disable Control(FC Carrier CGC Tax ID [BCGC])
+     Disable Control(FC CGC Tax ID D [BCGT])
+     Disable Control(FC CGC Tax ID E [BCGF])
+     Disable Control(FC Document Type [DCT])
+     Disable Control(FC Issue Date [ISSU])
+     Disable Control(FC N.F. Number [BNNF])
+     Disable Control(FC N.F. Number XML [Z55XML05])
+     Disable Control(FC N.F. Series [BSER])
+     Disable Control(FC N.F. Series XML [Z55XML06])
+     Disable Control(FC N.F. Total [BVTN])
+     Disable Control(FC Next Number Range 1 [N001])
+     Disable Control(FC NFE Document Status Code [55ESTC])
+     Disable Control(FC NFE Reference [55EREF])
+     Disable Control(FC Transaction Group [55XTG])
+     Disable Grid(FC Grid,  <All Rows>,  <All Columns>)
+End If
+
+=============================================
+Form: XML Capturado - W55XML1AB
+Event: Grid Record is Fetched
+Event GUID: d9f35ef6-9eda-4033-9585-14eedc1dd999
+=============================================
+F55XML03.FetchSingle  [Index 1: Z55XML01, Z55XML02]
+     BC ID XML de NF (F55XML03.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+     GC Descrição Item [DESC2000] <- TK Version Description [DESC2000]
+
+
+
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML Erro - W55XML1AD
+Event: Dialog is Initialized
+Event GUID: 286ca1a7-82da-4de2-b048-a54c1d3ad644
+=============================================
+FC ID XML de NF [Z55XML01] = FI mnIDXMLNF [Z55XML01]
+FC Item no XML da NF [Z55XML02] = FI mnItemXMLNF [Z55XML02]
+
+
+
+
+=============================================
+Form: PO a receber - W55XML1AE
+Event: Form Variables
+Event GUID: 1b0d9332-f49f-4bc8-ae87-64aa84e9835c
+=============================================
+frm_mnLinha_IA04 [IA04]
+frm_USER [USER]
+frm_PID [PID]
+frm_JOBN [JOBN]
+frm_VL01 [VL01]
+frm_UPMJ [UPMJ]
+frm_UPMT [UPMT]
+frm_ITM [ITM]
+frm_szErro_DTAI [DTAI]
+frm_mnConversionFactor_CONV [CONV]
+frm_MCU [MCU]
+frm_KCOO [KCOO]
+frm_DOCO [DOCO]
+frm_DCTO [DCTO]
+frm_SFXO [SFXO]
+frm_LNID [LNID]
+frm_UOM [UOM]
+frm_mnSaldo_ACQTY [ACQTY]
+frm_mnSaldo_AEXP [AEXP]
+
+=============================================
+EVENTS
+=============================================
+Form: PO a receber - W55XML1AE
+Object: HC Form exits
+Event: Button Clicked
+Event GUID: c03d117b-a8ec-4f93-ab8a-49c35962185d
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szNF_UOM [UOM]
+evt_mnNF_UORG [UORG]
+evt_mnNF_UPRC [UPRC]
+evt_mnNF_AEXP [AEXP]
+evt_mnPedido_AEXP [AEXP]
+evt_szPedido_UOM [UOM]
+evt_mnPedido_UORG [UORG]
+evt_mnPedido_UPRC [UPRC]
+evt_mnNF_ACQTY [ACQTY]
+evt_mnPedido_ACQTY [ACQTY]
+evt_szStatusXML_Z55XML04 [Z55XML04]
+evt_mnLimiteInferior_ACQTY [ACQTY]
+evt_mnLimiteSuperior_ACQTY [ACQTY]
+evt_mnPedidoConv_ACQTY [ACQTY]
+evt_mnValor_ACQTY [ACQTY]
+----------------------------------------
+//
+VA evt_szNF_UOM [UOM] = FC U/M [UOM]
+VA evt_mnNF_ACQTY [ACQTY] = VA frm_mnSaldo_ACQTY [ACQTY]
+VA evt_mnNF_UPRC [UPRC] = FC Unit Price [UPRC]
+VA evt_mnNF_AEXP [AEXP] = VA frm_mnSaldo_AEXP [AEXP]
+//
+Get Max Grid Rows(FC Grid, VA frm_mnLinha_IA04)
+While VA frm_mnLinha_IA04 [IA04] is greater than "0"
+     Get Grid Row(FC Grid, VA frm_mnLinha_IA04)
+     //
+     If GC Marca [EV01] is equal to "S"
+          VA evt_szPedido_UOM [UOM] = GC UM  [UOM]
+          VA evt_mnPedido_ACQTY [ACQTY] = GC Quantity Open [UOPN]
+          VA evt_mnPedido_UPRC [UPRC] = GC Unit Cost [PRRC]
+          VA evt_mnPedido_AEXP [AEXP] = GC Amount Open [AOPN]
+          //
+          F4101.FetchSingle  [Index 2: 2nd Item Number]
+               VA frm_ITM [ITM] <- TK Item Number - Short [ITM]
+               GC 2nd Item Number [LITM] = TK 2nd Item Number [LITM]
+          GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+               GC Business Unit [MCU] -> szBranchPlant [MCU]
+               GC UM  [UOM] -> szFromUnitOfMeasure [UOM]
+               FC U/M [UOM] -> szToUnitOfMeasure [RUM]
+               VA frm_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+               VA frm_szErro_DTAI [DTAI] <- szErrorMessageID [DTAI]
+               VA frm_ITM [ITM] -> mnShortItemNumber [ITM]
+          VA evt_mnPedidoConv_ACQTY [ACQTY] = [GC Quantity Open [UOPN]]*[VA frm_mnConversionFactor_CONV [CONV]]
+          //
+          If VA evt_mnNF_ACQTY [ACQTY] is less than VA evt_mnPedidoConv_ACQTY [ACQTY]
+               GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+                    GC Business Unit [MCU] -> szBranchPlant [MCU]
+                    FC U/M [UOM] -> szFromUnitOfMeasure [UOM]
+                    GC UM  [UOM] -> szToUnitOfMeasure [RUM]
+                    VA frm_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+                    VA frm_szErro_DTAI [DTAI] <- szErrorMessageID [DTAI]
+                    VA frm_ITM [ITM] -> mnShortItemNumber [ITM]
+               VA evt_mnPedido_ACQTY [ACQTY] = [VA evt_mnNF_ACQTY [ACQTY]]*[VA frm_mnConversionFactor_CONV [CONV]]
+               VA evt_mnPedido_AEXP [AEXP] = [VA evt_mnPedido_UORG [UORG]]*[VA evt_mnPedido_UPRC [UPRC]]
+          End If
+          VA evt_mnPedido_UORG [UORG] = VA evt_mnPedido_ACQTY [ACQTY]
+          //
+          If VA evt_mnNF_ACQTY [ACQTY] is greater than "0"
+               F55XML05.Insert  [Index 1: Z55XML01.Z55XML02]
+                    FI mnIDXMLNF [Z55XML01] -> TK ID XML de NF [Z55XML01]
+                    FI mnItemXMLNF [Z55XML02] -> TK Item no XML da NF [Z55XML02]
+                    GC Business Unit [MCU] -> TK Business Unit [MCU]
+                    GC Order Co [KCOO] -> TK Order Company (Order Number) [KCOO]
+                    GC Order Number [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+                    GC Or Ty [DCTO] -> TK Order Type [DCTO]
+                    GC Ord Suf [SFXO] -> TK Order Suffix [SFXO]
+                    GC Line Number [LNID] -> TK Line Number [LNID]
+                    VA evt_szPedido_UOM [UOM] -> TK Unit of Measure as Input [UOM]
+                    VA evt_mnPedido_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+                    VA evt_mnPedido_UPRC [UPRC] -> TK Amount - Price per Unit [UPRC]
+                    VA evt_mnPedido_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+                    VA frm_USER [USER] -> TK User ID [USER]
+                    VA frm_PID [PID] -> TK Program ID [PID]
+                    VA frm_VL01 [VL01] -> TK Selection Values 01 [VL01]
+                    VA frm_JOBN [JOBN] -> TK Work Station ID [JOBN]
+                    VA frm_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+                    VA frm_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+          End If
+          //
+          VA evt_mnNF_ACQTY [ACQTY] = [VA evt_mnNF_ACQTY [ACQTY]]-[VA evt_mnPedido_ACQTY [ACQTY]]
+          VA evt_mnNF_AEXP [AEXP] = [VA evt_mnNF_AEXP [AEXP]]-[VA evt_mnPedido_AEXP [AEXP]]
+     End If
+     VA frm_mnLinha_IA04 [IA04] = [VA frm_mnLinha_IA04 [IA04]]-1
+End While
+//
+If PO cAtivaQtd [EV01] is equal to "S"
+     VA evt_mnValor_ACQTY [ACQTY] = [FC Qtd [ACQTY]]*[PO mnPercentQtd [74UTOLP]]
+     VA evt_mnLimiteInferior_ACQTY [ACQTY] = [FC Qtd [ACQTY]]-[VA evt_mnValor_ACQTY [ACQTY]]
+     VA evt_mnLimiteSuperior_ACQTY [ACQTY] = [FC Qtd [ACQTY]]+[VA evt_mnValor_ACQTY [ACQTY]]
+     If VA evt_mnValor_ACQTY [ACQTY] is less than or equal to PO mnValorQtd [AEXP]
+     And VA evt_mnNF_ACQTY [ACQTY] is greater than or equal to VA evt_mnLimiteInferior_ACQTY [ACQTY]
+     And VA evt_mnNF_ACQTY [ACQTY] is less than or equal to VA evt_mnLimiteSuperior_ACQTY [ACQTY]
+          VA evt_szStatusXML_Z55XML04 [Z55XML04] = "500"
+          F55XML03.Update  [Index 1: Z55XML01, Z55XML02]
+               FI mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+               FI mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+               VA evt_szStatusXML_Z55XML04 [Z55XML04] -> TK Status XML [Z55XML04]
+     End If
+Else
+     If VA evt_mnNF_ACQTY [ACQTY] is equal to "0"
+          VA evt_szStatusXML_Z55XML04 [Z55XML04] = "500"
+          F55XML03.Update  [Index 1: Z55XML01, Z55XML02]
+               FI mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+               FI mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+               VA evt_szStatusXML_Z55XML04 [Z55XML04] -> TK Status XML [Z55XML04]
+     End If
+End If
+//
+Press Button(HC Cancel/Close)
+
+
+=============================================
+EVENTS
+=============================================
+Form: PO a receber - W55XML1AE
+Object: FC Vincular PO
+Event: Button Clicked
+Event GUID: c03d117b-a8ec-4f93-ab8a-49c35962185d
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szNF_UOM [UOM]
+evt_mnNF_UORG [UORG]
+evt_mnNF_UPRC [UPRC]
+evt_mnNF_AEXP [AEXP]
+evt_mnPedido_AEXP [AEXP]
+evt_szPedido_UOM [UOM]
+evt_mnPedido_UORG [UORG]
+evt_mnPedido_UPRC [UPRC]
+evt_mnNF_ACQTY [ACQTY]
+evt_mnPedido_ACQTY [ACQTY]
+evt_szStatusXML_Z55XML04 [Z55XML04]
+evt_mnLimiteInferior_ACQTY [ACQTY]
+evt_mnLimiteSuperior_ACQTY [ACQTY]
+evt_mnPedidoConv_ACQTY [ACQTY]
+evt_mnValor_ACQTY [ACQTY]
+----------------------------------------
+//
+VA evt_szNF_UOM [UOM] = FC U/M [UOM]
+VA evt_mnNF_ACQTY [ACQTY] = VA frm_mnSaldo_ACQTY [ACQTY]
+VA evt_mnNF_UPRC [UPRC] = FC Unit Price [UPRC]
+VA evt_mnNF_AEXP [AEXP] = VA frm_mnSaldo_AEXP [AEXP]
+//
+Get Max Grid Rows(FC Grid, VA frm_mnLinha_IA04)
+While VA frm_mnLinha_IA04 [IA04] is greater than "0"
+     Get Grid Row(FC Grid, VA frm_mnLinha_IA04)
+     //
+     If GC Marca [EV01] is equal to "S"
+          VA evt_szPedido_UOM [UOM] = GC UM  [UOM]
+          VA evt_mnPedido_ACQTY [ACQTY] = GC Quantity Open [UOPN]
+          VA evt_mnPedido_UPRC [UPRC] = GC Unit Cost [PRRC]
+          VA evt_mnPedido_AEXP [AEXP] = GC Amount Open [AOPN]
+          //
+          F4101.FetchSingle  [Index 2: 2nd Item Number]
+               VA frm_ITM [ITM] <- TK Item Number - Short [ITM]
+               GC 2nd Item Number [LITM] = TK 2nd Item Number [LITM]
+          GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+               GC Business Unit [MCU] -> szBranchPlant [MCU]
+               GC UM  [UOM] -> szFromUnitOfMeasure [UOM]
+               FC U/M [UOM] -> szToUnitOfMeasure [RUM]
+               VA frm_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+               VA frm_szErro_DTAI [DTAI] <- szErrorMessageID [DTAI]
+               VA frm_ITM [ITM] -> mnShortItemNumber [ITM]
+          VA evt_mnPedidoConv_ACQTY [ACQTY] = [GC Quantity Open [UOPN]]*[VA frm_mnConversionFactor_CONV [CONV]]
+          //
+          If VA evt_mnNF_ACQTY [ACQTY] is less than VA evt_mnPedidoConv_ACQTY [ACQTY]
+               GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+                    GC Business Unit [MCU] -> szBranchPlant [MCU]
+                    FC U/M [UOM] -> szFromUnitOfMeasure [UOM]
+                    GC UM  [UOM] -> szToUnitOfMeasure [RUM]
+                    VA frm_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+                    VA frm_szErro_DTAI [DTAI] <- szErrorMessageID [DTAI]
+                    VA frm_ITM [ITM] -> mnShortItemNumber [ITM]
+               VA evt_mnPedido_ACQTY [ACQTY] = [VA evt_mnNF_ACQTY [ACQTY]]*[VA frm_mnConversionFactor_CONV [CONV]]
+               VA evt_mnPedido_AEXP [AEXP] = [VA evt_mnPedido_UORG [UORG]]*[VA evt_mnPedido_UPRC [UPRC]]
+          End If
+          VA evt_mnPedido_UORG [UORG] = VA evt_mnPedido_ACQTY [ACQTY]
+          //
+          If VA evt_mnNF_ACQTY [ACQTY] is greater than "0"
+               F55XML05.Insert  [Index 1: Z55XML01.Z55XML02]
+                    FI mnIDXMLNF [Z55XML01] -> TK ID XML de NF [Z55XML01]
+                    FI mnItemXMLNF [Z55XML02] -> TK Item no XML da NF [Z55XML02]
+                    GC Business Unit [MCU] -> TK Business Unit [MCU]
+                    GC Order Co [KCOO] -> TK Order Company (Order Number) [KCOO]
+                    GC Order Number [DOCO] -> TK Document (Order No, Invoice, etc.) [DOCO]
+                    GC Or Ty [DCTO] -> TK Order Type [DCTO]
+                    GC Ord Suf [SFXO] -> TK Order Suffix [SFXO]
+                    GC Line Number [LNID] -> TK Line Number [LNID]
+                    VA evt_szPedido_UOM [UOM] -> TK Unit of Measure as Input [UOM]
+                    VA evt_mnPedido_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+                    VA evt_mnPedido_UPRC [UPRC] -> TK Amount - Price per Unit [UPRC]
+                    VA evt_mnPedido_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+                    VA frm_USER [USER] -> TK User ID [USER]
+                    VA frm_PID [PID] -> TK Program ID [PID]
+                    VA frm_VL01 [VL01] -> TK Selection Values 01 [VL01]
+                    VA frm_JOBN [JOBN] -> TK Work Station ID [JOBN]
+                    VA frm_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+                    VA frm_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+          End If
+          //
+          VA evt_mnNF_ACQTY [ACQTY] = [VA evt_mnNF_ACQTY [ACQTY]]-[VA evt_mnPedido_ACQTY [ACQTY]]
+          VA evt_mnNF_AEXP [AEXP] = [VA evt_mnNF_AEXP [AEXP]]-[VA evt_mnPedido_AEXP [AEXP]]
+     End If
+     VA frm_mnLinha_IA04 [IA04] = [VA frm_mnLinha_IA04 [IA04]]-1
+End While
+//
+If PO cAtivaQtd [EV01] is equal to "S"
+     VA evt_mnValor_ACQTY [ACQTY] = [FC Qtd [ACQTY]]*[PO mnPercentQtd [74UTOLP]]
+     VA evt_mnLimiteInferior_ACQTY [ACQTY] = [FC Qtd [ACQTY]]-[VA evt_mnValor_ACQTY [ACQTY]]
+     VA evt_mnLimiteSuperior_ACQTY [ACQTY] = [FC Qtd [ACQTY]]+[VA evt_mnValor_ACQTY [ACQTY]]
+     If VA evt_mnValor_ACQTY [ACQTY] is less than or equal to PO mnValorQtd [AEXP]
+     And VA evt_mnNF_ACQTY [ACQTY] is greater than or equal to VA evt_mnLimiteInferior_ACQTY [ACQTY]
+     And VA evt_mnNF_ACQTY [ACQTY] is less than or equal to VA evt_mnLimiteSuperior_ACQTY [ACQTY]
+          VA evt_szStatusXML_Z55XML04 [Z55XML04] = "500"
+          F55XML03.Update  [Index 1: Z55XML01, Z55XML02]
+               FI mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+               FI mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+               VA evt_szStatusXML_Z55XML04 [Z55XML04] -> TK Status XML [Z55XML04]
+     End If
+Else
+     If VA evt_mnNF_ACQTY [ACQTY] is equal to "0"
+          VA evt_szStatusXML_Z55XML04 [Z55XML04] = "500"
+          F55XML03.Update  [Index 1: Z55XML01, Z55XML02]
+               FI mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+               FI mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+               VA evt_szStatusXML_Z55XML04 [Z55XML04] -> TK Status XML [Z55XML04]
+     End If
+End If
+//
+Press Button(HC Cancel/Close)
+
+
+=============================================
+EVENTS
+=============================================
+Form: PO a receber - W55XML1AE
+Object: FC Grid
+Event: Double Click on Row Header
+Event GUID: c2d83f28-a543-44e6-8351-171892b68409
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnLinha_IA04 [IA04]
+evt_mnDiferenca_UPRC [UPRC]
+evt_cErro_EV01 [EV01]
+evt_mnInferior_UPRC [UPRC]
+evt_mnSuperior_UPRC [UPRC]
+evt_mnDiferenca_UORG [UORG]
+evt_mnInferior_UORG [UORG]
+evt_mnSuperior_UORG [UORG]
+evt_mnModulo_UPRC [UPRC]
+evt_mnModulo_UORG [UORG]
+evt_cErroTolerancia_EV01 [EV01]
+evt_szErro_DTAI [DTAI]
+----------------------------------------
+VA evt_cErro_EV01 [EV01] = "N"
+F4101.FetchSingle  [Index 2: 2nd Item Number]
+     VA frm_ITM [ITM] <- TK Item Number - Short [ITM]
+     GC 2nd Item Number [LITM] = TK 2nd Item Number [LITM]
+GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+     GC Business Unit [MCU] -> szBranchPlant [MCU]
+     GC UM  [UOM] -> szFromUnitOfMeasure [UOM]
+     FC U/M [UOM] -> szToUnitOfMeasure [RUM]
+     VA frm_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+     VA frm_szErro_DTAI [DTAI] <- szErrorMessageID [DTAI]
+     VA frm_ITM [ITM] -> mnShortItemNumber [ITM]
+// F41002 Get Item UoM Conversion
+// VA rpt_szUnidade_MCU -> szBranchPlant
+// VA rpt_szUnitOfMeasurePur3_UOM3 -> szFromUnitOfMeasure
+// VA rpt_szUnitOfMeasureF4101_UOM -> szToUnitOfMeasure
+// VA rpt_mnF41002ConverFactor_CONV <- mnConversionFactorFromToPrim
+// VA rpt_szErro_DTAI <- szErrorMessageID
+// BC Item Number - Short (F43121) -> mnShortItemNumber
+//
+Get Selected Grid Row Number(FC Grid, VA evt_mnLinha_IA04)
+Copy Grid Row To Grid Buffer(FC Grid, VA evt_mnLinha_IA04)
+If GC Marca [EV01] is equal to "N"
+     FC Saldo [OTOT] = [FC Saldo [OTOT]]-([GC Amount Open [AOPN]]*[VA frm_mnConversionFactor_CONV [CONV]])
+     FC Saldo Qtd [ACQTY] = [FC Saldo Qtd [ACQTY]]-([GC Quantity Open [UOPN]]*[VA frm_mnConversionFactor_CONV [CONV]])
+     If FC Saldo Qtd [ACQTY] is equal to "0"
+          FC Saldo Unit [UPRC] = [GC Unit Cost [PRRC]]
+     Else
+          FC Saldo Unit [UPRC] = [FC Saldo [OTOT]]/[FC Saldo Qtd [ACQTY]]
+     End If
+     //
+     // Erro se não houver conversão cadastrada
+     If VA frm_szErro_DTAI [DTAI] is not equal to <Blank>
+     And VA frm_szErro_DTAI [DTAI] is not equal to <NULL>
+     And VA frm_szErro_DTAI [DTAI] is not equal to "0"
+          VA evt_cErro_EV01 [EV01] = "S"
+          Set Grid Cell Error(FC Grid,  <Currently Selected Row>, GC UM, VA frm_szErro_DTAI)
+     End If
+     //
+     // Verifica se valor unitário esta na tolerância
+     If PO cAtivaUni [EV01] is equal to "S"
+          ! VA evt_mnDiferenca_UPRC [UPRC] = [PO mnPercentUni [74UTOLP]]/100
+          ! VA evt_mnDiferenca_UPRC [UPRC] = [GC Unit Cost [PRRC]]*[VA evt_mnDiferenca_UPRC [UPRC]]
+          ! VA evt_mnInferior_UPRC [UPRC] = [GC Unit Cost [PRRC]]-[VA evt_mnDiferenca_UPRC [UPRC]]
+          ! VA evt_mnSuperior_UPRC [UPRC] = [GC Unit Cost [PRRC]]+[VA evt_mnDiferenca_UPRC [UPRC]]
+          ! If FC Unit Price [UPRC] is greater than VA evt_mnSuperior_UPRC [UPRC]
+          ! OrFC Unit Price [UPRC] is less than VA evt_mnInferior_UPRC [UPRC]
+               ! VA evt_cErro_EV01 [EV01] = "S"
+               ! Set Grid Cell Error(FC Grid, <Currently Selected Row>, GC UnitCost, "112G")
+          ! Else
+               ! VA evt_mnModulo_UPRC [UPRC] = abs(([GC Unit Cost [PRRC]]-[FC Unit Price [UPRC]]))
+               ! If PO mnValorUni [AEXP] is not equal to <Blank>
+               ! And PO mnValorUni [AEXP] is not equal to <NULL>
+               ! And PO mnValorUni [AEXP] is not equal to "0"
+               ! And PO mnValorUni [AEXP] is less than VA evt_mnModulo_UPRC [UPRC]
+                    ! VA evt_cErro_EV01 [EV01] = "S"
+                    ! Set Grid Cell Error(FC Grid, <Currently Selected Row>, GC UnitCost, "112G")
+               ! End If
+          ! End If
+          XMLTolerancia(N55XML01.XMLTolerancia)
+               PO mnPercentUni [74UTOLP] -> mnPercentual [74UTOLP]
+               PO mnValorUni [AEXP] -> mnValorMaximo [UPRC]
+               GC Unit Cost [PRRC] -> mnValorReferencia [UPRC]
+               FC Unit Price [UPRC] -> mnValorUsado [UPRC]
+               VA evt_cErroTolerancia_EV01 [EV01] <- cErro [EV01]
+               VA frm_szErro_DTAI [DTAI] <- szMensagem [DTAI]
+          If VA evt_cErroTolerancia_EV01 [EV01] is equal to "S"
+               VA evt_cErro_EV01 [EV01] = "S"
+               Set Grid Cell Error(FC Grid, <Currently Selected Row>, GC UnitCost, VA frm_szErro_DTAI)
+          End If
+     End If
+     //
+     // Verifica se a quanitdade esta na tolerância
+     If PO cAtivaQtd [EV01] is equal to "S"
+          ! VA evt_mnDiferenca_UORG [UORG] = [PO mnPercentQtd [74UTOLP]]/100
+          ! VA evt_mnDiferenca_UORG [UORG] = [GC Quantity Open [UOPN]]*[VA evt_mnDiferenca_UORG [UORG]]
+          ! VA evt_mnInferior_UORG [UORG] = [GC Quantity Open [UOPN]]-[VA evt_mnDiferenca_UORG [UORG]]
+          ! VA evt_mnSuperior_UORG [UORG] = [GC Quantity Open [UOPN]]+[VA evt_mnDiferenca_UORG [UORG]]
+          ! If FC Saldo Qtd [ACQTY] is less than VA evt_mnInferior_UORG [UORG]
+          ! OrFC Saldo Qtd [ACQTY] is greater than VA evt_mnSuperior_UORG [UORG]
+               ! VA evt_cErro_EV01 [EV01] = "S"
+               ! Set Grid Cell Error(FC Grid, <Currently Selected Row>, GC QuantityOpen, "112G")
+          ! Else
+               ! VA evt_mnModulo_UORG [UORG] = abs(([GC Amount Open [AOPN]]-[FC Saldo Qtd [ACQTY]]))
+               ! If PO mnValorQtd [AEXP] is not equal to <Blank>
+               ! And PO mnValorQtd [AEXP] is not equal to <NULL>
+               ! And PO mnValorQtd [AEXP] is not equal to "0"
+               ! And PO mnValorQtd [AEXP] is less than VA evt_mnModulo_UORG [UORG]
+                    ! VA evt_cErro_EV01 [EV01] = "S"
+                    ! Set Grid Cell Error(FC Grid, <Currently Selected Row>, GC QuantityOpen, "112G")
+               ! End If
+          ! End If
+          XMLTolerancia(N55XML01.XMLTolerancia)
+               PO mnPercentQtd [74UTOLP] -> mnPercentual [74UTOLP]
+               PO mnValorQtd [AEXP] -> mnValorMaximo [UPRC]
+               GC Quantity Open [UOPN] -> mnValorReferencia [UPRC]
+               FC Saldo Qtd [ACQTY] -> mnValorUsado [UPRC]
+               VA evt_cErroTolerancia_EV01 [EV01] <- cErro [EV01]
+               VA frm_szErro_DTAI [DTAI] <- szMensagem [DTAI]
+          If VA evt_cErroTolerancia_EV01 [EV01] is equal to "S"
+               VA evt_cErro_EV01 [EV01] = "S"
+               Set Grid Cell Error(FC Grid, <Currently Selected Row>, GC QuantityOpen, VA frm_szErro_DTAI)
+          End If
+     End If
+     //
+     If VA evt_cErro_EV01 [EV01] is equal to "N"
+          GB Marca [EV01] = "S"
+          Insert Grid Buffer Row(FC Grid, VA evt_mnLinha_IA04,  <Yes>,  <No>,  <Yes>,  <Yes>,  <No>)
+          Set Grid Row Bitmap(FC Grid, VA evt_mnLinha_IA04, <Check Mark>)
+          VA evt_mnLinha_IA04 [IA04] = [VA evt_mnLinha_IA04 [IA04]]+1
+          Delete Grid Row(FC Grid, VA evt_mnLinha_IA04)
+     Else
+          FC Saldo [OTOT] = [FC Saldo [OTOT]]+([GC Amount Open [AOPN]]*[VA frm_mnConversionFactor_CONV [CONV]])
+          FC Saldo Qtd [ACQTY] = [FC Saldo Qtd [ACQTY]]+([GC Quantity Open [UOPN]]*[VA frm_mnConversionFactor_CONV [CONV]])
+          FC Saldo Unit [UPRC] = [FC Saldo [OTOT]]/[FC Saldo Qtd [ACQTY]]
+     End If
+Else
+     If GC Marca [EV01] is equal to "S"
+          FC Saldo [OTOT] = [FC Saldo [OTOT]]+([GC Amount Open [AOPN]]*[VA frm_mnConversionFactor_CONV [CONV]])
+          FC Saldo Qtd [ACQTY] = [FC Saldo Qtd [ACQTY]]+([GC Quantity Open [UOPN]]*[VA frm_mnConversionFactor_CONV [CONV]])
+          If FC Saldo Qtd [ACQTY] is not equal to "0"
+               FC Saldo Unit [UPRC] = [FC Saldo [OTOT]]/[FC Saldo Qtd [ACQTY]]
+          Else
+               FC Saldo Unit [UPRC] = 0
+          End If
+          GB Marca [EV01] = "N"
+          Insert Grid Buffer Row(FC Grid, VA evt_mnLinha_IA04,  <Yes>,  <No>,  <Yes>,  <Yes>,  <No>)
+          Set Grid Row Bitmap(FC Grid, VA evt_mnLinha_IA04, <Blank/Clear>)
+          VA evt_mnLinha_IA04 [IA04] = [VA evt_mnLinha_IA04 [IA04]]+1
+          Delete Grid Row(FC Grid, VA evt_mnLinha_IA04)
+     End If
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: PO a receber - W55XML1AE
+Event: Dialog is Initialized
+Event GUID: a402c1e9-eed3-49af-8034-2d4790ef384b
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnUnitsTransactionQty_UORG [UORG]
+evt_mnAmountExtendedPrice_AEXP [AEXP]
+evt_szXML_SDB [SDB]
+evt_szXML_TYDT [TYDT]
+evt_szXML_RMK [RMK]
+evt_szXML_RMK2 [RMK2]
+evt_szXML_RMK3 [RMK3]
+----------------------------------------
+//
+If PO mnMesesRetroativos [IA04] is equal to <Blank>
+Or PO mnMesesRetroativos [IA04] is equal to <NULL>
+Or PO mnMesesRetroativos [IA04] is equal to "0"
+     PO mnMesesRetroativos [IA04] = 24
+End If
+If PO szStatusCodeLast [LTTR] is equal to <Blank>
+Or PO szStatusCodeLast [LTTR] is equal to <NULL>
+Or PO szStatusCodeLast [LTTR] is equal to "0"
+     PO szStatusCodeLast [LTTR] = "200"
+End If
+If PO szStatusCodeNext [NXTR] is equal to <Blank>
+Or PO szStatusCodeNext [NXTR] is equal to <NULL>
+Or PO szStatusCodeNext [NXTR] is equal to "0"
+     PO szStatusCodeNext [NXTR] = "999"
+End If
+PO cAtivaQtd [EV01] = upper([PO cAtivaQtd [EV01]])
+PO cAtivaVlr [EV01] = upper([PO cAtivaVlr [EV01]])
+If PO cAtivaQtd [EV01] is equal to <Blank>
+Or PO cAtivaQtd [EV01] is equal to <NULL>
+Or PO cAtivaQtd [EV01] is equal to "0"
+     PO cAtivaQtd [EV01] = "N"
+End If
+If PO cAtivaVlr [EV01] is equal to <Blank>
+Or PO cAtivaVlr [EV01] is equal to <NULL>
+Or PO cAtivaVlr [EV01] is equal to "0"
+     PO cAtivaVlr [EV01] = "N"
+End If
+//
+FC Requested [DRQJ] = add_months([SL DateToday], ([PO mnMesesRetroativos [IA04]]*-1))
+FC Status Code - Last [LTTR] = [PO szStatusCodeLast [LTTR]]
+FC Status Code - Next [NXTR] = [PO szStatusCodeNext [NXTR]]
+FC Tax ID E [TAX] = FI szTax_Emitente [TAX]
+FC Tax ID D [TAX] = FI szTax_Destinatario [TAX]
+FC 2nd Item Number [LITM] = concat([FI szNCM [BCLF]], "*")
+//
+// Verifico se existe de/para de UM para o fornecedor
+F55XML03.Select  [Index 1: Z55XML01, Z55XML02]
+     FI mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     FI mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+F55XML03.FetchNext  [Index 1: Z55XML01, Z55XML02]
+     FC Qtd [ACQTY] <- TK Units - Order/Transaction Quantity [UORG]
+     FC U/M [UOM] <- TK Unit of Measure as Input [UOM]
+     FC Unit Price [UPRC] <- TK Amount - Price per Unit [UPRC]
+     FC Extended Price [AEXP] <- TK Amount - Extended Price [AEXP]
+VA evt_szXML_SDB [SDB] = "XML"
+VA evt_szXML_TYDT [TYDT] = "UM"
+VA evt_szXML_RMK [RMK] = FC Tax ID E [TAX]
+VA evt_szXML_RMK3 [RMK3] = FC U/M [UOM]
+F00092.Select  [Index 2: SuppDB]
+     VA evt_szXML_SDB [SDB] = TK Supplemental Database Code [SDB]
+     VA evt_szXML_TYDT [TYDT] = TK Type Data [TYDT]
+     VA evt_szXML_RMK [RMK] = TK Name - Remark [RMK]
+     VA evt_szXML_RMK3 [RMK3] = TK Text Remark [RMK3]
+F00092.FetchNext  [Index 2: SuppDB]
+     VA evt_szXML_RMK2 [RMK2] <- TK Name - Remark [RMK2]
+If SV File_IO_Status is equal to CO SUCCESS
+     FC U/M [UOM] = VA evt_szXML_RMK2 [RMK2]
+End If
+//
+// Abato do saldo do XML os pedidos já vinculados
+FC Saldo [OTOT] = FC Extended Price [AEXP]
+FC Saldo Qtd [ACQTY] = FC Qtd [ACQTY]
+F55XML05.Select  [Index 1: Z55XML01.Z55XML02]
+     FI mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     FI mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+F55XML05.FetchNext  [Index 1: Z55XML01.Z55XML02]
+     VA frm_MCU [MCU] <- TK Business Unit [MCU]
+     VA frm_KCOO [KCOO] <- TK Order Company (Order Number) [KCOO]
+     VA frm_DOCO [DOCO] <- TK Document (Order No, Invoice, etc.) [DOCO]
+     VA frm_DCTO [DCTO] <- TK Order Type [DCTO]
+     VA frm_SFXO [SFXO] <- TK Order Suffix [SFXO]
+     VA frm_LNID [LNID] <- TK Line Number [LNID]
+     VA frm_UOM [UOM] <- TK Unit of Measure as Input [UOM]
+     VA evt_mnUnitsTransactionQty_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+     VA evt_mnAmountExtendedPrice_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+While SV File_IO_Status is equal to CO SUCCESS
+     F4311.FetchSingle  [Index 1: Doc No, Order Type, + 1]
+          VA frm_KCOO [KCOO] = TK Order Company (Order Number) [KCOO]
+          VA frm_DOCO [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO]
+          VA frm_DCTO [DCTO] = TK Order Type [DCTO]
+          VA frm_SFXO [SFXO] = TK Order Suffix [SFXO]
+          VA frm_LNID [LNID] = TK Line Number [LNID]
+          VA frm_ITM [ITM] <- TK Item Number - Short [ITM]
+     GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+          VA frm_MCU [MCU] -> szBranchPlant [MCU]
+          VA frm_UOM [UOM] -> szFromUnitOfMeasure [UOM]
+          FC U/M [UOM] -> szToUnitOfMeasure [RUM]
+          VA frm_mnConversionFactor_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+          VA frm_szErro_DTAI [DTAI] <- szErrorMessageID [DTAI]
+          VA frm_ITM [ITM] -> mnShortItemNumber [ITM]
+     FC Saldo Qtd [ACQTY] = [FC Saldo Qtd [ACQTY]]-([VA evt_mnUnitsTransactionQty_UORG [UORG]]*[VA frm_mnConversionFactor_CONV [CONV]])
+     FC Saldo [OTOT] = [FC Saldo [OTOT]]-([VA evt_mnAmountExtendedPrice_AEXP [AEXP]]*[VA frm_mnConversionFactor_CONV [CONV]])
+     F55XML05.FetchNext  [Index 1: Z55XML01.Z55XML02]
+          VA frm_MCU [MCU] <- TK Business Unit [MCU]
+          VA frm_KCOO [KCOO] <- TK Order Company (Order Number) [KCOO]
+          VA frm_DOCO [DOCO] <- TK Document (Order No, Invoice, etc.) [DOCO]
+          VA frm_DCTO [DCTO] <- TK Order Type [DCTO]
+          VA frm_SFXO [SFXO] <- TK Order Suffix [SFXO]
+          VA frm_LNID [LNID] <- TK Line Number [LNID]
+          VA frm_UOM [UOM] <- TK Unit of Measure as Input [UOM]
+          VA evt_mnUnitsTransactionQty_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+          VA evt_mnAmountExtendedPrice_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+End While
+VA frm_mnSaldo_ACQTY [ACQTY] = FC Saldo Qtd [ACQTY]
+VA frm_mnSaldo_AEXP [AEXP] = FC Extended Price [AEXP]
+If FC Saldo Qtd [ACQTY] is equal to "0"
+     FC Saldo Unit [UPRC] = 0
+Else
+     FC Saldo Unit [UPRC] = [FC Saldo [OTOT]]/[FC Saldo Qtd [ACQTY]]
+End If
+//
+Disable Control(HC &OK/&Select)
+GetAuditInfo(B9800100.GetAuditInfo)
+     VA frm_USER [USER] <> szUserName [USER]
+     VA frm_UPMJ [UPMJ] <> jdDate [DTE]
+     VA frm_UPMT [UPMT] <> mnTime [TME0]
+     VA frm_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+VA frm_PID [PID] = "P55XMl1A"
+VA frm_VL01 [VL01] = SL VersionName
+
+=============================================
+Form: PO a receber - W55XML1AE
+Event: Grid Record is Fetched
+Event GUID: 7f34efee-6e06-4208-b606-ee7ce7dd1b3a
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szStatusXML_Z55XML04 [Z55XML04]
+evt_mnUORG [UORG]
+evt_mnUPRC [UPRC]
+evt_mnAEXP [AEXP]
+evt_szStatusCodeLast_LTTR [LTTR]
+evt_szStatusCodeNext_NXTR [NXTR]
+evt_szVariacao_LITM [LITM]
+evt_mnTamanho_IA04 [IA04]
+evt_szRaizItem_LITM [LITM]
+----------------------------------------
+GC Marca [EV01] = "N"
+GC Quantity Open [UOPN] = BC Units - Open (F4311.0) [UOPN]
+GC Unit Cost [PRRC] = BC Amount - Unit Cost (F4311.0) [PRRC]
+GC Amount Open [AOPN] = BC Amount - Open (F4311.0) [AOPN]
+VA evt_szStatusCodeNext_NXTR [NXTR] = "999"
+//
+// Verifico se o pedido possui baixa parcial e diminuo do saldo
+V55XML1C.Select
+     BC Order Company (Order Number) (F4311.0) [KCOO] = TK Order Company (Order Number) [KCOO][F55XML05.0]
+     BC Document (Order No, Invoice, etc.) (F4311.0) [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO][F55XML05.0]
+     BC Order Type (F4311.0) [DCTO] = TK Order Type [DCTO][F55XML05.0]
+     BC Order Suffix (F4311.0) [SFXO] = TK Order Suffix [SFXO][F55XML05.0]
+     BC Line Number (F4311.0) [LNID] = TK Line Number [LNID][F55XML05.0]
+     VA evt_szStatusCodeNext_NXTR [NXTR] <> TK Status Code - Next [NXTR][F4311.0]
+V55XML1C.FetchNext
+     VA evt_mnUORG [UORG] <- TK Units - Order/Transaction Quantity [UORG][F55XML05.0]
+     VA evt_mnUPRC [UPRC] <- TK Amount - Price per Unit [UPRC][F55XML05.0]
+     VA evt_mnAEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55XML05.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     GC Quantity Open [UOPN] = [GC Quantity Open [UOPN]]-[VA evt_mnUORG [UORG]]
+     GC Amount Open [AOPN] = [GC Amount Open [AOPN]]-[VA evt_mnAEXP [AEXP]]
+     //
+     V55XML1C.FetchNext
+          VA evt_mnUORG [UORG] <- TK Units - Order/Transaction Quantity [UORG][F55XML05.0]
+          VA evt_mnUPRC [UPRC] <- TK Amount - Price per Unit [UPRC][F55XML05.0]
+          VA evt_mnAEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55XML05.0]
+End While
+//
+// Caso não possua saldo omitir linha
+If GC Quantity Open [UOPN] is equal to "0"
+     Suppress Grid Line(FC Grid)
+Else
+     BC Units - Open (F4311.0) [UOPN] = GC Quantity Open [UOPN]
+     BC Amount - Unit Cost (F4311.0) [PRRC] = GC Unit Cost [PRRC]
+     BC Amount - Open (F4311.0) [AOPN] = GC Amount Open [AOPN]
+End If
+//
+// Comparo o NCM/Código de Serviço e suas variantes
+// Ex.:
+// 82546312      82546312.01       82546312.02
+// 1201               1201.01                1201.02
+VA evt_szVariacao_LITM [LITM] = concat([FI szNCM [BCLF]], ".")
+VA evt_mnTamanho_IA04 [IA04] = length([VA evt_szVariacao_LITM [LITM]])
+VA evt_szRaizItem_LITM [LITM] = substr([BC 2nd Item Number (F4311.0) [LITM]], "0", [VA evt_mnTamanho_IA04 [IA04]])
+If BC 2nd Item Number (F4311.0) [LITM] is not equal to FI szNCM [BCLF]
+And VA evt_szRaizItem_LITM [LITM] is not equal to VA evt_szVariacao_LITM [LITM]
+     Suppress Grid Line(FC Grid)
+End If
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Confirmação desvinculação? - W55XML1AF
+Object: FC Yes
+Event: Button Clicked
+Event GUID: 73f62157-36ce-41d9-b0cb-4348093fcf27
+=============================================
+FI cRetorno [EV01] = "S"
+
+
+=============================================
+EVENTS
+=============================================
+Form: Confirmação desvinculação? - W55XML1AF
+Object: FC No
+Event: Button Clicked
+Event GUID: bd476d11-58cd-40f8-a4d2-7b454167bc73
+=============================================
+FI cRetorno [EV01] = "N"
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Confirmação desvinculação? - W55XML1AF
+Event: Dialog is Initialized
+Event GUID: e52c7391-a694-475c-a933-66976f6a17ae
+=============================================
+FI cRetorno [EV01] = "N"
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: PO Vinculadas - W55XML1AG
+Event: Dialog is Initialized
+Event GUID: cc76a075-b08f-4cf3-9212-3837fb9022a4
+=============================================
+FC ID XML de NF [Z55XML01] = FI mnIDXMLNF [Z55XML01]
+FC Item no XML da NF [Z55XML02] = FI mnItemXMLNF [Z55XML02]
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML Histórico - W55XML1AH
+Event: Dialog is Initialized
+Event GUID: c51a060d-5386-4a74-b063-a2efe6514cc2
+=============================================
+FC ID XML de NF [Z55XML01] = FC ID XML de NF [Z55XML01]
+FC Item no XML da NF [Z55XML02] = FC Item no XML da NF [Z55XML02]
+
+=============================================
+Form: XML Histórico - W55XML1AH
+Event: Grid Record is Fetched
+Event GUID: 0227394c-aa7d-491b-a95e-d55ed5684895
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szLanguagePreference_LNGP [LNGP]
+----------------------------------------
+F9860.Select  [Index 1: Object Name]
+     BC Object Name (F55XML07.0) [OBNM] = TK Object Name [OBNM]
+F9860.FetchNext  [Index 1: Object Name]
+     GC Descrição Tabela [DL01] <- TK Description [MD]
+//
+VA evt_szLanguagePreference_LNGP [LNGP] = "P"
+F9202.Select  [Index 1: Data Field Display Text]
+     BC Data Item (F55XML07.0) [DTAI] = TK Data Item [DTAI]
+     VA evt_szLanguagePreference_LNGP [LNGP] = TK Language [LNGP]
+F9202.FetchNext  [Index 1: Data Field Display Text]
+     GC Descrição Campo [DL01] <- TK Description - Row [DSCR]
+If SV File_IO_Status is not equal to CO SUCCESS
+     VA evt_szLanguagePreference_LNGP [LNGP] = <NULL>
+     F9202.Select  [Index 1: Data Field Display Text]
+          BC Data Item (F55XML07.0) [DTAI] = TK Data Item [DTAI]
+          VA evt_szLanguagePreference_LNGP [LNGP] = TK Language [LNGP]
+     F9202.FetchNext  [Index 1: Data Field Display Text]
+          GC Descrição Campo [DL01] <- TK Description - Row [DSCR]
+     If SV File_IO_Status is not equal to CO SUCCESS
+          F9202.Select  [Index 1: Data Field Display Text]
+               BC Data Item (F55XML07.0) [DTAI] = TK Data Item [DTAI]
+          F9202.FetchNext  [Index 1: Data Field Display Text]
+               GC Descrição Campo [DL01] <- TK Description - Row [DSCR]
+     End If
+End If
+
+
+
+

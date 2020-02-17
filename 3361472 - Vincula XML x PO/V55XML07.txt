@@ -1,0 +1,21 @@
+﻿---------------------------------------------------------------------------------
+Business View: V55XML07 (BSVW XML Log)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F55XML07 - XML Log
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML07(0)  X
+Z55XML02   Item no XML da NF                        Math Numeric    15(0)      F55XML07(0)  X
+OBNM       Object Name                              String          10(0)      F55XML07(0)  X
+DTAI       Data Item                                String          10(0)      F55XML07(0)  X
+UPMJ       Date - Updated                           Date            6(0)       F55XML07(0)  X
+UPMT       Time - Last Updated                      Math Numeric    6(0)       F55XML07(0)  X
+USER       User ID                                  String          10(0)      F55XML07(0)  
+PID        Program ID                               String          10(0)      F55XML07(0)  
+VL01       Selection Values 01                      String          25(0)      F55XML07(0)  
+JOBN       Work Station ID                          String          10(0)      F55XML07(0)  
+KW21       Knowledgeware - Text                     String          100(0)     F55XML07(0)  
+
+

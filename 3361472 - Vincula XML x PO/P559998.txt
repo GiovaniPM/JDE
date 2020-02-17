@@ -1,0 +1,402 @@
+﻿
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F9860
+Event: Button Clicked
+Event GUID: 9ae5f340-1e78-4892-b623-ffd5642b36a2
+=============================================
+Call App:P559998 Form:W559998A Version:SL VersionName
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F0101
+Event: Button Clicked
+Event GUID: 4e94d835-96f1-4873-9579-91944675d80a
+=============================================
+Call App:P559998 Form:W559998C Version:SL VersionName
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F7611B
+Event: Button Clicked
+Event GUID: e89e1d17-2c46-4bd1-a245-72e3d0b81dd3
+=============================================
+Call App:P559998 Form:W559998D Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F4301
+Event: Button Clicked
+Event GUID: ff601932-05fc-4e99-8d1b-d938fd9014bc
+=============================================
+Call App:P559998 Form:W559998E Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F4311
+Event: Button Clicked
+Event GUID: 75ff23a4-668a-4e89-8529-05abaf7ae6c2
+=============================================
+Call App:P559998 Form:W559998F Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC Vetor
+Event: Button Clicked
+Event GUID: 2055d8a6-dba7-4d58-aa2c-b9bff38563a4
+=============================================
+Call App:P559998 Form:W559998G Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F4111
+Event: Button Clicked
+Event GUID: 2952aeeb-890a-4b65-ae5e-b426b4539b93
+=============================================
+Call App:P559998 Form:W559998I Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F5576B21
+Event: Button Clicked
+Event GUID: ca2dbcd4-9321-4924-8825-3f93f76bc50b
+=============================================
+Call App:P559998 Form:W559998H Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F4105
+Event: Button Clicked
+Event GUID: 239932be-0e44-43d9-be06-6afbb225bf2f
+=============================================
+Call App:P559998 Form:W559998J Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F5576B20
+Event: Button Clicked
+Event GUID: f61dc5f7-e0b2-4cf9-b748-8bbf78c1835e
+=============================================
+Call App:P559998 Form:W559998K Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F570860
+Event: Button Clicked
+Event GUID: 675a0693-652e-4228-9615-ace2253f4c9f
+=============================================
+Call App:P559998 Form:W559998T Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F43121
+Event: Button Clicked
+Event GUID: 5c85fcf8-f9b1-4d31-b63c-f7db4fb8e622
+=============================================
+Call App:P559998 Form:W559998U Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC N570801
+Event: Button Clicked
+Event GUID: 57c8e204-8845-40f2-bf89-0081a8bdaff9
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_cPassou_EV01 [EV01]
+----------------------------------------
+VerificaRegraOrigem(N570801.VerificaRegraOrigem)
+     VA evt_cPassou_EV01 [EV01] <- cPassou [EV01]
+     "201910" -> mnAnoMesProcessamento [ANMESENT]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F0911
+Event: Button Clicked
+Event GUID: 7b1f2524-e5b5-4fe8-b34a-817cc32b2dab
+=============================================
+Call App:P559998 Form:W559998V Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F55QUEUE
+Event: Button Clicked
+Event GUID: 93319342-e32a-4da6-bee8-8ec25546e261
+=============================================
+Call App:P559998 Form:W559998W Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC F00022
+Event: Button Clicked
+Event GUID: ba6bd93d-65d4-42e3-92ca-6331362c36b6
+=============================================
+Call App:P559998 Form:W559998X Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W559998B
+Object: FC P570806
+Event: Button Clicked
+Event GUID: 24320177-7636-40b7-b6a1-ec2c9b25db75
+=============================================
+Call App:P559998 Form:W559998Y Version:Undefined
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=============================================
+Form: Teste Array - W559998G
+Event: Form Variables
+Event GUID: 3937e0f8-4005-4385-9cc0-54722c1960d0
+=============================================
+frm_idVetor_GENLNG [GENLNG]
+frm_nIndice_CIP [CIP]
+frm_nTamanho_CIP [CIP]
+frm_URLXMLDefinition [URLXML]
+
+=============================================
+EVENTS
+=============================================
+Form: Teste Array - W559998G
+Object: FC Inicializa Vetor
+Event: Button Clicked
+Event GUID: ba6cc6f6-6261-4215-818c-fa0818f45433
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnValor_AN8 [AN8]
+----------------------------------------
+If VA frm_nTamanho_CIP [CIP] is greater than "0"
+     FinalizaVetor(B57ARRAY.FinalizaVetor)
+          VA frm_idVetor_GENLNG [GENLNG] <> idArray [GENLNG]
+End If
+VA frm_nTamanho_CIP [CIP] = 10
+InicializaVetor(B57ARRAY.InicializaVetor)
+     VA frm_idVetor_GENLNG [GENLNG] <> idArray [GENLNG]
+     VA frm_nTamanho_CIP [CIP] -> nTamanhoInicial [CIP]
+     "AN8" -> szDataItem [DTAI]
+//
+VA frm_nIndice_CIP [CIP] = 0
+While VA frm_nIndice_CIP [CIP] is less than VA frm_nTamanho_CIP [CIP]
+     VA evt_mnValor_AN8 [AN8] = 0
+     InsereBuscaSetaVetor(B57ARRAY.InsereBuscaSetaVetor)
+          VA frm_idVetor_GENLNG [GENLNG] <> idArray [GENLNG]
+          "S" -> cTipoOperacao [EV01]
+          VA frm_nIndice_CIP [CIP] <> nIndice [CIP]
+          VA evt_mnValor_AN8 [AN8] <> mnMathNumeric [MN29D9]
+     VA frm_nIndice_CIP [CIP] = [VA frm_nIndice_CIP [CIP]]+1
+End While
+Press Button(FC Exibe)
+
+
+=============================================
+EVENTS
+=============================================
+Form: Teste Array - W559998G
+Object: FC Adiciona
+Event: Button Clicked
+Event GUID: 0e7daf40-535e-420e-bc7b-5f95fea4f639
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnValor_AN8 [AN8]
+evt_nIndice_CIP [CIP]
+evt_nTamanho_CIP [CIP]
+----------------------------------------
+InsereBuscaSetaVetor(B57ARRAY.InsereBuscaSetaVetor)
+     VA frm_idVetor_GENLNG [GENLNG] <> idArray [GENLNG]
+     "S" -> cTipoOperacao [EV01]
+     FC XAPI Client IP [CIP] <> nIndice [CIP]
+     FC Address Number [AN8] <> mnMathNumeric [MN29D9]
+Press Button(FC Exibe)
+//
+! VA frm_URLXMLDefinition [URLXML] = "<?xml version="1.0" encoding="utf-8"?><Graph graphName="bar_basic"><O1Title text="Week Ending" visible="true"/><Y1Title text="Cost Variance (USD)" visible="true"/><LocalRelationalData><Row columnKey="9/1/05" rowKey="Actual Variance" dataValue="1504" /><Row columnKey="9/8/05" rowKey="Actual Variance" dataValue="980" /><Row columnKey="9/15/05" rowKey="Actual Variance" dataValue="-675" /><Row columnKey="9/22/05" rowKey="Actual Variance" dataValue="784" /><Row columnKey="9/29/05" rowKey="Actual Variance" dataValue="0" /><Row columnKey="9/1/06" rowKey="Actual Variance" dataValue="1504" /><Row columnKey="9/8/06" rowKey="Actual Variance" dataValue="980" /><Row columnKey="9/15/06" rowKey="Actual Variance" dataValue="-675" /><Row columnKey="9/22/06" rowKey="Actual Variance" dataValue="784" /><Row columnKey="9/29/06" rowKey="Actual Variance" dataValue="0" /></LocalRelationalData></Graph>"
+! Set Graph XML(FC Chart 30, VA frm_URLXMLDefinition)
+! Draw Chart(Could not resolve Form Control. 30)
+
+
+=============================================
+EVENTS
+=============================================
+Form: Teste Array - W559998G
+Object: FC XAPI Client IP
+Event: Control is Exited
+Event GUID: 6b6a0d9f-94b9-4caf-a1ab-c2954702448d
+=============================================
+If FC XAPI Client IP [CIP] is less than "0"
+Or FC XAPI Client IP [CIP] is greater than "9"
+     Set Control Error(FC XAPI Client IP, "VALOR INVALIDO!")
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Teste Array - W559998G
+Object: FC Exibe
+Event: Button Clicked
+Event GUID: 6010070f-4637-4c6e-a1e4-f44f80400466
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_nIndice_CIP [CIP]
+evt_mnValor_AN8 [AN8]
+----------------------------------------
+Delete Grid Row(FC Grid,  <All Rows>)
+VA evt_nIndice_CIP [CIP] = 0
+While VA evt_nIndice_CIP [CIP] is less than VA frm_nTamanho_CIP [CIP]
+     InsereBuscaSetaVetor(B57ARRAY.InsereBuscaSetaVetor)
+          VA frm_idVetor_GENLNG [GENLNG] <> idArray [GENLNG]
+          "P" -> cTipoOperacao [EV01]
+          VA evt_nIndice_CIP [CIP] <> nIndice [CIP]
+          VA evt_mnValor_AN8 [AN8] <> mnMathNumeric [MN29D9]
+     GB ID [GENLNG] = [VA evt_nIndice_CIP [CIP]]
+     GB Vetor [DL01] = [VA evt_mnValor_AN8 [AN8]]
+     ! MDDebug(MD_DEBUG.MDDebug)
+     !      "Teste" -> szComment [DSC1]
+     !      VA evt_mnValor_AN8 [AN8] -> mnMathNumeric_1 [ITM]
+     !      VA evt_nIndice_CIP [CIP] -> nInteger01 [INT01]
+     Insert Grid Buffer Row(FC Grid, <After Last Row>, <Yes>, <Yes>, <No>, <No>, <No>)
+     VA evt_nIndice_CIP [CIP] = [VA evt_nIndice_CIP [CIP]]+1
+End While
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Teste Array - W559998G
+Event: Dialog is Initialized
+Event GUID: dec0e20a-d86e-4e0f-b49e-0181adbe35ad
+=============================================
+VA frm_nTamanho_CIP [CIP] = 0
+Press Button(FC Inicializa Vetor)
+//
+! VA frm_URLXMLDefinition [URLXML] = "<?xml version="1.0" encoding="utf-8"?><Graph graphName="bar_basic"><O1Title text="Week Ending" visible="true"/><Y1Title text="Cost Variance (USD)" visible="true"/><LocalRelationalData><Row columnKey="9/1/05" rowKey="Actual Variance" dataValue="1504" /><Row columnKey="9/8/05" rowKey="Actual Variance" dataValue="980" /><Row columnKey="9/15/05" rowKey="Actual Variance" dataValue="-675" /><Row columnKey="9/22/05" rowKey="Actual Variance" dataValue="784" /><Row columnKey="9/29/05" rowKey="Actual Variance" dataValue="0" /><Row columnKey="9/1/06" rowKey="Actual Variance" dataValue="1504" /><Row columnKey="9/8/06" rowKey="Actual Variance" dataValue="980" /><Row columnKey="9/15/06" rowKey="Actual Variance" dataValue="-675" /><Row columnKey="9/22/06" rowKey="Actual Variance" dataValue="784" /><Row columnKey="9/29/06" rowKey="Actual Variance" dataValue="0" /></LocalRelationalData></Graph>"
+! Set Data XML(FC Chart 30, VA frm_URLXMLDefinition)
+! Set Graph XML(FC Chart 30, VA frm_URLXMLDefinition)
+! Draw Chart(Could not resolve Form Control. 30)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: F00092 - W559998S
+Object: GC Unique Key ID
+Event: Col is Exited
+Event GUID: 403cee73-0a82-4647-b0f6-855632b725e6
+=============================================
+If GC Unique Key ID [UKID] is equal to <Blank>
+Or GC Unique Key ID [UKID] is equal to <NULL>
+Or GC Unique Key ID [UKID] is equal to "0"
+     GetNextUniqueKeyID(X00022.GetNextUniqueKeyID)
+          "F00092" -> szObjectName [OBNM]
+          GC Unique Key ID [UKID] <> mnUniqueKeyID [UKID]
+End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,475 @@
+﻿---------------------------------------------------------------------------------
+Business Function: N55XML01 - BSFN XML
+Function Type: NER
+---------------------------------------------------------------------------------
+=============================================
+EVENTS
+=============================================
+NER: XMLItemValido 
+Event GUID: 509cb000-585e-4b24-ba8a-796673779231
+=============================================
+=====================================================
+Data Structure: D55XML1E - DS XML Item Valido                                          
+=====================================================
+BF szItemReferencia [LITM]
+BF szItem [LITM]
+BF cAchou [EV01]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnTamanho_IA04 [IA04]
+----------------------------------------
+If BF szItemReferencia [LITM] is equal to BF szItem [LITM]
+     BF cAchou [EV01] = "S"
+Else
+     VA evt_mnTamanho_IA04 [IA04] = length([BF szItemReferencia [LITM]])+1
+     BF szItemReferencia [LITM] = concat([BF szItemReferencia [LITM]], ".")
+     BF szItem [LITM] = substr([BF szItem [LITM]], "0", [VA evt_mnTamanho_IA04 [IA04]])
+     If BF szItemReferencia [LITM] is equal to BF szItem [LITM]
+          BF cAchou [EV01] = "S"
+     Else
+          BF cAchou [EV01] = "N"
+     End If
+End If
+
+
+=============================================
+EVENTS
+=============================================
+NER: XMLLogErro 
+Event GUID: 131969bf-856b-4155-b20a-3371f9e59e12
+=============================================
+=====================================================
+Data Structure: D55XML1G - DS XML Log Erro                                             
+=====================================================
+BF mnIDXMLNF [Z55XML01]
+BF mnItemXMLNF [Z55XML02]
+BF szMensagem [DL011]
+BF szUserId [USER]
+BF szProgramId [PID]
+BF szSelectionValues001 [VL01]
+BF szWorkStationId [JOBN]
+BF jdDateUpdated [UPMJ]
+BF mnTimeLastUpdated [UPMT]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnLinha_LNID [LNID]
+----------------------------------------
+F55XML04.Select  [Index 2: Z55XML01.02, LNID DESC]
+     BF mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     BF mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+F55XML04.FetchNext  [Index 2: Z55XML01.02, LNID DESC]
+     VA evt_mnLinha_LNID [LNID] <- TK Line Number [LNID]
+If SV File_IO_Status is not equal to CO SUCCESS
+     VA evt_mnLinha_LNID [LNID] = 1
+Else
+     VA evt_mnLinha_LNID [LNID] = [VA evt_mnLinha_LNID [LNID]]+1
+End If
+//
+F55XML04.Insert  [Index 1: Z55XML01, Z55XML02, LNID]
+     BF mnIDXMLNF [Z55XML01] -> TK ID XML de NF [Z55XML01]
+     BF mnItemXMLNF [Z55XML02] -> TK Item no XML da NF [Z55XML02]
+     BF szMensagem [DL011] -> TK Description 11 [DL011]
+     BF szUserId [USER] -> TK User ID [USER]
+     BF szProgramId [PID] -> TK Program ID [PID]
+     BF szSelectionValues001 [VL01] -> TK Selection Values 01 [VL01]
+     BF szWorkStationId [JOBN] -> TK Work Station ID [JOBN]
+     BF jdDateUpdated [UPMJ] -> TK Date - Updated [UPMJ]
+     BF mnTimeLastUpdated [UPMT] -> TK Time - Last Updated [UPMT]
+     VA evt_mnLinha_LNID [LNID] -> TK Line Number [LNID]
+
+
+=============================================
+EVENTS
+=============================================
+NER: XMLSaldoPedido 
+Event GUID: e58ac05f-a2d3-4205-bc5d-91768eed415a
+=============================================
+=====================================================
+Data Structure: D55XML1H - DS XML Saldo Pedido                                         
+=====================================================
+BF szCiaPedido [KCOO]
+BF mnDocumentoPedido [DOCO]
+BF szTipoPedido [DCTO]
+BF szSufixoPedido [SFXO]
+BF mnLinhaPedido [LNID]
+BF mnQtd [UORG]
+BF mnUni [UPRC]
+BF mnVlr [AEXP]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szStatusXML_Z55XML04 [Z55XML04]
+evt_mnUORG [UORG]
+evt_mnUPRC [UPRC]
+evt_mnAEXP [AEXP]
+----------------------------------------
+BF mnQtd [UORG] = 0
+BF mnUni [UPRC] = 0
+BF mnVlr [AEXP] = 0
+VA evt_szStatusXML_Z55XML04 [Z55XML04] = "999"
+V55XML1D.Select
+     BF szCiaPedido [KCOO] = TK Order Company (Order Number) [KCOO][F55XML05.0]
+     BF mnDocumentoPedido [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO][F55XML05.0]
+     BF szTipoPedido [DCTO] = TK Order Type [DCTO][F55XML05.0]
+     BF szSufixoPedido [SFXO] = TK Order Suffix [SFXO][F55XML05.0]
+     BF mnLinhaPedido [LNID] = TK Line Number [LNID][F55XML05.0]
+     VA evt_szStatusXML_Z55XML04 [Z55XML04] > TK Status XML [Z55XML04][F55XML03.0]
+V55XML1D.FetchNext
+     VA evt_mnUORG [UORG] <- TK Units - Order/Transaction Quantity [UORG][F55XML05.0]
+     VA evt_mnUPRC [UPRC] <- TK Amount - Price per Unit [UPRC][F55XML05.0]
+     VA evt_mnAEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55XML05.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     BF mnQtd [UORG] = [BF mnQtd [UORG]]+[VA evt_mnUORG [UORG]]
+     BF mnUni [UPRC] = [VA evt_mnUPRC [UPRC]]
+     BF mnVlr [AEXP] = [BF mnVlr [AEXP]]+[VA evt_mnAEXP [AEXP]]
+     V55XML1D.FetchNext
+          VA evt_mnUORG [UORG] <- TK Units - Order/Transaction Quantity [UORG][F55XML05.0]
+          VA evt_mnUPRC [UPRC] <- TK Amount - Price per Unit [UPRC][F55XML05.0]
+          VA evt_mnAEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55XML05.0]
+End While
+
+
+=============================================
+EVENTS
+=============================================
+NER: XMLSaldoVinculado 
+Event GUID: 51714898-3c47-45a8-a7e2-368472bc5e08
+=============================================
+=====================================================
+Data Structure: D55XML1C - DS XML Saldo Vinculado                                      
+=====================================================
+BF mnIDXMLNF [Z55XML01]
+BF mnItemXMLNF [Z55XML02]
+BF mnQuantidade [ACQTY]
+BF mnValorUnitario [UPRC]
+BF mnValorTotal [AEXP]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_05_KCOO [KCOO]
+evt_05_MCU [MCU]
+evt_05_DOCO [DOCO]
+evt_05_DCTO [DCTO]
+evt_05_SFXO [SFXO]
+evt_05_LNID [LNID]
+evt_05_UOM [UOM]
+evt_05_UORG [UORG]
+evt_05_AEXP [AEXP]
+evt_05_ITM [ITM]
+evt_03_UOM [UOM]
+evt_CONV [CONV]
+evt_DTAI [DTAI]
+evt_03_CMARTMES [CMARTMES]
+evt_SDB [SDB]
+evt_TYDT [TYDT]
+evt_RMK [RMK]
+evt_RMK2 [RMK2]
+evt_RMK3 [RMK3]
+evt_02_BCGF [BCGF]
+----------------------------------------
+F55XML02.Select  [Index 1: Z55XML01]
+     BF mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+F55XML02.FetchNext  [Index 1: Z55XML01]
+     VA evt_02_BCGF [BCGF] <- TK CGC Tax ID - Ship From [BCGF]
+F55XML02.Close
+     
+//
+F55XML03.Select  [Index 1: Z55XML01, Z55XML02]
+     BF mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     BF mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+F55XML03.FetchNext  [Index 1: Z55XML01, Z55XML02]
+     VA evt_03_UOM [UOM] <- TK Unit of Measure as Input [UOM]
+     VA evt_03_CMARTMES [CMARTMES] <- TK Unit of Measure [CMARTMES]
+F55XML03.Close
+     
+//
+VA evt_SDB [SDB] = "XML"
+VA evt_TYDT [TYDT] = "UM"
+VA evt_RMK [RMK] = VA evt_02_BCGF [BCGF]
+VA evt_RMK3 [RMK3] = VA evt_03_CMARTMES [CMARTMES]
+F00092.Select  [Index 2: SuppDB]
+     VA evt_SDB [SDB] = TK Supplemental Database Code [SDB]
+     VA evt_TYDT [TYDT] = TK Type Data [TYDT]
+     VA evt_RMK [RMK] = TK Name - Remark [RMK]
+     VA evt_RMK3 [RMK3] = TK Text Remark [RMK3]
+F00092.FetchNext  [Index 2: SuppDB]
+     VA evt_RMK2 [RMK2] <- TK Name - Remark [RMK2]
+If SV File_IO_Status is equal to CO SUCCESS
+     VA evt_03_UOM [UOM] = VA evt_RMK2 [RMK2]
+End If
+F00092.Close
+     
+//
+F55XML05.Select  [Index 1: Z55XML01.Z55XML02]
+     BF mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     BF mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+F55XML05.FetchNext  [Index 1: Z55XML01.Z55XML02]
+     VA evt_05_MCU [MCU] <- TK Business Unit [MCU]
+     VA evt_05_KCOO [KCOO] <- TK Order Company (Order Number) [KCOO]
+     VA evt_05_DOCO [DOCO] <- TK Document (Order No, Invoice, etc.) [DOCO]
+     VA evt_05_DCTO [DCTO] <- TK Order Type [DCTO]
+     VA evt_05_SFXO [SFXO] <- TK Order Suffix [SFXO]
+     VA evt_05_LNID [LNID] <- TK Line Number [LNID]
+     VA evt_05_UOM [UOM] <- TK Unit of Measure as Input [UOM]
+     VA evt_05_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+     VA evt_05_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+While SV File_IO_Status is equal to CO SUCCESS
+     F4311.FetchSingle  [Index 1: Doc No, Order Type, + 1]
+          VA evt_05_KCOO [KCOO] = TK Order Company (Order Number) [KCOO]
+          VA evt_05_DOCO [DOCO] = TK Document (Order No, Invoice, etc.) [DOCO]
+          VA evt_05_DCTO [DCTO] = TK Order Type [DCTO]
+          VA evt_05_SFXO [SFXO] = TK Order Suffix [SFXO]
+          VA evt_05_LNID [LNID] = TK Line Number [LNID]
+          VA evt_05_ITM [ITM] <- TK Item Number - Short [ITM]
+     F4311.Close
+          
+     GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+          VA evt_05_MCU [MCU] -> szBranchPlant [MCU]
+          VA evt_05_UOM [UOM] -> szFromUnitOfMeasure [UOM]
+          VA evt_03_UOM [UOM] -> szToUnitOfMeasure [RUM]
+          VA evt_CONV [CONV] <- mnConversionFactorFromToPrim [CONV]
+          VA evt_DTAI [DTAI] <- szErrorMessageID [DTAI]
+          VA evt_05_ITM [ITM] -> mnShortItemNumber [ITM]
+     BF mnQuantidade [ACQTY] = [BF mnQuantidade [ACQTY]]+([VA evt_05_UORG [UORG]]*[VA evt_CONV [CONV]])
+     BF mnValorTotal [AEXP] = [BF mnValorTotal [AEXP]]+[VA evt_05_AEXP [AEXP]]
+     F55XML05.FetchNext  [Index 1: Z55XML01.Z55XML02]
+          VA evt_05_MCU [MCU] <- TK Business Unit [MCU]
+          VA evt_05_KCOO [KCOO] <- TK Order Company (Order Number) [KCOO]
+          VA evt_05_DOCO [DOCO] <- TK Document (Order No, Invoice, etc.) [DOCO]
+          VA evt_05_DCTO [DCTO] <- TK Order Type [DCTO]
+          VA evt_05_SFXO [SFXO] <- TK Order Suffix [SFXO]
+          VA evt_05_LNID [LNID] <- TK Line Number [LNID]
+          VA evt_05_UOM [UOM] <- TK Unit of Measure as Input [UOM]
+          VA evt_05_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+          VA evt_05_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+End While
+If BF mnQuantidade [ACQTY] is equal to "0"
+     BF mnValorUnitario [UPRC] = 0
+Else
+     BF mnValorUnitario [UPRC] = [BF mnValorTotal [AEXP]]/[BF mnQuantidade [ACQTY]]
+End If
+F55XML05.Close
+     
+
+
+=============================================
+EVENTS
+=============================================
+NER: XMLTolerancia 
+Event GUID: 52b100e0-cda4-428b-ac2b-29114228ce44
+=============================================
+=====================================================
+Data Structure: D55XML1B - DS XML Tolerancia                                           
+=====================================================
+BF mnPercentual [74UTOLP]
+BF mnValorMaximo [UPRC]
+BF mnValorReferencia [UPRC]
+BF mnValorUsado [UPRC]
+BF cErro [EV01]
+BF szMensagem [DTAI]
+BF mnLimiteInferior [UPRC]
+BF mnLimiteSuperior [UPRC]
+BF mnDiferenca [UPRC]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnDiferenca_UPRC [UPRC]
+evt_mnLimiteInferior_UPRC [UPRC]
+evt_mnLimiteSuperior_UPRC [UPRC]
+evt_mnModulo_UPRC [UPRC]
+----------------------------------------
+BF cErro [EV01] = "N"
+BF szMensagem [DTAI] = <NULL>
+//
+VA evt_mnDiferenca_UPRC [UPRC] = [BF mnPercentual [74UTOLP]]/100
+VA evt_mnDiferenca_UPRC [UPRC] = [BF mnValorReferencia [UPRC]]*[VA evt_mnDiferenca_UPRC [UPRC]]
+VA evt_mnLimiteInferior_UPRC [UPRC] = [BF mnValorReferencia [UPRC]]-[VA evt_mnDiferenca_UPRC [UPRC]]
+VA evt_mnLimiteSuperior_UPRC [UPRC] = [BF mnValorReferencia [UPRC]]+[VA evt_mnDiferenca_UPRC [UPRC]]
+VA evt_mnModulo_UPRC [UPRC] = abs(([BF mnValorReferencia [UPRC]]-[BF mnValorUsado [UPRC]]))
+! If BF mnPercentual [74UTOLP] is not equal to <Blank>
+! And BF mnPercentual [74UTOLP] is not equal to <NULL>
+! And BF mnPercentual [74UTOLP] is not equal to "0"
+     If BF mnValorUsado [UPRC] is less than VA evt_mnLimiteInferior_UPRC [UPRC]
+     Or BF mnValorUsado [UPRC] is greater than VA evt_mnLimiteSuperior_UPRC [UPRC]
+          BF cErro [EV01] = "S"
+          BF szMensagem [DTAI] = "112G"
+     End If
+! End If
+If BF mnValorMaximo [UPRC] is not equal to <Blank>
+And BF mnValorMaximo [UPRC] is not equal to <NULL>
+And BF mnValorMaximo [UPRC] is not equal to "0"
+And BF mnValorMaximo [UPRC] is less than VA evt_mnModulo_UPRC [UPRC]
+     BF cErro [EV01] = "S"
+     BF szMensagem [DTAI] = "112G"
+End If
+BF mnLimiteInferior [UPRC] = VA evt_mnLimiteInferior_UPRC [UPRC]
+BF mnLimiteSuperior [UPRC] = VA evt_mnLimiteSuperior_UPRC [UPRC]
+BF mnDiferenca [UPRC] = VA evt_mnDiferenca_UPRC [UPRC]
+
+
+=============================================
+EVENTS
+=============================================
+NER: XMLUOMFornecedor 
+Event GUID: 5c830de8-098c-4f0c-aaa9-f555bfb17d4b
+=============================================
+=====================================================
+Data Structure: D55XML1D - DS XML UOM Fornecedor                                       
+=====================================================
+BF szCNPJFornecedor [RMK]
+BF szUOMFornecedor [RMK3]
+BF szUOMRBS [RMK2]
+BF cAchou [EV01]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_SDB [SDB]
+evt_TYDT [TYDT]
+----------------------------------------
+VA evt_SDB [SDB] = "XML"
+VA evt_TYDT [TYDT] = "UM"
+F00092.Select  [Index 2: SuppDB]
+     VA evt_SDB [SDB] = TK Supplemental Database Code [SDB]
+     VA evt_TYDT [TYDT] = TK Type Data [TYDT]
+     BF szCNPJFornecedor [RMK] = TK Name - Remark [RMK]
+     BF szUOMFornecedor [RMK3] = TK Text Remark [RMK3]
+F00092.FetchNext  [Index 2: SuppDB]
+     BF szUOMRBS [RMK2] <- TK Name - Remark [RMK2]
+If SV File_IO_Status is not equal to CO SUCCESS
+     BF szUOMRBS [RMK2] = <NULL>
+     BF cAchou [EV01] = "N"
+Else
+     BF cAchou [EV01] = "S"
+End If
+F00092.Close
+     
+
+
+=============================================
+EVENTS
+=============================================
+NER: XMLUpdateLog 
+Event GUID: 8e19894c-ea4d-416a-838c-1d87d49d86e7
+=============================================
+=====================================================
+Data Structure: D55XML1A - DS XML Log                                                  
+=====================================================
+BF mnIDXMLNF [Z55XML01]
+BF mnItemXMLNF [Z55XML02]
+BF szNameObject [OBNM]
+BF szDataItem [DTAI]
+BF szKwText [KW21]
+BF szUserId [USER]
+BF szProgramId [PID]
+BF szSelectionValues001 [VL01]
+BF szWorkStationId [JOBN]
+BF jdDateUpdated [UPMJ]
+BF mnTimeLastUpdated [UPMT]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szKwText_KW21 [KW21]
+evt_jdDateUpdated_UPMJ [UPMJ]
+evt_mnTimeLastUpdated_UPMT [UPMT]
+evt_szUserId_USER [USER]
+evt_szProgramId_PID [PID]
+evt_szWorkStationId_JOBN [JOBN]
+evt_szSelectionValues001_VL01 [VL01]
+----------------------------------------
+GetAuditInfo(B9800100.GetAuditInfo)
+     VA evt_szUserId_USER [USER] <> szUserName [USER]
+     VA evt_jdDateUpdated_UPMJ [UPMJ] <> jdDate [DTE]
+     VA evt_mnTimeLastUpdated_UPMT [UPMT] <> mnTime [TME0]
+     VA evt_szWorkStationId_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+! F55XML07.Select  [Index 2: Desc]
+!      BF mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+!      BF mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+!      BF szNameObject [OBNM] = TK Object Name [OBNM]
+!      BF szDataItem [DTAI] = TK Data Item [DTAI]
+!      VA evt_jdDateUpdated_UPMJ [UPMJ] = TK Date - Updated [UPMJ]
+!      VA evt_mnTimeLastUpdated_UPMT [UPMT] = TK Time - Last Updated [UPMT]
+F55XML07.Select  [Index 2: Desc]
+     BF mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     BF mnItemXMLNF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+     BF szNameObject [OBNM] = TK Object Name [OBNM]
+     BF szDataItem [DTAI] = TK Data Item [DTAI]
+F55XML07.FetchNext  [Index 2: Desc]
+     VA evt_szKwText_KW21 [KW21] <- TK Knowledgeware - Text [KW21]
+If BF szKwText [KW21] is not equal to VA evt_szKwText_KW21 [KW21]
+Or SV File_IO_Status is not equal to CO SUCCESS
+     F55XML07.Insert  [Index 1: Z55XML01,02,DTAI...]
+          BF mnIDXMLNF [Z55XML01] -> TK ID XML de NF [Z55XML01]
+          BF mnItemXMLNF [Z55XML02] -> TK Item no XML da NF [Z55XML02]
+          BF szNameObject [OBNM] -> TK Object Name [OBNM]
+          BF szDataItem [DTAI] -> TK Data Item [DTAI]
+          VA evt_szUserId_USER [USER] -> TK User ID [USER]
+          VA evt_szProgramId_PID [PID] -> TK Program ID [PID]
+          VA evt_szSelectionValues001_VL01 [VL01] -> TK Selection Values 01 [VL01]
+          VA evt_szWorkStationId_JOBN [JOBN] -> TK Work Station ID [JOBN]
+          VA evt_jdDateUpdated_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+          VA evt_mnTimeLastUpdated_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+          BF szKwText [KW21] -> TK Knowledgeware - Text [KW21]
+End If
+F55XML07.Close
+     
+
+
+=============================================
+EVENTS
+=============================================
+NER: XMLValorIncluir 
+Event GUID: b7b3c12f-7e45-46ed-9564-a1cced37b0d2
+=============================================
+=====================================================
+Data Structure: D55XML1F - DS XML Inclui Valor                                         
+=====================================================
+BF mnQtdXML [ACQTY]
+BF mnUniXML [UPRC]
+BF mnVlrXML [AEXP]
+BF mnQtdPed [ACQTY]
+BF mnUniPed [UPRC]
+BF mnVlrPed [AEXP]
+BF mnQtdIncluir [ACQTY]
+BF mnUniIncluir [UPRC]
+BF mnVlrIncluir [AEXP]
+BF mnConversionFactor [CONV]
+BF mnQtdSaldo [ACQTY]
+BF mnUniSaldo [UPRC]
+BF mnVlrSaldo [AEXP]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnQtd_ACQTY [ACQTY]
+----------------------------------------
+VA evt_mnQtd_ACQTY [ACQTY] = [BF mnQtdPed [ACQTY]]*[BF mnConversionFactor [CONV]]
+//
+If BF mnQtdXML [ACQTY] is greater than or equal to VA evt_mnQtd_ACQTY [ACQTY]
+     BF mnVlrIncluir [AEXP] = BF mnVlrPed [AEXP]
+     BF mnQtdIncluir [ACQTY] = BF mnQtdPed [ACQTY]
+     BF mnUniIncluir [UPRC] = BF mnUniPed [UPRC]
+Else
+     BF mnVlrIncluir [AEXP] = BF mnVlrXML [AEXP]
+     BF mnQtdIncluir [ACQTY] = [BF mnQtdXML [ACQTY]]*(1/[BF mnConversionFactor [CONV]])
+     BF mnUniIncluir [UPRC] = [BF mnVlrXML [AEXP]]/[BF mnQtdIncluir [ACQTY]]
+End If
+//
+BF mnVlrSaldo [AEXP] = [BF mnVlrXML [AEXP]]-[BF mnVlrIncluir [AEXP]]
+BF mnQtdSaldo [ACQTY] = [BF mnQtdXML [ACQTY]]-([BF mnQtdIncluir [ACQTY]]*[BF mnConversionFactor [CONV]])
+If BF mnQtdSaldo [ACQTY] is not equal to "0"
+     BF mnUniSaldo [UPRC] = [BF mnVlrSaldo [AEXP]]/[BF mnQtdSaldo [ACQTY]]
+Else
+     BF mnUniSaldo [UPRC] = 0
+End If
+
+
+

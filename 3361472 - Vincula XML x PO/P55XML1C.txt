@@ -1,0 +1,241 @@
+﻿
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: F55XML06 - W55XML1CB
+Object: HC Atualiza XML
+Event: Button Clicked
+Event GUID: 9f3ced5e-e90f-4b12-91c4-7ca036819593
+=============================================
+F55XML06.Update  [Index 1: Z44XML01,55ESTC]
+     GC ID XML [Z55XML01] = TK ID XML de NF [Z55XML01]
+     GC Status XML [55ESTC] = TK NFE Document Status Code [55ESTC]
+     FC XML Data Composite [XMLCMPST] -> TK XML Data Composite [XMLCMPST]
+
+
+=============================================
+EVENTS
+=============================================
+Form: F55XML06 - W55XML1CB
+Object: FC Grid
+Event: Row is Entered
+Event GUID: 63349e47-dc21-48a8-8162-f57f06b90e3c
+=============================================
+FC XML Data Composite [XMLCMPST] = GC XML Data [XMLCMPST]
+
+=============================================
+Form: F55XML06 - W55XML1CB
+Object: FC Grid
+Event: Row is Selected (Web Only)
+Event GUID: 8cbb0f96-342a-4f98-b82e-037f454e83e3
+=============================================
+FC XML Data Composite [XMLCMPST] = GC XML Data [XMLCMPST]
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: F55XML06 - W55XML1CB
+Event: Grid Record is Fetched
+Event GUID: 854a1e54-6dd9-4966-9020-d48b95436a8f
+=============================================
+F55XML06.Select  [Index 1: Z44XML01,55ESTC]
+     BC ID XML de NF (F55XML06.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+     BC NFE Document Status Code (F55XML06.0) [55ESTC] = TK NFE Document Status Code [55ESTC]
+F55XML06.FetchNext  [Index 1: Z44XML01,55ESTC]
+     GC XML Data [XMLCMPST] <- TK XML Data Composite [XMLCMPST]
+
+
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: F55XML03 - W55XML1CD
+Object: HC Atualiza Descrição
+Event: Button Clicked
+Event GUID: 7ccd61f2-2c7c-44d9-899a-340bc8c12ccd
+=============================================
+F55XML03.Update  [Index 1: Z55XML01, Z55XML02]
+     GC ID XML na NF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     GC Item XML na NF [Z55XML02] = TK Item no XML da NF [Z55XML02]
+     FC Version Detail [DESC2000] -> TK Version Description [DESC2000]
+
+
+=============================================
+EVENTS
+=============================================
+Form: F55XML03 - W55XML1CD
+Object: FC Grid
+Event: Row is Entered
+Event GUID: 07c518de-66df-40e6-b78e-6920aa1fbb52
+=============================================
+FC Version Detail [DESC2000] = GC Version Detail [DESC2000]
+
+=============================================
+Form: F55XML03 - W55XML1CD
+Object: FC Grid
+Event: Row is Selected (Web Only)
+Event GUID: 8da2592f-1a96-40a3-b5a8-6a91b3a97b67
+=============================================
+FC Version Detail [DESC2000] = GC Version Detail [DESC2000]
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: F55XML03 - W55XML1CD
+Event: Grid Record is Fetched
+Event GUID: d7994ff6-d3ef-4c57-99b2-76bfcda894f5
+=============================================
+F55XML03.Select  [Index 1: Z55XML01, Z55XML02]
+     BC ID XML de NF (F55XML03.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+     BC Item no XML da NF (F55XML03.0) [Z55XML02] = TK Item no XML da NF [Z55XML02]
+F55XML03.FetchNext  [Index 1: Z55XML01, Z55XML02]
+     GC Version Detail [DESC2000] <- TK Version Description [DESC2000]
+
+
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: F55XML02 - W55XML1CF
+Object: HC Atualiza Texto
+Event: Button Clicked
+Event GUID: 0fd697c2-c036-4e96-8f7f-2ad2b2dcd487
+=============================================
+F55XML02.Update  [Index 1: Z55XML01]
+     GC ID XML na NF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     FC Additional Text [ADDTEXT] -> TK Additional Text [ADDTEXT]
+
+
+=============================================
+EVENTS
+=============================================
+Form: F55XML02 - W55XML1CF
+Object: FC Grid
+Event: Row is Entered
+Event GUID: 6cb05901-7017-4e2c-8280-e3fdd4e84d8f
+=============================================
+FC Additional Text [ADDTEXT] = GC Additional Text [ADDTEXT]
+
+=============================================
+Form: F55XML02 - W55XML1CF
+Object: FC Grid
+Event: Row is Selected (Web Only)
+Event GUID: 4acb8865-d4f5-495a-90d6-755d5807f548
+=============================================
+FC Additional Text [ADDTEXT] = GC Additional Text [ADDTEXT]
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: F55XML02 - W55XML1CF
+Event: Grid Record is Fetched
+Event GUID: 0c8227a6-42b5-490e-a5d8-92024043c6fb
+=============================================
+F55XML02.Select  [Index 1: Z55XML01]
+     BC ID XML de NF (F55XML02.0) [Z55XML01] = TK ID XML de NF [Z55XML01]
+F55XML02.FetchNext  [Index 1: Z55XML01]
+     GC Additional Text [ADDTEXT] <- TK Additional Text [ADDTEXT]
+
+
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55XML1CH
+Object: FC F55XML01
+Event: Button Clicked
+Event GUID: cab028c8-27dc-46c3-850e-5462cb7ed29f
+=============================================
+Call App:P55XML1C Form:W55XML1CE Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55XML1CH
+Object: FC F55XML02
+Event: Button Clicked
+Event GUID: 28111280-d118-4348-8aaf-94aa29b3ba30
+=============================================
+Call App:P55XML1C Form:W55XML1CF Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55XML1CH
+Object: FC F55XML03
+Event: Button Clicked
+Event GUID: dbad2b44-bae3-4a49-b7de-624ed870cabb
+=============================================
+Call App:P55XML1C Form:W55XML1CD Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55XML1CH
+Object: FC F55XML04
+Event: Button Clicked
+Event GUID: c26a7b17-b916-4752-b84b-19fc7cb2cad5
+=============================================
+Call App:P55XML1C Form:W55XML1CC Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55XML1CH
+Object: FC F55XML05
+Event: Button Clicked
+Event GUID: 86587f8d-7916-433d-a5e9-6c489b95e037
+=============================================
+Call App:P55XML1C Form:W55XML1CAF Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55XML1CH
+Object: FC F55XML06
+Event: Button Clicked
+Event GUID: ef9da6e4-61bf-48a7-a9a1-3ad8643923ab
+=============================================
+Call App:P55XML1C Form:W55XML1CB Version:Undefined
+
+
+=============================================
+EVENTS
+=============================================
+Form: Menu - W55XML1CH
+Object: FC F55XML07
+Event: Button Clicked
+Event GUID: 555857b8-b9fe-4351-af9f-f2bd25a6e9c8
+=============================================
+Call App:P55XML1C Form:W55XML1CG Version:Undefined
+
+
+
+
+

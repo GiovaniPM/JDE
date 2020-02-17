@@ -1,0 +1,85 @@
+﻿---------------------------------------------------------------------------------
+Table: F55XML03 Tabela Detalhe XML
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   Z55XML01   ID XML de NF                             IDXMLNF                   Math Numeric    15(0)      X
+2   Z55XML02   Item no XML da NF                        ItemXMLNF                 Math Numeric    15(0)      X
+3   Z55XML03   Número da PO no XML                      NumeroPOnoXML             String          60(0)      
+4   Z55XML04   Status XML                               StatusXML                 String          3(0)       
+5   KCOO       Order Company (Order Number)             CompanyKeyOrderNo         String          5(0)       
+6   DOCO       Document (Order No, Invoice, etc.)       DocumentOrderInvoiceE     Math Numeric    8(0)       
+7   DCTO       Order Type                               OrderType                 String          2(0)       
+8   LNID       Line Number                              LineNumber                Math Numeric    6(3)       
+9   BRNOP      Code - Transaction Nature                CodeTransactionNature     String          5(0)       
+10  BCLF       Fiscal Classification                    FiscalClassification      String          10(0)      
+11  DESC2000   Version Description                      Descript2000Char          String          2000(0)    
+12  UORG       Units - Order/Transaction Quantity       UnitsTransactionQty       Math Numeric    15(0)      
+13  UOM        Unit of Measure as Input                 UnitOfMeasureAsInput      String          2(0)       
+14  UPRC       Amount - Price per Unit                  AmtPricePerUnit2          Math Numeric    15(4)      
+15  AEXP       Amount - Extended Price                  AmountExtendedPrice       Math Numeric    15(2)      
+16  USER       User ID                                  UserId                    String          10(0)      
+17  PID        Program ID                               ProgramId                 String          10(0)      
+18  VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+19  JOBN       Work Station ID                          WorkStationId             String          10(0)      
+20  UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+21  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+22  CMARTMES   Unit of Measure                          UnitMeasure               String          3(0)       
+23  MCU        Business Unit                            CostCenter                String          12(0)      
+
+INDICIES
+Z55XML01, Z55XML02                       1      PRIMARY UNIQUE
+                                         Z55XML01  
+                                         Z55XML02  
+
+Z55XML04                                 2     
+                                         Z55XML04  
+
+Z55XML01,02,04                           3     
+                                         Z55XML01  
+                                         Z55XML02  
+                                         Z55XML04  
+
+=============================================
+EVENTS
+=============================================
+TBLE: F55XML03
+Event: After Record is Inserted
+Event GUID: 7ccd1d70-30db-4e77-9cf6-3425002be447
+=============================================
+XMLUpdateLog(N55XML01.XMLUpdateLog)
+     TK ID XML de NF [Z55XML01] -> mnIDXMLNF [Z55XML01]
+     TK Item no XML da NF [Z55XML02] -> mnItemXMLNF [Z55XML02]
+     "F55XML03" -> szNameObject [OBNM]
+     "Z55XML04" -> szDataItem [DTAI]
+     TK Status XML [Z55XML04] -> szKwText [KW21]
+     TK User ID [USER] -> szUserId [USER]
+     TK Program ID [PID] -> szProgramId [PID]
+     TK Selection Values 01 [VL01] -> szSelectionValues001 [VL01]
+     TK Work Station ID [JOBN] -> szWorkStationId [JOBN]
+     TK Date - Updated [UPMJ] -> jdDateUpdated [UPMJ]
+     TK Time - Last Updated [UPMT] -> mnTimeLastUpdated [UPMT]
+
+=============================================
+TBLE: F55XML03
+Event: After Record is Updated
+Event GUID: 58210af9-184d-41cf-91ba-fb55fd182626
+=============================================
+If TK Status XML [Z55XML04] is not equal to <Blank>
+And TK Status XML [Z55XML04] is not equal to <NULL>
+And TK Status XML [Z55XML04] is not equal to "0"
+     XMLUpdateLog(N55XML01.XMLUpdateLog)
+          TK ID XML de NF [Z55XML01] -> mnIDXMLNF [Z55XML01]
+          TK Item no XML da NF [Z55XML02] -> mnItemXMLNF [Z55XML02]
+          "F55XML03" -> szNameObject [OBNM]
+          "Z55XML04" -> szDataItem [DTAI]
+          TK Status XML [Z55XML04] -> szKwText [KW21]
+          TK User ID [USER] -> szUserId [USER]
+          TK Program ID [PID] -> szProgramId [PID]
+          TK Selection Values 01 [VL01] -> szSelectionValues001 [VL01]
+          TK Work Station ID [JOBN] -> szWorkStationId [JOBN]
+          TK Date - Updated [UPMJ] -> jdDateUpdated [UPMJ]
+          TK Time - Last Updated [UPMT] -> mnTimeLastUpdated [UPMT]
+End If
+
+

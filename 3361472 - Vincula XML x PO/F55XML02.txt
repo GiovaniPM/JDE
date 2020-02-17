@@ -1,0 +1,38 @@
+﻿---------------------------------------------------------------------------------
+Table: F55XML02 Tabela Cabecalho XML
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   Z55XML01   ID XML de NF                             IDXMLNF                   Math Numeric    15(0)      X
+2   55EREF     NFE Reference                            NFEReference              String          44(0)      
+3   55XTG      XML Transaction Group                    XMLTransactionGroup       String          10(0)      
+4   BVTN       Amount - Nota Fiscal Total               AmountNotaFiscalTotals    Math Numeric    15(2)      
+5   ISSU       Date - Issue                             IssueDate                 Date            6(0)       
+6   BCGF       CGC Tax ID - Ship From                   CGCTaxIDShipFrom          String          15(0)      
+7   BCGT       CGC Tax ID - Ship To                     CGCTaxIDShipTo            String          15(0)      
+8   MCU        Business Unit                            CostCenter                String          12(0)      
+9   BCGC       CGC Tax ID - Carrier                     CGCTaxIDCarrier           String          15(0)      
+10  BFRT       Amount - Nota Fiscal Freight             AmountNotaFiscalFreight   Math Numeric    15(2)      
+11  ADDTEXT    Additional Text                          AdditionalText            String          5000(0)    
+12  USER       User ID                                  UserId                    String          10(0)      
+13  PID        Program ID                               ProgramId                 String          10(0)      
+14  VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+15  JOBN       Work Station ID                          WorkStationId             String          10(0)      
+16  UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+17  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+18  55ESTC     NFE Document Status Code                 NFEDocumentStatusCode     String          10(0)      
+19  Z55XML05   Nota Fiscal Number XML                   NotaFiscalNumberXML       Math Numeric    9(0)       
+20  Z55XML06   Nota Fiscal Series XML                   NotaFiscalSeriesXML       String          3(0)       
+21  BNNF       Nota Fiscal Number                       NotaFiscalNumber          Math Numeric    6(0)       
+22  BSER       Nota Fiscal Series                       NotaFiscalSeries          String          2(0)       
+23  N001       Next Number Range 1                      NextNumber001             Math Numeric    8(0)       
+24  DCT        Document Type                            DocumentType              String          2(0)       
+
+INDICIES
+Z55XML01                                 1      PRIMARY UNIQUE
+                                         Z55XML01  
+
+55EREF, 55ESTC                           2     
+                                         55EREF    
+                                         55ESTC    
+

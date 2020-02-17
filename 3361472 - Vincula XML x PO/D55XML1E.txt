@@ -1,0 +1,8 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D55XML1E DS XML Item Valido
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     szItemReferencia                    LITM         Input    Yes  
+2     szItem                              LITM         Input    Yes  
+3     cAchou                              EV01         Output   Yes  
+

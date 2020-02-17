@@ -1,0 +1,12 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D554308A DS Interpreta Regra
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+7     szTipo                              SPHD         Input    Yes  
+1     szEntradaString                     DL011        Input    Yes  
+2     mnEntradaNumerico                   AEXP         Input    Yes  
+3     jdEntradaData                       UPMJ         Input    Yes  
+4     szOperador                          RMK          Input    Yes  
+5     szValor                             RMK          Input    Yes  
+6     cRetorno                            EV01         Output   Yes  
+

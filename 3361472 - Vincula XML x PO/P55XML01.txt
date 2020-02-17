@@ -1,0 +1,133 @@
+﻿
+=============================================
+EVENTS
+=============================================
+Form: XML Capturados - W55XML01A
+Object: HC OK/Select
+Event: Button Clicked
+Event GUID: c7e9b0a9-5d34-48ce-9a05-ff0d55c1a2d9
+=============================================
+Call App:P55XML01 Form:W55XML01B Version:Undefined
+     GC ID XML na NF [Z55XML01] <> mnIDXMLNF [Z55XML01]
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML Capturados - W55XML01A
+Object: HC Delete record
+Event: Button Clicked
+Event GUID: 0ad542de-31da-4fa2-a869-265b2d2a77b0
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szNFEReference_55EREF [55EREF]
+evt_szStatusXML_Z55XML04 [Z55XML04]
+----------------------------------------
+VA evt_szStatusXML_Z55XML04 [Z55XML04] = "999"
+F55XML03.Select  [Index 1: Z55XML01, Z55XML02]
+     GC ID XML na NF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     VA evt_szStatusXML_Z55XML04 [Z55XML04] = TK Status XML [Z55XML04]
+F55XML03.FetchNext  [Index 1: Z55XML01, Z55XML02]
+     VA evt_szStatusXML_Z55XML04 [Z55XML04] <- TK Status XML [Z55XML04]
+If SV File_IO_Status is equal to CO ERROR
+     F55XML01.Delete  [Index 1: Z55XML01]
+          GC ID XML na NF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     F55XML02.Select  [Index 1: Z55XML01]
+          GC ID XML na NF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     F55XML02.FetchNext  [Index 1: Z55XML01]
+          VA evt_szNFEReference_55EREF [55EREF] <- TK NFE Reference [55EREF]
+     VA evt_szNFEReference_55EREF [55EREF] = concat("XX", substr([VA evt_szNFEReference_55EREF [55EREF]], "2", "42"))
+     F55XML02.Update  [Index 1: Z55XML01]
+          GC ID XML na NF [Z55XML01] = TK ID XML de NF [Z55XML01]
+          VA evt_szNFEReference_55EREF [55EREF] -> TK NFE Reference [55EREF]
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML Capturados - W55XML01A
+Event: Dialog is Initialized
+Event GUID: 5e8361e5-cc25-41d1-b5e6-ec7fd42964a4
+=============================================
+If PO szUserId01 [USER] is not equal to SL UserID
+And PO szUserId02 [USER] is not equal to SL UserID
+And PO szUserId03 [USER] is not equal to SL UserID
+     Disable Control(HC Delete)
+End If
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: XML Capturado - W55XML01B
+Event: Post Dialog is Initialized
+Event GUID: 25522a71-79ab-4abf-b2c7-0af57efebb33
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szStatus_55ESTC [55ESTC]
+evt_mnTab_IA04 [IA04]
+evt_XMLDataComposite [XMLCMPST]
+----------------------------------------
+Disable Control(HC &OK/&Select)
+Disable Control(FC ID XML de NF [Z55XML01])
+Disable Control(FC Date - Last Activity [ACTDATE])
+Disable Control(FC Time of Day [TDAY])
+Disable Tab Page(FC Tab Control 31, TP 01)
+Disable Tab Page(FC Tab Control 31, TP 02)
+Disable Tab Page(FC Tab Control 31, TP 03)
+Disable Tab Page(FC Tab Control 31, TP 04)
+//
+FC ID XML de NF [Z55XML01] = FI mnIDXMLNF [Z55XML01]
+F55XML01.FetchSingle  [Index 1: Z55XML01]
+     FI mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+     FC Date - Last Activity [ACTDATE] <- TK Date - Last Task [ACTDATE]
+     FC Time of Day [TDAY] <- TK Time of Day [TDAY]
+//
+VA evt_mnTab_IA04 [IA04] = 1
+F55XML06.Select  [Index 1: Z44XML01,55ESTC]
+     FI mnIDXMLNF [Z55XML01] = TK ID XML de NF [Z55XML01]
+F55XML06.FetchNext  [Index 1: Z44XML01,55ESTC]
+     VA evt_szStatus_55ESTC [55ESTC] <- TK NFE Document Status Code [55ESTC]
+     VA evt_XMLDataComposite [XMLCMPST] <- TK XML Data Composite [XMLCMPST]
+While SV File_IO_Status is equal to CO SUCCESS
+     If VA evt_mnTab_IA04 [IA04] is equal to "1"
+          Enable Tab Page(FC Tab Control 31, TP 01)
+          FC XML 01 [XMLCMPST] = VA evt_XMLDataComposite [XMLCMPST]
+          Set Control Text(FC Static Text 50, VA evt_szStatus_55ESTC)
+     Else
+          If VA evt_mnTab_IA04 [IA04] is equal to "2"
+               Enable Tab Page(FC Tab Control 31, TP 02)
+               FC XML 02 [XMLCMPST] = VA evt_XMLDataComposite [XMLCMPST]
+               Set Control Text(FC Static Text 51, VA evt_szStatus_55ESTC)
+          Else
+               If VA evt_mnTab_IA04 [IA04] is equal to "3"
+                    Enable Tab Page(FC Tab Control 31, TP 03)
+                    FC XML 03 [XMLCMPST] = VA evt_XMLDataComposite [XMLCMPST]
+                    Set Control Text(FC Static Text 52, VA evt_szStatus_55ESTC)
+               Else
+                    If VA evt_mnTab_IA04 [IA04] is equal to "4"
+                         Enable Tab Page(FC Tab Control 31, TP 04)
+                         FC XML 04 [XMLCMPST] = VA evt_XMLDataComposite [XMLCMPST]
+                         Set Control Text(FC Static Text 53, VA evt_szStatus_55ESTC)
+                    End If
+               End If
+          End If
+     End If
+     F55XML06.FetchNext  [Index 1: Z44XML01,55ESTC]
+          VA evt_szStatus_55ESTC [55ESTC] <- TK NFE Document Status Code [55ESTC]
+          VA evt_XMLDataComposite [XMLCMPST] <- TK XML Data Composite [XMLCMPST]
+     VA evt_mnTab_IA04 [IA04] = [VA evt_mnTab_IA04 [IA04]]+1
+End While
+
+
+
+

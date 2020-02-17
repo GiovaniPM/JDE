@@ -1,0 +1,14 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D55XML1B DS XML Tolerancia
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     mnPercentual                        74UTOLP      Input    Yes  
+3     mnValorMaximo                       UPRC         Input    Yes  
+4     mnValorReferencia                   UPRC         Input    Yes  
+5     mnValorUsado                        UPRC         Input    Yes  
+6     cErro                               EV01         Output   Yes  
+7     szMensagem                          DTAI         Output   Yes  
+8     mnLimiteInferior                    UPRC         Output   Yes  
+9     mnLimiteSuperior                    UPRC         Output   Yes  
+10    mnDiferenca                         UPRC         Output   Yes  
+

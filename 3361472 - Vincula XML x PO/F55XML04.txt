@@ -1,0 +1,27 @@
+﻿---------------------------------------------------------------------------------
+Table: F55XML04 Tabela Erros XML
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   Z55XML01   ID XML de NF                             IDXMLNF                   Math Numeric    15(0)      X
+2   Z55XML02   Item no XML da NF                        ItemXMLNF                 Math Numeric    15(0)      X
+3   DL011      Description 11                           Description011            String          100(0)     
+4   USER       User ID                                  UserId                    String          10(0)      
+5   PID        Program ID                               ProgramId                 String          10(0)      
+6   VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+7   JOBN       Work Station ID                          WorkStationId             String          10(0)      
+8   UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+9   UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+10  LNID       Line Number                              LineNumber                Math Numeric    6(3)       X
+
+INDICIES
+Z55XML01, Z55XML02, LNID                 1      PRIMARY UNIQUE
+                                         Z55XML01  
+                                         Z55XML02  
+                                         LNID      
+
+Z55XML01.02, LNID DESC                   2     
+                                         Z55XML01  
+                                         Z55XML02  
+                                         LNID      Descending
+

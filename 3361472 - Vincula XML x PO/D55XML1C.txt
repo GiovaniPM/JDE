@@ -1,0 +1,10 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D55XML1C DS XML Saldo Vinculado
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     mnIDXMLNF                           Z55XML01     Input    Yes  
+2     mnItemXMLNF                         Z55XML02     Input    Yes  
+3     mnQuantidade                        ACQTY        Output   Yes  
+4     mnValorUnitario                     UPRC         Output   Yes  
+5     mnValorTotal                        AEXP         Output   Yes  
+

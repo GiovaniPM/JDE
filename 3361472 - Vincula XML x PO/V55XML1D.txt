@@ -1,0 +1,29 @@
+﻿---------------------------------------------------------------------------------
+Business View: V55XML1D (BSVW XML Saldo de pedidos por item)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F55XML03 - Tabela Detalhe XML
+  F55XML05 - XML PO
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML03(0)  X
+Z55XML02   Item no XML da NF                        Math Numeric    15(0)      F55XML03(0)  X
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML05(0)  
+Z55XML02   Item no XML da NF                        Math Numeric    15(0)      F55XML05(0)  
+MCU        Business Unit                            String          12(0)      F55XML05(0)  
+KCOO       Order Company (Order Number)             String          5(0)       F55XML05(0)  
+DOCO       Document (Order No, Invoice, etc.)       Math Numeric    8(0)       F55XML05(0)  
+DCTO       Order Type                               String          2(0)       F55XML05(0)  
+SFXO       Order Suffix                             String          3(0)       F55XML05(0)  
+LNID       Line Number                              Math Numeric    6(3)       F55XML05(0)  
+Z55XML04   Status XML                               String          3(0)       F55XML03(0)  
+UORG       Units - Order/Transaction Quantity       Math Numeric    15(0)      F55XML05(0)  
+UPRC       Amount - Price per Unit                  Math Numeric    15(4)      F55XML05(0)  
+AEXP       Amount - Extended Price                  Math Numeric    15(2)      F55XML05(0)  
+UOM        Unit of Measure as Input                 String          2(0)       F55XML05(0)  
+
+Joins:
+F55XML03.Z55XML01 Simple(==) = F55XML05.Z55XML01
+F55XML03.Z55XML02 Simple(==) = F55XML05.Z55XML02
+

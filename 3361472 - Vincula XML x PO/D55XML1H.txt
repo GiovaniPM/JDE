@@ -1,0 +1,13 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D55XML1H DS XML Saldo Pedido
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+1     szCiaPedido                         KCOO         Input    Yes  
+2     mnDocumentoPedido                   DOCO         Input    Yes  
+3     szTipoPedido                        DCTO         Input    Yes  
+4     szSufixoPedido                      SFXO         Input    Yes  
+5     mnLinhaPedido                       LNID         Input    Yes  
+6     mnQtd                               UORG         Output   Yes  
+7     mnUni                               UPRC         Output   Yes  
+8     mnVlr                               AEXP         Output   Yes  
+

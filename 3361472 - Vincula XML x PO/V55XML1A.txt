@@ -1,0 +1,51 @@
+﻿---------------------------------------------------------------------------------
+Business View: V55XML1A (BSVW XML's para recebimento)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F55XML02 - Tabela Cabecalho XML
+  F55XML03 - Tabela Detalhe XML
+  F55XML01 - XML's para recebimento
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML02(0)  X
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML03(0)  
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML01(0)  
+Z55XML02   Item no XML da NF                        Math Numeric    15(0)      F55XML03(0)  
+55EREF     NFE Reference                            String          44(0)      F55XML02(0)  
+55XTG      XML Transaction Group                    String          10(0)      F55XML02(0)  
+BVTN       Amount - Nota Fiscal Total               Math Numeric    15(2)      F55XML02(0)  
+ISSU       Date - Issue                             Date            6(0)       F55XML02(0)  
+BCGF       CGC Tax ID - Ship From                   String          15(0)      F55XML02(0)  
+BCGT       CGC Tax ID - Ship To                     String          15(0)      F55XML02(0)  
+BCGC       CGC Tax ID - Carrier                     String          15(0)      F55XML02(0)  
+MCU        Business Unit                            String          12(0)      F55XML02(0)  
+BFRT       Amount - Nota Fiscal Freight             Math Numeric    15(2)      F55XML02(0)  
+Z55XML03   Número da PO no XML                      String          60(0)      F55XML03(0)  
+Z55XML04   Status XML                               String          3(0)       F55XML03(0)  
+KCOO       Order Company (Order Number)             String          5(0)       F55XML03(0)  
+DCTO       Order Type                               String          2(0)       F55XML03(0)  
+DOCO       Document (Order No, Invoice, etc.)       Math Numeric    8(0)       F55XML03(0)  
+LNID       Line Number                              Math Numeric    6(3)       F55XML03(0)  
+BRNOP      Code - Transaction Nature                String          5(0)       F55XML03(0)  
+BCLF       Fiscal Classification                    String          10(0)      F55XML03(0)  
+UORG       Units - Order/Transaction Quantity       Math Numeric    15(0)      F55XML03(0)  
+UOM        Unit of Measure as Input                 String          2(0)       F55XML03(0)  
+UPRC       Amount - Price per Unit                  Math Numeric    15(4)      F55XML03(0)  
+AEXP       Amount - Extended Price                  Math Numeric    15(2)      F55XML03(0)  
+CMARTMES   Unit of Measure                          String          3(0)       F55XML03(0)  
+55ESTC     NFE Document Status Code                 String          10(0)      F55XML02(0)  
+Z55XML05   Nota Fiscal Number XML                   Math Numeric    9(0)       F55XML02(0)  
+Z55XML06   Nota Fiscal Series XML                   String          3(0)       F55XML02(0)  
+BNNF       Nota Fiscal Number                       Math Numeric    6(0)       F55XML02(0)  
+BSER       Nota Fiscal Series                       String          2(0)       F55XML02(0)  
+N001       Next Number Range 1                      Math Numeric    8(0)       F55XML02(0)  
+DCT        Document Type                            String          2(0)       F55XML02(0)  
+ACTDATE    Date - Last Task                         Date            6(0)       F55XML01(0)  
+TDAY       Time of Day                              Math Numeric    6(0)       F55XML01(0)  
+MCU        Business Unit                            String          12(0)      F55XML03(0)  
+
+Joins:
+F55XML02.Z55XML01 Simple(==) = F55XML03.Z55XML01
+F55XML01.Z55XML01 Simple(==) = F55XML02.Z55XML01
+

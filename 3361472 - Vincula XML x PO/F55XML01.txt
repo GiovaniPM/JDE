@@ -1,0 +1,23 @@
+﻿---------------------------------------------------------------------------------
+Table: F55XML01 XML's para recebimento
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   Z55XML01   ID XML de NF                             IDXMLNF                   Math Numeric    15(0)      X
+2   ACTDATE    Date - Last Task                         DateLastActivityOW        Date            6(0)       
+3   TDAY       Time of Day                              TimeOfDay                 Math Numeric    6(0)       
+4   USER       User ID                                  UserId                    String          10(0)      
+5   PID        Program ID                               ProgramId                 String          10(0)      
+6   VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+7   JOBN       Work Station ID                          WorkStationId             String          10(0)      
+8   UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+9   UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+Z55XML01                                 1      PRIMARY UNIQUE
+                                         Z55XML01  
+
+ACCDATE, TDAY                            2     
+                                         ACTDATE   
+                                         TDAY      
+

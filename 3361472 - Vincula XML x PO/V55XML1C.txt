@@ -1,0 +1,47 @@
+﻿---------------------------------------------------------------------------------
+Business View: V55XML1C (BSVW XML Pedidos Reservados)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F55XML05 - XML PO
+  F4311 - Purchase Order Detail File
+  F76411 - Item Master Regional Information - Brazil             - 41
+  F55XML03 - Tabela Detalhe XML
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+KCOO       Order Company (Order Number)             String          5(0)       F55XML05(0)  X
+KCOO       Order Company (Order Number)             String          5(0)       F4311(0)     
+DOCO       Document (Order No, Invoice, etc.)       Math Numeric    8(0)       F55XML05(0)  X
+DOCO       Document (Order No, Invoice, etc.)       Math Numeric    8(0)       F4311(0)     
+DCTO       Order Type                               String          2(0)       F55XML05(0)  X
+DCTO       Order Type                               String          2(0)       F4311(0)     
+SFXO       Order Suffix                             String          3(0)       F55XML05(0)  X
+SFXO       Order Suffix                             String          3(0)       F4311(0)     
+LNID       Line Number                              Math Numeric    6(3)       F55XML05(0)  X
+LNID       Line Number                              Math Numeric    6(3)       F4311(0)     
+ITM        Item Number - Short                      Math Numeric    8(0)       F4311(0)     
+ITM        Item Number - Short                      Math Numeric    8(0)       F76411(0)    
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML03(0)  
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML05(0)  X
+Z55XML02   Item no XML da NF                        Math Numeric    15(0)      F55XML03(0)  
+Z55XML02   Item no XML da NF                        Math Numeric    15(0)      F55XML05(0)  X
+MCU        Business Unit                            String          12(0)      F55XML05(0)  X
+BCLF       Fiscal Classification                    String          10(0)      F76411(0)    
+UOM        Unit of Measure as Input                 String          2(0)       F55XML05(0)  
+UORG       Units - Order/Transaction Quantity       Math Numeric    15(0)      F55XML05(0)  
+UPRC       Amount - Price per Unit                  Math Numeric    15(4)      F55XML05(0)  
+AEXP       Amount - Extended Price                  Math Numeric    15(2)      F55XML05(0)  
+Z55XML04   Status XML                               String          3(0)       F55XML03(0)  
+LTTR       Status Code - Last                       String          3(0)       F4311(0)     
+NXTR       Status Code - Next                       String          3(0)       F4311(0)     
+
+Joins:
+F55XML05.KCOO Simple(==) = F4311.KCOO
+F55XML05.DOCO Simple(==) = F4311.DOCO
+F55XML05.DCTO Simple(==) = F4311.DCTO
+F55XML05.SFXO Simple(==) = F4311.SFXO
+F55XML05.LNID Simple(==) = F4311.LNID
+F4311.ITM Simple(==) = F76411.ITM
+F55XML03.Z55XML01 Simple(==) = F55XML05.Z55XML01
+F55XML03.Z55XML02 Simple(==) = F55XML05.Z55XML02
+

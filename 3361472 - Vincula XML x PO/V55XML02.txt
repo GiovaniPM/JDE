@@ -1,0 +1,33 @@
+﻿---------------------------------------------------------------------------------
+Business View: V55XML02 (BSVW XML Cabecalho - Full)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F55XML02 - Tabela Cabecalho XML
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML02(0)  X
+55EREF     NFE Reference                            String          44(0)      F55XML02(0)  
+55XTG      XML Transaction Group                    String          10(0)      F55XML02(0)  
+BVTN       Amount - Nota Fiscal Total               Math Numeric    15(2)      F55XML02(0)  
+ISSU       Date - Issue                             Date            6(0)       F55XML02(0)  
+BCGF       CGC Tax ID - Ship From                   String          15(0)      F55XML02(0)  
+BCGT       CGC Tax ID - Ship To                     String          15(0)      F55XML02(0)  
+MCU        Business Unit                            String          12(0)      F55XML02(0)  
+BCGC       CGC Tax ID - Carrier                     String          15(0)      F55XML02(0)  
+BFRT       Amount - Nota Fiscal Freight             Math Numeric    15(2)      F55XML02(0)  
+USER       User ID                                  String          10(0)      F55XML02(0)  
+PID        Program ID                               String          10(0)      F55XML02(0)  
+VL01       Selection Values 01                      String          25(0)      F55XML02(0)  
+JOBN       Work Station ID                          String          10(0)      F55XML02(0)  
+UPMJ       Date - Updated                           Date            6(0)       F55XML02(0)  
+UPMT       Time - Last Updated                      Math Numeric    6(0)       F55XML02(0)  
+55ESTC     NFE Document Status Code                 String          10(0)      F55XML02(0)  
+Z55XML05   Nota Fiscal Number XML                   Math Numeric    9(0)       F55XML02(0)  
+Z55XML06   Nota Fiscal Series XML                   String          3(0)       F55XML02(0)  
+BNNF       Nota Fiscal Number                       Math Numeric    6(0)       F55XML02(0)  
+BSER       Nota Fiscal Series                       String          2(0)       F55XML02(0)  
+N001       Next Number Range 1                      Math Numeric    8(0)       F55XML02(0)  
+DCT        Document Type                            String          2(0)       F55XML02(0)  
+
+

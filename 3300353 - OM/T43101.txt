@@ -1,0 +1,481 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: T43101 Purchase Order
+Type: Processing Options
+---------------------------------------------------------------------------------
+PAGE: 0 Defaults                       - Defaults                      
+  szOrderType                    [DCT]
+    1. Order Type
+    VALUE: []
+  szLineType                     [LNTY]
+    2. Line Type
+    VALUE: []
+  szStatusCodeLast               [LTTR]
+    3. Beginning Status
+    VALUE: []
+  szOverrideNextStatus           [NXTR]
+    4. Override Next Status
+    VALUE: []
+  szUnitsOfMeasure               [UOM]
+    5. Unit of Measure
+    VALUE: []
+  mnLineNumberIncrement          [LNID]
+    6. Line Number Increment
+    VALUE: []
+  szTaxRateAreaSelection         [VL01]
+    7. Default Tax Rate/Area        Blank = Supplier        1 = Ship To
+    VALUE: []
+  szUnitOfMeasureSelection       [VL02]
+    8. Transaction Unit of Measure        Blank = Purchasing Unit of Measure        1 = Primary Unit of Measure
+    VALUE: []
+  szLandedCostRule               [LANC]
+    9. Landed Cost Rule
+    VALUE: []
+  szHeaderChangesToDetail        [VL03]
+    10. Header to Detail          Blank = Manually load header changes to detail          1 = Auto load header changes to detail  
+    VALUE: []
+  szWorkOrderStatus              [SRST]
+    11. Work Order Status
+    VALUE: []
+  cDescriptionDefaults           [EV01]
+    12. Account Description          Blank = Business unit, object, subsidiary          1 = Business unit, subsidiary
+    VALUE: []
+  cContinuousLineNumbering       [EV01]
+    13. Line Sequence          Blank = Assigns unique line number continuously.          1 = Starts the sequencing process over for each                     change order.
+    VALUE: []
+  szCostRuleSelection_VL24       [VL24]
+    14. Cost Rule Selection	        Blank = Supplier        1 = Ship To
+    VALUE: []
+PAGE: 1 Display                        - Display                       
+  szSuppressClosedLines          [VL08]
+    1.Suppress Closed Lines   Blank = Do not suppress   1 = Suppress
+    VALUE: []
+  szProtectStatusCode            [VL10]
+    2. Status Code Protection   Blank = Do not protect   1 = Protect
+    VALUE: []
+  szProtectOrderType             [VL11]
+    3. Order Type Protection   Blank = Do not protect   1 = Protect
+    VALUE: []
+  cDisplayKitComponentLines      [EV02]
+    4. Kit Display   Blank = Parent line   1 = Component lines
+    VALUE: []
+  szProtectPriceFlag             [VL09]
+    5. Cost Protection   Blank = Display cost fields   1 = Disable cost fields     2 = Hide cost fields
+    VALUE: []
+  szLastStatusAllowingChange     [A1TR]
+    6. Detail Line Protection
+    VALUE: []
+  cFreeGoodsCatalogWarning       [EV01]
+    7. Free Goods Catalog  Blank = No Warning  1 = Issue Warning
+    VALUE: []
+  cHeaderProtection_EV01         [EV01]
+    8.  Order Header Protection   Blank = Do not protect   1 = Protect
+    VALUE: []
+  cJobProject                    [EV01]
+    9. Jargon and Header Business Unit   Blank = Branch/Plant   1 = Job   2 = Project   3 = Business Unit
+    VALUE: []
+  cProtectAccountNumber          [EV01]
+    10. Account Protection  Blank = Do not protect  1 = Protect account number if         received/vouchered
+    VALUE: []
+  cAdditionalProperties          [EV01]
+    11. Display Additional Properties Tab  Blank = Disable  1 = Enable
+    VALUE: []
+  cCategoryCodes                 [EV01]
+    12. Display Category Codes on Header Tab and Detail Grid  Blank = Disable  1 = Enable
+    VALUE: []
+  cClauseApplication             [EV01]
+    13. Enable Form Exit for Clauses  Blank = Disable  1 = Enable
+    VALUE: []
+  cDisplayLocationLot            [EV01]
+    14. Display Location and Lot fields for a Job or Project  Blank = Do not display  1 = Display
+    VALUE: []
+  cAN8Required                   [EV01]
+    15. Address Book Field Required  Blank = Not required  1 = Address Book 1 required  2 = Address Book 2 required  3 = Address Book 1 and  Address Book 2 required
+    VALUE: []
+  cDisplayRetainageIndicator     [EV01]
+    16. Display Retainage Indicator  Blank = Do not display  1 = Display
+    VALUE: []
+  cDisplayServiceUnits           [EV01]
+    17. Display Service Units  Blank = Do not display  1 = Display
+    VALUE: []
+PAGE: 2 Interfaces                     - Interfaces                    
+  cBranchPlantValidation         [EV01]
+    1. Business Unit Validation   Blank = Business Unit Master table   1 = Inventory Constants table
+    VALUE: []
+  szNoPBCOWarningOnGLDate        [VL04]
+    2. PBCO Warning   Blank = Issue warning   1 = Do not issue warning
+    VALUE: []
+  szNoPACOWarningOnGLDate        [VL05]
+    3. PACO Warning   Blank = Issue warning   1 = Do not issue warning
+    VALUE: []
+  szItemAvailabilityUpdate       [VL06]
+    4. Quantity Update   Blank = Quantity on PO   1 = Quantity on Other POs
+    VALUE: []
+  szSupplierAnalysisUpdate       [VL07]
+    5. Supplier Analysis   Blank = Do not capture   1 = Capture
+    VALUE: []
+  cEditSupplierMaster            [EV01]
+    6. Edit Supplier Master  Blank = Do not edit  1 = Edit
+    VALUE: []
+  cFinancialAAIs                 [EV01]
+    7. Financial AAIs  Blank = Do not validate  1 = Validate
+    VALUE: []
+PAGE: 3 Processing                     - Processing                    
+  szNewSupplierAdd               [VL12]
+    1. New Supplier Information   Blank = Manually access Address Book Revisions   1 = Auto display Address Book Revisions
+    VALUE: []
+  szOrderTemplates               [VL15]
+    2. Order Templates   Blank = Do not display   1 = Display
+    VALUE: []
+  cPrintPOViaSubsystem           [EV05]
+    3. Subsystem Printing   Blank = Do not print   1 = Print
+    VALUE: []
+  szBlanketQuoteRelease          [VL14]
+    4. Blanket Releases   Blank = Do not process   1 = Process and search all   2 = Process and search with Branch Plant
+    VALUE: []
+  cHeaderFirstCode               [EV03]
+    5. Header Display   Blank = Display Order Detail   1 = Display Order Header before Order Detail
+    VALUE: []
+  cAgreementSearchMethod         [SCH1]
+    6.  Agreement Search   Blank = Do not search   1 = Assign one if there is only one   2 = Display all   3 = Assign agreement with the earliest expiration date
+    VALUE: []
+  cProhibitChanges               [EV01]
+    7.  Base Order Protection   Blank = Do not protect   1 = Protected
+    VALUE: []
+  cSingleJob                     [EV01]
+    8. Project/Job Validation   Blank = No warning or error   1 = Warning if header and detail are different   2 = Error if header and detail are different    3 = Error if job does not belong to header project
+    VALUE: []
+  szExclusiveAdjustmentHold      [HOLD]
+    9. Exclusive Adjustment Hold
+    VALUE: []
+  cDisplayLogs                   [EV01]
+    10. Logs Entry Display   Blank = Do not display   1 = Display
+    VALUE: []
+PAGE: 4 Duplication                    - Duplication                   
+  szDuplicationOrderType         [DCTO]
+    1. Duplicate Order Type
+    VALUE: []
+  szDuplicationLastStatus        [A3TR]
+    2. Beginning Status Code
+    VALUE: []
+  szDuplicationNextStatus        [A4TR]
+    3. Next Status Code (Optional)
+    VALUE: []
+  cTextDuplicationSelection      [EV07]
+    4. Copy Selection   Blank = Do not copy   1 = Line text   2 = Line and order text   3 = Order text
+    VALUE: []
+PAGE: 5 Cross Reference                - Cross Ref                     
+  szCrossReferenceType           [XRT]
+    1. Substitute Items
+    VALUE: []
+  szTypeCrossReferenceT          [XRT2]
+    2. Obsolete Items
+    VALUE: []
+  szCrossReferencePromotional    [XRT]
+    3. Promotional Items
+    VALUE: []
+PAGE: 6 Processing Options for Open Order Inquir - Order Inquiry                 
+  InqFromStatusCode              [LTTR]
+    1. From Status Code
+    VALUE: []
+  InqThruStatusCode              [NXTR]
+    2. Thru Status Code
+    VALUE: []
+  cInqBasedOnLastStatus          [EV01]
+    3. Last Status   Blank = Next Status Code   1 = Last Status Code
+    VALUE: []
+  cInqBasedOnReqDate             [EV01]
+    4. Date   Blank = Requested Date   1 = Transaction Date   2 = Promised Date   3 = Original Promised Date   4 = Receipt Date   5 = Cancel Date   6 = G/L Date
+    VALUE: []
+PAGE: 7 Entry Versions To Execute      - Versions                      
+  szSupplyDemandInquiry          [VL20]
+    1. Supply/Demand Inquiry (P4021)
+    VALUE: []
+  szSupplierAnalysisVersion      [VL21]
+    2. Supplier Analysis (P43230)
+    VALUE: []
+  szSupplierMasterVersion        [VL22]
+    3. Supplier Master (P04012)
+    VALUE: []
+  szPOPrintOnDemandVersion       [VL23]
+    4. PO Print on Demand  (R43500)
+    VALUE: []
+  InqItemAvailVersion            [VERS]
+    5. Item Availability Summary (P41202)
+    VALUE: []
+  InqApprovalReviewVersion       [VERS]
+    6. Approval Review (P43081)
+    VALUE: []
+  InqReceiptRoutingVersion       [VERS]
+    7. Receipt Routing (P43250)
+    VALUE: []
+  InqOpenReceiptsVersion         [VERS]
+    8. Open Receipts (P43214)
+    VALUE: []
+  InqChangeOrderVersion          [VERS]
+    9. Revision Audit Summary (P4319)
+    VALUE: []
+  PurchasingLedgerVersion        [VERS]
+    10. Purchase Ledger (P43041)
+    VALUE: []
+  szOpenOrderInquiry             [VERS]
+    11. Open Order Inquiry (P4310)
+    VALUE: []
+  szFinancialStatusInquiry       [VERS]
+    12. Financial Status Inquiry (P44200)
+    VALUE: []
+  szInboundTransportationVersion [VERS]
+    13. Inbound Transportation (P4915)
+    VALUE: []
+  szWMSPreferenceProfileVersion  [VERS]
+    14. Preference Profile (R40400)
+    VALUE: []
+  szConfiguratorVersion          [VERS]
+    15. Configurator (P3210)
+    VALUE: []
+  szBlanketReleaseVersion        [VERS]
+    16. Blanket Release (P43216)
+    VALUE: []
+  szLogsEntryVersion             [VERS]
+    17. Logs Entry (P4305)
+    VALUE: []
+  szRequistionSelfServiceVersion [VER1]
+    18. Requisition Self Service (P43E10)
+    VALUE: []
+  szStyleMatrixEntryVersion      [VERS]
+    19. Style Matrix Entry (PCW10)
+    VALUE: []
+PAGE: 8 Currency                       - Currency                      
+  mnToleranceLimit               [MATH01]
+    1. Tolerance
+    VALUE: []
+                                 []
+    As-If Currency Display:
+    VALUE: []
+  szCurrencyCodeFrom             [CRCD]
+    2. Currency Code
+    VALUE: []
+  jdDateTransactionJulian        [TRDJ]
+    3. As of Date
+    VALUE: []
+PAGE: 9 Approvals                      - Approvals                     
+  szApprovalRouteCodeSelection   [VL16]
+    1. Route Code   Blank = Do not perform   1 = Originator's address   2 = Originator's user profile   3 = Branch/Plant   4 = Default location  
+    VALUE: []
+  szAwaitingApprovalStatus       [LTT2]
+    2. Awaiting Approval Status
+    VALUE: []
+  szApprovedStatus               [NXT2]
+    3. Approved Status
+    VALUE: []
+  cApprovalsReapproveChanges     [EV01]
+    4. Reapprove Changed Lines  Blank = Do not reapprove  1 = Reapprove on change to any field  2 = Reapprove on change to user-activated critical fields only  3 = Reapprove on change to standard critical fields only
+    VALUE: []
+  szApprovalsHoldCode            [HOLD]
+    5. Approval Hold Code  
+    VALUE: []
+PAGE: 10 Budgeting                      - Budgeting                     
+  szBudgetHoldCode               [HOLD]
+    1. Budget Hold Code
+    VALUE: []
+  szBudgetLedgerType             [LT]
+    2. Budget Ledger Type
+    VALUE: []
+  cBudgetLevelofDetail           [LDA]
+    3. Level of Detail
+    VALUE: []
+  cBudgetTotalMethod             [EV01]
+    4. Budget Total Method  1 = Job Cost budget  2 = Standard financial budget  3 = Standard financial spread  	
+    VALUE: []
+  cBudgetPeriodAccumMethod       [EV02]
+    5. Period Accumulation Method  Blank = Total annual budget  1 = Through Current Period
+    VALUE: []
+  mnBudgetTolerancePercentage    [PERT]
+    6. Tolerance Percentage
+    VALUE: []
+  cBudgetHoldWarning             [EV06]
+    7. Hold Warning   Blank = Do not display   1 = Display   2 = Display warning, but do not place order on hold
+    VALUE: []
+  cBudgetAccumLofD               [EV01]
+    8. Budget Accumulation Level of Detail   Blank = Do not accumulate   1 = Accumulate
+    VALUE: []
+  cBudgetExcludeSubledger        [EV02]
+    9. Exclude Subledger/Type   Blank = Include   1 = Exclude
+    VALUE: []
+  cBudgetJobCostSequence         [EV03]
+    10. Job Cost Account Sequence   Blank = Standard   1 = Job cost
+    VALUE: []
+  cBudgetIncludeTaxes            [EV04]
+    11. Include Taxes  Blank = Exclude  1 = Include
+    VALUE: []
+PAGE: 11 Interop                        - Interop                       
+  cBeforeImageProcessing         [BIPROC]
+    1. Purchase Order Before/ After Image Processing   Blank = After Image   1 = Before and After Image
+    VALUE: []
+  szTypeTransaction              [TYTN]
+    2. Purchase Order Transaction Type
+    VALUE: []
+  cWOBeforeImageProcessing       [BIPROC]
+    3. Work Order Before/ After Image Processing  Blank = After Image  1= Before and After Image
+    VALUE: []
+  szWOTypeTransaction            [TYTN]
+    4. Work Order Transaction Type
+    VALUE: []
+PAGE: 12 Order Revisions                - Order Revision                
+  szChangeOrderProcessingOn      [VL13]
+    1. Revision Tracking   Blank = Do not perform   1 = Existing orders   2 = Existing orders and addition of new lines to the order
+    VALUE: []
+  szChangeOrderStatus            [A2TR]
+    2. Next Status
+    VALUE: []
+  cAllowChangeOrderText          [EV04]
+    3. Text Entry   Blank = Disallow   1= Allow
+    VALUE: []
+PAGE: 13 Supplier Self-Service          - Self-Service                  
+  cSupplierSelfService1          [SSS1]
+    1. Supplier Self-Service       Blank = Do not activate       1 = Activate
+    VALUE: []
+PAGE: 14 Product Variants               - Product Variants              
+                                 []
+    These processing options are used with the Product Variants functionality.
+    VALUE: []
+  cInventoryParent               [SEGB]
+    1. Inventory Parent       Blank = Display Matrix Order form       1 = Do not display Matrix Order form
+    VALUE: []
+PAGE: 15 Workflow                       - Workflow                      
+  cNotifyPriceChange             [EV01]
+    1.  Price Changes Notify       Blank = Do not send any notification emails     1 = Purchase Order Originator     2 = Project Manager     3 = Buyer     4 =  Originator, Buyer and Project Manager
+    VALUE: []
+  cNotifyDeliveryChange          [EV01]
+    2. Planned Delivery Date Changes Notify       Blank = Do not send any notification emails     1 = Purchase Order Originator     2 = Project Manager     3 = Buyer     4 = Originator, Buyer and Project Manager
+    VALUE: []
+  cNotifyQuantityChanges         [EV01]
+    3. Quantity Changes Notify       Blank = Do not send notification emails     1 = Purchase Order Originator     2 = Project Manager     3 = Buyer     4 = Originator, Buyer and Project Manager
+    VALUE: []
+  cNotifyOrderHold               [EV01]
+    4. Order Hold Notify       Blank = Do not send notification emails     1 = Purchase Order Originator     2 = Project Manager     3 = Buyer     4 = Originator, Buyer and Project Manager
+    VALUE: []
+PAGE: 16 Create Item Branch             - Transfer Order                
+  cCreateItemBranch              [EV01]
+    1. Create Item Branch Record if one does not exist for the receiving B/P when Entering a Transfer Order    Blank	= Create Item Branch Record  1	= Do not Create Item Branch Record
+    VALUE: []
+  szTransferProjectLineType      [LNTY]
+    2. Project Transfer Order Line Type
+    VALUE: []
+PAGE: 17                                - Style                         
+                                 []
+    These processing options are used with the Style Item functionality.
+    VALUE: []
+  cDisplayPCW10                  [EV01]
+    1. Display Matrix Entry (PCW10)     Blank = Do not display Matrix Entry  1 = Display Matrix Entry
+    VALUE: []
+  szCollection                   [C9COLL]
+    2. Collection
+    VALUE: []
+  szSeasonCode                   [C9SEAC]
+    3. Season Code
+    VALUE: []
+  szSeasonYear                   [C9SEAY]
+    4. Season Year
+    VALUE: []
+  cValidateItemsWithCollection   [EV01]
+    5. Validate Items Against Collection    Blank = Do not validate items  1 = Validate items and issue warnings  2 = Validate items and issue errors
+    VALUE: []
+  cCollectionTemplatePrefix      [C9MACO]
+    6. Prefix for Collection Templates
+    VALUE: []
+  cAddressNumberforPCW10         [EV02]
+    7. Send Address Number for Split Percentage to Matrix Entry (PCW10)    Blank = Send Ship To  1 = Send Supplier
+    VALUE: []
+  cStyleItemSearchType           [EV01]
+    8. Item Search and Select    Blank = Use Default Item Search and Select  1 = Use Style Item Search and Select
+    VALUE: []
+PAGE: 18 Customização RBS               - Customização RBS              
+                                 []
+    1. Opção para os campos PART NUMBER, FRETE, LOCAL DE COBRANÇA, LOCAL ENTREGA e REQUISITANTE :
+    VALUE: []
+  OpcaoSuprimentos               [EV01]
+    "1" para mostrar no grid os campos  " " para NÃO mostrar os campos no grid
+    VALUE: []
+                                 []
+    2.Opção para CATÁLOGO DE PREÇOS :
+    VALUE: []
+  OpcaoCatalogo                  [EV01]
+    "1" para ativar o Catálogo de Preços automaticamente  " " para NÂO ativar o Catálogo de Preços
+    VALUE: []
+  TpCatalogo                     [EV01]
+    Tipo de Catálogo de Preços:  "R" = Recarga de Cartuchos (1001)  " " =  Outros (FABESUL)
+    VALUE: []
+  UltimoStatusPermitido          [LTTR]
+    3.Código do Último Status(Inicial) para consistir a entrada do FRETE e verificar se o fornecedor tem Catálogo de Preços  
+    VALUE: []
+  OpcaoDataPrometida_            [EV01]
+    4.Opção "1" obrigatório o preenchimento da Data Prometida  Opção " " NÃO obrigatório o preenchimento da Data Prometida
+    VALUE: []
+  OpcaoViagens                   [EV01]
+    5. Opção Viagens = "1": campos DSC2 e DS40 e DRQJ(Data Solicitação) obrigatórios; e grava F4330 (AN8)
+    VALUE: []
+  cInvest                        [AA01]
+    6. Validação do Processo de Investimentos (S/N)
+    VALUE: []
+  bloquearlanctosnaoorcados      [EV01]
+    7. Bloquear Lançamentos não Orçados (S/N) ?
+    VALUE: []
+  cPessoaFisica                  [AA01]
+    8. Validação Pessoa Física       "  " - não valida (default)      "1" - valida
+    VALUE: []
+  CartoesVisita                  [EV01]
+    9. Exigir Informações de Cartões de Visita (S/N) ?
+    VALUE: []
+  mnFornecedorCartaoVisita_AN8   [AN8]
+     9.1 Dados Para Cartão de Visita - [ Fornecedor]
+    VALUE: []
+  mnQuantidadeCartaoVisita_UORG  [UORG]
+     9.2 Dados Para Cartão de Vistas - [ Quantidade ]
+    VALUE: []
+  mnValorCartaoVisita_UPAX       [UPAX]
+     9.3 Dados Para Cartão de Visita - [ Valor ]
+    VALUE: []
+  verificarbloqueioporvalor      [EV01]
+    Verificar existência de bloqueio por valor (S/N) ?
+    VALUE: []
+PAGE: 19 Customização RBS 2             - Custom. RBS 2                 
+  cImprimeR5543501S              [EV01]
+    1. Entre '1' para imprimir relatório Solicitação de Compras (R5543501S)
+    VALUE: []
+  ProtectNXTRCabec               [NXTR]
+    Proteção do Cabeçalho - próximo status maior ou igual protege campos da tela W4310B - Order Header
+    VALUE: []
+  cCampo_Primeira_CotacaoEV01    [EV01]
+    Opção para Suprimentos (campo 1a Cotação visível)  'S' = Suprimentos  '  ' = Outros
+    VALUE: []
+  cEmailCD                       [EV01]
+    Envia E-mail - CD (S \N)
+    VALUE: []
+  szCodigoXMLOC                  [Z5576B22]
+    Código XML para a ordem de compras
+    VALUE: []
+  cPermitirSoFornecedor          [EV01]
+    Permitir tipos de cadastro como fornecedor em pedido  	S - Todos  	Default - Somente fornecedores (tipo V)
+    VALUE: []
+  cSoFornecedorItem              [EV01]
+    Permitir somente itens com fornecedores aprovados (SDB XML/FI)  	S - Somente cadastrados  	Default - Todos
+    VALUE: []
+  cValidaRExFFxCta               [EV01]
+    Validar relação: Ref. de envio x Filial/Fábrica x Conta (Rúbrica)  	S - Valida  	Default - Não
+    VALUE: []
+  cRequisitantes_EV01            [EV01]
+    Permitir somente usuários do JDE como Requisitantes  	S - Sim  	Default - Campo livre
+    VALUE: []
+                                 []
+    Regra de Suprimentos
+    VALUE: []
+  szVersaoR554308A               [VL01]
+    	Versão R554308A (Regra de Suprimentos)  		Em branco - Não processa regras
+    VALUE: []
+  szCodigoRegra                  [SDB]
+    	Códido para regra de suprimentos  		Default - REQ
+    VALUE: []
+  szTipoRegra                    [TYDT]
+    	Tipo para regra de suprimentos  		Default - OM
+    VALUE: []
+

@@ -1,0 +1,43 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: T554308A PO Processa OM
+Type: Processing Options
+---------------------------------------------------------------------------------
+PAGE: 0                                - Parâmetros                    
+  szTipoRequisicao               [DCTO]
+    1. Tipo de requisição  	Default - OM
+    VALUE: []
+  jdDataCorte                    [UPMJ]
+    2. Data de corte  	Default - Data de hoje - 5 dias
+    VALUE: []
+  szStatusRequisicao             [LTTR]
+    3. Próximo status  	Default - 120
+    VALUE: []
+                                 []
+    4. Regra para gerar pedido automático
+    VALUE: []
+  szSupplementalDatabaseCode_SDB [SDB]
+    	4.1. Código Suplementar  		Default - REQ
+    VALUE: []
+  szTypeofData_TYDT              [TYDT]
+    	4.2. Tipo Suplementar  		Default - OM
+    VALUE: []
+PAGE: 1                                - Processamento                 
+                                 []
+    1. Usuários (Precisa ser preenchido para executar)
+    VALUE: []
+  mnUsuarioSuprimentos           [AN8]
+    	1.1. Usuário do suprimentos
+    VALUE: []
+  szTipoPedido                   [DCTO]
+    2. Tipo de pedido  	Default - O3
+    VALUE: []
+  szVersaoR4311Z1I               [VL01]
+    3. Versão do R4311Z1I (Precisa ser preenchido para executar)
+    VALUE: []
+  szUsuarioTransacao             [EDUS]
+    	3.1. Nome da Transação (Precisa ser preenchido para executar)
+    VALUE: []
+  szStatusCodeLast               [LTTR]
+    4. Status de processamento  	Defatult - 120
+    VALUE: []
+

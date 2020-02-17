@@ -1,0 +1,19 @@
+﻿---------------------------------------------------------------------------------
+Business View: V55XML01 (BSVW F55XML01 - Full)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F55XML01 - XML's para recebimento
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML01(0)  X
+ACTDATE    Date - Last Task                         Date            6(0)       F55XML01(0)  
+TDAY       Time of Day                              Math Numeric    6(0)       F55XML01(0)  
+USER       User ID                                  String          10(0)      F55XML01(0)  
+PID        Program ID                               String          10(0)      F55XML01(0)  
+VL01       Selection Values 01                      String          25(0)      F55XML01(0)  
+JOBN       Work Station ID                          String          10(0)      F55XML01(0)  
+UPMJ       Date - Updated                           Date            6(0)       F55XML01(0)  
+UPMT       Time - Last Updated                      Math Numeric    6(0)       F55XML01(0)  
+
+

@@ -1,0 +1,28 @@
+﻿---------------------------------------------------------------------------------
+Business View: V55XML05 (BSVW XML Pedidos Vinculados)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F55XML05 - XML PO
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+Z55XML01   ID XML de NF                             Math Numeric    15(0)      F55XML05(0)  X
+Z55XML02   Item no XML da NF                        Math Numeric    15(0)      F55XML05(0)  X
+MCU        Business Unit                            String          12(0)      F55XML05(0)  X
+KCOO       Order Company (Order Number)             String          5(0)       F55XML05(0)  X
+DOCO       Document (Order No, Invoice, etc.)       Math Numeric    8(0)       F55XML05(0)  X
+DCTO       Order Type                               String          2(0)       F55XML05(0)  X
+SFXO       Order Suffix                             String          3(0)       F55XML05(0)  X
+LNID       Line Number                              Math Numeric    6(3)       F55XML05(0)  X
+UOM        Unit of Measure as Input                 String          2(0)       F55XML05(0)  
+UORG       Units - Order/Transaction Quantity       Math Numeric    15(0)      F55XML05(0)  
+UPRC       Amount - Price per Unit                  Math Numeric    15(4)      F55XML05(0)  
+AEXP       Amount - Extended Price                  Math Numeric    15(2)      F55XML05(0)  
+USER       User ID                                  String          10(0)      F55XML05(0)  
+PID        Program ID                               String          10(0)      F55XML05(0)  
+VL01       Selection Values 01                      String          25(0)      F55XML05(0)  
+JOBN       Work Station ID                          String          10(0)      F55XML05(0)  
+UPMJ       Date - Updated                           Date            6(0)       F55XML05(0)  
+UPMT       Time - Last Updated                      Math Numeric    6(0)       F55XML05(0)  
+
+

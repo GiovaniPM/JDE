@@ -1,0 +1,689 @@
+﻿
+=============================================
+EVENTS
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: GC Last Status
+Event: Col Exited & Changed - Asynch
+Event GUID: f57dec21-a23a-11d0-a204-0000f6728a56
+=============================================
+// 
+//    SAR 5853272 - Changed the IF statement
+If GC Last Status [TRTY] is not equal to <Blank>
+And GC Last Status [TRTY] is not equal to <NULL>
+And GC Last Status [TRTY] is not equal to "0"
+     GetUDC(X0005.GetUDC)
+          UNDEFINED <> szDataDictionaryItem [DTAI]
+          "40" -> szSystemCode [SY]
+          "AT" -> szRecordTypeCode [RT]
+          GC Last Status [TRTY] -> szUserDefinedCode [KY]
+          "3.00" -> mnKeyFieldLength [AS]
+          UNDEFINED <> szLanguagePreference [LNGP]
+          GC Associated Description [DL01] <- szDescription001 [DL01]
+          UNDEFINED <> szDescription002 [DL02]
+          UNDEFINED <> szSpecialHandlingCode [SPHD]
+          UNDEFINED <> cUdcOwnershipFlag [UDCO]
+          UNDEFINED <> cHardCodedYn [HRDC]
+          UNDEFINED <> cSuppressErrorMessage [EV01]
+          UNDEFINED <> szErrorMessageId [DTAI]
+          UNDEFINED <> cUDCOne [EV01]
+     GC Last Status Description [DSC1] = GC Associated Description [DL01]
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: GC Last Status Description
+Event: Col Exited & Changed - Asynch
+Event GUID: c78583f4-a240-11d0-a204-0000f6728a56
+=============================================
+If GC Last Status Description [DSC1] is less than or equal to <Blank>
+And GC Last Status Description [DSC1] is equal to or empty <Blank>
+     GC Last Status Description [DSC1] = GC Associated Description [DL01]
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: HC OK/Select
+Event: Button Clicked
+Event GUID: f57dec1f-a23a-11d0-a204-0000f6728a56
+=============================================
+FC Grid Row Count (wf) [DTAI] = "1"
+FC Count - wf [INT01] = "1"
+FC Count-MathNumeric (wf) [MATH01] = "1"
+// 
+// SAR 6745661
+Get Max Grid Rows(FC Grid, FC Max Lines - wf)
+// 
+// Retrieve each grid row and verify Next Status, Other 1 thru 5 exist as Last
+// Status Code.  If it does not exist as a Last Status Code, an error will be
+// given.
+// 
+While FC Count - wf [INT01] is less than FC Max Lines - wf [INT01]
+     Get Grid Row(FC Grid, FC Grid Row Count (wf), )
+     ValidateAllowStatusLineList(B4000010.ValidateAllowStatusLineList)
+          FC GENLNG - Link List Address (wf) [GENLNG] <> idStatusLineList [GENLNG]
+          FC EV02 - Status Line Error 1/0 (wf) [EV02] <> cErrorCode [EV01]
+          GC Next Status [NXTR] <> szNextStatusCode [NXTR]
+          GC Other 1 [A1TR] <> szAllowedStatusCode1 [A1TR]
+          GC Other 2 [A2TR] <> szAllowedStatusCode2 [A2TR]
+          GC Other 3 [A3TR] <> szAllowedStatusCode3 [A3TR]
+          GC Other 4 [A4TR] <> szAllowedStatusCode4 [A4TR]
+          GC Other 5 [A5TR] <> szAllowedStatusCode5 [A5TR]
+     If FC EV02 - Status Line Error 1/0 (wf) [EV02] is equal to "1"
+          Stop Processing
+     End If
+     FC Count - wf [INT01] = [FC Count - wf [INT01]]+1
+     FC Count-MathNumeric (wf) [MATH01] = [FC Count-MathNumeric (wf) [MATH01]]+1
+     ConvertNumericToString(B0000045.ConvertNumericToString)
+          FC Count-MathNumeric (wf) [MATH01] -> mnMathNumeric01 [MATH01]
+          FC Grid Row Count (wf) [DTAI] <- szVideoConstant30A [VC30A]
+End While
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: HC OK/Select
+Event: Post Button Clicked
+Event GUID: 5ef15a17-e064-11d1-9ac9-00600832fe19
+=============================================
+DestroyIndexLinkList(B4000010.DestroyIndexLinkList)
+     FC GENLNG - Link List Address (wf) [GENLNG] <> idCacheHandleAddress [GENLNG]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: HC Delete record
+Event: Button Clicked
+Event GUID: f57dec22-a23a-11d0-a204-0000f6728a56
+=============================================
+FC Suppress Delete - wf [EV01] = "0"
+FC EV01-Do Not Delete (wf) [EV01] = "0"
+If GC Prct Line [EV01] is equal to "1"
+     FC Suppress Delete - wf [EV01] = "1"
+     FC EV01-Do Not Delete (wf) [EV01] = "1"
+     CheckForOrdActRuleDeltOK(B4000010.CheckForOrdActRuleDeltOK)
+          GC Prct Line [EV01] <> cProtectLineFlag [EV01]
+          GC Last Status [TRTY] <> szLastStatus [TRTY]
+Else
+     DeleteIndexFromIndexList(B4000010.DeleteIndexFromIndexList)
+          GC Last Status [TRTY] <> szStringIndexToDelete [DSC2]
+          UNDEFINED <> mnNumericIndexToDelete [CDL]
+          UNDEFINED <> cNumericFlag [EV01]
+          UNDEFINED <> cDeleteAllDuplicates [EV02]
+          FC EV01-Do Not Delete (wf) [EV01] <> cErrorCode [ERR]
+          FC GENLNG - Link List Address (wf) [GENLNG] <> idCacheHandleAddress [GENLNG]
+          UNDEFINED <> cDeleteKeyIndex [EV01]
+     If FC EV01-Do Not Delete (wf) [EV01] is not equal to "1"
+          UpdateAllowedStatusRowList(B4000010.UpdateAllowedStatusRowList)
+               GC Next Status [NXTR] -> szOriginalNextStatusCode [NXTR]
+               GC Other 1 [A1TR] -> szOriginalStatusAllowed1 [A1TR]
+               UNDEFINED <> szNextStatusCode [NXTR]
+               UNDEFINED <> szStatusCodeAllowed1 [A1TR]
+               GC Other 2 [A2TR] -> szOriginalStatusAllowed2 [A2TR]
+               UNDEFINED <> szStatusCodeAllowed2 [A2TR]
+               GC Other 3 [A3TR] -> szOriginalStatusAllowed3 [A3TR]
+               UNDEFINED <> szStatusCodeAllowed3 [A3TR]
+               GC Other 4 [A4TR] -> szOriginalStatusAllowed4 [A4TR]
+               UNDEFINED <> szStatusCodeAllowed4 [A4TR]
+               GC Other 5 [A5TR] -> szOriginalStatusAllowed5 [A5TR]
+               UNDEFINED <> szStatusCodeAllowed5 [A5TR]
+               FC GENLNG - Link List Address (wf) [GENLNG] <> idCacheHandleAddress [GENLNG]
+     Else
+          Stop Processing
+     End If
+End If
+// Suppress Delete - wf is not working properly.  
+// Do Not Delete (wf) is to replace Suppress Delete
+// 
+// 
+// Added for SAR 1762576.  SD  10/20/97
+If FC EV01-Do Not Delete (wf) [EV01] is not equal to "1"
+     F4311.FetchSingle  [Index 2: Order Type, Next Status, +]
+          GC Or Ty [DCTO] = TK Order Type [DCTO]
+          GC Ln Ty [LNTY] = TK Line Type [LNTY]
+          GC Next Stat - wf [NXTR] = TK Status Code - Next [NXTR]
+     If SV File_IO_Status is equal to CO SUCCESS
+          Set Grid Cell Error(FC Grid,  <Current Row>, GC NextStat - wf, "0382")
+          FC EV01-Do Not Delete (wf) [EV01] = "1"
+     Else
+          F4211.FetchSingle  [Index 2: Order Type, Next Status, +B]
+               GC Or Ty [DCTO] = TK Order Type [DCTO]
+               GC Ln Ty [LNTY] = TK Line Type [LNTY]
+               GC Next Stat - wf [NXTR] = TK Status Code - Next [NXTR]
+          If SV File_IO_Status is equal to CO SUCCESS
+               Set Grid Cell Error(FC Grid,  <Current Row>, GC NextStatus, "0382")
+               FC EV01-Do Not Delete (wf) [EV01] = "1"
+          End If
+     End If
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: HC Cancel/Close
+Event: Button Clicked
+Event GUID: f57dec20-a23a-11d0-a204-0000f6728a56
+=============================================
+DestroyIndexLinkList(B4000010.DestroyIndexLinkList)
+     FC GENLNG - Link List Address (wf) [GENLNG] <> idCacheHandleAddress [GENLNG]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: FC Order Type
+Event: Control Exited/Changed-Asynch
+Event GUID: f57dec23-a23a-11d0-a204-0000f6728a56
+=============================================
+// 
+// The FIND button will allow the user to know what record is already exist in
+// F40203 table.  This will prevent an error window to pop up.
+// "Insert Fail F40203"  (Duplicate Key). 
+// 
+If FC Order Type [DCTO] is greater than <Blank>
+And FC Line Type [LNTY] is greater than <Blank>
+     If SV Form_ Mode is equal to CO ADD_MODE
+          ! Press Button(FC )
+     End If
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: FC Line Type
+Event: Control Exited/Changed-Asynch
+Event GUID: f57dec24-a23a-11d0-a204-0000f6728a56
+=============================================
+GetLineTypeConstants(B4000260.GetLineTypeConstants)
+     FC Line Type [LNTY] <> szLineType [LNTY]
+     FC LINE TYPE [DL01] <> szLineTypeDesc [LNDS]
+     UNDEFINED <> szLineTypeDesc2 [LND2]
+     UNDEFINED <> cGLInterface [GLI]
+     UNDEFINED <> cInventoryInterface [IVI]
+     UNDEFINED <> cARInterface [ARI]
+     UNDEFINED <> cAPInterface [API]
+     UNDEFINED <> cReverseSign [RSGN]
+     UNDEFINED <> cTextLine [TXYN]
+     UNDEFINED <> cIncludeSalesCOGS [PRFT]
+     UNDEFINED <> cIncludeCashDiscount [CDSC]
+     UNDEFINED <> cIncludeTax1 [TX01]
+     UNDEFINED <> cIncludeTax2 [TX02]
+     UNDEFINED <> szGLOffset [GLC]
+     UNDEFINED <> cPrintDocument1 [PDC1]
+     UNDEFINED <> cPrintDocument2 [PDC2]
+     UNDEFINED <> cPrintDocument3 [PDC3]
+     UNDEFINED <> cRecordVariance [PDC4]
+     UNDEFINED <> cIncludeTotalDocument1 [IDC1]
+     UNDEFINED <> cIncludeTotalDocument2 [IDC2]
+     UNDEFINED <> cIncludeTotalDocument3 [IDC3]
+     UNDEFINED <> cIncludeTotaldocument4 [IDC4]
+     UNDEFINED <> cIncludeColumnSalesJournal [CSJ]
+     UNDEFINED <> szOrderType [DCTO]
+     UNDEFINED <> cApplyRetainage [ART]
+     UNDEFINED <> cApplyFreight [AFT]
+     UNDEFINED <> cGenerateWorkOrder [GWO]
+     UNDEFINED <> cSuppressErrorMessage [EV01]
+     UNDEFINED <> cErrorCode [ERR]
+     UNDEFINED <> cCallMaterialsIssue [CMI]
+// 
+// In an ADD mode, the FIND button will help the user know which record already
+// exist in the file .  This is to prevent an error window to pop up  
+// "Insert Fail F40203"  (Duplicate keys).
+// 
+If FC Order Type [DCTO] is greater than <Blank>
+And FC Line Type [LNTY] is greater than <Blank>
+     If SV Form_ Mode is equal to CO ADD_MODE
+          ! Press Button(FC )
+     End If
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: FC Grid
+Event: Add Grid Rec to DB - Before
+Event GUID: f57dec17-a23a-11d0-a204-0000f6728a56
+=============================================
+BC Description - Line Type (F40203.0) [LNDS] = FC LINE TYPE [DL01]
+BC Description - Status (F40203.0) [STDS] = GC Last Status Description [DSC1]
+BC Description - Line Type Line 2 (F40203.0) [LND2] = FC Description2-wf [DSC1]
+! GC Or Ty [DCTO] = FC Order Type [DCTO]
+! GC Ln Ty [LNTY] = FC Line Type [LNTY]
+BC Order Type (F40203.0) [DCTO] = FC Order Type [DCTO]
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: FC Grid
+Event: Update Grid Rec to DB-Before
+Event GUID: f57dec19-a23a-11d0-a204-0000f6728a56
+=============================================
+BC Description - Line Type (F40203.0) [LNDS] = FC LINE TYPE [DL01]
+BC Description - Line Type Line 2 (F40203.0) [LND2] = FC Description2-wf [DSC1]
+BC Description - Status (F40203.0) [STDS] = GC Last Status Description [DSC1]
+GC Or Ty [DCTO] = FC Order Type [DCTO]
+GC Ln Ty [LNTY] = FC Line Type [LNTY]
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: FC Grid
+Event: Delete Grid Rec Verify-Before
+Event GUID: f57dec1b-a23a-11d0-a204-0000f6728a56
+=============================================
+If FC EV01-Do Not Delete (wf) [EV01] is equal to "1"
+     Suppress Delete
+End If
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: FC Grid
+Event: Delete Grid Rec from DB-Before
+Event GUID: f57dec1c-a23a-11d0-a204-0000f6728a56
+=============================================
+If FC EV01-Do Not Delete (wf) [EV01] is equal to "1"
+     Suppress Delete
+End If
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: FC Grid
+Event: Add Last Entry Row to Grid
+Event GUID: f57dec1d-a23a-11d0-a204-0000f6728a56
+=============================================
+FC Max Lines - wf [INT01] = [FC Max Lines - wf [INT01]]+1
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Object: FC Grid
+Event: Row Exit & Changed - Asynch
+Event GUID: f57dec1e-a23a-11d0-a204-0000f6728a56
+=============================================
+If GC Next Status [NXTR] is not equal to <Blank>
+     VerifyNextStatusGreaterThanLast(B4000260.VerifyNextStatusGreaterThanLast)
+          GC Next Status [NXTR] <> szStatuscodenext [NXTR]
+          GC Last Status [TRTY] <> szStatuscodelast [LTTR]
+End If
+// 
+//      If the Original Last Status is not blank and the Last Status changes, 
+// update the link list with the new Last Status
+// 
+If GC Original Last Status [DTAI] is not equal to <Blank>
+     DeleteIndexFromIndexList(B4000010.DeleteIndexFromIndexList)
+          GC Original Last Status [DTAI] <> szStringIndexToDelete [DSC2]
+          UNDEFINED <> mnNumericIndexToDelete [CDL]
+          UNDEFINED <> cNumericFlag [EV01]
+          UNDEFINED <> cDeleteAllDuplicates [EV02]
+          UNDEFINED <> cErrorCode [ERR]
+          FC GENLNG - Link List Address (wf) [GENLNG] <> idCacheHandleAddress [GENLNG]
+          "1" <> cDeleteKeyIndex [EV01]
+     GC Line Type Description [LND2] = GC Associated Description [DL01]
+End If
+// 
+BuildStatusCodeIndex(B4000010.BuildStatusCodeIndex)
+     UNDEFINED <> mnLineNumber [CDL]
+     UNDEFINED <> cAllowDuplicate [EV02]
+     UNDEFINED <> cNumericFlag [EV03]
+     GC Last Status [TRTY] <> szLineStatusCode [DSC2]
+     FC GENLNG - Link List Address (wf) [GENLNG] <> idCacheHandleAddress [GENLNG]
+UpdateAllowedStatusRowList(B4000010.UpdateAllowedStatusRowList)
+     GC Next Stat - wf [NXTR] <> szOriginalNextStatusCode [NXTR]
+     GC Allowed Status 1 - wf [A1TR] <> szOriginalStatusAllowed1 [A1TR]
+     GC Next Status [NXTR] <> szNextStatusCode [NXTR]
+     GC Other 1 [A1TR] <> szStatusCodeAllowed1 [A1TR]
+     GC Allowed Status 2 - wf [A2TR] <> szOriginalStatusAllowed2 [A2TR]
+     GC Other 2 [A2TR] <> szStatusCodeAllowed2 [A2TR]
+     GC Allowed Status 3 - wf [A3TR] <> szOriginalStatusAllowed3 [A3TR]
+     GC Other 3 [A3TR] <> szStatusCodeAllowed3 [A3TR]
+     GC Allowed Status 4 - wf [A4TR] <> szOriginalStatusAllowed4 [A4TR]
+     GC Other 4 [A4TR] <> szStatusCodeAllowed4 [A4TR]
+     GC Allowed Status 5 - wf [A5TR] <> szOriginalStatusAllowed5 [A5TR]
+     GC Other 5 [A5TR] <> szStatusCodeAllowed5 [A5TR]
+     FC GENLNG - Link List Address (wf) [GENLNG] <> idCacheHandleAddress [GENLNG]
+// 
+GC Allowed Status 5 - wf [A5TR] = GC Other 5 [A5TR]
+GC Allowed Status 4 - wf [A4TR] = GC Other 4 [A4TR]
+GC Allowed Status 3 - wf [A3TR] = GC Other 3 [A3TR]
+GC Allowed Status 2 - wf [A2TR] = GC Other 2 [A2TR]
+GC Allowed Status 1 - wf [A1TR] = GC Other 1 [A1TR]
+GC Original Last Status [DTAI] = GC Last Status [TRTY]
+FC EV02 - Status Line Error 1/0 (wf) [EV02] = "0"
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Event: Dialog is Initialized
+Event GUID: f57dec12-a23a-11d0-a204-0000f6728a56
+=============================================
+FC GENLNG - Link List Address (wf) [GENLNG] = "0"
+// 
+If SV Form_ Mode is equal to CO COPY_MODE
+     FC Order Type [DCTO] = FI Ordertype [DCTO]
+     FC Line Type [LNTY] = FI Linetype [LNTY]
+     If FI Linetype [LNTY] is greater than <Blank>
+     And FI Ordertype [DCTO] is greater than <Blank>
+          GetLineTypeConstants(B4000260.GetLineTypeConstants)
+               FI Linetype [LNTY] <> szLineType [LNTY]
+               FC LINE TYPE [DL01] <- szLineTypeDesc [LNDS]
+               FC Description2-wf [DSC1] <> szLineTypeDesc2 [LND2]
+               UNDEFINED <> cGLInterface [GLI]
+               UNDEFINED <> cInventoryInterface [IVI]
+               UNDEFINED <> cARInterface [ARI]
+               UNDEFINED <> cAPInterface [API]
+               UNDEFINED <> cReverseSign [RSGN]
+               UNDEFINED <> cTextLine [TXYN]
+               UNDEFINED <> cIncludeSalesCOGS [PRFT]
+               UNDEFINED <> cIncludeCashDiscount [CDSC]
+               UNDEFINED <> cIncludeTax1 [TX01]
+               UNDEFINED <> cIncludeTax2 [TX02]
+               UNDEFINED <> szGLOffset [GLC]
+               UNDEFINED <> cPrintDocument1 [PDC1]
+               UNDEFINED <> cPrintDocument2 [PDC2]
+               UNDEFINED <> cPrintDocument3 [PDC3]
+               UNDEFINED <> cRecordVariance [PDC4]
+               UNDEFINED <> cIncludeTotalDocument1 [IDC1]
+               UNDEFINED <> cIncludeTotalDocument2 [IDC2]
+               UNDEFINED <> cIncludeTotalDocument3 [IDC3]
+               UNDEFINED <> cIncludeTotaldocument4 [IDC4]
+               UNDEFINED <> cIncludeColumnSalesJournal [CSJ]
+               UNDEFINED <> szOrderType [DCTO]
+               UNDEFINED <> cApplyRetainage [ART]
+               UNDEFINED <> cApplyFreight [AFT]
+               UNDEFINED <> cGenerateWorkOrder [GWO]
+               UNDEFINED <> cSuppressErrorMessage [EV01]
+               UNDEFINED <> cErrorCode [ERR]
+               UNDEFINED <> cCallMaterialsIssue [CMI]
+     End If
+End If
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Event: Post Dialog is Initialized
+Event GUID: f57dec13-a23a-11d0-a204-0000f6728a56
+=============================================
+If SV Form_ Mode is not equal to CO COPY_MODE
+     FC Order Type [DCTO] = FI Ordertype [DCTO]
+     FC Line Type [LNTY] = FI Linetype [LNTY]
+     If FI Linetype [LNTY] is greater than <Blank>
+     And FI Ordertype [DCTO] is greater than <Blank>
+          GetLineTypeConstants(B4000260.GetLineTypeConstants)
+               FI Linetype [LNTY] <> szLineType [LNTY]
+               FC LINE TYPE [DL01] <- szLineTypeDesc [LNDS]
+               FC Description2-wf [DSC1] <> szLineTypeDesc2 [LND2]
+               UNDEFINED <> cGLInterface [GLI]
+               UNDEFINED <> cInventoryInterface [IVI]
+               UNDEFINED <> cARInterface [ARI]
+               UNDEFINED <> cAPInterface [API]
+               UNDEFINED <> cReverseSign [RSGN]
+               UNDEFINED <> cTextLine [TXYN]
+               UNDEFINED <> cIncludeSalesCOGS [PRFT]
+               UNDEFINED <> cIncludeCashDiscount [CDSC]
+               UNDEFINED <> cIncludeTax1 [TX01]
+               UNDEFINED <> cIncludeTax2 [TX02]
+               UNDEFINED <> szGLOffset [GLC]
+               UNDEFINED <> cPrintDocument1 [PDC1]
+               UNDEFINED <> cPrintDocument2 [PDC2]
+               UNDEFINED <> cPrintDocument3 [PDC3]
+               UNDEFINED <> cRecordVariance [PDC4]
+               UNDEFINED <> cIncludeTotalDocument1 [IDC1]
+               UNDEFINED <> cIncludeTotalDocument2 [IDC2]
+               UNDEFINED <> cIncludeTotalDocument3 [IDC3]
+               UNDEFINED <> cIncludeTotaldocument4 [IDC4]
+               UNDEFINED <> cIncludeColumnSalesJournal [CSJ]
+               UNDEFINED <> szOrderType [DCTO]
+               UNDEFINED <> cApplyRetainage [ART]
+               UNDEFINED <> cApplyFreight [AFT]
+               UNDEFINED <> cGenerateWorkOrder [GWO]
+               UNDEFINED <> cSuppressErrorMessage [EV01]
+               UNDEFINED <> cErrorCode [ERR]
+               UNDEFINED <> cCallMaterialsIssue [CMI]
+     End If
+End If
+If SV Form_ Mode is equal to CO UPDATE_MODE
+     Disable Control(FC Order Type [DCTO])
+     Disable Control(FC Line Type [LNTY])
+End If
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Event: Grid Record is Fetched
+Event GUID: f57dec14-a23a-11d0-a204-0000f6728a56
+=============================================
+BuildStatusCodeIndex(B4000010.BuildStatusCodeIndex)
+     UNDEFINED <> mnLineNumber [CDL]
+     UNDEFINED <> cAllowDuplicate [EV02]
+     UNDEFINED <> cNumericFlag [EV03]
+     BC Status - Line (F40203.0) [TRTY] -> szLineStatusCode [DSC2]
+     FC GENLNG - Link List Address (wf) [GENLNG] <> idCacheHandleAddress [GENLNG]
+UpdateAllowedStatusRowList(B4000010.UpdateAllowedStatusRowList)
+     UNDEFINED <> szOriginalNextStatusCode [NXTR]
+     UNDEFINED <> szOriginalStatusAllowed1 [A1TR]
+     BC Status Code - Next (F40203.0) [NXTR] -> szNextStatusCode [NXTR]
+     BC Status Code Allowed 1 (F40203.0) [A1TR] -> szStatusCodeAllowed1 [A1TR]
+     UNDEFINED <> szOriginalStatusAllowed2 [A2TR]
+     BC Status Code Allowed 2 (F40203.0) [A2TR] -> szStatusCodeAllowed2 [A2TR]
+     UNDEFINED <> szOriginalStatusAllowed3 [A3TR]
+     BC Status Code Allowed 3 (F40203.0) [A3TR] -> szStatusCodeAllowed3 [A3TR]
+     UNDEFINED <> szOriginalStatusAllowed4 [A4TR]
+     BC Status Code Allowed 4 (F40203.0) [A4TR] -> szStatusCodeAllowed4 [A4TR]
+     UNDEFINED <> szOriginalStatusAllowed5 [A5TR]
+     BC Status Code Allowed 5 (F40203.0) [A5TR] -> szStatusCodeAllowed5 [A5TR]
+     FC GENLNG - Link List Address (wf) [GENLNG] <> idCacheHandleAddress [GENLNG]
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Event: Write Grid Line-Before
+Event GUID: f57dec15-a23a-11d0-a204-0000f6728a56
+=============================================
+CheckOrderLineNextStatusExistenc(B4000010.CheckOrderLineNextStatusExistenc)
+     FC Order Type [DCTO] <> szOrderType [DCTO]
+     BC Status - Line (F40203.0) [TRTY] <> szNextStatusCode [NXTR]
+     FC Line Type [LNTY] <> szLineType [LNTY]
+     GC Prct Line [EV01] <> cProtectLineFlag [EV01]
+GC Allowed Status 5 - wf [A5TR] = BC Status Code Allowed 5 (F40203.0) [A5TR]
+GC Allowed Status 4 - wf [A4TR] = BC Status Code Allowed 4 (F40203.0) [A4TR]
+GC Allowed Status 3 - wf [A3TR] = BC Status Code Allowed 3 (F40203.0) [A3TR]
+GC Allowed Status 2 - wf [A2TR] = BC Status Code Allowed 2 (F40203.0) [A2TR]
+GC Allowed Status 1 - wf [A1TR] = BC Status Code Allowed 1 (F40203.0) [A1TR]
+GC Next Stat - wf [NXTR] = BC Status Code - Next (F40203.0) [NXTR]
+GC Original Last Status [DTAI] = GC Last Status [TRTY]
+GC Last Status Description [DSC1] = BC Description - Status (F40203.0) [STDS]
+If GC Prct Line [EV01] is equal to "1"
+     Disable Grid(FC Grid,  <Current Row>, GC LastStatus)
+End If
+
+=============================================
+Form: Order Activity Rules - Revisions - W40204A
+Event: Last Grid Record Has Been Read
+Event GUID: f57dec16-a23a-11d0-a204-0000f6728a56
+=============================================
+Get Max Grid Rows(FC Grid, FC Max Lines - wf)
+If SV Form_ Mode is equal to CO COPY_MODE
+     FC Order Type [DCTO] = <Blank>
+     FC Line Type [LNTY] = <Blank>
+     FC ORDER TYPE [DL01] = <Blank>
+     FC LINE TYPE [DL01] = <Blank>
+End If
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Order Activity Rules - W40204B
+Object: HC OK/Select
+Event: Button Clicked
+Event GUID: f57dec10-a23a-11d0-a204-0000f6728a56
+=============================================
+// 
+//      Since the browse form display a set of DCT and LNTY,  the multiple selec
+// will only on in the Header Less Detail once per set to update.  
+// 
+// 
+//   Only get Total Grid Row Selected Once.
+// 
+If FC Total Selected - wf [INT01] is less than or equal to "0"
+     Get Selected Grid Row Count(FC Grid, FC Total Selected - wf, )
+End If
+If FC Last Row Selected  wf [INT01] is less than or equal to "0"
+     FC DCTO-Hold Order Type/DD (wf) [DCTO] = <Blank>
+     FC LNTY - Hold Line Type/DD (wf) [LNTY] = <Blank>
+End If
+If FC DCTO-Hold Order Type/DD (wf) [DCTO] is not equal to GC Order Type [DCTO]
+Or FC LNTY - Hold Line Type/DD (wf) [LNTY] is not equal to GC Line Type [LNTY]
+     Call App:P40204 Form:W40204A Version: 
+          GC Order Type [DCTO] -> Ordertype [DCTO]
+          GC Line Type [LNTY] -> Linetype [LNTY]
+          GC Order Type Next Number [ORNN] -> Ordertypenextnumber [ORNN]
+     FC DCTO-Hold Order Type/DD (wf) [DCTO] = GC Order Type [DCTO]
+     FC LNTY - Hold Line Type/DD (wf) [LNTY] = GC Line Type [LNTY]
+End If
+FC Last Row Selected  wf [INT01] = [FC Last Row Selected  wf [INT01]]+1
+If FC Last Row Selected  wf [INT01] is greater than or equal to FC Total Selected - wf [INT01]
+     FC DCTO-Hold Order Type/DD (wf) [DCTO] = <Blank>
+     FC LNTY - Hold Line Type/DD (wf) [LNTY] = <Blank>
+     FC Total Selected - wf [INT01] = "0"
+     FC Last Row Selected  wf [INT01] = "0"
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Order Activity Rules - W40204B
+Object: HC Add record
+Event: Button Clicked
+Event GUID: f57dec11-a23a-11d0-a204-0000f6728a56
+=============================================
+Call App:P40204 Form:W40204A Version: 
+     UNDEFINED <> Ordertype [DCTO]
+     UNDEFINED <> Linetype [LNTY]
+     UNDEFINED <> Ordertypenextnumber [ORNN]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Order Activity Rules - W40204B
+Object: HC Copy record
+Event: Button Clicked
+Event GUID: 9093267f-a23d-11d0-a204-0000f6728a56
+=============================================
+Call App:P40204 Form:W40204A Version: 
+     GC Order Type [DCTO] <> Ordertype [DCTO]
+     GC Line Type [LNTY] <> Linetype [LNTY]
+     BC Order Type Next Number (F40203.0) [ORNN] <> Ordertypenextnumber [ORNN]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Order Activity Rules - W40204B
+Object: HC Print Order Activity Rules
+Event: Button Clicked
+Event GUID: f57e0752-a23a-11d0-a204-0000f6728a56
+=============================================
+Call App:P98305 Form:W98305A Version: 
+     "R40213" <> ProgramId [PID]
+     UNDEFINED <> Version [VERS]
+     UNDEFINED <> Memberdescription [MD]
+     UNDEFINED <> ReportId [REPORTID]
+     "UBE" <> Object Type [FUNO]
+     UNDEFINED <> ProcessingOptionTemplateId [PROPTMID]
+     UNDEFINED <> idParm [APPLID]
+     UNDEFINED <> cCalledByOMW [EV01]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Order Activity Rules - W40204B
+Object: HC UDC Revisions
+Event: Button Clicked
+Event GUID: f57e074f-a23a-11d0-a204-0000f6728a56
+=============================================
+Call App:P0004A Form:W0004AA Version: 
+     "40" <> SystemCode [SY]
+     "AT" <> UserDefinedCodes [RT]
+     UNDEFINED <> CodeLength [CDL]
+     UNDEFINED <> NumericYN [CNUM]
+     UNDEFINED <> TypeIdentifier [ED0]
+     UNDEFINED <> Description001 [DL01]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Order Activity Rules - W40204B
+Object: HC Order Activity Rules - Revisions
+Event: Button Clicked
+Event GUID: f57e0796-a23a-11d0-a204-0000f6728a56
+=============================================
+If FC Total Selected - wf [INT01] is less than or equal to "0"
+     Get Selected Grid Row Count(FC Grid, FC Total Selected - wf, )
+End If
+If FC Last Row Selected  wf [INT01] is less than or equal to "0"
+     FC DCTO-Hold Order Type/DD (wf) [DCTO] = <Blank>
+     FC LNTY - Hold Line Type/DD (wf) [LNTY] = <Blank>
+End If
+If GC Order Type [DCTO] is not equal to FC DCTO-Hold Order Type/DD (wf) [DCTO]
+Or GC Line Type [LNTY] is not equal to FC LNTY - Hold Line Type/DD (wf) [LNTY]
+     Call App:P40204 Form:W40204A Version: 
+          GC Order Type [DCTO] -> Ordertype [DCTO]
+          GC Line Type [LNTY] -> Linetype [LNTY]
+          GC Order Type Next Number [ORNN] -> Ordertypenextnumber [ORNN]
+     FC DCTO-Hold Order Type/DD (wf) [DCTO] = GC Order Type [DCTO]
+     FC LNTY - Hold Line Type/DD (wf) [LNTY] = GC Line Type [LNTY]
+End If
+FC Last Row Selected  wf [INT01] = [FC Last Row Selected  wf [INT01]]+1
+If FC Last Row Selected  wf [INT01] is greater than or equal to FC Total Selected - wf [INT01]
+     FC Total Selected - wf [INT01] = "0"
+     FC Last Row Selected  wf [INT01] = "0"
+     FC DCTO-Hold Order Type/DD (wf) [DCTO] = <Blank>
+     FC LNTY - Hold Line Type/DD (wf) [LNTY] = <Blank>
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Work With Order Activity Rules - W40204B
+Event: Dialog is Initialized
+Event GUID: f57e069e-a23a-11d0-a204-0000f6728a56
+=============================================
+FC Total Selected - wf [INT01] = "0"
+FC Last Row Selected  wf [INT01] = "0"
+! Disable Control(Could not resolve Form Control. -5)
+
+=============================================
+Form: Work With Order Activity Rules - W40204B
+Event: Write Grid Line-Before
+Event GUID: f57dec0f-a23a-11d0-a204-0000f6728a56
+=============================================
+If BC Order Type (F40203.0) [DCTO] is not equal to FC DCTO-Hold Order Type/DD (wf) [DCTO]
+Or BC Line Type (F40203.0) [LNTY] is not equal to FC LNTY - Hold Line Type/DD (wf) [LNTY]
+     FC DCTO-Hold Order Type/DD (wf) [DCTO] = BC Order Type (F40203.0) [DCTO]
+     FC LNTY - Hold Line Type/DD (wf) [LNTY] = BC Line Type (F40203.0) [LNTY]
+     Set Grid Font(FC Grid, <Current Row>, <All Columns>, <,Bold,9,Black>, )
+End If
+
+
+
+

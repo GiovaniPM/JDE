@@ -1,0 +1,34 @@
+﻿---------------------------------------------------------------------------------
+Table: F55XML07 XML Log
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   Z55XML01   ID XML de NF                             IDXMLNF                   Math Numeric    15(0)      X
+2   Z55XML02   Item no XML da NF                        ItemXMLNF                 Math Numeric    15(0)      X
+3   OBNM       Object Name                              NameObject                String          10(0)      X
+4   DTAI       Data Item                                DataItem                  String          10(0)      X
+5   USER       User ID                                  UserId                    String          10(0)      
+6   PID        Program ID                               ProgramId                 String          10(0)      
+7   VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+8   JOBN       Work Station ID                          WorkStationId             String          10(0)      
+9   UPMJ       Date - Updated                           DateUpdated               Date            6(0)       X
+10  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       X
+11  KW21       Knowledgeware - Text                     KwText                    String          100(0)     
+
+INDICIES
+Z55XML01,02,DTAI...                      1      PRIMARY UNIQUE
+                                         Z55XML01  
+                                         Z55XML02  
+                                         UPMT      
+                                         UPMJ      
+                                         OBNM      
+                                         DTAI      
+
+Desc                                     2     
+                                         UPMJ      Descending
+                                         UPMT      Descending
+                                         Z55XML01  
+                                         Z55XML02  
+                                         OBNM      
+                                         DTAI      
+
