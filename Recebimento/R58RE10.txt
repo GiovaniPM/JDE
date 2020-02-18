@@ -1,0 +1,356 @@
+Listing of ER for Report: Load NFE (R58RE10)
+
+***********************************************************************
+     GLOBALS: Global Variable
+***********************************************************************
+     rpt_szUserId_USER
+     rpt_szProgramId_PID
+     rpt_jdDateUpdated_UPMJ
+     rpt_mnTimeLastUpdated_UPMT
+     rpt_szWorkStationId_JOBN
+     rpt_szPath_PTH
+     rpt_szNomeArquivo_PTH
+     rpt_mnidFile_GENLNG
+     rpt_szEAN_CITM
+     rpt_szIdentifier2ndItem_LITM
+     rpt_mnLineNumber_LNID
+     rpt_mnSegmento_MATH01
+     rpt_cCaracterDecimal_AA01
+     rpt_cCaracterSeparador_SPTV
+     rpt_szTipoDocNF_DCT
+     rpt_mnLoteControle_N002
+     rpt_szCaminhoDestino_PTH
+     rpt_szListaPossibilidadesOC_DL
+     rpt_szArquivo_PTH
+     rpt_mnIDArquivo_GENLNG
+     rpt_szLinhaTexto_VAR1
+     rpt_cErroFile_EV01
+     rpt_mnSeq_UKID
+     rpt_szListaPossibOC_GDTA
+     rpt_szListaPossibFCI_PRSTR
+     rpt_szCNPJFornecedor_TAX
+     rpt_szF0101_AT1
+
+=======================================================================
+     SECTION: Header [GROUP SECTION] (S3)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+     evt_cErro_EV01
+     evt_szVersaoLayout_VERS
+     evt_szCodErro_AA06
+     evt_szMensagemErro_DS01
+     evt_szF0005_DL01
+0001 //
+0002 VA rpt_mnSeq_UKID = "0"
+0003 F58RE002.Select
+        PO szLayout_DL01 =  TK Description1
+        PO szTipoArquivo_AA03 =  TK Alpha Spec. Data 03
+0004 //
+0005 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0006 // Inicio - Julio Donati - 07/08/2013
+0007 // Adicionado Leitura dos campos GDTA e PRSTR
+0008 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0009 //
+0010 // Codigo Comentado
+0011 ! F58RE002.Fetch Next
+     !    VA rpt_cCaracterDecimal_AA01 <- TK Alpha Spec. Data 01
+     !    VA rpt_szTipoDocNF_DCT <- TK Document Type
+     !    VA rpt_cCaracterSeparador_SPTV <- TK Separator Value
+     !    VA rpt_szListaPossibilidadesOC_DL <- TK Description
+     !    VA evt_szVersaoLayout_VERS <- TK Version History
+0012 //
+0013 // Novo Codigo
+0014 F58RE002.Fetch Next
+        VA rpt_cCaracterDecimal_AA01 <- TK Alpha Spec. Data 01
+        VA rpt_szTipoDocNF_DCT <- TK Document Type
+        VA rpt_cCaracterSeparador_SPTV <- TK Separator Value
+        VA rpt_szListaPossibilidadesOC_DL <- TK Description
+        VA evt_szVersaoLayout_VERS <- TK Version History
+        VA rpt_szListaPossibOC_GDTA <- TK Graphics Display File (GDF) data
+        VA rpt_szListaPossibFCI_PRSTR <- TK Parameter String
+0015 //
+0016 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0017 // Fim - Julio Donati - 07/08/2013
+0018 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0019 //
+0020 If SV File_IO_Status is equal to CO SUCCESS
+0021    Get Next Unique Key ID
+           "R58RE10" -> szObjectName
+           VA rpt_mnLoteControle_N002 <- mnUniqueKeyID
+0022    VA rpt_szPath_PTH = PO szCaminhoOrigem_PTH
+0023    If PO szTipoArquivo_AA03 is equal to "XML"
+0024       VA rpt_szPath_PTH = concat([VA rpt_szPath_PTH],"*.xml")
+0025    End If
+0026    If PO szTipoArquivo_AA03 is equal to "TXT"
+0027       VA rpt_szPath_PTH = concat([VA rpt_szPath_PTH],"*_env.txt")
+0028    End If
+0029    Localiza Arquivos em Pastas
+           VA rpt_mnidFile_GENLNG <> hFile
+           VA rpt_szPath_PTH -> szTargetDirectory
+           VA rpt_szNomeArquivo_PTH <- szFileName
+           UNDEFINED <- idFileSize
+           UNDEFINED <- cReadOnly
+           UNDEFINED <- cSystem
+           UNDEFINED <- cHidden
+           UNDEFINED <- cArchive
+           UNDEFINED <- cSubdir
+0030    While VA rpt_szNomeArquivo_PTH is not equal to <Blank>
+        And VA rpt_szNomeArquivo_PTH is not equal to <Null>
+0031       VA rpt_szCaminhoDestino_PTH = PO szCamihoDestino_PTH
+0032       VA rpt_szPath_PTH = PO szCaminhoOrigem_PTH
+0033       If PO szTipoArquivo_AA03 is equal to "XML"
+0034          Read XML
+                 VA rpt_szPath_PTH -> szPathFile
+                 VA rpt_szNomeArquivo_PTH -> szFileName
+                 PO szLayout_DL01 -> szLayout
+                 VA evt_cErro_EV01 <- cErro
+                 VA rpt_szTipoDocNF_DCT -> szTipoDoc
+                 VA rpt_cCaracterDecimal_AA01 -> cSeparadorDecimal
+                 VA rpt_mnLoteControle_N002 -> mnLoteControle
+                 VA rpt_szListaPossibilidadesOC_DL -> szListaPossibilidadeOC
+                 VA evt_szVersaoLayout_VERS -> szVersaoLayout
+                 PO szStatusInicial_AA03 -> szStatusInical
+                 VA evt_szCodErro_AA06 <- szCodErro
+                 VA evt_szMensagemErro_DS01 <- szMsgErro
+0035       End If
+0036       If PO szTipoArquivo_AA03 is equal to "TXT"
+0037          //
+0038          // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0039          // Inicio - Julio Donati - 07/08/2013
+0040          // Adicionado Passagem de parametros dos campos GDTA e PRSTR
+0041          // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0042          //
+0043          // Codigo Comentado
+0044 !          Read NFE TXT
+     !             VA rpt_szPath_PTH -> szPathFile
+     !             VA rpt_szNomeArquivo_PTH -> szFileName
+     !             PO szLayout_DL01 -> szLayout
+     !             VA evt_cErro_EV01 <> cErro
+     !             VA rpt_szTipoDocNF_DCT -> szTipoDoc
+     !             VA rpt_cCaracterDecimal_AA01 -> cSeparadorDecimal
+     !             VA rpt_mnLoteControle_N002 -> mnLoteControle
+     !             VA rpt_szListaPossibilidadesOC_DL -> szListaPossibilidadeOC
+     !             VA rpt_cCaracterSeparador_SPTV -> cSeparadorTexto
+     !             VA evt_szVersaoLayout_VERS -> szVersaoLayout
+     !             PO szStatusInicial_AA03 -> szStatusInical
+     !             VA evt_szCodErro_AA06 <- szCodErro
+     !             VA evt_szMensagemErro_DS01 <- szMsgErro
+0045          //
+0046          // Novo Codigo
+0047          // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0048          // Inicio - Julio Donati - 08/12/2014
+0049          // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0050          // Codigo Comentado
+0051 !          Read NFE TXT
+     !             VA rpt_szPath_PTH -> szPathFile
+     !             VA rpt_szNomeArquivo_PTH -> szFileName
+     !             PO szLayout_DL01 -> szLayout
+     !             VA evt_cErro_EV01 <> cErro
+     !             VA rpt_szTipoDocNF_DCT -> szTipoDoc
+     !             VA rpt_cCaracterDecimal_AA01 -> cSeparadorDecimal
+     !             VA rpt_mnLoteControle_N002 -> mnLoteControle
+     !             VA rpt_szListaPossibilidadesOC_DL -> szListaPossibilidadeOC
+     !             VA rpt_cCaracterSeparador_SPTV -> cSeparadorTexto
+     !             VA evt_szVersaoLayout_VERS -> szVersaoLayout
+     !             PO szStatusInicial_AA03 -> szStatusInical
+     !             VA evt_szCodErro_AA06 <- szCodErro
+     !             VA evt_szMensagemErro_DS01 <- szMsgErro
+     !             VA rpt_szListaPossibOC_GDTA -> szListaPossibOC_GDTA
+     !             VA rpt_szListaPossibFCI_PRSTR -> szListaPossibFCI_PRSTR
+     !             UNDEFINED X  szListaPossibPercFCI_W2CRM
+     !             UNDEFINED X  szListaPossibVlrFCI_Y5AFWF01
+0052          //
+0053          // Novo Codigo
+0054          // ==>> Se não estiver ligado na PO para verificar se o CNPJ é de Fornecedor,
+0055          // contínua executando o processo normal.
+0056          If PO szCaminhoRemetenteInvalido_PTH is equal to <Blank>
+              Or PO szCaminhoRemetenteInvalido_PTH is equal to <Null>
+0057             //
+0058             Read NFE TXT
+                    VA rpt_szPath_PTH -> szPathFile
+                    VA rpt_szNomeArquivo_PTH -> szFileName
+                    PO szLayout_DL01 -> szLayout
+                    VA evt_cErro_EV01 <> cErro
+                    VA rpt_szTipoDocNF_DCT -> szTipoDoc
+                    VA rpt_cCaracterDecimal_AA01 -> cSeparadorDecimal
+                    VA rpt_mnLoteControle_N002 -> mnLoteControle
+                    VA rpt_szListaPossibilidadesOC_DL -> szListaPossibilidadeOC
+                    VA rpt_cCaracterSeparador_SPTV -> cSeparadorTexto
+                    VA evt_szVersaoLayout_VERS -> szVersaoLayout
+                    PO szStatusInicial_AA03 -> szStatusInical
+                    VA evt_szCodErro_AA06 <- szCodErro
+                    VA evt_szMensagemErro_DS01 <- szMsgErro
+                    VA rpt_szListaPossibOC_GDTA -> szListaPossibOC_GDTA
+                    VA rpt_szListaPossibFCI_PRSTR -> szListaPossibFCI_PRSTR
+                    UNDEFINED X  szListaPossibPercFCI_W2CRM
+                    UNDEFINED X  szListaPossibVlrFCI_Y5AFWF01
+0059             //
+0060          Else
+0061             //
+0062             // ==>> Verifica pelo nome do arquivo se o CNPJ do emitente é um fornecedor
+0063             VA rpt_szCNPJFornecedor_TAX = substr([VA rpt_szNomeArquivo_PTH],6,14 )
+0064             VA rpt_szF0101_AT1 = ""
+0065             F0101.Select
+                    VA rpt_szCNPJFornecedor_TAX =  TK Tax ID
+0066             F0101.Fetch Next
+                    VA rpt_szF0101_AT1 <- TK Search Type
+0067             While SV File_IO_Status is equal to CO SUCCESS
+                 And VA rpt_szF0101_AT1 is not equal to "V"
+0068                F0101.Fetch Next
+                       VA rpt_szF0101_AT1 <- TK Search Type
+0069             End While
+0070             //
+0071             If VA rpt_szF0101_AT1 is equal to "V"
+0072                // ==>>Caso seja fornecedor faz o processo normal
+0073                Read NFE TXT
+                       VA rpt_szPath_PTH -> szPathFile
+                       VA rpt_szNomeArquivo_PTH -> szFileName
+                       PO szLayout_DL01 -> szLayout
+                       VA evt_cErro_EV01 <> cErro
+                       VA rpt_szTipoDocNF_DCT -> szTipoDoc
+                       VA rpt_cCaracterDecimal_AA01 -> cSeparadorDecimal
+                       VA rpt_mnLoteControle_N002 -> mnLoteControle
+                       VA rpt_szListaPossibilidadesOC_DL -> szListaPossibilidadeOC
+                       VA rpt_cCaracterSeparador_SPTV -> cSeparadorTexto
+                       VA evt_szVersaoLayout_VERS -> szVersaoLayout
+                       PO szStatusInicial_AA03 -> szStatusInical
+                       VA evt_szCodErro_AA06 <- szCodErro
+                       VA evt_szMensagemErro_DS01 <- szMsgErro
+                       VA rpt_szListaPossibOC_GDTA -> szListaPossibOC_GDTA
+                       VA rpt_szListaPossibFCI_PRSTR -> szListaPossibFCI_PRSTR
+                       UNDEFINED X  szListaPossibPercFCI_W2CRM
+                       UNDEFINED X  szListaPossibVlrFCI_Y5AFWF01
+0074                //
+0075             Else
+0076                //
+0077                // ==>>Se não for fornecedor, seta erro e copia o arquivo para pasta de Remetente
+0078                // Invalido
+0079                VA evt_cErro_EV01 = "Y"
+0080                VA evt_szCodErro_AA06 = "143"
+0081                VA rpt_szPath_PTH = concat([VA rpt_szPath_PTH],[VA rpt_szNomeArquivo_PTH])
+0082                VA rpt_szCaminhoDestino_PTH = PO szCaminhoRemetenteInvalido_PTH
+0083                VA rpt_szCaminhoDestino_PTH = concat([VA rpt_szCaminhoDestino_PTH],[VA rpt_szNomeArquivo_PTH])
+0084                Delete Or Copy Flat File
+                       VA rpt_szPath_PTH -> szOriginalFlatFile
+                       VA rpt_szCaminhoDestino_PTH -> szNewFlatFile
+                       "2" -> cActionOnFlatFiles
+                       UNDEFINED X  cSuppressErrorMessage
+                       UNDEFINED X  cErrorCode
+                       UNDEFINED X  szErrorMessage
+0085                Delete Or Copy Flat File
+                       VA rpt_szPath_PTH -> szOriginalFlatFile
+                       VA rpt_szCaminhoDestino_PTH -> szNewFlatFile
+                       "1" -> cActionOnFlatFiles
+                       UNDEFINED X  cSuppressErrorMessage
+                       UNDEFINED X  cErrorCode
+                       UNDEFINED X  szErrorMessage
+0086                //
+0087             End If
+0088          End If
+0089          // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0090          // Fim - Julio Donati - 08/12/2014
+0091          // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0092          //
+0093          // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0094          // Fim - Julio Donati - 07/08/2013
+0095          // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0096          //
+0097       End If
+0098       If VA evt_cErro_EV01 is equal to "N"
+0099          VA rpt_szPath_PTH = concat([VA rpt_szPath_PTH],[VA rpt_szNomeArquivo_PTH])
+0100          VA rpt_szCaminhoDestino_PTH = concat([VA rpt_szCaminhoDestino_PTH],[VA rpt_szNomeArquivo_PTH])
+0101          Delete Or Copy Flat File
+                 VA rpt_szPath_PTH -> szOriginalFlatFile
+                 VA rpt_szCaminhoDestino_PTH -> szNewFlatFile
+                 "2" -> cActionOnFlatFiles
+                 UNDEFINED X  cSuppressErrorMessage
+                 UNDEFINED X  cErrorCode
+                 UNDEFINED X  szErrorMessage
+0102          Delete Or Copy Flat File
+                 VA rpt_szPath_PTH -> szOriginalFlatFile
+                 VA rpt_szCaminhoDestino_PTH -> szNewFlatFile
+                 "1" -> cActionOnFlatFiles
+                 UNDEFINED X  cSuppressErrorMessage
+                 UNDEFINED X  cErrorCode
+                 UNDEFINED X  szErrorMessage
+0103       Else
+0104          VA rpt_mnSeq_UKID = [VA rpt_mnSeq_UKID]+1
+0105          Get UDC Description
+                 UNDEFINED X  szDataDictionaryItem
+                 "58" -> szSystemCode
+                 "ER" -> szUserDefinedCodes
+                 UNDEFINED X  cUserDefinedCode
+                 VA evt_szCodErro_AA06 -> szUserDefinedCode
+                 VA evt_szF0005_DL01 <- szDescription01
+                 UNDEFINED X  szDescription02
+                 UNDEFINED X  cErrorCode
+                 UNDEFINED X  szSpecialHandlingCode
+0106          F58RE041.Insert
+                 VA rpt_mnLoteControle_N002 -> TK Next Number Range 1
+                 VA rpt_mnSeq_UKID -> TK Unique Key ID (Internal)
+                 VA evt_szCodErro_AA06 -> TK Alpha Spec. Data 06
+                 VA evt_szF0005_DL01 -> TK Description
+                 VA evt_szMensagemErro_DS01 -> TK Description
+                 VA rpt_szNomeArquivo_PTH -> TK Description
+                 VA rpt_szUserId_USER -> TK User ID
+                 VA rpt_szProgramId_PID -> TK Program ID
+                 VA rpt_szWorkStationId_JOBN -> TK Work Station ID
+                 VA rpt_jdDateUpdated_UPMJ -> TK Date - Updated
+                 VA rpt_mnTimeLastUpdated_UPMT -> TK Time - Last Updated
+0107       End If
+0108       Localiza Arquivos em Pastas - Proximo
+              VA rpt_mnidFile_GENLNG <> hFile
+              VA rpt_szNomeArquivo_PTH <- szFileName
+              UNDEFINED <- idSize
+              UNDEFINED <- cReadOnly
+              UNDEFINED <- cSystem
+              UNDEFINED <- cHidden
+              UNDEFINED <- cArchive
+              UNDEFINED <- cSubdir
+0109    End While
+0110 Else
+0111 End If
+0112 If VA rpt_mnLoteControle_N002 is not equal to <Zero>
+0113    Do Custom Section(RS NF Processada)
+0114 End If
+0115 If VA rpt_mnSeq_UKID is greater than "0"
+0116    Do Custom Section(RS Header Erros)
+0117    Do Custom Section(RS BSVW F58RE041)
+0118 End If
+
+=======================================================================
+     SECTION: NF Processada [COLUMNAR SECTION] (S5)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Initialize Section
+-----------------------------------------------------------------------
+0001 Set User Selection(BC Next Number Range 2 (F58RE76A),  <Equal To>, VA rpt_mnLoteControle_N002,  <And>)
+
+=======================================================================
+     SECTION: BSVW F58RE041 [GROUP SECTION] (S7)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Initialize Section
+-----------------------------------------------------------------------
+0001 Set User Selection(BC Next Number Range 1 (F58RE041),  <Equal To>, VA rpt_mnLoteControle_N002,  <And>)
+
+-----------------------------------------------------------------------
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+     evt_szMSG
+0001 VA evt_szMSG = BC Description (F58RE041)
+0002 VA evt_szMSG = ltrim(rtrim([VA evt_szMSG],' '),' ' )
+0003 RV ERRO = concat([VA evt_szMSG]," ")
+0004 VA evt_szMSG = BC Description (F58RE041)
+0005 VA evt_szMSG = ltrim(rtrim([VA evt_szMSG],' '),' ' )
+0006 RV ERRO = concat([RV ERRO],[VA evt_szMSG])
+
+-----------------------------------------------------------------------
+     EVENT:  End Section
+-----------------------------------------------------------------------
+0001 F58RE041.Delete
+        VA rpt_mnLoteControle_N002 =  TK Next Number Range 1
+
+Thursday January 23, 2020  15:46

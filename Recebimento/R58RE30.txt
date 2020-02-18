@@ -1,0 +1,264 @@
+Listing of ER for Report: Carrega EDI (R58RE30)
+
+***********************************************************************
+     GLOBALS: Global Variable
+***********************************************************************
+     rpt_NotaFiscalNumber_BNNF
+     rpt_NotaFiscalSeries_BSER
+     rpt_NextNumber001_N001
+     rpt_NotaFiscalLon_SLN
+     rpt_mnDocEDI_EDOC
+     rpt_EdiLineNumber_EDLN
+     rpt_ProgramId_PID
+     rpt_WorkStationId_JOBN
+     rpt_DateUpdated_UPMJ
+     rpt_TimeLastUpdated_UPMT
+     rpt_UserId_USER
+     rpt_szOC_NXTR
+     rpt_szOC_LTTR
+     rpt_mnF58RE76B_AEXP
+     rpt_mnF58RE76C_UORG
+     rpt_szF58RE76C_LOTN
+     rpt_mnF58RE76B_UPRC
+     rpt_mnF47072_AEXP
+     rpt_mnF58RE76B_UORG
+     rpt_PO_EdiTransactionSet_EDST
+     rpt_PO_EdiDocumentType_EDCT
+     rpt_cGravouF47072_EV01
+     rpt_szF58RE76B_KCO
+     rpt_mnF58RE76B_AN8
+     rpt_mnF58RE75B_DOCO
+     rpt_szF58RE76B_MCU
+     rpt_szF58RE76B_DCTO
+     rpt_szOrderSuffix_SFXO
+     rpt_szPO_ProxStatusNFe_AA03
+     rpt_szSFX0
+     rpt_szLineItemStatusCode_LSTS
+     rpt_mnF58RE76B_SHAN
+     rpt_mnF58RE76B_UNCS
+     rpt_mnF58RE76B_UOR3
+     rpt_mnF58RE76C_UOR3
+     rpt_mnF58RE76A_SHAN
+
+=======================================================================
+     SECTION: BSVW F58RE76A [GROUP SECTION] (S3)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Initialize Section
+-----------------------------------------------------------------------
+0001 //
+0002 Set Selection Append Flag( <Yes>)
+0003 Set User Selection(BC Alpha Spec. Data 03 (F58RE76A), <Equal To>, PO szStatusSelecNFe_AA03, <And>)
+0004 //
+0005 //
+0006 Get Audit Information
+        VA rpt_UserId_USER <> szUserName
+        VA rpt_DateUpdated_UPMJ <> jdDate
+        VA rpt_TimeLastUpdated_UPMT <> mnTime
+        VA rpt_WorkStationId_JOBN <> szWorkstation_UserId
+0007 VA rpt_ProgramId_PID = "R58RE30"
+0008 VA rpt_szOC_LTTR = PO szOC_LTTR
+0009 VA rpt_szOC_NXTR = PO szOC_NXTR
+0010 VA rpt_PO_EdiDocumentType_EDCT = PO szEdiDocumentType_EDCT
+0011 VA rpt_PO_EdiTransactionSet_EDST = PO szEdiTransactionSet_EDST
+0012 VA rpt_szPO_ProxStatusNFe_AA03 = PO szProxStatusNFe_AA03
+
+-----------------------------------------------------------------------
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+0001 VA rpt_NotaFiscalLon_SLN = BC Seal Number (F58RE76A)
+0002 VA rpt_NextNumber001_N001 = BC Next Number Range 1 (F58RE76A)
+0003 VA rpt_NotaFiscalSeries_BSER = BC Nota Fiscal Series (F58RE76A)
+0004 VA rpt_NotaFiscalNumber_BNNF = BC Nota Fiscal Number (F58RE76A)
+0005 VA rpt_mnF58RE76A_SHAN = BC Address Number - Ship To (F58RE76A)
+0006 VA rpt_szOrderSuffix_SFXO = "000"
+0007 ! Get Next Unique Key ID
+     !    "R58RE30" -> szObjectName
+     !    VA rpt_mnDocEDI_EDOC <- mnUniqueKeyID
+0008 X0010 - Get Next Number
+        "47" -> szSystemCode
+        "1" -> mnNextNumberingIndexNo
+        UNDEFINED X  szCompanyKey
+        UNDEFINED X  szDocumentType
+        UNDEFINED X  mnCentury
+        UNDEFINED X  mnFiscalYear1
+        UNDEFINED X  szSameAsDocumentType
+        VA rpt_mnDocEDI_EDOC <> mnNextNumber001
+0009 //
+0010 Do Custom Section(RS BSVW F58RE76B X F4311)
+0011 If VA rpt_cGravouF47072_EV01 is equal to "T"
+0012    F47071.Insert
+           VA rpt_szF58RE76B_KCO -> TK Company - Key (EDI - Document Key Co)
+           VA rpt_mnDocEDI_EDOC -> TK EDI - Document Number
+           VA rpt_PO_EdiDocumentType_EDCT -> TK EDI - Document Type
+           VA rpt_PO_EdiTransactionSet_EDST -> TK EDI - Transaction Set Number
+           VA rpt_szF58RE76B_KCO -> TK Order Company (Order Number)
+           VA rpt_mnF58RE75B_DOCO -> TK Document (Order No, Invoice, etc.)
+           VA rpt_szF58RE76B_DCTO -> TK Order Type
+           VA rpt_szOrderSuffix_SFXO -> TK Order Suffix
+           VA rpt_szF58RE76B_MCU -> TK Business Unit
+           VA rpt_mnF58RE76B_AN8 -> TK Address Number
+           VA rpt_mnF58RE76B_SHAN -> TK Address Number - Ship To
+           VA rpt_UserId_USER -> TK Transaction Originator
+           VA rpt_UserId_USER -> TK User ID
+           VA rpt_ProgramId_PID -> TK Program ID
+           VA rpt_WorkStationId_JOBN -> TK Work Station ID
+           VA rpt_DateUpdated_UPMJ -> TK Date - Updated
+           VA rpt_TimeLastUpdated_UPMT -> TK Time of Day
+0013    If SV File_IO_Status is equal to CO SUCCESS
+0014       RV ErroYN = "N"
+0015       F58RE76A.Update
+              BC Nota Fiscal Number =  TK Nota Fiscal Number
+              BC Nota Fiscal Series =  TK Nota Fiscal Series
+              BC Next Number Range 1 =  TK Next Number Range 1
+              BC Document Type =  TK Document Type
+              BC Seal Number =  TK Seal Number
+              VA rpt_UserId_USER -> TK User ID
+              VA rpt_ProgramId_PID -> TK Program ID
+              VA rpt_WorkStationId_JOBN -> TK Work Station ID
+              VA rpt_DateUpdated_UPMJ -> TK Date - Updated
+              VA rpt_TimeLastUpdated_UPMT -> TK Time of Day
+              VA rpt_szPO_ProxStatusNFe_AA03 -> TK Alpha Spec. Data 03
+0016    Else
+0017       RV ErroYN = "Y"
+0018    End If
+0019 Else
+0020    RV ErroYN = "Y"
+0021 End If
+0022 RV Tipo OC = VA rpt_szF58RE76B_DCTO
+0023 RV OrdemCompra = VA rpt_mnF58RE75B_DOCO
+0024 RV Filial = VA rpt_szF58RE76B_MCU
+
+=======================================================================
+     SECTION: BSVW F58RE76B X F4311 [GROUP SECTION] (S4)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Initialize Section
+-----------------------------------------------------------------------
+0001 Set Selection Append Flag( <No>)
+0002 Set User Selection(BC Nota Fiscal Number (F58RE76E), <Equal To>, VA rpt_NotaFiscalNumber_BNNF, <And>)
+0003 Set User Selection(BC Nota Fiscal Series (F58RE76E), <Equal To>, VA rpt_NotaFiscalSeries_BSER, <And>)
+0004 Set User Selection(BC Seal Number (F58RE76E), <Equal To>, VA rpt_NotaFiscalLon_SLN, <And>)
+0005 Set User Selection(BC Next Number Range 1 (F58RE76E), <Equal To>, VA rpt_NextNumber001_N001, <And>)
+0006 VA rpt_EdiLineNumber_EDLN = "0"
+0007 VA rpt_cGravouF47072_EV01 = "F"
+
+-----------------------------------------------------------------------
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+     evt_mnF58RE76C_AN02
+     evt_mnF58RE76C_UNCS
+     evt_jdF58RE76C_MMEJ
+0001 VA rpt_szF58RE76B_MCU = BC Business Unit (F4311)
+0002 VA rpt_mnF58RE75B_DOCO = BC Document (Order No, Invoice, etc.) (F58RE76E)
+0003 VA rpt_mnF58RE76B_AN8 = BC Address Number (F4311)
+0004 VA rpt_szF58RE76B_KCO = BC Order Company (Order Number) (F58RE76E)
+0005 VA rpt_szF58RE76B_DCTO = BC Order Type (F4311)
+0006 VA rpt_mnF58RE76B_SHAN = VA rpt_mnF58RE76A_SHAN
+0007 VA rpt_szLineItemStatusCode_LSTS = "1"
+0008 VA rpt_szOrderSuffix_SFXO = "000"
+0009 //
+0010 VA evt_jdF58RE76C_MMEJ = ""
+0011 VA rpt_EdiLineNumber_EDLN = [VA rpt_EdiLineNumber_EDLN]+1
+0012 VA rpt_mnF58RE76C_UORG = ""
+0013 VA rpt_szF58RE76C_LOTN = ""
+0014 //
+0015 If VA rpt_PO_EdiDocumentType_EDCT is equal to <Blank>
+     Or VA rpt_PO_EdiDocumentType_EDCT is equal to <Blank>
+0016    VA rpt_PO_EdiDocumentType_EDCT = BC Order Type (F4311)
+0017 End If
+0018 //
+0019 //
+0020 F58RE76C.Select
+        BC Nota Fiscal Number =  TK Nota Fiscal Number
+        BC Next Number Range 1 =  TK Next Number Range 1
+        BC Nota Fiscal Series =  TK Nota Fiscal Series
+        BC Unique Key ID (Internal) =  TK Unique Key ID (Internal)
+        BC Seal Number =  TK Seal Number
+        BC 2nd Item Number =  TK 2nd Item Number
+        BC Lot/Serial Number =  TK Lot/Serial Number
+0021 F58RE76C.Fetch Next
+        VA evt_jdF58RE76C_MMEJ <- TK Date - Lot Expiration
+0022 //
+0023 F47072.Insert
+        BC Order Company (Order Number) -> TK Company - Key (EDI - Document Key Co)
+        VA rpt_mnDocEDI_EDOC -> TK EDI - Document Number
+        VA rpt_PO_EdiDocumentType_EDCT -> TK EDI - Document Type
+        VA rpt_EdiLineNumber_EDLN -> TK EDI - Line Number
+        VA rpt_PO_EdiTransactionSet_EDST -> TK EDI - Transaction Set Number
+        VA rpt_szLineItemStatusCode_LSTS -> TK Line Item Status Code
+        BC Order Company (Order Number) -> TK Order Company (Order Number)
+        BC Document (Order No, Invoice, etc.) -> TK Document (Order No, Invoice, etc.)
+        BC Order Type -> TK Order Type
+        BC Order Suffix -> TK Order Suffix
+        BC Line Number -> TK Line Number
+        BC Business Unit -> TK Business Unit
+        BC Company -> TK Company
+        BC Address Number -> TK Address Number
+        VA rpt_mnF58RE76A_SHAN -> TK Address Number - Ship To
+        BC Date - Requested -> TK Date - Requested
+        VA rpt_DateUpdated_UPMJ -> TK Date - Order/Transaction
+        VA evt_jdF58RE76C_MMEJ -> TK Date - Future Date 2
+        BC Item Number - Short -> TK Item Number - Short
+        BC 2nd Item Number -> TK 2nd Item Number
+        BC 3rd Item Number -> TK 3rd Item Number
+        BC Location -> TK Location
+        BC Lot/Serial Number -> TK Lot/Serial Number
+        BC Description -> TK Description
+        BC Description - Line 2 -> TK Description - Line 2
+        BC Line Type -> TK Line Type
+        VA rpt_szOC_NXTR -> TK Status Code - Next
+        VA rpt_szOC_LTTR -> TK Status Code - Last
+        BC Reporting Code 1 - Sales -> TK Reporting Code 1 - Sales
+        BC Reporting Code 2 - Sales -> TK Reporting Code 2 - Sales
+        BC Reporting Code 3 - Sales -> TK Reporting Code 3 - Sales
+        BC Reporting Code 4 - Sales -> TK Reporting Code 4 - Sales
+        BC Reporting Code 5 - Sales -> TK Reporting Code 5 - Sales
+        BC Unit of Measure as Input -> TK Unit of Measure as Input
+        BC Units - Order/Transaction Quantity -> TK Units - Order/Transaction Quantity
+        BC Units - Order/Transaction Quantity -> TK Units - Received
+        BC Amount - Unit Cost -> TK Amount - Unit Cost
+        BC Amount - Extended Price -> TK Amount - Extended Price
+        BC Amount - Extended Price -> TK Amount - Received
+        BC Price and Adjustment Schedule -> TK Price and Adjustment Schedule
+        BC Item Price Group -> TK Item Price Group
+        BC Catalog -> TK Catalog
+        BC Payment Terms Code -> TK Payment Terms Code
+        BC Purchasing Taxable (Y/N) -> TK Purchasing Taxable (Y/N)
+        BC Freight Calculated (Y/N) -> TK Freight Calculated (Y/N)
+        BC Buyer Number -> TK Buyer Number
+        BC Shipping Commodity Class -> TK Shipping Commodity Class
+        BC Shipping Conditions Code -> TK Shipping Conditions Code
+        BC Unit of Measure - Primary -> TK Unit of Measure - Primary
+        BC Unit of Measure - Secondary -> TK Unit of Measure - Secondary
+        BC Volume Unit of Measure -> TK Volume Unit of Measure
+        BC G/L Offset -> TK G/L Offset
+        VA rpt_UserId_USER -> TK User ID
+        VA rpt_ProgramId_PID -> TK Program ID
+        VA rpt_WorkStationId_JOBN -> TK Work Station ID
+        VA rpt_DateUpdated_UPMJ -> TK Date - Updated
+        VA rpt_TimeLastUpdated_UPMT -> TK Time of Day
+0024 VA rpt_cGravouF47072_EV01 = "T"
+0025 //
+0026 //
+0027 //
+0028 //
+0029 If VA rpt_cGravouF47072_EV01 is equal to "T"
+0030    F58RE76B.Update
+           VA rpt_NotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+           VA rpt_NotaFiscalSeries_BSER =  TK Nota Fiscal Series
+           VA rpt_NextNumber001_N001 =  TK Next Number Range 1
+           BC Document Type =  TK Document Type
+           BC Unique Key ID (Internal) =  TK Unique Key ID (Internal)
+           BC Seal Number =  TK Seal Number
+           VA rpt_mnDocEDI_EDOC -> TK Document (Voucher, Invoice, etc.)
+           VA rpt_PO_EdiDocumentType_EDCT -> TK Order Type
+           VA rpt_UserId_USER -> TK User ID
+           VA rpt_ProgramId_PID -> TK Program ID
+           VA rpt_WorkStationId_JOBN -> TK Work Station ID
+           VA rpt_DateUpdated_UPMJ -> TK Date - Updated
+           VA rpt_TimeLastUpdated_UPMT -> TK Time of Day
+           VA rpt_szPO_ProxStatusNFe_AA03 -> TK Alpha Spec. Data 03
+0031 End If
+
+Thursday January 23, 2020  16:03

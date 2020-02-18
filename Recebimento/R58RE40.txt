@@ -1,0 +1,1898 @@
+Listing of ER for Report: EDI Recebimento Compras (R58RE40)
+
+***********************************************************************
+     GLOBALS: Global Variable
+***********************************************************************
+     rpt_GLDate
+     rpt_Rv_EDSP
+     rpt_F4111JobNumber
+     rpt_F0911JobNumber
+     rpt_IdentifierShortItem
+     rpt_ExchangeRate
+     rpt_TriangulationRateFromCurre
+     rpt_TriangulationRateToCurrenc
+     rpt_CurrencyConversionMethod
+     rpt_cReceiptOption
+     rpt_F4311Pointer_GENLNG
+     rpt_POItemNumber_LITM
+     rpt_ItemLevelError_EV01
+     rpt_cUOMErrorFlag_EV01
+     rpt_LandedCJobnumber
+     rpt_LCF0911Jobnumber
+     rpt_LandedCostRule
+     rpt_LineType_LNTY
+     rpt_EDIDocumentNumber
+     rpt_InvInterfaceFlg_IVI
+     rpt_POUnitsOpen_UOPN
+     rpt_UnitCost1_PRRC
+     rpt_UnitCost_PRRC
+     rpt_Location_LOCN
+     rpt_ReceiptLineNo_NLIN
+     rpt_AmtReceivedForeigh_PRRC
+     rpt_AmtReceivedForeigh1_PRRC
+     rpt_POAmountOpen_AOPN
+     rpt_mnNotaFiscalNumber_BNNF
+     rpt_szNotaFiscalSeries_BSER
+     rpt_mnF7601B_N001
+     rpt_szF58RE76B_DCT
+     rpt_jdF7601B_ISSU
+     rpt_mnF47071_DOCO
+     rpt_szF47071_DCTO
+     rpt_szF47071_KCOO
+     rpt_mnF58RE76B_AN8
+     rpt_mnF58RE76B_SHAN
+     rpt_szF58RE76B_OCTO
+     rpt_mnF47071_EDOC
+     rpt_szF58RE76B_BSER
+     rpt_mnF58RE76B_N001
+     rpt_szF58RE76B_SLN
+     rpt_UserId_USER
+     rpt_ProgramId_PID
+     rpt_WorkStationId_JOBN
+     rpt_DateUpdated_UPMJ
+     rpt_TimeLastUpdated_UPMT
+     rpt_szF58RE76A_CRTY
+     rpt_szF58RE76A_FRTH
+     rpt_mnDocRecebimento_DOC
+     rpt_szCompanhia_KCOO
+     rpt_mnF58RE76E_DOCO
+     rpt_szF58RE76E_DCTO
+     rpt_mnF58RE76E_LNID
+     rpt_szF58RE76E_LITM
+     rpt_mnF58RE76E_AN8
+     rpt_szF58RE76E_KCOO
+     rpt_szF43121_LOTN
+     rpt_jdDataFabricacao_UA02
+     rpt_jdDataVencimento_MMEJ
+     rpt_szF43121_MCU
+     rpt_mnF43121_ITM
+     rpt_mnDiasRetroativos_MATH01
+     rpt_szF4071_MCU
+     rpt_mnF43121_NLIN
+     rpt_cFlagAtualizaLote_EV01
+     rpt_mnTempFCI_BNNF
+     rpt_szTempFCI_BSER
+     rpt_mnTempFCI_N001
+     rpt_szTempFCI_DCT
+     rpt_mnF58RE76E_N001
+     rpt_szF58RE76E_DCT
+     rpt_mnF58RE76E_SLN
+     rpt_szF58RE76E_BSER
+     rpt_mnF58RE76E_UKID
+     rpt_szLoteEmBranco_LOTN
+     rpt_szNumeroFCI_DESF
+     rpt_cErrorCodeN557613B_ERRC
+
+=======================================================================
+     SECTION: Print Audit Info [GROUP SECTION] (S6)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  After Last Object Printed
+-----------------------------------------------------------------------
+0001 RV R_OrderCo(gv) = " "
+0002 RV R_OrderNo(gv) = " "
+0003 RV R_OrderType(gv) = " "
+0004 RV R_OrderSuffix(gv) = " "
+0005 RV R_LineNumber(gv) = " "
+0006 RV Description(gv) = " "
+0007 RV Business Unit = " "
+0008 RV R_Supplier(gv) = " "
+0009 RV QtyRej(gv) = " "
+0010 RV QtyRec(gv) = " "
+0011 RV R_ItemNo(gv) = " "
+
+=======================================================================
+     SECTION: Read/Edit EDI Header [GROUP SECTION] (S84)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Initialize Section
+-----------------------------------------------------------------------
+0001 VA rpt_LandedCJobnumber = "0"
+0002 VA rpt_LCF0911Jobnumber = "0"
+0003 // Check for subsystem job fields being passed.
+0004 //
+0005 If RI mnEdiDocumentNumber is not equal to <Blank>
+     And RI mnEdiDocumentNumber is not equal to <Null>
+0006    Set Selection Append Flag( <No>)
+0007    Set User Selection(BC EDI - Document Number (F47071),  <Equal To>, RI mnEdiDocumentNumber,  <And>)
+0008    Set User Selection(BC EDI - Document Type (F47071),  <Equal To>, RI szEdiDocumentType,  <And>)
+0009    Set User Selection(BC Company - Key (EDI - Document Key Co) ,  <Equal To>, RI szCompanyKeyEdiOrder,  <None>)
+0010 End If
+0011 //
+0012 // B9800100
+0013 Get Audit Information
+        RV R_EDIUserID(gv) <> szUserName
+        RV R_EDIDateUpd(gv) <> jdDate
+        RV R_EDITDay(gv) <> mnTime
+        RV R_EDIWorkID(gv) <> szWorkstation_UserId
+0014 //
+0015 // B0100025
+0016 F01131 Edit JDEM Error Message
+        UNDEFINED X  szUserid
+        UNDEFINED X  mnAddressnumber
+        UNDEFINED X  cDoNotLogWarnings
+        UNDEFINED X  cAllowUserIDToChange
+        UNDEFINED X  szMailboxdesignator
+        RV RV  GENLNG(gv) <> idPPATworkField
+        UNDEFINED X  cSendErrorsToReport
+0017 //
+0018 //  ASSIGN THE PROGRAM ID  ER47071
+0019 //
+0020 RV Rv_ProID(gv) = "ER47071"
+0021 //
+0022 // B000042
+0023 RV Rv_BatchNo(gv) = " "
+0024 F0011 Open Batch
+        UNDEFINED X  cPrevBatchstatus
+        UNDEFINED X  cPostoutofbalance
+        "O" -> szBatchtype
+        RV Rv_BatchNo(gv) <- mnBatchnumber
+        RV R_EDIDateUpd(gv) <> jdBatchDate
+        UNDEFINED X  cCancelBatchControl
+0025 VA rpt_Rv_EDSP = " "
+0026 RV BatchErr(gv) = " "
+0027 VA rpt_ProgramId_PID = "R58RE40"
+0028 Get Audit Information
+        VA rpt_UserId_USER <> szUserName
+        VA rpt_DateUpdated_UPMJ <> jdDate
+        VA rpt_TimeLastUpdated_UPMT <> mnTime
+        VA rpt_WorkStationId_JOBN <> szWorkstation_UserId
+
+-----------------------------------------------------------------------
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+     evt_mnF58RE76B_UKID
+     evt_mnF58RE76B_BNNF
+     evt_mnF58RE76B_N001
+     evt_szF58RE76B_DCT
+     evt_szF58RE76B_BSER
+     evt_mnF58RE76B_SLN
+0001 // COPY THE BC TO THE GLOBAL VARIABLES
+0002 //
+0003 VA rpt_szCompanhia_KCOO = BC Order Company (Order Number) (F47071)
+0004 VA rpt_mnDocRecebimento_DOC = "0"
+0005 RV EDI_DocCo(gv) = BC Company - Key (EDI - Document Key Co) (F47071)
+0006 RV EDI_DocNo(gv) = BC EDI - Document Number (F47071)
+0007 RV EDI_DocType(gv) = BC EDI - Document Type (F47071)
+0008 VA rpt_EDIDocumentNumber = BC EDI - Document Number (F47071)
+0009 //
+0010 RV TransErr(gv) = " "
+0011 RV LineContainsError(gv) = " "
+0012 RV RecordErr(gv) = " "
+0013 //
+0014 // N4700010
+0015 //
+0016 Transaction Set Purpose Code, Convert to Action Code
+        BC Transaction Set Purpose -> szTransactionSetPurposeCode
+        RV ACTN(gv) <- cActionCode
+0017 //
+0018 //
+0019 // PROCESSING OPTIONS
+0020 //
+0021 If PO szVersion is equal to <Blank>
+     Or PO szVersion is equal to <Null>
+     Or PO szVersion is equal to <Zero>
+0022    // if blank, then default  ZJDE0001
+0023    RV Version(gv) = "ZJDE0001"
+0024 Else
+0025    RV Version(gv) = PO szVersion
+0026 End If
+0027 //
+0028 // ////////////////////////////////////////////GL DATE////////////////////////
+0029 // GL DATE
+0030 //
+0031 If PO jdGLDate is not equal to <Blank>
+     Or PO jdGLDate is not equal to <Null>
+     Or PO jdGLDate is not equal to <Zero>
+0032    VA rpt_GLDate = PO jdGLDate
+0033 Else
+0034    VA rpt_GLDate = date_today( )
+0035 End If
+0036 //
+0037 VA rpt_ExchangeRate = BC Currency Conversion Rate - Spot Rate (F47071)
+0038 VA rpt_TriangulationRateFromCurre = "0"
+0039 VA rpt_TriangulationRateToCurrenc = "0"
+0040 VA rpt_CurrencyConversionMethod = " "
+0041 //
+0042 // Begin SAR 5193622
+0043 RV JobNo(gv) = ""
+0044 // End SAR 5193622
+0045 //
+0046 F58RE76B.Select
+        BC EDI - Document Number =  TK Document (Voucher, Invoice, etc.)
+0047 F58RE76B.Fetch Next
+        VA evt_mnF58RE76B_BNNF <- TK Nota Fiscal Number
+        VA evt_mnF58RE76B_N001 <- TK Next Number Range 1
+0048 While SV File_IO_Status is equal to CO SUCCESS
+     And VA rpt_mnDocRecebimento_DOC is equal to <Zero>
+0049    F58RE76E.Select
+           VA evt_mnF58RE76B_BNNF =  TK Nota Fiscal Number
+           VA evt_mnF58RE76B_N001 =  TK Next Number Range 1
+           BC Document (Order No, Invoice, etc.) =  TK Document (Order No, Invoice, etc.)
+           BC Order Type =  TK Order Type
+           BC Order Company (Order Number) =  TK Order Company (Order Number)
+0050    F58RE76E.Fetch Next
+           VA rpt_mnDocRecebimento_DOC <- TK Nota Fiscal Number
+0051    //
+0052    //
+0053    F58RE76B.Fetch Next
+           VA evt_mnF58RE76B_BNNF <- TK Nota Fiscal Number
+           VA evt_mnF58RE76B_N001 <- TK Next Number Range 1
+0054 End While
+0055 VA evt_mnF58RE76B_BNNF = ""
+0056 VA evt_mnF58RE76B_N001 = ""
+0057 //
+0058 ! F58RE76B.Select
+     !    BC Document (Order No, Invoice, etc.) =  TK Document (Order No, Invoice, etc.)
+     !    BC Order Type =  TK Document Type - Purchase Order
+     !    BC Order Company (Order Number) =  TK Order Company (Order Number)
+     !    BC EDI - Document Number =  TK Document (Voucher, Invoice, etc.)
+0059 ! F58RE76B.Fetch Next
+     !    VA rpt_mnDocRecebimento_DOC <- TK Nota Fiscal Number
+0060 Do Custom Section(RS GetDocReceipt)
+0061 //
+0062 F43121 Begin Document
+        RV JobNo(gv) <> mnJobNumber
+        RV R_EDIWorkID(gv) <> szComputerID
+        "1" -> cActionCode
+        "1" <> cProcessEdits
+        RV Rv_ProID(gv) <> szProgramID
+        RV CurrencyYN(gv) <> cCurrencyProcessingFlag
+        BC Document (Order No, Invoice, etc.) <> mnOrderNumber
+        BC Order Type <> szOrderType
+        BC Order Company (Order Number) <> szOrderCompany
+        BC Order Suffix <> szOrderSuffix
+        BC Currency Mode-Foreign or Domestic Entry <> cCurrencyMode
+        VA rpt_mnDocRecebimento_DOC <> mnReceiptNumber
+        BC Address Number <> mnSupplier
+        UNDEFINED X  szBaseCurrency
+        BC Currency Code - From -> szPOCurrency
+        VA rpt_ExchangeRate <> mnExchangeRate
+        BC Date - Actual Ship Date -> jdReceiptDate
+        VA rpt_GLDate <> jdGLDate
+        BC Hold Orders Code <> szHoldCode
+        RV R_EDIUserID(gv) <> szUserID
+        RV Version(gv) -> szPOVersion
+        RV Rv_BatchNo(gv) <> mnBatchNumber
+        UNDEFINED X  cBatchStatus
+        UNDEFINED X  cPostOutOfBalance
+        UNDEFINED X  jdBatchDate
+        UNDEFINED X  cOption
+        "1" <> cReceiptsByPO
+        "1" <> cCalledFromEDI
+        VA rpt_TriangulationRateFromCurre <> mnTriangulationRateFromCurrenc
+        VA rpt_TriangulationRateToCurrenc <> mnTriangulationRateToCurrency
+        VA rpt_CurrencyConversionMethod <> cCurrencyConversionMethod
+0063 //
+0064 If SV Error_Status                    is equal to CO ERROR
+0065    //
+0066    RV TransErr(gv) = "1"
+0067    RV BatchErr(gv) = "1"
+0068    RV LineContainsError(gv) = "Y"
+0069    //
+0070    JDEM Sales Order Level Action Error Set
+           RV EDI_DocNo(gv) -> mnEDIOrderNumber
+           UNDEFINED X  mnFI_EDIOrderNumber
+           UNDEFINED X  szFI_EDIOrderType
+           UNDEFINED X  szFI_EDIOrderCompany
+           UNDEFINED X  cIncludeInterconnect
+           RV RV  GENLNG(gv) <> idPtrToPPATMsgs
+0071    Proccess batch errors to the JDEM system
+           "2" <> mnLeveloftotaling
+           RV RV  GENLNG(gv) <> idDataBaseWorkField
+           UNDEFINED X  cErrorPreProcessFlag
+           UNDEFINED X  szUserid
+0072    RV R_OrderCo(gv) = BC Order Company (Order Number) (F47071)
+0073    RV R_OrderNo(gv) = BC Document (Order No, Invoice, etc.) (F47071)
+0074    RV R_OrderType(gv) = BC Order Type (F47071)
+0075    RV R_OrderSuffix(gv) = BC Order Suffix (F47071)
+0076    RV R_LineNumber(gv) = BC EDI - Line Number (F47071)
+0077    RV Business Unit = BC Business Unit (F47071)
+0078    RV R_Supplier(gv) = BC Address Number (F47071)
+0079    // CALL PRINT AUDIT INFO
+0080    Do Custom Section(RS Print Audit Info)
+0081 !    RV ErrorNumber_DTAI = "2334"
+0082    RV Order Number_Error = BC Document (Order No, Invoice, etc.) (F47071)
+0083    RV Order Type_Error = BC Order Type (F47071)
+0084    Do Custom Section(RS Errors)
+0085 Else
+0086    //
+0087 !    F58RE76B.Select
+     !       BC Document (Order No, Invoice, etc.) =  TK Document (Order No, Invoice, etc.)
+     !       BC Order Type =  TK Document Type - Purchase Order
+     !       BC Order Company (Order Number) =  TK Order Company (Order Number)
+     !       BC EDI - Document Number =  TK Document (Voucher, Invoice, etc.)
+0088 !    F58RE76B.Fetch Next
+     !       VA rpt_mnDocRecebimento_DOC <- TK Nota Fiscal Number
+0089    //
+0090    RV LineContainsError(gv) = " "
+0091    // CALL READ/EDIT EDIT DETAIL
+0092    Do Custom Section(RS Read/Edit EDI Detail)
+0093 End If
+0094 //
+0095 // IF NOT IN FINAL MODE AND NO ERRORS CALL END DOC
+0096 //
+0097 If PO cMode is equal to "1"
+0098    //
+0099    If RV TransErr(gv) is not equal to "1"
+0100       Do Custom Section(RS DataBase Updates)
+0101    End If
+0102    If RV TransErr(gv) is equal to "1"
+0103       F58RE76B.Select
+              BC Document (Order No, Invoice, etc.) =  TK Document (Order No, Invoice, etc.)
+              BC Order Type =  TK Document Type - Purchase Order
+              BC Order Company (Order Number) =  TK Order Company (Order Number)
+              BC EDI - Document Number =  TK Document (Voucher, Invoice, etc.)
+0104       F58RE76B.Fetch Next
+              VA evt_mnF58RE76B_BNNF <- TK Nota Fiscal Number
+              VA evt_szF58RE76B_BSER <- TK Nota Fiscal Series
+              VA evt_mnF58RE76B_N001 <- TK Next Number Range 1
+              VA evt_szF58RE76B_DCT <- TK Document Type
+              VA evt_mnF58RE76B_UKID <- TK Unique Key ID (Internal)
+              VA evt_mnF58RE76B_SLN <- TK Seal Number
+0105       While SV File_IO_Status is equal to CO SUCCESS
+0106          F58RE76B.Update
+                 VA evt_mnF58RE76B_BNNF =  TK Nota Fiscal Number
+                 VA evt_szF58RE76B_BSER =  TK Nota Fiscal Series
+                 VA evt_mnF58RE76B_N001 =  TK Next Number Range 1
+                 VA evt_szF58RE76B_DCT =  TK Document Type
+                 VA evt_mnF58RE76B_UKID =  TK Unique Key ID (Internal)
+                 VA evt_mnF58RE76B_SLN =  TK Seal Number
+                 VA rpt_UserId_USER -> TK User ID
+                 VA rpt_ProgramId_PID -> TK Program ID
+                 VA rpt_WorkStationId_JOBN -> TK Work Station ID
+                 VA rpt_DateUpdated_UPMJ -> TK Date - Updated
+                 VA rpt_TimeLastUpdated_UPMT -> TK Time of Day
+                 PO szProxStatusErro_AA03 -> TK Alpha Spec. Data 03
+0107          F58RE76B.Fetch Next
+                 VA evt_mnF58RE76B_BNNF <- TK Nota Fiscal Number
+                 VA evt_szF58RE76B_BSER <- TK Nota Fiscal Series
+                 VA evt_mnF58RE76B_N001 <- TK Next Number Range 1
+                 VA evt_szF58RE76B_DCT <- TK Document Type
+                 VA evt_mnF58RE76B_UKID <- TK Unique Key ID (Internal)
+0108       End While
+0109       F58RE76A.Update
+              VA evt_mnF58RE76B_BNNF =  TK Nota Fiscal Number
+              VA evt_szF58RE76B_BSER =  TK Nota Fiscal Series
+              VA evt_mnF58RE76B_N001 =  TK Next Number Range 1
+              VA evt_szF58RE76B_DCT =  TK Document Type
+              VA evt_mnF58RE76B_SLN =  TK Seal Number
+              VA rpt_UserId_USER -> TK User ID
+              VA rpt_ProgramId_PID -> TK Program ID
+              VA rpt_ProgramId_PID -> TK Work Station ID
+              VA rpt_DateUpdated_UPMJ -> TK Date - Updated
+              VA rpt_TimeLastUpdated_UPMT -> TK Time of Day
+              PO szProxStatusErro_AA03 -> TK Alpha Spec. Data 03
+0110    End If
+0111    //
+0112 End If
+0113 If PO cMode is not equal to "1"
+     Or RV TransErr(gv) is equal to "1"
+0114    // CLEAR WORKFILES
+0115    F43121 Delete Work File
+           RV R_EDIWorkID(gv) <> szComputerID
+           RV JobNo(gv) <> mnJobNumber
+           UNDEFINED X  cErrorInClear
+           UNDEFINED X  mnPOLineNumber
+           UNDEFINED X  mnReceiptLineNumber
+           UNDEFINED X  mnOrderNumber
+           UNDEFINED X  szOrderType
+           UNDEFINED X  szOrderCompany
+           UNDEFINED X  szOrderSuffix
+           RV Version(gv) -> szPOVersion
+           UNDEFINED X  mnLandedCostJobNumber
+           UNDEFINED X  cReversalOption
+           RV F4111 Job Number -> mnF4111JobNumber
+           RV F0911 Job Number -> mnF0911JobNumber
+0116 End If
+0117 //
+
+-----------------------------------------------------------------------
+     EVENT:  End Section
+-----------------------------------------------------------------------
+0001 // CLOSE BATCH
+0002 F0011 Close Batch
+        RV Rv_BatchNo(gv) -> mnBatchnumber
+        "O" -> szBatchtype
+        UNDEFINED X  cPrevBatchstatus
+        "<Blank>" -> cChangeBatchStatus
+        UNDEFINED X  cDocumentInBalance
+        UNDEFINED X  cSuppressBatchControl
+        "A" -> cOverrideMode
+        UNDEFINED X  cSuppressDeleteFlag
+0003 If RV BatchErr(gv) is equal to "1"
+0004    Proccess batch errors to the JDEM system
+           "1" -> mnLeveloftotaling
+           RV RV  GENLNG(gv) <> idDataBaseWorkField
+           UNDEFINED X  cErrorPreProcessFlag
+           UNDEFINED X  szUserid
+0005    Memory, Free Ptr To Data Structure
+           RV RV  GENLNG(gv) <> idGenericLong
+0006 End If
+
+=======================================================================
+     SECTION: Read/Edit EDI Detail [GROUP SECTION] (S85)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Initialize Section
+-----------------------------------------------------------------------
+0001 VA rpt_LandedCostRule = ""
+
+-----------------------------------------------------------------------
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+0001 //
+0002 VA rpt_ItemLevelError_EV01 = " "
+0003 VA sec_szItemErrorMessage_DTAI = ""
+0004 // SAR 4985548 Begin
+0005 VA rpt_Location_LOCN = BC Location (F47072)
+0006 // SAR 4985548 END
+0007 //
+0008 F4311 Get Purchase Order Detail Row
+        BC Document (Order No, Invoice, etc.) -> mnOrderNumber
+        BC Order Type -> szOrderType
+        BC Order Company (Order Number) -> szDocumentCompany
+        BC Order Suffix -> szOrderSuffix
+        BC Line Number -> mnOrderLineNumber
+        VA rpt_F4311Pointer_GENLNG <- idPointerToF4311DataStructure
+        "1" -> cReturnFlag
+        UNDEFINED X  cErrorCode
+        "1" -> cCallType
+        UNDEFINED X  szErrorMessageID
+        "1" -> cSuppressErrorMessage
+0009 // SAR 4297278  AW5903516  6/28/00  Begin
+0010 // If location is not found in the F47072 file then default location in from OP
+0011 If VA rpt_Location_LOCN is equal to <Blank>
+     Or VA rpt_Location_LOCN is equal to <Null>
+0012    //
+0013    // Begin SAR 4697503
+0014    // Added Two Report Variables to hold the Foreign Amount Received.  The Master
+0015    // Business Function Calculates this amount and writes it to the F4311 and
+0016    // F43121.  Changed Business Function to bring in the Foreign Open Amount
+0017    // To populate the Variables so the MBF can Properly calculate the FREC.
+0018    //
+0019    // SAR 5621455 Begin - Added VA for Amount Open
+0020    //
+0021    F4311 Get Item, Account, Subledger
+           VA rpt_F4311Pointer_GENLNG -> idPointerToF4311DS
+           UNDEFINED X  mnLineNumber
+           UNDEFINED X  jdTransactionDate
+           UNDEFINED X  mnItemNumberShort
+           VA rpt_POItemNumber_LITM <- sz2ndItemNumber
+           UNDEFINED X  sz3rdItemNumber
+           VA rpt_Location_LOCN <- szLocation
+           UNDEFINED X  szLot
+           UNDEFINED X  szDescription1
+           UNDEFINED X  szDescription2
+           VA rpt_LineType_LNTY <- szLineType
+           UNDEFINED X  szNextStatusCode
+           UNDEFINED X  szLastStatusCode
+           UNDEFINED X  mnTransactionQuantity
+           UNDEFINED X  mnQuantityOnHold
+           VA rpt_POUnitsOpen_UOPN <- mnQuantityOpen
+           UNDEFINED X  mnQuantityReceived
+           UNDEFINED X  mnExtendedPrice
+           UNDEFINED X  mnAmountOnHold
+           VA rpt_POAmountOpen_AOPN <- mnAmountOpen
+           UNDEFINED X  mnAmountReceived
+           UNDEFINED X  mnTaxCommitment
+           UNDEFINED X  cPurchasingTaxable
+           UNDEFINED X  szTaxExplanationCode
+           UNDEFINED X  szTaxRateArea
+           UNDEFINED X  mnQuantityOrdered
+           UNDEFINED X  szAccountNumber
+           UNDEFINED X  szAccountID
+           UNDEFINED X  cSubledgerType
+           UNDEFINED X  szSubledger
+           UNDEFINED X  szCurrencyCode
+           UNDEFINED X  mnForeignChangedAmount
+           VA rpt_AmtReceivedForeigh1_PRRC <- mnForeignOpenAmount
+           UNDEFINED X  szUnitOfMeasureOne
+           UNDEFINED X  szUnitOfMeasure
+           UNDEFINED X  szUnitofMeasureTwo
+           UNDEFINED X  szUnitofMeasureThree
+           UNDEFINED X  mnCarrierNumber
+           UNDEFINED X  mnSupplierNumber
+           UNDEFINED X  szBranchPlant
+           VA rpt_UnitCost1_PRRC <- mnUnitCost
+           UNDEFINED X  jdPromisedDate
+           UNDEFINED X  szWeightUnitOfMeasure
+           UNDEFINED X  szVolumeUnitOfMeasure
+           VA rpt_LandedCostRule <- szReportCode5Purchasing
+0022 Else
+0023    F4311 Get Item, Account, Subledger
+           VA rpt_F4311Pointer_GENLNG -> idPointerToF4311DS
+           UNDEFINED X  mnLineNumber
+           UNDEFINED X  jdTransactionDate
+           UNDEFINED X  mnItemNumberShort
+           VA rpt_POItemNumber_LITM <- sz2ndItemNumber
+           UNDEFINED X  sz3rdItemNumber
+           UNDEFINED X  szLocation
+           UNDEFINED X  szLot
+           UNDEFINED X  szDescription1
+           UNDEFINED X  szDescription2
+           VA rpt_LineType_LNTY <- szLineType
+           UNDEFINED X  szNextStatusCode
+           UNDEFINED X  szLastStatusCode
+           UNDEFINED X  mnTransactionQuantity
+           UNDEFINED X  mnQuantityOnHold
+           VA rpt_POUnitsOpen_UOPN <- mnQuantityOpen
+           UNDEFINED X  mnQuantityReceived
+           UNDEFINED X  mnExtendedPrice
+           UNDEFINED X  mnAmountOnHold
+           VA rpt_POAmountOpen_AOPN <- mnAmountOpen
+           UNDEFINED X  mnAmountReceived
+           UNDEFINED X  mnTaxCommitment
+           UNDEFINED X  cPurchasingTaxable
+           UNDEFINED X  szTaxExplanationCode
+           UNDEFINED X  szTaxRateArea
+           UNDEFINED X  mnQuantityOrdered
+           UNDEFINED X  szAccountNumber
+           UNDEFINED X  szAccountID
+           UNDEFINED X  cSubledgerType
+           UNDEFINED X  szSubledger
+           UNDEFINED X  szCurrencyCode
+           UNDEFINED X  mnForeignChangedAmount
+           VA rpt_AmtReceivedForeigh1_PRRC <- mnForeignOpenAmount
+           UNDEFINED X  szUnitOfMeasureOne
+           UNDEFINED X  szUnitOfMeasure
+           UNDEFINED X  szUnitofMeasureTwo
+           UNDEFINED X  szUnitofMeasureThree
+           UNDEFINED X  mnCarrierNumber
+           UNDEFINED X  mnSupplierNumber
+           UNDEFINED X  szBranchPlant
+           VA rpt_UnitCost1_PRRC <- mnUnitCost
+           UNDEFINED X  jdPromisedDate
+           UNDEFINED X  szWeightUnitOfMeasure
+           UNDEFINED X  szVolumeUnitOfMeasure
+           VA rpt_LandedCostRule <- szReportCode5Purchasing
+0024    //
+0025    // SAR 5621455 End
+0026    //
+0027    // End  SAR  4697503
+0028    //
+0029    VA rpt_Location_LOCN = BC Location (F47072)
+0030 End If
+0031 // SAR 4297278  AW5903516  6/28/00  End
+0032 Memory, Free Ptr To Data Structure
+        VA rpt_F4311Pointer_GENLNG <> idGenericLong
+0033 F40205 Get Line Type Constants
+        VA rpt_LineType_LNTY -> szLineType
+        UNDEFINED X  szLineTypeDesc
+        UNDEFINED X  szLineTypeDesc2
+        UNDEFINED X  cGLInterface
+        VA rpt_InvInterfaceFlg_IVI <- cInventoryInterface
+        UNDEFINED X  cARInterface
+        UNDEFINED X  cAPInterface
+        UNDEFINED X  cReverseSign
+        UNDEFINED X  cTextLine
+        UNDEFINED X  cIncludeSalesCOGS
+        UNDEFINED X  cIncludeCashDiscount
+        UNDEFINED X  cIncludeTax1
+        UNDEFINED X  cIncludeTax2
+        UNDEFINED X  szGLOffset
+        UNDEFINED X  cPrintDocument1
+        UNDEFINED X  cPrintDocument2
+        UNDEFINED X  cPrintDocument3
+        UNDEFINED X  cRecordVariance
+        UNDEFINED X  cIncludeTotalDocument1
+        UNDEFINED X  cIncludeTotalDocument2
+        UNDEFINED X  cIncludeTotalDocument3
+        UNDEFINED X  cIncludeTotaldocument4
+        UNDEFINED X  cIncludeColumnSalesJournal
+        UNDEFINED X  szOrderType
+        UNDEFINED X  cApplyRetainage
+        UNDEFINED X  cApplyFreight
+        UNDEFINED X  cGenerateWorkOrder
+        UNDEFINED X  cSuppressErrorMessage
+        UNDEFINED X  cErrorCode
+0034 If VA rpt_InvInterfaceFlg_IVI is not equal to "A,N"
+0035    F4101 Get Item Master Information
+           UNDEFINED X  mnShortItemNumber
+           UNDEFINED X  szPrimaryItemNumber
+           BC 2nd Item Number -> szSecondItemNumber
+           UNDEFINED X  szThirdItemNumber
+           RV Description(gv) <- szDescription
+           UNDEFINED X  szDescriptionLine2
+           UNDEFINED X  szItemFlashMessage
+           UNDEFINED X  szPrimaryUOM
+           UNDEFINED X  szSecondaryUOM
+           UNDEFINED X  szPurchasingUOM
+           UNDEFINED X  szPricingUOM
+           UNDEFINED X  szShippingUOM
+           UNDEFINED X  szWeightUOM
+           UNDEFINED X  szVolumeUOM
+           UNDEFINED X  cSuppressErrorMessage
+           UNDEFINED X  szErrorMessageID
+           BC Business Unit -> szBranchPlant
+           UNDEFINED X  cBackOrdersAllowedYN
+           UNDEFINED X  cStockingType
+           UNDEFINED X  cBulkPackedFlag
+           UNDEFINED X  cInventoryCostLevel
+           UNDEFINED X  szLineType
+           UNDEFINED X  cLotProcessType
+           UNDEFINED X  mnShelfLifeDays
+           UNDEFINED X  szGLClassCode
+           UNDEFINED X  cContractItem
+           UNDEFINED X  szProductionUOM
+           UNDEFINED X  szFromGrade
+           UNDEFINED X  szThruGrade
+           UNDEFINED X  mnFromPotency
+           UNDEFINED X  mnThruPotency
+           UNDEFINED X  cPriceLevel
+           UNDEFINED X  cGradePotencyPricing
+           UNDEFINED X  cRoundToWholeNumber
+           UNDEFINED X  cKitPricingMethod
+           UNDEFINED X  szComponentUOM
+           UNDEFINED X  szStandardUOMConversion
+           UNDEFINED X  mnBuyer
+           UNDEFINED X  mnPlannerNumber
+           UNDEFINED X  szPrintMessage
+           UNDEFINED X  cCommitmentMethod
+           UNDEFINED X  cCheckAvailability
+           UNDEFINED X  cSerialNumberReqsted
+           UNDEFINED X  cLotStatusCode
+           UNDEFINED X  cPurchasePriceLevel
+0036 End If
+0037 RV R_OrderCo(gv) = BC Order Company (Order Number) (F47072)
+0038 RV R_OrderNo(gv) = BC Document (Order No, Invoice, etc.) (F47072)
+0039 RV R_OrderType(gv) = BC Order Type (F47072)
+0040 RV R_OrderSuffix(gv) = BC Order Suffix (F47072)
+0041 RV R_LineNumber(gv) = BC Line Number (F47072)
+0042 RV R_Supplier(gv) = BC Address Number (F47072)
+0043 RV Business Unit = BC Business Unit (F47072)
+0044 //
+0045 RV EDI_LineNo(gv) = BC EDI - Line Number (F47072)
+0046 RV RecordErr(gv) = " "
+0047 RV LineContainsError(gv) = " "
+0048 //
+0049 // SAR#3318807 Begin
+0050 // Initialize error status for Unit of Measure to "0"
+0051 VA rpt_cUOMErrorFlag_EV01 = "0"
+0052 // SAR #3318807 End
+0053 //
+0054 // ADDITION FOR THE QUANTITY
+0055 RV QtyRec(gv) = BC Units - Received (F47072)
+0056 //
+0057 //  Qty rej = Qty returned,damaged,rejected,
+0058 //            qty in question 1,2,3
+0059 //
+0060 RV QtyRej(gv) = [BC Units - Returned (F47072)]+[BC Units - Rejected (F47072)]+[BC Units - Damaged (F47072)]
+0061 RV Batch Number = RV Rv_BatchNo(gv)
+0062 //
+0063 // N4700020
+0064 If VA rpt_InvInterfaceFlg_IVI is not equal to "A,N"
+0065    EDI Item Number, Convert to Unknown Item Number
+           BC 2nd Item Number <> sz2ndItemNumber
+           BC 3rd Item Number <> sz3rdItemNumber
+           BC Item Number - Customer/Supplier <> szCustomerItemNumber
+           BC Business Unit <> szBusinessUnit
+           RV R_ItemNo(gv) <- szItemNoUnknownFormat
+           BC Item Number - Short <> mnShortItemNumber
+0066 End If
+0067 //
+0068 // SAR 5864035 - Removed Hard Coded Logic to use 2nd Item Number (LITM)
+0069 //
+0070 ! RV R_ItemNo(gv) = BC 2nd Item Number (F47072)
+0071 //
+0072 // SAR 5864035 END
+0073 //
+0074 If VA rpt_InvInterfaceFlg_IVI is not equal to "A,N"
+0075    F4101 Get Item Master Row
+           RV R_ItemNo(gv) -> szPrimaryItemNumber
+           BC Business Unit -> szBranchPlant
+           RV Description(gv) <- szDescription
+           UNDEFINED X  szDescription2
+           UNDEFINED X  cSymbolidentifier
+           UNDEFINED X  idF4101LongRowPtr
+           BC Item Number - Short <- mnShortItemNumber
+           UNDEFINED X  cErrorcode
+           UNDEFINED X  szLanguagepreference
+           BC Address Number -> mnAddressnumber
+           UNDEFINED X  szSystemcode
+           BC 2nd Item Number <- szLongItemNumber
+           BC 3rd Item Number <- szThirdItemNumber
+           UNDEFINED X  szItemFlashMsg
+           UNDEFINED X  cReturnPtr
+           "1" -> cSuppressErrorMsg
+           VA sec_szItemErrorMessage_DTAI <- szErrorMsgID
+           "1" -> cCallType
+           UNDEFINED X  idPtrToF41001Record
+           UNDEFINED X  szBaseLngDesc1
+           UNDEFINED X  szBaseLngDesc2
+           "2" -> cCrossRefMode
+           UNDEFINED X  cLngPrefType
+           VA rpt_GLDate -> jdExpirationDate
+           UNDEFINED X  szStandardUOMConversion
+0076 End If
+0077 //
+0078 // If the item is not in our records, set an error
+0079 If VA sec_szItemErrorMessage_DTAI is not equal to <Blank>
+     And VA sec_szItemErrorMessage_DTAI is not equal to <Null>
+0080    RV LineContainsError(gv) = "Y"
+0081 End If
+0082 //
+0083 // N4700100
+0084 EDI Get Purchase Order Line Number
+        BC Document (Order No, Invoice, etc.) <> mnDocumentOrderInvoiceE
+        BC Order Type <> szOrderType
+        BC Order Company (Order Number) <> szCompanyKeyOrderNo
+        BC Order Suffix <> szOrderSuffix
+        BC Line Number <> mnLineNumber
+        BC Item Number - Short -> mnIdentifierShortItem
+        BC 2nd Item Number -> szIdentifier2ndItem
+        BC 3rd Item Number -> szIdentifier3rdItem
+        UNDEFINED X  cLineFound
+0085 If BC Line Number (F47072) is not equal to <Zero>
+0086    If BC 2nd Item Number (F47072) is not equal to VA rpt_POItemNumber_LITM
+0087       Set UBE Error("143J")
+0088       RV ErrorNumber_DTAI = "143J"
+0089       VA rpt_ItemLevelError_EV01 = "1"
+0090    End If
+0091 Else
+0092    Set UBE Error("143J")
+0093    RV ErrorNumber_DTAI = "143J"
+0094    VA rpt_ItemLevelError_EV01 = "1"
+0095 End If
+0096 //
+0097 ! If SL CurrencyProcessing              is equal to "Y"
+0098 !    RV CurrencyYN(gv) = "'Y'"
+0099 ! Else
+0100 !    RV CurrencyYN(gv) = "'N'"
+0101 ! End If
+0102 //
+0103 // SAR 5881724 Begin
+0104 // Removed Logic that Passed UOM3, Purchasing UOM, To Edit Line.  The Transactio
+0105 // UOM will now be used.  See call to Edit Line
+0106 //
+0107 // SAR# 3318807 Begin
+0108 // Set Unit of Measure error if UOM-Purchasing = " "
+0109 ! If BC Unit of Measure - Purchasing (F47072) is equal to <Blank>
+0110 !    Set UBE Error("4335")
+0111 !    RV ErrorNumber_DTAI = "4335"
+0112 !    VA rpt_cUOMErrorFlag_EV01 = "1"
+0113 ! End If
+0114 // SAR# 3318807 End
+0115 //
+0116 // SAR 5881724 END
+0117 // ***  JB5408726     SAR #3002335     04/21/99
+0118 //
+0119 VA rpt_cReceiptOption = substr([BC Line Item Status Code (F47072)],0,1)
+0120 If BC Line Item Status Code (F47072) is equal to <Blank>
+     Or BC Line Item Status Code (F47072) is equal to <Null>
+0121    RV LineContainsError(gv) = "Y"
+0122    Set UBE Error("143Q")
+0123    RV ErrorNumber_DTAI = "143Q"
+0124 End If
+0125 // XT4312z1   Edit Line
+0126 If BC Amount - Unit Cost (F47072) is equal to <Blank>
+     Or BC Amount - Unit Cost (F47072) is equal to <Null>
+0127    VA rpt_UnitCost_PRRC = VA rpt_UnitCost1_PRRC
+0128 Else
+0129    VA rpt_UnitCost_PRRC = BC Amount - Unit Cost (F47072)
+0130 End If
+0131 //
+0132 // Begin SAR 4697503
+0133 //
+0134 If BC Amount - Foreign Unit Cost (F47072) is equal to <Blank>
+     Or BC Amount - Foreign Unit Cost (F47072) is equal to <Null>
+0135    VA rpt_AmtReceivedForeigh_PRRC = VA rpt_AmtReceivedForeigh1_PRRC
+0136    VA rpt_AmtReceivedForeigh_PRRC = [VA rpt_AmtReceivedForeigh_PRRC]/[VA rpt_POUnitsOpen_UOPN]
+0137 Else
+0138    VA rpt_AmtReceivedForeigh_PRRC = BC Amount - Foreign Unit Cost (F47072)
+0139 End If
+0140 //
+0141 // End SAR 4697503
+0142 //
+0143 VA rpt_ReceiptLineNo_NLIN = "0"
+0144 //
+0145 // SAR 5621455 Begin - Added If to check for POAmountOpen and POUnitCost
+0146 //
+0147 If VA rpt_POUnitsOpen_UOPN is not equal to <Zero>
+     Or VA rpt_POAmountOpen_AOPN is not equal to <Zero>
+0148    If VA rpt_ItemLevelError_EV01 is not equal to "1"
+0149       //
+0150       F43121 Edit Line
+              RV JobNo(gv) <> mnJobNumber
+              RV R_EDIWorkID(gv) <> szComputerID
+              "1" <> cActionCode
+              "1" <> cProcessEdits
+              RV Rv_ProID(gv) <> szProgramID
+              RV CurrencyYN(gv) <> cCurrencyProcessingFlag
+              BC Document (Order No, Invoice, etc.) <> mnOrderNumber
+              BC Order Type <> szOrderType
+              BC Order Company (Order Number) <> szOrderKeyCompany
+              BC Order Suffix <> szOrderSuffix
+              BC Line Number <> mnLineNumber
+              VA rpt_ReceiptLineNo_NLIN -> mnReceiptLineNumber
+              UNDEFINED X  cReceiptRecWritten
+              VA rpt_cReceiptOption <> cOption
+              RV Version(gv) -> szPOVersion
+              RV QtyRec(gv) <> mnQuantityReceived
+              BC Unit of Measure as Input <> szReceiptUOM
+              VA rpt_UnitCost_PRRC <> mnUnitCostReceived
+              VA rpt_AmtReceivedForeigh_PRRC <> mnForeignUnitCostReceived
+              BC Amount - Received <> mnAmountReceived
+              BC Amount - Received Foreign <> mnForeignAmountReceived
+              BC Project Business Unit <> szReceiptBranch
+              VA rpt_Location_LOCN <> szLocationDatabase
+              BC Lot/Serial Number <> szLotNumber
+              UNDEFINED X  cLotStatus
+              BC From Potency <> mnLotPotency
+              BC From Grade <> szLotGrade
+              BC Date - Future Date 2 <> jdLotExpirationDate
+              UNDEFINED X  szLotDescription
+              UNDEFINED X  szSupplierLot
+              BC Serial Number -> szAssetID
+              VA rpt_LandedCostRule -> szLandedCostRule
+              BC Reason Code -> szReasonCode
+              BC Container I.D. <> szContainerID
+              UNDEFINED X  szVendorRemark
+              BC Subledger - G/L <> szSubledger
+              BC Subledger Type <> cSubledgerType
+              VA rpt_GLDate <> jdGLDate
+              BC Date - Actual Ship Date -> jdReceiptDate
+              UNDEFINED X  szDomesticCurrencyCode
+              BC Currency Code - From -> szPOCurrencyCode
+              VA rpt_ExchangeRate -> mnExchangeRate
+              UNDEFINED X  cCurrencyMode
+              UNDEFINED X  cFirstOfMultiLine
+              UNDEFINED X  cLandedCostCode
+              RV Rv_BatchNo(gv) <> mnBatchNumber
+              "O" <> szBatchType
+              RV R_EDIDateUpd(gv) <> jdBatchDate
+              VA rpt_mnDocRecebimento_DOC <> mnReceiptDoc
+              BC Address Number <> mnSupplier
+              RV SupplierName(gv) <- szSupplierName
+              UNDEFINED X  cInventoryInterface
+              UNDEFINED X  cGLInterface
+              UNDEFINED X  cTextLineYN
+              UNDEFINED X  szQuantityBucketToUpdate
+              UNDEFINED X  cReceiptAcknowledgement
+              UNDEFINED X  cPaymentEligible
+              RV F4111 Job Number <> mnF4111JobNumber
+              VA rpt_F0911JobNumber <> mnF0911JobNumber
+              UNDEFINED X  cF4111Written
+              BC Units - In Question 1 -> mnQtyCompleted
+              RV QtyRej(gv) <> mnQtyScrapped
+              BC Units in Question 1 Code -> szP3103UOM
+              UNDEFINED X  szOperationStatus
+              UNDEFINED X  mnLastJELine
+              BC G/L Offset <> szGLRemark
+              UNDEFINED X  szInventoryTransRemark
+              UNDEFINED X  cCalledFromRouting
+              UNDEFINED X  mnF4311JobNumber
+              "1" -> cCalledFromEDI
+              UNDEFINED X  mnWMSLineNumber
+              VA rpt_LandedCJobnumber <> mnLandedCJobNo
+              UNDEFINED X  szMemoLotField1
+              UNDEFINED X  szMemoLotField2
+              VA rpt_TriangulationRateFromCurre <> mnTriangulationRateFromCurrenc
+              VA rpt_TriangulationRateToCurrenc <> mnTriangulationRateToCurrency
+              VA rpt_CurrencyConversionMethod <> cCurrencyConversionMethod
+              UNDEFINED X  mnAmbientVolume
+              UNDEFINED X  szAmbientVolumeUOM
+              UNDEFINED X  mnStandardVolume
+              UNDEFINED X  szStandardVolumeUOM
+              UNDEFINED X  mnWeightQuantity
+              UNDEFINED X  szWeightQuantityUOM
+              UNDEFINED X  mnTemperature
+              UNDEFINED X  cTemperatureType
+              UNDEFINED X  cDensityType
+              UNDEFINED X  mnDensityTemperature
+              UNDEFINED X  cDensityTemperatureType
+              UNDEFINED X  mnVolumeCorrectionFactor
+              UNDEFINED X  cProgramStatus
+              UNDEFINED X  mnTransQtyInPrimaryForBulk
+              UNDEFINED X  szPrimaryUOMForBulk
+              UNDEFINED X  mnDisplayDensity
+              UNDEFINED X  mnTransactionTime
+              UNDEFINED X  cManagerialAnalysisType1
+              UNDEFINED X  szManagerialAnalysisCode1
+              UNDEFINED X  cManagerialAnalysisType2
+              UNDEFINED X  szManagerialAnalysisCode2
+              UNDEFINED X  cManagerialAnalysisType3
+              UNDEFINED X  szManagerialAnalysisCode3
+              UNDEFINED X  cManagerialAnalysisType4
+              UNDEFINED X  szManagerialAnalysisCode4
+              UNDEFINED X  szAgreementNumber
+              UNDEFINED X  mnAgreementSupplement
+              UNDEFINED X  cBatchStatus
+              UNDEFINED X  cPostOutOfBalance
+              UNDEFINED X  mnWarehouseResSeq
+              UNDEFINED X  mnF43092Jobnumber
+              UNDEFINED X  mnShipmentNumber
+              UNDEFINED X  mnTransportationJobNumber
+0151       //
+0152    End If
+0153 End If
+0154 //
+0155 // SAR 5621455 End
+0156 //
+0157 // SAR# 3318807 Begin
+0158 If SV Error_Status is equal to CO ERROR
+     Or RV LineContainsError(gv) is equal to "Y"
+     Or VA rpt_ItemLevelError_EV01 is equal to "1"
+     Or VA rpt_cUOMErrorFlag_EV01 is equal to "1"
+0159    // SAR# 3318807 End
+0160    RV LineContainsError(gv) = "Y"
+0161    RV TransErr(gv) = "1"
+0162    RV RecordErr(gv) = "1"
+0163    RV BatchErr(gv) = "1"
+0164    JDEM Sales Detail Line Level Action Error Set
+           BC EDI - Line Number <> mnEDILineNumber
+           UNDEFINED X  cIncludeInterconnect
+           RV RV  GENLNG(gv) <> idPtrToPPATMsgs
+           UNDEFINED X  mnFI_EDIOrderNumber
+           UNDEFINED X  szFI_EDIOrderType
+           UNDEFINED X  szFI_EDIOrderCompany
+0165    Proccess batch errors to the JDEM system
+           "3" <> mnLeveloftotaling
+           RV RV  GENLNG(gv) <> idDataBaseWorkField
+           UNDEFINED X  cErrorPreProcessFlag
+           UNDEFINED X  szUserid
+0166    // BLM0019
+0167    JDEM Sales Order Level Action Error Set
+           RV EDI_DocNo(gv) -> mnEDIOrderNumber
+           UNDEFINED X  mnFI_EDIOrderNumber
+           UNDEFINED X  szFI_EDIOrderType
+           UNDEFINED X  szFI_EDIOrderCompany
+           UNDEFINED X  cIncludeInterconnect
+           RV RV  GENLNG(gv) <> idPtrToPPATMsgs
+0168    Proccess batch errors to the JDEM system
+           "2" <> mnLeveloftotaling
+           RV RV  GENLNG(gv) <> idDataBaseWorkField
+           UNDEFINED X  cErrorPreProcessFlag
+           UNDEFINED X  szUserid
+0169    Do Custom Section(RS Errors)
+0170 End If
+0171 // PRINT AUDIT INFO
+0172 Do Custom Section(RS Print Audit Info)
+
+-----------------------------------------------------------------------
+     EVENT:  Variable
+-----------------------------------------------------------------------
+     sec_szItemErrorMessage_DTAI
+
+=======================================================================
+     SECTION: DataBase Updates [GROUP SECTION] (S86)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+     evt_address
+     evt_mnF58RE76B_UKID
+     evt_jdF58RE76C_MMEJ
+     evt_jdF58RE76C_UA01
+     evt_szF58RE76C_LOTN
+     evt_szF58RE76C_LITM
+     evt_szF4102_SLD
+     evt_mnF4101_ITM
+     evt_mnNotaFiscal_VINV
+0001 VA rpt_szF47071_KCOO = BC Order Company (Order Number) (F47071)
+0002 VA rpt_szF47071_DCTO = BC Order Type (F47071)
+0003 VA rpt_mnF47071_DOCO = BC Document (Order No, Invoice, etc.) (F47071)
+0004 VA rpt_mnF47071_EDOC = BC EDI - Document Number (F47071)
+0005 VA rpt_szF4071_MCU = BC Business Unit (F47071)
+0006 VA rpt_szNotaFiscalSeries_BSER = ""
+0007 Do Custom Section(RS GetNF)
+0008 If VA rpt_szNotaFiscalSeries_BSER is equal to <Blank>
+     Or VA rpt_szNotaFiscalSeries_BSER is equal to <Null>
+0009    RV TransErr(gv) = "1"
+0010    RV LineContainsError(gv) = "Y"
+0011    Stop Section Processing
+0012 End If
+0013 // SAR 5621455 Begin
+0014 //
+0015 If VA rpt_POUnitsOpen_UOPN is not equal to <Zero>
+     Or VA rpt_POAmountOpen_AOPN is not equal to <Zero>
+0016    // RR6042543   -   SAR#3405513   -   12/02/99
+0017    F43121 Edit Document
+           RV JobNo(gv) -> mnJobNumber
+           RV R_EDIWorkID(gv) -> szComputerID
+           "1" -> cActionCode
+           "1" -> cProcessEdits
+           RV Rv_ProID(gv) -> szProgramID
+           RV R_EDIUserID(gv) -> szUserID
+           RV Version(gv) -> szPOVersion
+           VA rpt_LandedCJobnumber <- mnLandedCostJobNumber
+           BC Document (Order No, Invoice, etc.) -> mnOrderNumber
+           BC Order Type -> szOrderType
+           BC Order Company (Order Number) -> szOrderKeyCompany
+           BC Order Suffix -> szOrderSuffix
+           VA rpt_GLDate -> jdGLDate
+           RV Rv_BatchNo(gv) -> mnBatchNumber
+           UNDEFINED <> szBatchType
+           UNDEFINED <- mnLCReceiptDoc
+           UNDEFINED <- mnLCJournalEntryLineNo
+           BC Currency Mode-Foreign or Domestic Entry -> cCurrencyMode
+           BC Currency Code - From -> szCurrencyCode
+           VA rpt_LCF0911Jobnumber <- mnLCF0911JobNumber
+           UNDEFINED -> cReversalOption
+0018    // RR6042543   -   SAR#3405513   -   12/02/99
+0019    //
+0020    //
+0021    Cache Nota Fiscal
+           VA rpt_mnNotaFiscalNumber_BNNF -> mnNotaFiscalNumber
+           VA rpt_szNotaFiscalSeries_BSER -> szNotaFiscalSeries
+           VA rpt_mnF7601B_N001 -> mnNextNumber
+           VA rpt_szF58RE76B_OCTO -> szDocumentType
+           RV R_EDIWorkID(gv) -> szComputerID
+           RV JobNo(gv) -> mnJobnumberA
+           UNDEFINED X  szErrorMessageID
+           "7" -> szCacheActionCode
+           VA rpt_jdF7601B_ISSU -> jdIssueDate
+0022    //
+0023    Cache Nota Fiscal Additional Info
+           RV R_EDIWorkID(gv) -> szComputerID
+           RV JobNo(gv) -> mnJobnumberA
+           UNDEFINED X  szErrorMessageID
+           "7" -> szCacheActionCode
+           VA rpt_szF58RE76A_CRTY -> szNotaFiscalModel
+           VA rpt_szF58RE76A_FRTH -> szFreightHandlingCode
+           UNDEFINED X  szNFEKey
+           UNDEFINED X  mnValorPrestadoConsumido
+0024    //
+0025    F43121 End Document
+           RV JobNo(gv) -> mnJobNumber
+           RV R_EDIWorkID(gv) <> szComputerID
+           "1" <> cActionCode
+           "1" <> cProcessEdits
+           RV Rv_ProID(gv) -> szProgramID
+           RV Version(gv) -> szPOVersion
+           RV CurrencyYN(gv) -> cCurrencyProcessingFlag
+           RV F4111 Job Number -> mnF4111JobNumber
+           RV F0911 Job Number -> mnF0911JobNumber
+           RV Rv_BatchNo(gv) <> mnBatchNumber
+           "O" -> szBatchType
+           UNDEFINED X  cBatchStatus
+           BC Currency Mode-Foreign or Domestic Entry <> cCurrencyMode
+           RV R_EDIUserID(gv) <> szUserID
+           UNDEFINED X  szZeroBalRemark
+           UNDEFINED X  szTaxRemark
+           UNDEFINED X  szLandedCostRemark
+           VA rpt_mnDocRecebimento_DOC <> mnDocumentNumber
+           "1" -> cCalledFromEDI
+           VA rpt_LandedCJobnumber -> mnLandedCJobNo
+           UNDEFINED X  szReceiptTravelerNumber
+           VA rpt_LCF0911Jobnumber -> mnLCF0911JobNumber
+           UNDEFINED X  cTransIntransitFlag
+0026    //
+0027    F58RE76B.Select
+           VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+           VA rpt_szF58RE76B_BSER =  TK Nota Fiscal Series
+           VA rpt_mnF58RE76B_N001 =  TK Next Number Range 1
+           VA rpt_szF58RE76B_DCT =  TK Document Type
+           VA rpt_szF58RE76B_SLN =  TK Seal Number
+0028    F58RE76B.Fetch Next
+           VA evt_mnF58RE76B_UKID <- TK Unique Key ID (Internal)
+0029    While SV File_IO_Status is equal to CO SUCCESS
+0030       F58RE76B.Update
+              VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+              VA rpt_szF58RE76B_BSER =  TK Nota Fiscal Series
+              VA rpt_mnF58RE76B_N001 =  TK Next Number Range 1
+              VA rpt_szF58RE76B_DCT =  TK Document Type
+              VA evt_mnF58RE76B_UKID =  TK Unique Key ID (Internal)
+              VA rpt_szF58RE76B_SLN =  TK Seal Number
+              VA rpt_mnNotaFiscalNumber_BNNF -> TK Nota Fiscal Number - Original
+              VA rpt_szNotaFiscalSeries_BSER -> TK Nota Fiscal Series - Original
+              VA rpt_mnF7601B_N001 -> TK Next Number Range 2
+              VA rpt_UserId_USER -> TK User ID
+              VA rpt_ProgramId_PID -> TK Program ID
+              VA rpt_WorkStationId_JOBN -> TK Work Station ID
+              VA rpt_DateUpdated_UPMJ -> TK Date - Updated
+              VA rpt_TimeLastUpdated_UPMT -> TK Time of Day
+              PO szPróximoStatus_AA03 -> TK Alpha Spec. Data 03
+0031       F58RE76B.Fetch Next
+              VA evt_mnF58RE76B_UKID <- TK Unique Key ID (Internal)
+0032    End While
+0033    F58RE76A.Update
+           VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+           VA rpt_szF58RE76B_BSER =  TK Nota Fiscal Series
+           VA rpt_mnF58RE76B_N001 =  TK Next Number Range 1
+           VA rpt_szF58RE76B_DCT =  TK Document Type
+           VA rpt_szF58RE76B_SLN =  TK Seal Number
+           VA rpt_mnNotaFiscalNumber_BNNF -> TK Nota Fiscal Number - Original
+           VA rpt_szNotaFiscalSeries_BSER -> TK Nota Fiscal Series - Original
+           VA rpt_mnF7601B_N001 -> TK Next Number Range 2
+           VA rpt_jdF7601B_ISSU -> TK Date - Shipped (Julian)
+           VA rpt_UserId_USER -> TK User ID
+           VA rpt_ProgramId_PID -> TK Program ID
+           VA rpt_WorkStationId_JOBN -> TK Work Station ID
+           VA rpt_DateUpdated_UPMJ -> TK Date - Updated
+           VA rpt_TimeLastUpdated_UPMT -> TK Time of Day
+           PO szPróximoStatus_AA03 -> TK Alpha Spec. Data 03
+0034    //
+0035 !    VA evt_szF58RE76C_LOTN = ""
+0036 !    F58RE76C.Select
+     !       VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+     !       VA rpt_mnF58RE76B_N001 =  TK Next Number Range 1
+     !       VA rpt_szF58RE76B_BSER =  TK Nota Fiscal Series
+     !       VA rpt_szF58RE76B_SLN =  TK Seal Number
+0037 !    F58RE76C.Fetch Next
+     !       VA evt_szF58RE76C_LITM <- TK 2nd Item Number
+     !       VA evt_szF58RE76C_LOTN <- TK Lot/Serial Number
+     !       VA evt_jdF58RE76C_MMEJ <- TK Date - Lot Expiration
+     !       VA evt_jdF58RE76C_UA01 <- TK Date - User Defined Date 01
+0038 !    While SV File_IO_Status is equal to CO SUCCESS
+0039 !       //
+0040 !       VA evt_szF4102_SLD = days_between([VA evt_jdF58RE76C_UA01],[VA evt_jdF58RE76C_MMEJ])
+0041 !       If VA evt_szF4102_SLD is greater than <Zero>
+0042 !          F4101.Fetch Single
+     !             VA evt_mnF4101_ITM <- TK Item Number - Short
+     !             VA evt_szF58RE76C_LITM =  TK 2nd Item Number
+0043 !          F4102.Update
+     !             VA evt_mnF4101_ITM =  TK Item Number - Short
+     !             BC Business Unit =  TK Business Unit
+     !             VA evt_szF4102_SLD -> TK Days - Shelf Life Days
+0044 !          F4108.Update
+     !             VA evt_szF58RE76C_LOTN =  TK Lot/Serial Number
+     !             BC Business Unit =  TK Business Unit
+     !             VA evt_mnF4101_ITM =  TK Item Number - Short
+     !             VA evt_jdF58RE76C_UA01 -> TK Date - User Defined Date 02
+0045 !       Else
+0046 !       End If
+0047 !       //
+0048 !       F58RE76C.Fetch Next
+     !          VA evt_szF58RE76C_LITM <- TK 2nd Item Number
+     !          VA evt_szF58RE76C_LOTN <- TK Lot/Serial Number
+     !          VA evt_jdF58RE76C_MMEJ <- TK Date - Lot Expiration
+     !          VA evt_jdF58RE76C_UA01 <- TK Date - User Defined Date 01
+0049 !    End While
+0050    // codigo abaixo para atualizar data de fabricacao para os demais produtos
+0051 !    VA rpt_mnDiasRetroativos_MATH01 = "-360"
+0052 !    If VA evt_szF58RE76C_LOTN is equal to <Blank>
+     ! Or VA evt_szF58RE76C_LOTN is equal to <Null>
+0053 !       Convert Math_Numeric To String
+     !          VA rpt_mnNotaFiscalNumber_BNNF -> mnMathNumeric01
+     !          VA evt_mnNotaFiscal_VINV <- szString
+0054 !       F58RE76E.Select
+     !          VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+     !          VA rpt_mnF58RE76B_N001 =  TK Next Number Range 1
+     !          VA rpt_szF58RE76B_DCT =  TK Document Type
+     !          VA rpt_szF58RE76B_SLN =  TK Seal Number
+     !          VA rpt_szF58RE76B_BSER =  TK Nota Fiscal Series
+0055 !       F58RE76E.Fetch Next
+     !          VA rpt_szF58RE76E_LITM <- TK 2nd Item Number
+     !          VA rpt_mnF58RE76E_LNID <- TK Line Number
+     !          VA rpt_mnF58RE76E_DOCO <- TK Document (Order No, Invoice, etc.)
+     !          VA rpt_szF58RE76E_DCTO <- TK Order Type
+     !          VA rpt_szF58RE76E_KCOO <- TK Order Company (Order Number)
+     !          VA rpt_mnF58RE76E_AN8 <- TK Address Number
+0056 !       While SV File_IO_Status is equal to CO SUCCESS
+0057 !          //
+0058 !          F43121.Select
+     !             VA rpt_mnF58RE76E_AN8 =  TK Address Number
+     !             VA rpt_mnF58RE76E_DOCO =  TK Document (Order No, Invoice, etc.)
+     !             VA rpt_szF58RE76E_DCTO =  TK Order Type
+     !             VA rpt_mnF58RE76E_LNID =  TK Line Number
+     !             VA evt_mnNotaFiscal_VINV =  TK Supplier Invoice Number
+0059 !          F43121.Fetch Next
+     !             VA rpt_mnF43121_ITM <- TK Item Number - Short
+     !             VA rpt_szF43121_LOTN <- TK Lot/Serial Number
+     !             VA rpt_szF43121_MCU <- TK Business Unit
+0060 !          If VA rpt_szF43121_LOTN is not equal to <Blank>
+     ! And VA rpt_szF43121_LOTN is not equal to <Null>
+0061 !             VA rpt_jdDataFabricacao_UA02 = add_days([SL DateToday                      ],[VA rpt_mnDiasRetroativos_MATH01])
+0062 !             If VA rpt_jdDataFabricacao_UA02 is greater than <Null Date>
+0063 !                F4108.Update
+     !                   VA rpt_szF43121_LOTN =  TK Lot/Serial Number
+     !                   BC Business Unit =  TK Business Unit
+     !                   VA rpt_mnF43121_ITM =  TK Item Number - Short
+     !                   VA rpt_jdDataFabricacao_UA02 -> TK Date - User Defined Date 02
+0064 !             End If
+0065 !          End If
+0066 !          //
+0067 !          //
+0068 !          //
+0069 !          F58RE76E.Fetch Next
+     !             VA rpt_szF58RE76E_LITM <- TK 2nd Item Number
+     !             VA rpt_mnF58RE76E_LNID <- TK Line Number
+     !             VA rpt_mnF58RE76E_DOCO <- TK Document (Order No, Invoice, etc.)
+     !             VA rpt_szF58RE76E_DCTO <- TK Order Type
+     !             VA rpt_szF58RE76E_KCOO <- TK Order Company (Order Number)
+     !             VA rpt_mnF58RE76E_AN8 <- TK Address Number
+0070 !       End While
+0071 !    Else
+0072 !    End If
+0073    //
+0074    // *******************************************************************
+0075    //
+0076    F58RE76E.Select
+           VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+           VA rpt_mnF58RE76B_N001 =  TK Next Number Range 1
+           VA rpt_szF58RE76B_DCT =  TK Document Type
+           VA rpt_szF58RE76B_SLN =  TK Seal Number
+           VA rpt_szF58RE76B_BSER =  TK Nota Fiscal Series
+0077    F58RE76E.Fetch Next
+           VA rpt_szF58RE76E_LITM <- TK 2nd Item Number
+           VA rpt_mnF58RE76E_LNID <- TK Line Number
+           VA rpt_mnF58RE76E_DOCO <- TK Document (Order No, Invoice, etc.)
+           VA rpt_szF58RE76E_DCTO <- TK Order Type
+           VA rpt_szF58RE76E_KCOO <- TK Order Company (Order Number)
+           VA rpt_mnF58RE76E_AN8 <- TK Address Number
+0078    While SV File_IO_Status is equal to CO SUCCESS
+0079       VA rpt_cFlagAtualizaLote_EV01 = ""
+0080       //
+0081       F58RE76C.Select
+              VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+              VA rpt_mnF58RE76B_N001 =  TK Next Number Range 1
+              VA rpt_szF58RE76B_BSER =  TK Nota Fiscal Series
+              VA rpt_szF58RE76B_SLN =  TK Seal Number
+              VA rpt_szF58RE76E_LITM =  TK 2nd Item Number
+0082       F58RE76C.Fetch Next
+              VA evt_szF58RE76C_LITM <- TK 2nd Item Number
+0083       If SV File_IO_Status is equal to CO SUCCESS
+0084          VA rpt_cFlagAtualizaLote_EV01 = "1"
+0085       Else
+0086          VA rpt_cFlagAtualizaLote_EV01 = "2"
+0087       End If
+0088       Do Custom Section(RS AtualizaDataLote)
+0089       //
+0090       //
+0091       F58RE76E.Fetch Next
+              VA rpt_szF58RE76E_LITM <- TK 2nd Item Number
+              VA rpt_mnF58RE76E_LNID <- TK Line Number
+              VA rpt_mnF58RE76E_DOCO <- TK Document (Order No, Invoice, etc.)
+              VA rpt_szF58RE76E_DCTO <- TK Order Type
+              VA rpt_szF58RE76E_KCOO <- TK Order Company (Order Number)
+              VA rpt_mnF58RE76E_AN8 <- TK Address Number
+0092    End While
+0093    //
+0094    //
+0095    // *******************************************************************
+0096    //
+0097    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0098    // Inicio - Julio Donati - 08/08/2013
+0099    // Funcional: Umberto Cristale
+0100    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0101    //
+0102    VA rpt_mnTempFCI_BNNF = VA rpt_mnNotaFiscalNumber_BNNF
+0103    VA rpt_szTempFCI_BSER = VA rpt_szNotaFiscalSeries_BSER
+0104    VA rpt_mnTempFCI_N001 = VA rpt_mnF7601B_N001
+0105    VA rpt_szTempFCI_DCT = VA rpt_szF58RE76B_OCTO
+0106    //
+0107    Do Custom Section(RS Carrega FCI)
+0108    //
+0109    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0110    // Fim - Julio Donati - 08/08/2013
+0111    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0112    //
+0113    // **** RR6042543 - SAR# 5899975 - 04/10/2002 ****
+0114    // **** Need to populate the generated batch number on the report and EDI files
+0115    //
+0116    RV EDI Batch Number = [RV Rv_BatchNo(gv)]
+0117    //
+0118    // B4700070
+0119    VA rpt_Rv_EDSP = "Y"
+0120    F47071.Update
+           BC Company - Key (EDI - Document Key Co) =  TK Company - Key (EDI - Document Key Co)
+           BC EDI - Document Number =  TK EDI - Document Number
+           BC EDI - Document Type =  TK EDI - Document Type
+           VA rpt_Rv_EDSP -> TK EDI - Successfully Processed
+           RV EDI Batch Number -> TK EDI - Batch Number
+           BC User ID -> TK User ID
+           BC Program ID -> TK Program ID
+           BC Work Station ID -> TK Work Station ID
+           BC Date - Updated -> TK Date - Updated
+           BC Time of Day -> TK Time of Day
+0121    F47072.Update
+           BC Company - Key (EDI - Document Key Co) =  TK Company - Key (EDI - Document Key Co)
+           BC EDI - Document Number =  TK EDI - Document Number
+           BC EDI - Document Type =  TK EDI - Document Type
+           VA rpt_Rv_EDSP -> TK EDI - Successfully Processed
+           RV EDI Batch Number -> TK EDI - Batch Number
+           BC User ID -> TK User ID
+           BC Program ID -> TK Program ID
+           BC Work Station ID -> TK Work Station ID
+           BC Date - Updated -> TK Date - Updated
+           BC Time of Day -> TK Time of Day
+0122    EDI Convert EDI Text To Generic Text
+           "GT4301" -> szObjectName
+           "F47071" -> szFileID
+           RV EDI_DocNo(gv) -> mnEDIDocumentNumber
+           RV EDI_DocType(gv) -> szEDIDocumentType
+           RV EDI_DocCo(gv) -> szEDIKeyCompany
+           RV EDI_LineNo(gv) -> mnEDILineNumber
+           BC Document (Order No, Invoice, etc.) -> mnDocumentNumber
+           BC Order Company (Order Number) -> szDocumentType
+           UNDEFINED X  szSuffix
+           UNDEFINED X  mnLineNumber
+           "<Blank>" -> cDeleteGenericText
+           "<Blank>" -> cDeleteEDIText
+           UNDEFINED X  cConversionSuccessful
+           UNDEFINED X  szKeyCompany
+           "R47071" -> szProgramID
+0123    //
+0124    // N4700120  sold to
+0125    F4706 Convert EDI Order Address to Order Address
+           BC EDI - Document Number -> mnEdiDocumentNumber
+           BC EDI - Document Type -> szEdiDocumentType
+           BC Company - Key (EDI - Document Key Co) -> szCompanyKeyEdiOrder
+           BC EDI - Line Number -> mnEdiLineNumber
+           BC EDI - Batch Number -> szEdiBatchNumber
+           RV R_OrderNo(gv) -> mnDocumentOrderInvoicee
+           RV R_OrderType(gv) -> szOrderType
+           RV EDI_DocCo(gv) -> szCompanyKeyOrderNo
+           BC Address Number -> mnAddressNumber
+           "F47071" -> szFileName
+           "1" -> cTypeAddressNumber
+           RV R_EDIUserID(gv) -> szTransactionOriginator
+           RV R_EDIUserID(gv) -> szUserId
+           RV Rv_ProID(gv) -> szProgramId
+           RV R_EDIWorkID(gv) -> szWorkstationId
+           RV R_EDIDateUpd(gv) -> jdDateUpdated
+           RV R_EDITDay(gv) -> mnTimeOfDay
+           UNDEFINED X  cErrorCode
+0126    // N4700120  Ship To
+0127    F4706 Convert EDI Order Address to Order Address
+           BC EDI - Document Number -> mnEdiDocumentNumber
+           BC EDI - Document Type -> szEdiDocumentType
+           BC Company - Key (EDI - Document Key Co) -> szCompanyKeyEdiOrder
+           BC EDI - Line Number -> mnEdiLineNumber
+           BC EDI - Batch Number -> szEdiBatchNumber
+           RV R_OrderNo(gv) -> mnDocumentOrderInvoicee
+           RV R_OrderType(gv) -> szOrderType
+           BC Company - Key (EDI - Document Key Co) -> szCompanyKeyOrderNo
+           BC Address Number - Ship To -> mnAddressNumber
+           "F47071" -> szFileName
+           "2" -> cTypeAddressNumber
+           RV R_EDIUserID(gv) -> szTransactionOriginator
+           RV R_EDIUserID(gv) -> szUserId
+           RV Rv_ProID(gv) -> szProgramId
+           RV R_EDIWorkID(gv) -> szWorkstationId
+           RV R_EDIDateUpd(gv) -> jdDateUpdated
+           RV R_EDITDay(gv) -> mnTimeOfDay
+           UNDEFINED X  cErrorCode
+0128    VA sec_FILE_FileName = "F47011"
+0129    VA sec_EDLN_EdiLineNumber = "0"
+0130    //
+0131    VA sec_ANTY_AddressType = "1"
+0132    F4706.Update
+           RV EDI_DocCo(gv) =  TK Company - Key (EDI - Document Key Co)
+           RV EDI_DocNo(gv) =  TK EDI - Document Number
+           RV EDI_DocType(gv) =  TK EDI - Document Type
+           VA sec_EDLN_EdiLineNumber =  TK EDI - Line Number
+           VA rpt_Rv_EDSP -> TK EDI - Successfully Processed
+           VA sec_FILE_FileName =  TK File Name
+           RV R_OrderNo(gv) -> TK Document (Order No, Invoice, etc.)
+           RV R_OrderType(gv) -> TK Order Type
+           RV R_OrderCo(gv) -> TK Order Company (Order Number)
+           VA sec_ANTY_AddressType =  TK Type - Address Number
+           RV R_EDIUserID(gv) -> TK User ID
+           RV Rv_ProID(gv) -> TK Program ID
+           RV R_EDIWorkID(gv) -> TK Work Station ID
+           RV R_EDIDateUpd(gv) -> TK Date - Updated
+           RV R_EDITDay(gv) -> TK Time of Day
+0133    //
+0134    VA sec_ANTY_AddressType = "2"
+0135    F4706.Update
+           RV EDI_DocCo(gv) =  TK Company - Key (EDI - Document Key Co)
+           RV EDI_DocNo(gv) =  TK EDI - Document Number
+           RV EDI_DocType(gv) =  TK EDI - Document Type
+           VA sec_EDLN_EdiLineNumber =  TK EDI - Line Number
+           VA rpt_Rv_EDSP -> TK EDI - Successfully Processed
+           VA sec_FILE_FileName =  TK File Name
+           RV R_OrderNo(gv) -> TK Document (Order No, Invoice, etc.)
+           RV R_OrderType(gv) -> TK Order Type
+           RV R_OrderCo(gv) -> TK Order Company (Order Number)
+           VA sec_ANTY_AddressType =  TK Type - Address Number
+           RV R_EDIUserID(gv) -> TK User ID
+           RV Rv_ProID(gv) -> TK Program ID
+           RV R_EDIWorkID(gv) -> TK Work Station ID
+           RV R_EDIDateUpd(gv) -> TK Date - Updated
+           RV R_EDITDay(gv) -> TK Time of Day
+0136 End If
+0137 // Moved End If from above to Nest the Update to the System 47 tables
+0138 // SAR 5621455 END
+
+-----------------------------------------------------------------------
+     EVENT:  Variable
+-----------------------------------------------------------------------
+     sec_FILE_FileName
+     sec_EDLN_EdiLineNumber
+     sec_ANTY_AddressType
+
+=======================================================================
+     SECTION: Errors [GROUP SECTION] (S87)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+0001 Retrieve Data Dictionary Alpha Desc
+        RV ErrorNumber_DTAI -> szDataItem
+        RV Error Description <- szDescriptionAlpha
+        UNDEFINED X  szDescCompressed
+0002 If RV ErrorNumber_DTAI is equal to <Blank>
+     Or RV ErrorNumber_DTAI is equal to <Null>
+0003    Hide Object(RV ErrorNumber_DTAI)
+0004    Hide Object(RV Error Description)
+0005    Show Object(RV WorkCenter)
+0006    RV WorkCenter = TV See Work Center for Detailed Error Message
+0007 Else
+0008    Show Object(RV ErrorNumber_DTAI)
+0009    Show Object(RV Error Description)
+0010    Hide Object(RV WorkCenter)
+0011 End If
+
+-----------------------------------------------------------------------
+     EVENT:  After Last Object Printed
+-----------------------------------------------------------------------
+0001 RV ErrorNumber_DTAI = " "
+0002 RV Error Description = " "
+0003 RV Order Number_Error = " "
+
+=======================================================================
+     SECTION: GetNF [GROUP SECTION] (S88)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Initialize Section
+-----------------------------------------------------------------------
+0001 VA rpt_ProgramId_PID = "R58RE40"
+0002 Get Audit Information
+        VA rpt_UserId_USER <> szUserName
+        VA rpt_DateUpdated_UPMJ <> jdDate
+        VA rpt_TimeLastUpdated_UPMT <> mnTime
+        VA rpt_WorkStationId_JOBN <> szWorkstation_UserId
+
+-----------------------------------------------------------------------
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+     evt_zsF7601B_BSER
+     evt_cFlagSerie_EV01
+     evt_szAux_BSER
+     evt_mnAux_MATH01
+     evt_szAux_AA02
+     evt_mnCont_INT01
+0001 F58RE76B.Select
+        VA rpt_mnF47071_EDOC =  TK Document (Voucher, Invoice, etc.)
+0002 F58RE76B.Fetch Next
+        VA rpt_mnNotaFiscalNumber_BNNF <- TK Nota Fiscal Number
+        VA rpt_szNotaFiscalSeries_BSER <- TK Nota Fiscal Series
+        VA rpt_mnF58RE76B_N001 <- TK Next Number Range 1
+        VA rpt_szF58RE76B_DCT <- TK Document Type
+        VA rpt_szF58RE76B_SLN <- TK Seal Number
+        VA rpt_szF58RE76B_OCTO <- TK Original Order Type
+        VA rpt_mnF58RE76B_SHAN <- TK Address Number - Ship To
+        VA rpt_mnF58RE76B_AN8 <- TK Address Number
+0003 VA rpt_szF58RE76B_BSER = VA rpt_szNotaFiscalSeries_BSER
+0004 If SV File_IO_Status is equal to CO SUCCESS
+0005    F7601B.Select
+           VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+           VA rpt_szNotaFiscalSeries_BSER =  TK Nota Fiscal Series
+           VA rpt_szF58RE76B_OCTO =  TK Document Type
+           VA rpt_mnF58RE76B_AN8 =  TK Address Number - Supplier
+0006    F7601B.Fetch Next
+           VA evt_zsF7601B_BSER <- TK Nota Fiscal Series
+0007    If SV File_IO_Status is equal to CO SUCCESS
+0008       VA evt_cFlagSerie_EV01 = "F"
+0009       While VA evt_cFlagSerie_EV01 is equal to "F"
+           And VA evt_mnCont_INT01 is less than "100"
+0010          F7601B.Select
+                 VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+                 VA evt_zsF7601B_BSER =  TK Nota Fiscal Series
+                 VA rpt_szF58RE76B_OCTO =  TK Document Type
+                 VA rpt_mnF58RE76B_AN8 =  TK Address Number - Supplier
+0011          F7601B.Fetch Next
+                 VA evt_zsF7601B_BSER <- TK Nota Fiscal Series
+0012          If SV File_IO_Status is equal to CO SUCCESS
+0013             VA evt_mnAux_MATH01 = length([VA evt_zsF7601B_BSER])
+0014             If VA evt_mnAux_MATH01 is equal to "2"
+0015                VA evt_szAux_AA02 = substr([VA evt_zsF7601B_BSER],0,1 )
+0016             End If
+0017             VA evt_mnAux_MATH01 = ""
+0018             Convert String to Math Numeric
+                    VA evt_szAux_BSER -> szInputString
+                    VA evt_mnAux_MATH01 <- mnOutputMathNumeric
+                    UNDEFINED <- cReturnedErrorCode
+0019             VA evt_mnAux_MATH01 = [VA evt_mnAux_MATH01] +1
+0020             Convert Math_Numeric To String
+                    VA evt_mnAux_MATH01 -> mnMathNumeric01
+                    VA evt_zsF7601B_BSER <- szString
+0021             If VA evt_mnAux_MATH01 is less than "10"
+                 And VA evt_szAux_AA02 is equal to "0"
+0022                VA evt_zsF7601B_BSER = concat([VA evt_szAux_AA02],[VA evt_zsF7601B_BSER])
+0023             End If
+0024          Else
+0025             VA evt_cFlagSerie_EV01 = "T"
+0026          End If
+0027          VA evt_mnCont_INT01 = [VA evt_mnCont_INT01]+1
+0028       End While
+0029       VA rpt_szNotaFiscalSeries_BSER = VA evt_zsF7601B_BSER
+0030    Else
+0031    End If
+0032 Else
+0033 End If
+0034 If VA rpt_szNotaFiscalSeries_BSER is not equal to <Blank>
+     And VA rpt_szNotaFiscalSeries_BSER is not equal to <Null>
+0035    X0010 - Get Next Number
+           "76" -> szSystemCode
+           "1" -> mnNextNumberingIndexNo
+           UNDEFINED X  szCompanyKey
+           UNDEFINED X  szDocumentType
+           UNDEFINED X  mnCentury
+           UNDEFINED X  mnFiscalYear1
+           UNDEFINED X  szSameAsDocumentType
+           VA rpt_mnF7601B_N001 <- mnNextNumber001
+0036    F58RE76A.Fetch Single
+           VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+           VA rpt_szF58RE76B_BSER =  TK Nota Fiscal Series
+           VA rpt_mnF58RE76B_N001 =  TK Next Number Range 1
+           VA rpt_szF58RE76B_DCT =  TK Document Type
+           VA rpt_szF58RE76B_SLN =  TK Seal Number
+           VA rpt_jdF7601B_ISSU <- TK Date - Issue
+           VA rpt_szF58RE76A_CRTY <- TK Carrier Type
+           VA rpt_szF58RE76A_FRTH <- TK Freight Handling Code
+0037 Else
+0038 End If
+0039 ! VA rpt_jdF7601B_ISSU = VA rpt_DateUpdated_UPMJ
+
+=======================================================================
+     SECTION: GetDocReceipt [GROUP SECTION] (S90)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+     evt_mnAux_DOC
+     evt_szDOC_AA08
+     evt_mnTamNum_INT01
+     evt_cFlagDoc_EV01
+     evt_szF43121_DCT
+     evt_mnCont_INT01
+     evt_mnNumZero_INT01
+     evt_mnMultiplo_INT01
+     evt_szTipoDocRecebimento_DCT
+0001 // seção para verificar se já existe o numero do documento de recebimento. O dept
+0002 // Fiscal utilza o numero da NF para casar com o voucher, mas se já existir o
+0003 // numero tem que ser incrementado.
+0004 //
+0005 VA evt_szTipoDocRecebimento_DCT = "OV"
+0006 VA evt_mnCont_INT01 = "0"
+0007 VA evt_cFlagDoc_EV01 = "F"
+0008 F43121.Select
+        VA rpt_szCompanhia_KCOO =  TK Document Company
+        VA rpt_mnDocRecebimento_DOC =  TK Document (Voucher, Invoice, etc.)
+        VA evt_szTipoDocRecebimento_DCT =  TK Document Type
+0009 F43121.Fetch Next
+        VA evt_mnAux_DOC <- TK Document (Voucher, Invoice, etc.)
+0010 If SV File_IO_Status is equal to CO SUCCESS
+0011    Convert Math_Numeric To String
+           VA evt_mnAux_DOC -> mnMathNumeric01
+           VA evt_szDOC_AA08 <- szString
+0012    VA evt_mnTamNum_INT01 = length([VA evt_szDOC_AA08])
+0013    //
+0014    If VA evt_mnTamNum_INT01 is equal to "8"
+0015       VA evt_mnAux_DOC = [VA evt_mnAux_DOC]+1
+0016       While VA evt_cFlagDoc_EV01 is not equal to "T"
+           And VA evt_mnCont_INT01 is less than or equal to "1"
+0017          F43121.Select
+                 VA rpt_szCompanhia_KCOO =  TK Document Company
+                 VA evt_mnAux_DOC =  TK Document (Voucher, Invoice, etc.)
+                 VA evt_szTipoDocRecebimento_DCT =  TK Document Type
+0018          F43121.Fetch Next
+                 VA evt_szF43121_DCT <- TK Order Type
+0019          If SV File_IO_Status is equal to CO SUCCESS
+0020             VA evt_mnAux_DOC = [VA evt_mnAux_DOC]+1
+0021             If VA evt_mnAux_DOC is equal to "99999999"
+0022                VA evt_mnAux_DOC = "1"
+0023                VA evt_mnCont_INT01 = [VA evt_mnCont_INT01]+1
+0024             End If
+0025          Else
+0026             VA rpt_mnDocRecebimento_DOC = VA evt_mnAux_DOC
+0027             VA evt_cFlagDoc_EV01 = "T"
+0028          End If
+0029       End While
+0030    End If
+0031    //
+0032    VA evt_mnCont_INT01 = "0"
+0033    VA evt_mnNumZero_INT01 = [VA evt_mnTamNum_INT01]+1
+0034    VA evt_mnMultiplo_INT01 = "9"
+0035    If VA evt_mnTamNum_INT01 is less than "8"
+0036       //
+0037       VA evt_szDOC_AA08 = rpad([VA evt_szDOC_AA08],'0',([VA evt_mnNumZero_INT01]))
+0038       Convert String to Math Numeric
+              VA evt_szDOC_AA08 -> szInputString
+              VA evt_mnAux_DOC <- mnOutputMathNumeric
+              UNDEFINED <- cReturnedErrorCode
+0039       While VA evt_cFlagDoc_EV01 is equal to "F"
+0040          //
+0041          If VA evt_mnCont_INT01 is equal to VA evt_mnMultiplo_INT01
+0042             VA evt_mnMultiplo_INT01 = [VA evt_mnMultiplo_INT01]+10
+0043             VA evt_mnCont_INT01 = "0"
+0044             VA evt_mnNumZero_INT01 = [VA evt_mnNumZero_INT01]+1
+0045             VA evt_szDOC_AA08 = rpad([VA evt_szDOC_AA08],'0',([VA evt_mnNumZero_INT01]))
+0046             VA evt_mnTamNum_INT01 = length([VA evt_szDOC_AA08])
+0047             Convert String to Math Numeric
+                    VA evt_szDOC_AA08 -> szInputString
+                    VA evt_mnAux_DOC <- mnOutputMathNumeric
+                    UNDEFINED <- cReturnedErrorCode
+0048          Else
+0049          End If
+0050          //
+0051          If VA evt_mnTamNum_INT01 is less than or equal to "8"
+0052             F43121.Select
+                    VA rpt_szCompanhia_KCOO =  TK Document Company
+                    VA evt_mnAux_DOC =  TK Document (Voucher, Invoice, etc.)
+                    VA evt_szTipoDocRecebimento_DCT =  TK Document Type
+0053             F43121.Fetch Next
+                    VA evt_szF43121_DCT <- TK Order Type
+0054             If SV File_IO_Status is equal to CO SUCCESS
+0055                VA evt_mnAux_DOC = [VA evt_mnAux_DOC]+1
+0056             Else
+0057                VA rpt_mnDocRecebimento_DOC = VA evt_mnAux_DOC
+0058                VA evt_cFlagDoc_EV01 = "T"
+0059             End If
+0060             VA evt_mnCont_INT01 = [VA evt_mnCont_INT01]+1
+0061          Else
+0062             VA evt_cFlagDoc_EV01 = "0"
+0063          End If
+0064          //
+0065       End While
+0066       //
+0067    End If
+0068    //
+0069    //
+0070 End If
+
+=======================================================================
+     SECTION: AtualizaDataLote [GROUP SECTION] (S91)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+     evt_jdF58RE76C_MMEJ
+     evt_szF58RE76C_LOTN
+     evt_jdF58RE76C_UA01
+     evt_szF58RE76C_LITM
+     evt_mnF4102_SLD
+     evt_mnF4101_ITM
+     evt_szF43121_VINV
+     evt_cMatchType_MATC
+0001 //
+0002 If VA rpt_cFlagAtualizaLote_EV01 is equal to "1"
+0003    VA evt_jdF58RE76C_MMEJ = ""
+0004    F58RE76C.Select
+           VA rpt_mnNotaFiscalNumber_BNNF =  TK Nota Fiscal Number
+           VA rpt_mnF58RE76B_N001 =  TK Next Number Range 1
+           VA rpt_szF58RE76B_BSER =  TK Nota Fiscal Series
+           VA rpt_szF58RE76B_SLN =  TK Seal Number
+           VA rpt_szF58RE76E_LITM =  TK 2nd Item Number
+0005    F58RE76C.Fetch Next
+           VA evt_szF58RE76C_LITM <- TK 2nd Item Number
+           VA evt_szF58RE76C_LOTN <- TK Lot/Serial Number
+           VA evt_jdF58RE76C_MMEJ <- TK Date - Lot Expiration
+           VA evt_jdF58RE76C_UA01 <- TK Date - User Defined Date 01
+0006    While SV File_IO_Status is equal to CO SUCCESS
+0007       VA evt_mnF4102_SLD = days_between([VA evt_jdF58RE76C_UA01],[VA evt_jdF58RE76C_MMEJ])
+0008       If VA evt_mnF4102_SLD is greater than <Zero>
+           And VA evt_jdF58RE76C_MMEJ is not equal to <Null Date>
+0009          F4101.Fetch Single
+                 VA evt_mnF4101_ITM <- TK Item Number - Short
+                 VA evt_szF58RE76C_LITM =  TK 2nd Item Number
+0010          F4102.Update
+                 VA evt_mnF4101_ITM =  TK Item Number - Short
+                 VA rpt_szF4071_MCU =  TK Business Unit
+                 VA evt_mnF4102_SLD -> TK Days - Shelf Life Days
+0011          F4108.Update
+                 VA evt_szF58RE76C_LOTN =  TK Lot/Serial Number
+                 VA rpt_szF4071_MCU =  TK Business Unit
+                 VA evt_mnF4101_ITM =  TK Item Number - Short
+                 VA evt_jdF58RE76C_UA01 -> TK Date - User Defined Date 02
+0012       End If
+0013       //
+0014       F58RE76C.Fetch Next
+              VA evt_szF58RE76C_LITM <- TK 2nd Item Number
+              VA evt_szF58RE76C_LOTN <- TK Lot/Serial Number
+              VA evt_jdF58RE76C_MMEJ <- TK Date - Lot Expiration
+              VA evt_jdF58RE76C_UA01 <- TK Date - User Defined Date 01
+0015    End While
+0016 End If
+0017 //
+0018 //
+0019 //
+0020 //
+0021 VA evt_cMatchType_MATC = "1"
+0022 If VA rpt_cFlagAtualizaLote_EV01 is equal to "2"
+0023    VA rpt_mnDiasRetroativos_MATH01 = "-360"
+0024    Convert Math_Numeric To String
+           VA rpt_mnNotaFiscalNumber_BNNF -> mnMathNumeric01
+           VA evt_szF43121_VINV <- szString
+0025    F43121.Select
+           VA evt_cMatchType_MATC =  TK Type - Match Record Type
+           VA rpt_mnF58RE76E_AN8 =  TK Address Number
+           VA rpt_mnF58RE76E_DOCO =  TK Document (Order No, Invoice, etc.)
+           VA rpt_szF58RE76E_DCTO =  TK Order Type
+           VA rpt_mnF58RE76E_LNID =  TK Line Number
+           VA evt_szF43121_VINV =  TK Supplier Invoice Number
+           VA rpt_mnDocRecebimento_DOC =  TK Document (Voucher, Invoice, etc.)
+0026    F43121.Fetch Next
+           VA rpt_mnF43121_NLIN <- TK Number of Lines
+           VA rpt_mnF43121_ITM <- TK Item Number - Short
+           VA rpt_szF43121_LOTN <- TK Lot/Serial Number
+           VA rpt_szF43121_MCU <- TK Business Unit
+0027    While SV File_IO_Status is equal to CO SUCCESS
+0028       If VA rpt_szF43121_LOTN is not equal to <Blank>
+           And VA rpt_szF43121_LOTN is not equal to <Null>
+0029          VA rpt_jdDataFabricacao_UA02 = add_days([SL DateToday                      ],[VA rpt_mnDiasRetroativos_MATH01])
+0030          If VA rpt_jdDataFabricacao_UA02 is greater than <Null Date>
+0031             F4108.Update
+                    VA rpt_szF43121_LOTN =  TK Lot/Serial Number
+                    VA rpt_szF4071_MCU =  TK Business Unit
+                    VA rpt_mnF43121_ITM =  TK Item Number - Short
+                    VA rpt_jdDataFabricacao_UA02 -> TK Date - User Defined Date 02
+0032          End If
+0033       End If
+0034       //
+0035       //
+0036       F43121.Fetch Next
+              VA rpt_mnF43121_NLIN <- TK Number of Lines
+              VA rpt_mnF43121_ITM <- TK Item Number - Short
+              VA rpt_szF43121_LOTN <- TK Lot/Serial Number
+              VA rpt_szF43121_MCU <- TK Business Unit
+0037    End While
+0038 End If
+0039 //
+
+=======================================================================
+     SECTION: Carrega FCI [GROUP SECTION] (S93)
+=======================================================================
+     OBJECT:  SECTION
+     EVENT:  Initialize Section
+-----------------------------------------------------------------------
+0001 //
+0002 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0003 // Desenvolvedor: Julio Donati
+0004 // Funcional: Umberto Cristale
+0005 // Data: 08/08/2013
+0006 // Projeto: FCI
+0007 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+0008 //
+0009 Set User Selection(BC Nota Fiscal Number (F7611B),  <Equal To>, VA rpt_mnTempFCI_BNNF,  <And>)
+0010 Set User Selection(BC Next Number Range 1 (F7611B), <Equal To>, VA rpt_mnTempFCI_N001, <And>)
+0011 Set User Selection(BC Nota Fiscal Series (F7611B), <Equal To>, VA rpt_szTempFCI_BSER, <And>)
+0012 Set User Selection(BC Document Type (F7611B), <Equal To>, VA rpt_szTempFCI_DCT, <And>)
+0013 //
+
+-----------------------------------------------------------------------
+     EVENT:  Do Section
+-----------------------------------------------------------------------
+0001 //
+0002 VA rpt_szNumeroFCI_DESF = ""
+0003 //
+0004 // ==>> Seleciona com o Lote
+0005 F58RE76E.Select
+        BC Nota Fiscal Number =  TK Nota Fiscal Number
+        BC Line Number =  TK Line Number
+        BC Document (Order No, Invoice, etc.) =  TK Document (Order No, Invoice, etc.)
+        BC Document Type - Purchase Order =  TK Order Type
+        BC Order Company (Order Number) =  TK Order Company (Order Number)
+        BC Lot/Serial Number =  TK Lot/Serial Number
+0006 F58RE76E.Fetch Next
+        VA rpt_mnF58RE76E_N001 <- TK Next Number Range 1
+        VA rpt_szF58RE76E_DCT <- TK Document Type
+        VA rpt_mnF58RE76E_SLN <- TK Seal Number
+        VA rpt_szF58RE76E_BSER <- TK Nota Fiscal Series
+        VA rpt_mnF58RE76E_UKID <- TK Unique Key ID (Internal)
+0007 //
+0008 If SV File_IO_Status is not equal to CO SUCCESS
+0009    //
+0010    // ==>> Seleciona com o Lote em Branco
+0011    VA rpt_szLoteEmBranco_LOTN = " "
+0012    F58RE76E.Select
+           BC Nota Fiscal Number =  TK Nota Fiscal Number
+           BC Line Number =  TK Line Number
+           BC Document (Order No, Invoice, etc.) =  TK Document (Order No, Invoice, etc.)
+           BC Document Type - Purchase Order =  TK Order Type
+           BC Order Company (Order Number) =  TK Order Company (Order Number)
+           VA rpt_szLoteEmBranco_LOTN =  TK Lot/Serial Number
+0013    F58RE76E.Fetch Next
+           VA rpt_mnF58RE76E_N001 <- TK Next Number Range 1
+           VA rpt_szF58RE76E_DCT <- TK Document Type
+           VA rpt_mnF58RE76E_SLN <- TK Seal Number
+           VA rpt_szF58RE76E_BSER <- TK Nota Fiscal Series
+           VA rpt_mnF58RE76E_UKID <- TK Unique Key ID (Internal)
+0014    //
+0015    If SV File_IO_Status is equal to CO SUCCESS
+0016       //
+0017       F58RE76E.Fetch Next
+              VA rpt_mnTempFCI_BNNF <- TK Nota Fiscal Number
+0018       //
+0019       If SV File_IO_Status is equal to CO SUCCESS
+0020          // Seta Warning que existe mais de uma linha sem lote
+0021       End If
+0022       //
+0023    Else
+0024       //
+0025       // Seta Warning que não foi encontrado registro na F58RE76E
+0026       //
+0027    End If
+0028    //
+0029    //
+0030 Else
+0031    //
+0032    F58RE76E.Fetch Next
+           VA rpt_mnTempFCI_BNNF <- TK Nota Fiscal Number
+0033    //
+0034    If SV File_IO_Status is equal to CO SUCCESS
+0035       // Seta Warning que existe mais de uma linha com lote
+0036    End If
+0037    //
+0038 End If
+0039 //
+0040 //
+0041 //
+0042 F58RE76H.Fetch Single
+        BC Nota Fiscal Number =  TK Nota Fiscal Number
+        VA rpt_mnF58RE76E_N001 =  TK Next Number Range 1
+        VA rpt_szF58RE76E_BSER =  TK Nota Fiscal Series
+        VA rpt_szF58RE76E_DCT =  TK Document Type
+        VA rpt_mnF58RE76E_UKID =  TK Unique Key ID (Internal)
+        VA rpt_mnF58RE76E_SLN =  TK Seal Number
+        VA rpt_szNumeroFCI_DESF <- TK Alpha Description - Foreign
+0043 //
+0044 FCI em NF de Entrada
+        BC Nota Fiscal Number -> mnNotaFiscalNumber_BNNF
+        BC Nota Fiscal Series -> szNotaFiscalSeries_BSER
+        BC Next Number Range 1 -> mnNextNumber001_N001
+        BC Document Type -> szDocumentType_DCT
+        BC Unique Key ID (Internal) -> mnUniqueKeyIDInternal_UKID
+        BC Item Number - Short -> mnIdentifierShortItem_ITM
+        BC Lot/Serial Number -> szLot_LOTN
+        BC Business Unit -> szCostCenter_MCU
+        VA rpt_szNumeroFCI_DESF -> szFCINumber_DESF
+        UNDEFINED X  mnPercentForeignCost_PE01
+        UNDEFINED X  mnAmountForeignCost_FEC
+        BC Item Origin -> cItemOrigin_BORI
+        UNDEFINED X  cF557613B_EV01
+        UNDEFINED X  cF557613B_EV02
+        UNDEFINED X  szF557613B_URCD
+        UNDEFINED X  jdF557613B_URDT
+        UNDEFINED X  mnF557613B_URAT
+        UNDEFINED X  mnF557613B_URAB
+        UNDEFINED X  szF557613B_URRF
+        UNDEFINED X  szF554108_LOT1
+        UNDEFINED X  szF554108_LOT2
+        UNDEFINED X  szF554108_LOT3
+        UNDEFINED X  szF554108_LRP1
+        UNDEFINED X  szF554108_LRP2
+        UNDEFINED X  szF554108_LRP3
+        UNDEFINED X  szF554108_VTEXT
+        UNDEFINED X  cF554108_EV01
+        UNDEFINED X  cF554108_EV02
+        UNDEFINED X  szF554108_URCD
+        UNDEFINED X  jdF554108_URDT
+        UNDEFINED X  mnUF554108_URAT
+        UNDEFINED X  mnF554108_URAB
+        UNDEFINED X  szF554108_URRF
+        VA rpt_cErrorCodeN557613B_ERRC <- cErrorCode_ERRC
+        UNDEFINED X  szErrorMessageId_DTAI
+        VA rpt_ProgramId_PID -> szProgramId_PID
+0045 //
+0046 If VA rpt_cErrorCodeN557613B_ERRC is not equal to <Zero>
+0047    //
+0048    // Tratamento de erros a ser definido
+0049    //
+0050 End If
+0051 //
+
+Thursday January 23, 2020  16:04
