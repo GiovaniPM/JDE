@@ -1,0 +1,14 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: D5576B05A DS Calculo consumo insumo BTI
+Type: BSFN Structure
+---------------------------------------------------------------------------------
+9     szBaseCalculo                       DL01         Input    Yes  
+1     mnQuantidadePorExemplar             QNTY         Input    Yes  
+2     mnQuantidadeChapas                  Z5576B03     Input    Yes  
+4     mnExemplaresEstragados              Z5576B10     Input    Yes  
+3     mnExemplaresTotal                   Z5576B09     Input    Yes  
+5     mnPaginasTintaPreta                 Z5576B05     Input    Yes  
+6     mnPaginasTintaColorida              Z5576B06     Input    Yes  
+7     mnPaginasSpot                       Z5576B08     Input    Yes  
+8     mnQuantidadeConsumida               UORG         Output   Yes  
+

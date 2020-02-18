@@ -1,0 +1,1801 @@
+﻿=============================================
+EVENTS
+=============================================
+UBE: R5576B04
+Event: Report Variables
+Event GUID: 0c3c226b-1d56-4550-a606-d86e272f09c3
+=============================================
+rpt_szLedgType_LEDG [LEDG]
+rpt_lGenericLong_GENLNG [GENLNG]
+rpt_szErro_DTAI [DTAI]
+rpt_szErroCusto_DTAI [DTAI]
+rpt_szErroConversion_DTAI [DTAI]
+rpt_szChave1_OBNM [OBNM]
+rpt_mnChave_TDAY [TDAY]
+rpt_szChave_DL011 [DL011]
+rpt_mnChave_AEXP [AEXP]
+rpt_mnChave_UORG [UORG]
+rpt_szChave2_OBNM [OBNM]
+rpt_szChave3_OBNM [OBNM]
+rpt_szChave_DRES [DRES]
+rpt_szChave4_OBNM [OBNM]
+rpt_szTitulo_EV01 [EV01]
+rpt_szTitulo_DL011 [DL011]
+rpt_szChave5_OBNM [OBNM]
+rpt_szLog_USER [USER]
+rpt_szLog_PID [PID]
+rpt_szLog_JOBN [JOBN]
+rpt_szLog_VL01 [VL01]
+rpt_jdLog_UPMJ [UPMJ]
+rpt_mnLog_UPMT [UPMT]
+rpt_cErroNoRelatorio_EDSP [EDSP]
+rpt_szChave6_OBNM [OBNM]
+rpt_szCompany_CO [CO]
+rpt_szGlCategory_GLPT [GLPT]
+rpt_szErroDMAAI4122_DTAI [DTAI]
+rpt_szErroDMAAI4124_DTAI [DTAI]
+rpt_szErroQuantidade_DTAI [DTAI]
+rpt_cChave_EV01 [EV01]
+rpt_mnChave_ICU [ICU]
+rpt_szChave_ICUT [ICUT]
+rpt_szChave_KCO [KCO]
+rpt_mnChave_DOC [DOC]
+rpt_szChave_DCT [DCT]
+rpt_mnLinha_EDOC [EDOC]
+rpt_jdLinha_TRDJ [TRDJ]
+rpt_szLinha_MMCU [MMCU]
+rpt_mnLinha_KIT [KIT]
+rpt_mnLinha_ITM [ITM]
+rpt_szLinha_Z5576B04 [Z5576B04]
+rpt_szLinha_Z5576B14 [Z5576B14]
+rpt_mnNN_ICU [ICU]
+rpt_mnUnitsTransactionQty_UORG [UORG]
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Produtos [5] 
+Event: Do Section
+Event GUID: 46612abc-8e96-45b0-b619-0a4ef29c27bb
+=============================================
+RV Custo = [RV Valor]/[RV Quantidade]
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Soma Entradas [4] 
+Event: Initialize Section
+Event GUID: 2a5f9250-18af-4610-bb7a-3399d9e6520a
+=============================================
+Set Selection Append Flag( <No>)
+! Set User Selection(BC J.D. EnterpriseOne Event Point 01 (F5576B21)(EV01),  <Equal To>, "A",  <And>)
+! Set User Selection(BC Caderno (F5576B21)(Z5576B14), <Equal To>, ":nf:", <And>)
+! Set User Selection(BC J.D. EnterpriseOne Event Point 01 (F5576B21)(EV01), <Equal To>, "W",  <Or>)
+! Set User Selection(BC Caderno (F5576B21)(Z5576B14), <Equal To>, ":nf:", <And>)
+Set User Selection(BC J.D. EnterpriseOne Event Point 01 (F5576B21)(EV01), <Equal To>, "T",  <And>)
+Set User Selection(BC Caderno (F5576B21)(Z5576B14), <Equal To>, ":nf:", <And>)
+
+=============================================
+Section: Soma Entradas [4] 
+Event: Do Section
+Event GUID: 197b6dfc-d8fd-4ee6-b1ca-e2dbf0072df5
+=============================================
+VA rpt_szChave_DL011 [DL011] = <NULL>
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Branch (F5576B21.0) [MMCU]])
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], "|")
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC 2nd Item Number (F5576B21.0) [LITM]])
+// rpt_szChave2_OBNM"R5576B04_N"PQ.  GRAFICO|PRODUTO
+F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave2_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+     VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_mnChave_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+     VA rpt_mnChave_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+If SV File_IO_Status is equal to CO SUCCESS
+     VA rpt_mnChave_AEXP [AEXP] = 0
+     VA rpt_mnChave_UORG [UORG] = [VA rpt_mnChave_UORG [UORG]]+[BC Units - Order/Transaction Quantity (F5576B21.0) [UORG]]
+     // rpt_szChave2_OBNM"R5576B04_N"PQ.  GRAFICO|PRODUTO
+     F55QUEUE.Update  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave2_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+          VA rpt_mnChave_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+          VA rpt_mnChave_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+Else
+     VA rpt_mnChave_AEXP [AEXP] = 0
+     VA rpt_mnChave_UORG [UORG] = [BC Units - Order/Transaction Quantity (F5576B21.0) [UORG]]
+     // rpt_szChave2_OBNM"R5576B04_N"PQ.  GRAFICO|PRODUTO
+     F55QUEUE.Insert  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave2_OBNM [OBNM] -> TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] -> TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] -> TK Description 11 [DL011]
+          VA rpt_mnChave_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+          VA rpt_mnChave_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+End If
+//
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Erro [3] 
+Event: Do Section
+Event GUID: d8a3753b-c52d-4d97-bf9b-824d02e89e6f
+=============================================
+VA rpt_cErroNoRelatorio_EDSP [EDSP] = "S"
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Page Header [2] 
+Event: After Last Object Printed
+Event GUID: 36fba109-f475-4897-9f7e-7412d79abc5f
+=============================================
+If VA rpt_szTitulo_EV01 [EV01] is equal to "1"
+     Do Custom Section(RS Titulo1)
+Else
+     RV Titulo1 = VA rpt_szTitulo_DL011 [DL011]
+     RV Titulo2 = "Quantidade"
+     RV Titulo3 = "Valor"
+     RV Titulo4 = "Custo"
+     Do Custom Section(RS Titulo2)
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: BSVW Manufatura BTI                                          [1] 
+Event: Initialize Section
+Event GUID: b3f00b4e-5cd5-46af-a772-214d536a19b1
+=============================================
+//
+If PO szCostCenter [MCU] is equal to <Blank>
+Or PO szCostCenter [MCU] is equal to <NULL>
+Or PO szCostCenter [MCU] is equal to "0"
+     PO szCostCenter [MCU] = "     MIPG004"
+End If
+//
+Set Selection Append Flag( <Yes>)
+Set User Selection(BC J.D. EnterpriseOne Event Point 01 (F5576B21)(EV01), <Equal To>, "A", <And>)
+Set User Selection(BC Supplemental Database Code (F00092)(SDB),  <Equal To>, "BTI",  <And>)
+Set User Selection(BC Type Data (F00092)(TYDT), <Equal To>, "CO", <And>)
+Set User Selection(BC Text Remark (F00092)(RMK3),  <Not Equal To>, <Blank>, <And>)
+Set User Selection(BC Text Remark (F00092)(RMK3), <Not Equal To>,  <Zero>, <And>)
+Set User Selection(BC Branch (F5576B21)(MMCU),  <Equal To>, PO szCostCenter, <And>)
+//
+Set User Selection(BC J.D. EnterpriseOne Event Point 01 (F5576B21)(EV01), <Equal To>, "W",  <Or>)
+Set User Selection(BC Supplemental Database Code (F00092)(SDB),  <Equal To>, "BTI",  <And>)
+Set User Selection(BC Type Data (F00092)(TYDT), <Equal To>, "CO", <And>)
+Set User Selection(BC Text Remark (F00092)(RMK3),  <Not Equal To>, <Blank>, <And>)
+Set User Selection(BC Text Remark (F00092)(RMK3), <Not Equal To>,  <Zero>, <And>)
+Set User Selection(BC Branch (F5576B21)(MMCU),  <Equal To>, PO szCostCenter, <And>)
+//
+GetAuditInfo(B9800100.GetAuditInfo)
+     VA rpt_szLog_USER [USER] <> szUserName [USER]
+     VA rpt_jdLog_UPMJ [UPMJ] <> jdDate [DTE]
+     VA rpt_mnLog_UPMT [UPMT] <> mnTime [TME0]
+     VA rpt_szLog_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+VA rpt_szLog_VL01 [VL01] = SL VersionName
+VA rpt_szLog_PID [PID] = "R5576B04"
+VA rpt_mnChave_TDAY [TDAY] = VA rpt_mnLog_UPMT [UPMT]
+VA rpt_szLedgType_LEDG [LEDG] = "02"
+VA rpt_cErroNoRelatorio_EDSP [EDSP] = "N"
+//
+// PQ.  GRAFICO|PRODUTO|C. DE CUSTO|CADERNO
+VA rpt_szChave1_OBNM [OBNM] = "R5576B04_V"
+// PQ.  GRAFICO|PRODUTO
+VA rpt_szChave2_OBNM [OBNM] = "R5576B04_N"
+// C. DE CUSTO|CADERNO
+VA rpt_szChave3_OBNM [OBNM] = "R5576B04_C"
+// PQ.  GRAFICO|INSUMO|UM|PRODUTO
+VA rpt_szChave4_OBNM [OBNM] = "R5576B04_I"
+// PQ.  GRAFICO|INSUMO|UM
+VA rpt_szChave5_OBNM [OBNM] = "R5576B04_B"
+// Lista de erros
+VA rpt_szChave6_OBNM [OBNM] = "Erro"
+//
+InitializePPATapi(B0100025.InitializePPATapi)
+     SL UserID -> szUserid [USER]
+     "1" -> cDoNotLogWarnings [EV01]
+     "1" -> cAllowUserIDToChange [EV02]
+     VA rpt_lGenericLong_GENLNG [GENLNG] <> idPPATworkField [GENLNG]
+//
+VA rpt_szTitulo_EV01 [EV01] = "1"
+//
+If PO szTipoDocumento [DCT] is equal to <Blank>
+Or PO szTipoDocumento [DCT] is equal to <NULL>
+Or PO szTipoDocumento [DCT] is equal to "0"
+     PO szTipoDocumento [DCT] = "II"
+End If
+//
+GetNextUniqueKeyID(X00022.GetNextUniqueKeyID)
+     "F5576B22" -> szObjectName [OBNM]
+     VA rpt_mnNN_ICU [ICU] <> mnUniqueKeyID [UKID]
+VA rpt_mnChave_ICU [ICU] = VA rpt_mnNN_ICU [ICU]
+VA rpt_szChave_ICUT [ICUT] = "T"
+VA rpt_cChave_EV01 [EV01] = "T"
+VA rpt_szChave_KCO [KCO] = <NULL>
+VA rpt_mnChave_DOC [DOC] = <NULL>
+VA rpt_szChave_DCT [DCT] = <NULL>
+//
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave2_OBNM [OBNM] = TK Object Name [OBNM]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave3_OBNM [OBNM] = TK Object Name [OBNM]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave4_OBNM [OBNM] = TK Object Name [OBNM]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave5_OBNM [OBNM] = TK Object Name [OBNM]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave6_OBNM [OBNM] = TK Object Name [OBNM]
+
+=============================================
+Section: BSVW Manufatura BTI                                          [1] 
+Event: Do Section
+Event GUID: 710a1b06-2f9c-41e3-b187-8775fa43c707
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szRelatedUnitOfMeasure_RUM [RUM]
+evt_mnConversionFactor_CONV [CONV]
+evt_szDataItem_DTAI [DTAI]
+evt_mnIdentifierShortItem_ITM [ITM]
+evt_mnAmountUnitCost_UNCS [UNCS]
+evt_cLinha_EV01 [EV01]
+----------------------------------------
+F4101.FetchSingle  [Index 2: 2nd Item Number]
+     VA evt_mnIdentifierShortItem_ITM [ITM] <- TK Item Number - Short [ITM]
+     BC 2nd Item Number (F5576B21.0) [LITM] = TK 2nd Item Number [LITM]
+     VA evt_szRelatedUnitOfMeasure_RUM [RUM] <- TK Unit of Measure - Primary [UOM1]
+     VA rpt_szGlCategory_GLPT [GLPT] <- TK Category - G/L [GLPT]
+RetrieveCompanyFromBusUnit(B0000130.RetrieveCompanyFromBusUnit)
+     BC Branch (F5576B21.0) [MMCU] -> szCostCenter [MCU0]
+     VA rpt_szCompany_CO [CO] <> szCompany [CO]
+//
+// Verifica se tem conversão de unidade de medida
+GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+     BC Branch (F5576B21.0) [MMCU] -> szBranchPlant [MCU]
+     BC Unit of Measure (F5576B21.0) [UM] -> szFromUnitOfMeasure [UOM]
+     VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szToUnitOfMeasure [RUM]
+     VA evt_mnConversionFactor_CONV [CONV] <> mnConversionFactorFrom_to_To [CONV]
+     VA rpt_szErroConversion_DTAI [DTAI] <> szErrorMessageID [DTAI]
+     VA evt_mnIdentifierShortItem_ITM [ITM] -> mnShortItemNumber [ITM]
+If VA rpt_szErroConversion_DTAI [DTAI] is not equal to <Blank>
+And VA rpt_szErroConversion_DTAI [DTAI] is not equal to <NULL>
+And VA rpt_szErroConversion_DTAI [DTAI] is not equal to "0"
+     Set UBE Error("46L7")
+     SetLevelItemBranchError(BLM77701.SetLevelItemBranchError)
+          VA rpt_lGenericLong_GENLNG [GENLNG] -> idGenericLong [GENLNG]
+          VA evt_mnIdentifierShortItem_ITM [ITM] -> mnIdentifierShortItem [ITM]
+          BC Branch (F5576B21.0) [MMCU] -> szCostCenter [MCU]
+     ProcessErrorsToPPAT(B0100011.ProcessErrorsToPPAT)
+          "2" -> mnLeveloftotaling [LTOT]
+          VA rpt_lGenericLong_GENLNG [GENLNG] -> idDataBaseWorkField [GENLNG]
+          SL UserID -> szUserid [USER]
+End If
+//
+// Verifica se tem o custo médio cadastrado
+F4105.Select  [Index 1: Item No,Branch, +A]
+     VA evt_mnIdentifierShortItem_ITM [ITM] = TK Item Number - Short [ITM]
+     BC Branch (F5576B21.0) [MMCU] = TK Business Unit [MCU]
+     VA rpt_szLedgType_LEDG [LEDG] = TK Cost Method [LEDG]
+F4105.FetchNext  [Index 1: Item No,Branch, +A]
+     VA evt_mnAmountUnitCost_UNCS [UNCS] <- TK Amount - Unit Cost [UNCS]
+If SV File_IO_Status is equal to CO SUCCESS
+And VA evt_mnAmountUnitCost_UNCS [UNCS] is not equal to "0"
+     RV Unit Cost [UNCS] = [VA evt_mnAmountUnitCost_UNCS [UNCS]]*[VA evt_mnConversionFactor_CONV [CONV]]
+     RV Extended Price [AEXP] = [BC Units - Order/Transaction Quantity (F5576B21.0) [UORG]]*[RV Unit Cost [UNCS]]
+Else
+     VA rpt_szErroCusto_DTAI [DTAI] = "096J"
+     Set UBE Error("096J")
+     SetLevelItemBranchError(BLM77701.SetLevelItemBranchError)
+          VA rpt_lGenericLong_GENLNG [GENLNG] -> idGenericLong [GENLNG]
+          VA evt_mnIdentifierShortItem_ITM [ITM] -> mnIdentifierShortItem [ITM]
+          BC Branch (F5576B21.0) [MMCU] -> szCostCenter [MCU]
+     ProcessErrorsToPPAT(B0100011.ProcessErrorsToPPAT)
+          "2" -> mnLeveloftotaling [LTOT]
+          VA rpt_lGenericLong_GENLNG [GENLNG] -> idDataBaseWorkField [GENLNG]
+          SL UserID -> szUserid [USER]
+End If
+//
+// Verifica se existe DMAAI 4122 para este lançamento
+RetrieveDistAAIwF4095Cache(B4000351.RetrieveDistAAIwF4095Cache)
+     "4122" -> mnAAITableNumber [ANUM]
+     VA rpt_szCompany_CO [CO] -> szCompanyNumber [CO]
+     PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+     VA rpt_szGlCategory_GLPT [GLPT] -> szGLCategory [GLPT]
+     BC Business Unit (F00092.0) [MCU] -> szBranchPlant [MCU]
+     VA rpt_szErroDMAAI4122_DTAI [DTAI] <> szErrorMessageID [DTAI]
+If SV Error_Status is equal to CO ERROR
+     Set UBE Error("031T")
+     SetLevelItemBranchError(BLM77701.SetLevelItemBranchError)
+          VA rpt_lGenericLong_GENLNG [GENLNG] -> idGenericLong [GENLNG]
+          VA evt_mnIdentifierShortItem_ITM [ITM] -> mnIdentifierShortItem [ITM]
+          BC Branch (F5576B21.0) [MMCU] -> szCostCenter [MCU]
+     ProcessErrorsToPPAT(B0100011.ProcessErrorsToPPAT)
+          "2" -> mnLeveloftotaling [LTOT]
+          VA rpt_lGenericLong_GENLNG [GENLNG] -> idDataBaseWorkField [GENLNG]
+          SL UserID -> szUserid [USER]
+End If
+//
+// Verifica se existe DMAAI 4124 para este lançamento
+If PO szAcctNoInputMode [ANI] is equal to <Blank>
+Or PO szAcctNoInputMode [ANI] is equal to <NULL>
+Or PO szAcctNoInputMode [ANI] is equal to "0"
+     RetrieveDistAAIwF4095Cache(B4000351.RetrieveDistAAIwF4095Cache)
+          "4124" -> mnAAITableNumber [ANUM]
+          VA rpt_szCompany_CO [CO] -> szCompanyNumber [CO]
+          PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+          VA rpt_szGlCategory_GLPT [GLPT] -> szGLCategory [GLPT]
+          BC Business Unit (F00092.0) [MCU] -> szBranchPlant [MCU]
+          VA rpt_szErroDMAAI4124_DTAI [DTAI] <> szErrorMessageID [DTAI]
+     If SV Error_Status is equal to CO ERROR
+          Set UBE Error("031T")
+          SetLevelItemBranchError(BLM77701.SetLevelItemBranchError)
+               VA rpt_lGenericLong_GENLNG [GENLNG] -> idGenericLong [GENLNG]
+               VA evt_mnIdentifierShortItem_ITM [ITM] -> mnIdentifierShortItem [ITM]
+               BC Branch (F5576B21.0) [MMCU] -> szCostCenter [MCU]
+          ProcessErrorsToPPAT(B0100011.ProcessErrorsToPPAT)
+               "2" -> mnLeveloftotaling [LTOT]
+               VA rpt_lGenericLong_GENLNG [GENLNG] -> idDataBaseWorkField [GENLNG]
+               SL UserID -> szUserid [USER]
+     End If
+End If
+//
+VA rpt_szChave_DL011 [DL011] = <NULL>
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Branch (F5576B21.0) [MMCU]])
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], "|")
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Text Remark (F00092.0) [RMK3]])
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], "|")
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Centro de Custo (F5576B21.0) [Z5576B04]])
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], "|")
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Caderno (F5576B21.0) [Z5576B14]])
+// rpt_szChave1_OBNM"R5576B04_V"PQ.  GRAFICO|PRODUTO|C. DE CUSTO|CADERNO
+F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+     VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_mnChave_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+     VA rpt_mnChave_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+If SV File_IO_Status is equal to CO SUCCESS
+     VA rpt_mnChave_UORG [UORG] = 0
+     VA rpt_mnChave_AEXP [AEXP] = [VA rpt_mnChave_AEXP [AEXP]]+([RV Extended Price [AEXP]]*-1)
+     // rpt_szChave1_OBNM"R5576B04_V"PQ.  GRAFICO|PRODUTO|C. DE CUSTO|CADERNO
+     F55QUEUE.Update  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+          VA rpt_mnChave_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+          VA rpt_mnChave_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+Else
+     VA rpt_mnChave_UORG [UORG] = 0
+     VA rpt_mnChave_AEXP [AEXP] = [RV Extended Price [AEXP]]*-1
+     // rpt_szChave1_OBNM"R5576B04_V"PQ.  GRAFICO|PRODUTO|C. DE CUSTO|CADERNO
+     F55QUEUE.Insert  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave1_OBNM [OBNM] -> TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] -> TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] -> TK Description 11 [DL011]
+          VA rpt_mnChave_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+          VA rpt_mnChave_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+End If
+//
+VA rpt_szChave_DL011 [DL011] = <NULL>
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Centro de Custo (F5576B21.0) [Z5576B04]])
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], "|")
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Caderno (F5576B21.0) [Z5576B14]])
+// rpt_szChave3_OBNM"R5576B04_C"C. DE CUSTO|CADERNO
+F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave3_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+     VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_mnChave_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+     VA rpt_mnChave_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+If SV File_IO_Status is equal to CO SUCCESS
+     VA rpt_szChave_DRES [DRES] = <NULL>
+     VA rpt_mnChave_UORG [UORG] = 0
+     VA rpt_mnChave_AEXP [AEXP] = 0
+     // rpt_szChave3_OBNM"R5576B04_C"C. DE CUSTO|CADERNO
+     F55QUEUE.Update  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave3_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+          VA rpt_szChave_DRES [DRES] -> TK Filler da Transm. Bancaria [DRES]
+          VA rpt_mnChave_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+          VA rpt_mnChave_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+Else
+     VA rpt_szChave_DRES [DRES] = <NULL>
+     VA rpt_mnChave_UORG [UORG] = 0
+     VA rpt_mnChave_AEXP [AEXP] = 0
+     // rpt_szChave3_OBNM"R5576B04_C"C. DE CUSTO|CADERNO
+     F55QUEUE.Insert  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave3_OBNM [OBNM] -> TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] -> TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] -> TK Description 11 [DL011]
+          VA rpt_szChave_DRES [DRES] -> TK Filler da Transm. Bancaria [DRES]
+          VA rpt_mnChave_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+          VA rpt_mnChave_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+End If
+//
+VA rpt_szChave_DL011 [DL011] = <NULL>
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Branch (F5576B21.0) [MMCU]])
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], "|")
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC 2nd Item Number (F5576B21.0) [LITM]])
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], "|")
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Unit of Measure (F5576B21.0) [UM]])
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], "|")
+VA rpt_szChave_DL011 [DL011] = concat([VA rpt_szChave_DL011 [DL011]], [BC Text Remark (F00092.0) [RMK3]])
+// rpt_szChave4_OBNM"R5576B04_I"PQ.  GRAFICO|INSUMO|UM|PRODUTO
+F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave4_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+     VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_mnChave_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+     VA rpt_mnChave_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+If SV File_IO_Status is equal to CO SUCCESS
+     VA rpt_mnChave_UORG [UORG] = [VA rpt_mnChave_UORG [UORG]]+[BC Units - Order/Transaction Quantity (F5576B21.0) [UORG]]
+     VA rpt_mnChave_AEXP [AEXP] = [VA rpt_mnChave_AEXP [AEXP]]+[RV Extended Price [AEXP]]
+     // rpt_szChave4_OBNM"R5576B04_I"PQ.  GRAFICO|INSUMO|UM|PRODUTO
+     F55QUEUE.Update  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave4_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+          VA rpt_mnChave_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+          VA rpt_mnChave_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+Else
+     VA rpt_mnChave_UORG [UORG] = [BC Units - Order/Transaction Quantity (F5576B21.0) [UORG]]
+     VA rpt_mnChave_AEXP [AEXP] = [RV Extended Price [AEXP]]
+     // rpt_szChave4_OBNM"R5576B04_I"PQ.  GRAFICO|INSUMO|UM|PRODUTO
+     F55QUEUE.Insert  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave4_OBNM [OBNM] -> TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] -> TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] -> TK Description 11 [DL011]
+          VA rpt_mnChave_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+          VA rpt_mnChave_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+End If
+//
+If PO cModoRelatorio [EV01] is equal to "1"
+     F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          BC EDI - Document Number (F5576B21.0) [EDOC] = TK EDI - Document Number [EDOC]
+          VA rpt_cChave_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+          BC Date - Order/Transaction (F5576B21.0) [TRDJ] = TK Date - Order/Transaction [TRDJ]
+          BC Branch (F5576B21.0) [MMCU] = TK Branch [MMCU]
+          BC Parent (short) Item Number (F5576B21.0) [KIT] = TK Parent (short) Item Number [KIT]
+          BC Item Number - Short (F5576B21.0) [ITM] = TK Item Number - Short [ITM]
+          BC Centro de Custo (F5576B21.0) [Z5576B04] = TK Centro de Custo [Z5576B04]
+          BC Caderno (F5576B21.0) [Z5576B14] = TK Caderno [Z5576B14]
+          VA rpt_mnChave_ICU [ICU] -> TK Batch Number [ICU]
+          VA rpt_szChave_ICUT [ICUT] -> TK Batch Type [ICUT]
+          VA rpt_szChave_KCO [KCO] -> TK Document Company [KCO]
+          VA rpt_mnChave_DOC [DOC] -> TK Document (Voucher, Invoice, etc.) [DOC]
+          VA rpt_szChave_DCT [DCT] -> TK Document Type [DCT]
+     //
+     VA rpt_szLinha_Z5576B04 [Z5576B04] = ":total:"
+     VA rpt_szLinha_Z5576B14 [Z5576B14] = ":total:"
+     F5576B21.Select  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          BC EDI - Document Number (F5576B21.0) [EDOC] = TK EDI - Document Number [EDOC]
+          BC Date - Order/Transaction (F5576B21.0) [TRDJ] = TK Date - Order/Transaction [TRDJ]
+          BC Branch (F5576B21.0) [MMCU] = TK Branch [MMCU]
+          BC Item Number - Short (F5576B21.0) [ITM] = TK Item Number - Short [ITM]
+          VA rpt_szLinha_Z5576B04 [Z5576B04] = TK Centro de Custo [Z5576B04]
+          VA rpt_szLinha_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+     F5576B21.FetchNext  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          VA evt_cLinha_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+          VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+          VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+     While SV File_IO_Status is equal to CO SUCCESS
+          If VA evt_cLinha_EV01 [EV01] is equal to ("A","W")
+               F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+                    BC EDI - Document Number (F5576B21.0) [EDOC] = TK EDI - Document Number [EDOC]
+                    VA rpt_cChave_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+                    BC Date - Order/Transaction (F5576B21.0) [TRDJ] = TK Date - Order/Transaction [TRDJ]
+                    BC Branch (F5576B21.0) [MMCU] = TK Branch [MMCU]
+                    VA rpt_mnLinha_KIT [KIT] = TK Parent (short) Item Number [KIT]
+                    VA rpt_mnLinha_ITM [ITM] = TK Item Number - Short [ITM]
+                    VA rpt_szLinha_Z5576B04 [Z5576B04] = TK Centro de Custo [Z5576B04]
+                    VA rpt_szLinha_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+                    VA rpt_mnChave_ICU [ICU] -> TK Batch Number [ICU]
+                    VA rpt_szChave_ICUT [ICUT] -> TK Batch Type [ICUT]
+                    VA rpt_szChave_KCO [KCO] -> TK Document Company [KCO]
+                    VA rpt_mnChave_DOC [DOC] -> TK Document (Voucher, Invoice, etc.) [DOC]
+                    VA rpt_szChave_DCT [DCT] -> TK Document Type [DCT]
+          End If
+          F5576B21.FetchNext  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+               VA evt_cLinha_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+               VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+               VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+     End While
+     //
+     VA rpt_szLinha_Z5576B04 [Z5576B04] = ":nf:"
+     VA rpt_szLinha_Z5576B14 [Z5576B14] = ":nf:"
+     F5576B21.Select  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          BC EDI - Document Number (F5576B21.0) [EDOC] = TK EDI - Document Number [EDOC]
+          BC Date - Order/Transaction (F5576B21.0) [TRDJ] = TK Date - Order/Transaction [TRDJ]
+          BC Branch (F5576B21.0) [MMCU] = TK Branch [MMCU]
+          VA rpt_szLinha_Z5576B04 [Z5576B04] = TK Centro de Custo [Z5576B04]
+          VA rpt_szLinha_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+     F5576B21.FetchNext  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          VA evt_cLinha_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+          VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+          VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+     While SV File_IO_Status is equal to CO SUCCESS
+          If VA evt_cLinha_EV01 [EV01] is equal to ("A","W")
+               F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+                    BC EDI - Document Number (F5576B21.0) [EDOC] = TK EDI - Document Number [EDOC]
+                    VA rpt_cChave_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+                    BC Date - Order/Transaction (F5576B21.0) [TRDJ] = TK Date - Order/Transaction [TRDJ]
+                    BC Branch (F5576B21.0) [MMCU] = TK Branch [MMCU]
+                    VA rpt_mnLinha_KIT [KIT] = TK Parent (short) Item Number [KIT]
+                    VA rpt_mnLinha_ITM [ITM] = TK Item Number - Short [ITM]
+                    VA rpt_szLinha_Z5576B04 [Z5576B04] = TK Centro de Custo [Z5576B04]
+                    VA rpt_szLinha_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+                    VA rpt_mnChave_ICU [ICU] -> TK Batch Number [ICU]
+                    VA rpt_szChave_ICUT [ICUT] -> TK Batch Type [ICUT]
+                    VA rpt_szChave_KCO [KCO] -> TK Document Company [KCO]
+                    VA rpt_mnChave_DOC [DOC] -> TK Document (Voucher, Invoice, etc.) [DOC]
+                    VA rpt_szChave_DCT [DCT] -> TK Document Type [DCT]
+          End If
+          F5576B21.FetchNext  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+               VA evt_cLinha_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+               VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+               VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+     End While
+End If
+
+=============================================
+Section: BSVW Manufatura BTI                                          [1] 
+Event: End Section
+Event GUID: 4cff4561-c4ae-4e8b-8302-d4fa772d5d5e
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szR5576B04_N_DL011 [DL011]
+evt_szR5576B04_C_DL011 [DL011]
+evt_mnUniqueKeyIDInternal_UKID [UKID]
+evt_szDataField1_DTA1 [DTA1]
+evt_mnUnitsTransactionQ_UORG [UORG]
+evt_mnAmountExtendedPrice_AEXP [AEXP]
+evt_mnAntes_UORG [UORG]
+evt_mnAntes_AEXP [AEXP]
+evt_szR5576B04_B_DL011 [DL011]
+evt_szDescriptionLine1_DSC1 [DSC1]
+evt_szIdentifier2ndItem_LITM [LITM]
+evt_mnUnitOfMeasurePrimar_UOM1 [UOM1]
+evt_szRelatedUnitOfMeasure_RUM [RUM]
+evt_mnIdentifierShortItem_ITM [ITM]
+evt_szCostCenter_MCU [MCU]
+evt_cEverestEventPoint01_EV01 [EV01]
+evt_mnQuantityAvailable_QAVAL [QAVAL]
+evt_mnConversionFactor_CONV [CONV]
+evt_mnNumeroLote_ICU [ICU]
+evt_mnDocVoucherInvoiceE_DOC [DOC]
+evt_szTipoLote_ICUT [ICUT]
+evt_szStatusLote_IST [IST]
+evt_szLoteAprovado_IAPP [IAPP]
+evt_szPostOutOfBalance_POB [POB]
+evt_szCurrencyCodeFrom_CRCD [CRCD]
+evt_PO_cAllowQtyOverAvailable [EV05]
+evt_PO_cAllowHeldLots [EV06]
+evt_PO_cSummaryMode [EV03]
+evt_PO_OutInteroperabilityType [TYTN]
+evt_FC_OrderDate [TRDJ]
+evt_szCompany_CO [CO]
+evt_FC_Branch [MMCU]
+evt_szWorkStationId_JOBN [JOBN]
+evt_FC_dicjBatchDate [DICJ]
+evt_mnJournalEntryLineNo_JELN [JELN]
+evt_jdDateForGLandVoucherJ_DGJ [DGJ]
+evt_jdDateTransactionJuli_TRDJ [TRDJ]
+evt_szFromTo_FRTO [FRTO]
+evt_ev06RcdWritten [EV06]
+evt_lnidLineNumber [LNID]
+evt_FC_GFC_GLDate [DGJ]
+evt_szExplicacao_EXA [EXA]
+evt_FC_PrevLineNo [LNID]
+evt_FC_LastJELinE [JELN]
+evt_PO_cEntera1todefaultfrompr [EV01]
+evt_FC_EV01Batchstat [EV01]
+evt_itmShortItemNo [ITM]
+evt_Location [LOCN]
+evt_LocationFile [LOCN]
+evt_UnitCost [UNCS]
+evt_mnTransactioProcess_MATH01 [MATH01]
+evt_FC_jobsJobNoF0911 [JOBS]
+evt_FC_kcoDocKeyComp [KCO]
+evt_STKTStockingType [STKT]
+evt_FC_JOBSInvJobNumber [JOBS]
+evt_ev09CostEntered [EV09]
+evt_WMSLine [MATH05]
+evt_GLMBFVersion_VER [VER]
+evt_FC_GLDate [DGJ]
+evt_mnAmountUnitCost_UNCS [UNCS]
+evt_mnNumeroDocumento_DOC [DOC]
+evt_mnUniqueKeyIDF41021WF_UKID [UKID]
+evt_szProgramId_PID [PID]
+evt_szTipo_FUAN1 [FUAN1]
+evt_cPrimaryBinPS_PBIN [PBIN]
+evt_cUpdateQuantityOnHand_EV01 [EV01]
+evt_cErrorConditions_EV01 [EV01]
+evt_mnLastJELineNumber [JELN]
+evt_cAllowQtyOverAvailabl_EV01 [EV01]
+evt_jdBatchDate_DGL [DGL]
+evt_szF4111_AID [AID]
+evt_szF4111_MCUZ [MCUZ]
+evt_szF4111_OBJ [OBJ]
+evt_szF4111_SUB [SUB]
+evt_mnLinha_UKID [UKID]
+evt_szTransactionReferenc_TREF [TREF]
+evt_szCentroCusto_Z5576B04 [Z5576B04]
+evt_szCaderno_Z5576B14 [Z5576B14]
+evt_mnChave_ITM [ITM]
+----------------------------------------
+Do Custom Section(RS Soma Entradas)
+//
+// Totaliza quantidade por centro de custo e caderno
+// rpt_szChave1_OBNM"R5576B04_V"PQ.  GRAFICO|PRODUTO|C. DE CUSTO|CADERNO
+V55QUEUE.Select
+     VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+V55QUEUE.FetchNext
+     VA rpt_szChave_DL011 [DL011] <- TK Description 11 [DL011][F55QUEUE.0]
+     VA evt_mnAmountExtendedPrice_AEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     VA evt_szR5576B04_N_DL011 [DL011] = <NULL>
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 0
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], "|")
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 1
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     //
+     VA evt_szR5576B04_C_DL011 [DL011] = <NULL>
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 2
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_C_DL011 [DL011] = concat([VA evt_szR5576B04_C_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     VA evt_szR5576B04_C_DL011 [DL011] = concat([VA evt_szR5576B04_C_DL011 [DL011]], "|")
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 3
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_C_DL011 [DL011] = concat([VA evt_szR5576B04_C_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     //
+     // rpt_szChave2_OBNM"R5576B04_N"PQ.  GRAFICO|PRODUTO
+     F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave2_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA evt_szR5576B04_N_DL011 [DL011] = TK Description 11 [DL011]
+     F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+          VA evt_mnUnitsTransactionQ_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+     // rpt_szChave3_OBNM"R5576B04_C"C. DE CUSTO|CADERNO
+     F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave3_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA evt_szR5576B04_C_DL011 [DL011] = TK Description 11 [DL011]
+     F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+          VA evt_mnAntes_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+     // rpt_szChave1_OBNM"R5576B04_V"PQ.  GRAFICO|PRODUTO|C. DE CUSTO|CADERNO
+     F55QUEUE.Update  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+          VA evt_mnUnitsTransactionQ_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+     VA evt_mnUnitsTransactionQ_UORG [UORG] = [VA evt_mnAntes_UORG [UORG]]+[VA evt_mnUnitsTransactionQ_UORG [UORG]]
+     // rpt_szChave3_OBNM"R5576B04_C"C. DE CUSTO|CADERNO
+     F55QUEUE.Update  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave3_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA evt_szR5576B04_C_DL011 [DL011] = TK Description 11 [DL011]
+          VA evt_mnUnitsTransactionQ_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+          VA evt_mnAmountExtendedPrice_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+     //
+     V55QUEUE.FetchNext
+          VA rpt_szChave_DL011 [DL011] <- TK Description 11 [DL011][F55QUEUE.0]
+          VA evt_mnAmountExtendedPrice_AEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+End While
+//
+// Totaliza valor por produto/centro de custo/caderno
+// rpt_szChave1_OBNM"R5576B04_V"PQ.  GRAFICO|PRODUTO|C. DE CUSTO|CADERNO
+V55QUEUE.Select
+     VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+V55QUEUE.FetchNext
+     VA rpt_szChave_DL011 [DL011] <- TK Description 11 [DL011][F55QUEUE.0]
+     VA evt_mnAntes_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+     VA evt_mnAntes_AEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     VA evt_szR5576B04_C_DL011 [DL011] = <NULL>
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 2
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_C_DL011 [DL011] = concat([VA evt_szR5576B04_C_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     VA evt_szR5576B04_C_DL011 [DL011] = concat([VA evt_szR5576B04_C_DL011 [DL011]], "|")
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 3
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_C_DL011 [DL011] = concat([VA evt_szR5576B04_C_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     //
+     // rpt_szChave3_OBNM"R5576B04_C"C. DE CUSTO|CADERNO
+     F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave3_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA evt_szR5576B04_C_DL011 [DL011] = TK Description 11 [DL011]
+     F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+          VA evt_mnUnitsTransactionQ_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+          VA evt_mnAmountExtendedPrice_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+     VA evt_mnAntes_AEXP [AEXP] = ([VA evt_mnAntes_UORG [UORG]]/[VA evt_mnUnitsTransactionQ_UORG [UORG]])*[VA evt_mnAntes_AEXP [AEXP]]
+     // rpt_szChave1_OBNM"R5576B04_V"PQ.  GRAFICO|PRODUTO|C. DE CUSTO|CADERNO
+     F55QUEUE.Update  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA rpt_szChave_DL011 [DL011] = TK Description 11 [DL011]
+          VA evt_mnAntes_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+     //
+     V55QUEUE.FetchNext
+          VA rpt_szChave_DL011 [DL011] <- TK Description 11 [DL011][F55QUEUE.0]
+          VA evt_mnAntes_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+          VA evt_mnAntes_AEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+End While
+//
+// Totaliza valor por NF
+// rpt_szChave1_OBNM"R5576B04_V"PQ.  GRAFICO|PRODUTO|C. DE CUSTO|CADERNO
+V55QUEUE.Select
+     VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+V55QUEUE.FetchNext
+     VA rpt_szChave_DL011 [DL011] <- TK Description 11 [DL011][F55QUEUE.0]
+     VA evt_mnAmountExtendedPrice_AEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     VA evt_szR5576B04_N_DL011 [DL011] = <NULL>
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 0
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], "|")
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 1
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     //
+     // rpt_szChave2_OBNM"R5576B04_N"PQ.  GRAFICO|PRODUTO
+     F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave2_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA evt_szR5576B04_N_DL011 [DL011] = TK Description 11 [DL011]
+     F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+          VA evt_mnAntes_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+     VA evt_mnAmountExtendedPrice_AEXP [AEXP] = [VA evt_mnAntes_AEXP [AEXP]]+[VA evt_mnAmountExtendedPrice_AEXP [AEXP]]
+     // rpt_szChave2_OBNM"R5576B04_N"PQ.  GRAFICO|PRODUTO
+     F55QUEUE.Update  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave2_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA evt_szR5576B04_N_DL011 [DL011] = TK Description 11 [DL011]
+          VA evt_mnAmountExtendedPrice_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+     //
+     V55QUEUE.FetchNext
+          VA rpt_szChave_DL011 [DL011] <- TK Description 11 [DL011][F55QUEUE.0]
+          VA evt_mnAmountExtendedPrice_AEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+End While
+//
+// Totalizo valor das baixas
+// rpt_szChave4_OBNM"R5576B04_I"PQ.  GRAFICO|INSUMO|UM|PRODUTO
+V55QUEUE.Select
+     VA rpt_szChave4_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+V55QUEUE.FetchNext
+     VA rpt_szChave_DL011 [DL011] <- TK Description 11 [DL011][F55QUEUE.0]
+     VA rpt_mnChave_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+     VA rpt_mnChave_AEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     VA evt_szR5576B04_N_DL011 [DL011] = <NULL>
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 0
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], "|")
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 1
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], "|")
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 2
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          VA rpt_szChave_DL011 [DL011] -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_szR5576B04_N_DL011 [DL011] = concat([VA evt_szR5576B04_N_DL011 [DL011]], [VA evt_szDataField1_DTA1 [DTA1]])
+     //
+     // rpt_szChave5_OBNM"R5576B04_B"PQ.  GRAFICO|INSUMO|UM
+     F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szChave5_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+          VA evt_szR5576B04_N_DL011 [DL011] = TK Description 11 [DL011]
+     F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+          VA evt_mnAntes_AEXP [AEXP] <- TK Amount - Extended Price [AEXP]
+     If SV File_IO_Status is not equal to CO SUCCESS
+          // rpt_szChave5_OBNM"R5576B04_B"PQ.  GRAFICO|INSUMO|UM
+          F55QUEUE.Insert  [Index 1: OBNM, TDAY, DL011]
+               VA rpt_szChave5_OBNM [OBNM] -> TK Object Name [OBNM]
+               VA rpt_mnChave_TDAY [TDAY] -> TK Time of Day [TDAY]
+               VA evt_szR5576B04_N_DL011 [DL011] -> TK Description 11 [DL011]
+               VA rpt_mnChave_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+               VA rpt_mnChave_AEXP [AEXP] -> TK Amount - Extended Price [AEXP]
+     End If
+     //
+     V55QUEUE.FetchNext
+          VA rpt_szChave_DL011 [DL011] <- TK Description 11 [DL011][F55QUEUE.0]
+          VA rpt_mnChave_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+          VA rpt_mnChave_AEXP [AEXP] <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+End While
+//
+VA rpt_szTitulo_EV01 [EV01] = "2"
+//
+// Listo as baixas
+VA rpt_szTitulo_DL011 [DL011] = "PQ.  GRAFICO|INSUMO                   |UM"
+Do Custom Section(RS Quebra)
+V55QUEUE.Select
+     VA rpt_szChave5_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+V55QUEUE.FetchNext
+     RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+     RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+     RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 0
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szCostCenter_MCU [MCU] <- szConteudo_CNLS [CNLS]
+          RV Linha -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 1
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szIdentifier2ndItem_LITM [LITM] <- szConteudo_CNLS [CNLS]
+          RV Linha -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 2
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szRelatedUnitOfMeasure_RUM [RUM] <- szConteudo_CNLS [CNLS]
+          RV Linha -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     F4101.Select  [Index 2: 2nd Item Number]
+          VA evt_szIdentifier2ndItem_LITM [LITM] = TK 2nd Item Number [LITM]
+     F4101.FetchNext  [Index 1: Item Master]
+          VA evt_mnIdentifierShortItem_ITM [ITM] <- TK Item Number - Short [ITM]
+          VA evt_szDescriptionLine1_DSC1 [DSC1] <- TK Description [DSC1]
+          VA evt_mnUnitOfMeasurePrimar_UOM1 [UOM1] <- TK Unit of Measure - Primary [UOM1]
+     ItemAvailability(BCW07.ItemAvailability)
+          VA evt_mnIdentifierShortItem_ITM [ITM] -> mnShortItemNumber [ITM]
+          VA evt_szCostCenter_MCU [MCU] -> szBranchPlant [MCU]
+          VA evt_cEverestEventPoint01_EV01 [EV01] <> cReturnCode [EV01]
+          VA evt_mnQuantityAvailable_QAVAL [QAVAL] <- mnTotQtyAvailable [QAVAL]
+     GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+          VA evt_szCostCenter_MCU [MCU] -> szBranchPlant [MCU]
+          VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szFromUnitOfMeasure [UOM]
+          VA evt_mnUnitOfMeasurePrimar_UOM1 [UOM1] -> szToUnitOfMeasure [RUM]
+          VA evt_mnConversionFactor_CONV [CONV] <> mnConversionFactorFrom_to_To [CONV]
+          VA evt_mnIdentifierShortItem_ITM [ITM] -> mnShortItemNumber [ITM]
+     VA evt_mnUnitsTransactionQ_UORG [UORG] = ([RV Quantidade]*[VA evt_mnConversionFactor_CONV [CONV]])*-1
+     RV Linha = rtrim([RV Linha], <Blank>)
+     RV Linha = concat([RV Linha], " (")
+     RV Linha = concat([RV Linha], [VA evt_szDescriptionLine1_DSC1 [DSC1]])
+     RV Linha = concat([RV Linha], ")")
+     Do Custom Section(RS Produtos)
+     //
+     // Verifico se tem quantidade para baixar, totalizado os itens
+     If PO cEstoqueNegativo [EV01] is not equal to "1"
+          If VA evt_mnQuantityAvailable_QAVAL [QAVAL] is less than VA evt_mnUnitsTransactionQ_UORG [UORG]
+               VA rpt_szErroQuantidade_DTAI [DTAI] = "CW0034"
+               Set UBE Error("CW0034")
+               SetLevelItemBranchError(BLM77701.SetLevelItemBranchError)
+                    VA rpt_lGenericLong_GENLNG [GENLNG] -> idGenericLong [GENLNG]
+                    VA evt_mnIdentifierShortItem_ITM [ITM] -> mnIdentifierShortItem [ITM]
+                    VA evt_szCostCenter_MCU [MCU] -> szCostCenter [MCU]
+               ProcessErrorsToPPAT(B0100011.ProcessErrorsToPPAT)
+                    "2" -> mnLeveloftotaling [LTOT]
+                    VA rpt_lGenericLong_GENLNG [GENLNG] -> idDataBaseWorkField [GENLNG]
+                    SL UserID -> szUserid [USER]
+               GetDDErrorDescription(B1800320.GetDDErrorDescription)
+                    VA rpt_szErroQuantidade_DTAI [DTAI] -> szDataItem [DTAI]
+                    RV MensagemErro <> szDescriptionAlpha [DSCA]
+               Do Custom Section(RS Erro)
+          End If
+     End If
+     //
+     V55QUEUE.FetchNext
+          RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+          RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+          RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+End While
+//
+// Listo por produto/centro de custo e caderno
+VA rpt_szTitulo_DL011 [DL011] = "PQ.  GRAFICO|PRODUTO                                           | C. DE CUSTO|CADERNO"
+Do Custom Section(RS Quebra)
+V55QUEUE.Select
+     VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+V55QUEUE.FetchNext
+     RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+     RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+     RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     Do Custom Section(RS Produtos)
+     V55QUEUE.FetchNext
+          RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+          RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+          RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+End While
+//
+// Listo por centro de custo e caderno
+VA rpt_szTitulo_DL011 [DL011] = " C. DE CUSTO|CADERNO"
+Do Custom Section(RS Quebra)
+V55QUEUE.Select
+     VA rpt_szChave3_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+V55QUEUE.FetchNext
+     RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+     RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+     RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     Do Custom Section(RS Produtos)
+     V55QUEUE.FetchNext
+          RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+          RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+          RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+End While
+//
+// Listo por produto
+VA rpt_szTitulo_DL011 [DL011] = "PQ.  GRAFICO|PRODUTO"
+Do Custom Section(RS Quebra)
+V55QUEUE.Select
+     VA rpt_szChave2_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+V55QUEUE.FetchNext
+     RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+     RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+     RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+While SV File_IO_Status is equal to CO SUCCESS
+     VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 1
+     BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+          "|" -> cSeparador_EV01 [EV01]
+          VA evt_szDataField1_DTA1 [DTA1] <- szConteudo_CNLS [CNLS]
+          RV Linha -> szRegistro_TXVC [TXVC]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+     F4101.Select  [Index 2: 2nd Item Number]
+          VA evt_szDataField1_DTA1 [DTA1] = TK 2nd Item Number [LITM]
+     F4101.FetchNext  [Index 1: Item Master]
+          VA evt_szDescriptionLine1_DSC1 [DSC1] <- TK Description [DSC1]
+     RV Linha = rtrim([RV Linha], <Blank>)
+     RV Linha = concat([RV Linha], " (")
+     RV Linha = concat([RV Linha], [VA evt_szDescriptionLine1_DSC1 [DSC1]])
+     RV Linha = concat([RV Linha], ")")
+     Do Custom Section(RS Produtos)
+     V55QUEUE.FetchNext
+          RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+          RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+          RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+End While
+//
+// Efetuo a contabilização da manufatura
+If VA rpt_cErroNoRelatorio_EDSP [EDSP] is equal to "N"
+And PO cModoRelatorio [EV01] is equal to "1"
+     //
+     VA evt_PO_cAllowHeldLots [EV06] = <NULL>
+     VA evt_PO_cAllowQtyOverAvailable [EV05] = "1"
+     VA evt_PO_cSummaryMode [EV03] = <NULL>
+     VA evt_PO_OutInteroperabilityType [TYTN] = <NULL>
+     VA evt_FC_Branch [MMCU] = PO szCostCenter [MCU]
+     VA evt_FC_dicjBatchDate [DICJ] = SL DateToday
+     VA evt_FC_EV01Batchstat [EV01] = <Blank>
+     VA evt_FC_GLDate [DGJ] = SL DateToday
+     VA evt_FC_OrderDate [TRDJ] = SL DateToday
+     VA evt_cAllowQtyOverAvailabl_EV01 [EV01] = "1"
+     VA evt_cPrimaryBinPS_PBIN [PBIN] = "P"
+     VA evt_cUpdateQuantityOnHand_EV01 [EV01] = "1"
+     VA evt_ev06RcdWritten [EV06] = <Blank>
+     VA evt_jdDateForGLandVoucherJ_DGJ [DGJ] = SL DateToday
+     VA evt_mnDocVoucherInvoiceE_DOC [DOC] = 0
+     VA evt_mnNumeroLote_ICU [ICU] = 0
+     VA evt_mnTransactioProcess_MATH01 [MATH01] = "2"
+     VA evt_szCurrencyCodeFrom_CRCD [CRCD] = "R$"
+     VA evt_szLoteAprovado_IAPP [IAPP] = "P"
+     VA evt_szPostOutOfBalance_POB [POB] = "N"
+     VA evt_szProgramId_PID [PID] = "R5576B04"
+     VA evt_szStatusLote_IST [IST] = "U"
+     VA evt_szTipo_FUAN1 [FUAN1] = "2"
+     VA evt_szTipoLote_ICUT [ICUT] = "N"
+     //
+     GetAuditInfo(B9800100.GetAuditInfo)
+          VA evt_szWorkStationId_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+     RetrieveCompanyFromBusUnit(B0000130.RetrieveCompanyFromBusUnit)
+          VA evt_FC_Branch [MMCU] -> szCostCenter [MCU0]
+          VA evt_szCompany_CO [CO] <- szCompany [CO]
+     VA evt_FC_kcoDocKeyComp [KCO] = VA evt_szCompany_CO [CO]
+     F4114BeginDocument(XT4114Z1.F4114BeginDocument)
+          <Blank> -> cDocumentAction [ACTN]
+          VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          VA evt_cErrorConditions_EV01 [EV01] <- cErrorConditions [EV02]
+          VA evt_FC_Branch [MMCU] -> szBranchPlant [MCU]
+          VA evt_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+          VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+          VA evt_mnLastJELineNumber [JELN] <> mnLastJELineNumber [JELN]
+          VA evt_szCompany_CO [CO] <> szDocumentKeyCompany [KCO]
+          PO szTipoDocumento [DCT] <> szDocumentType [DCT]
+          VA evt_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+          VA evt_jdDateForGLandVoucherJ_DGJ [DGJ] <> jdGLDate [DGL]
+          VA evt_jdDateTransactionJuli_TRDJ [TRDJ] <> jdTransactionDate [TRDJ]
+     V55QUEUE.Select
+          VA rpt_szChave5_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+     V55QUEUE.FetchNext
+          RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+          RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+          RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+     While SV File_IO_Status is equal to CO SUCCESS
+          VA evt_szExplicacao_EXA [EXA] = "Baixa por manufatura"
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 0
+          BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+               "|" -> cSeparador_EV01 [EV01]
+               VA evt_szCostCenter_MCU [MCU] <- szConteudo_CNLS [CNLS]
+               RV Linha -> szRegistro_TXVC [TXVC]
+               VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 1
+          BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+               "|" -> cSeparador_EV01 [EV01]
+               VA evt_szIdentifier2ndItem_LITM [LITM] <- szConteudo_CNLS [CNLS]
+               RV Linha -> szRegistro_TXVC [TXVC]
+               VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 2
+          BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+               "|" -> cSeparador_EV01 [EV01]
+               VA evt_szRelatedUnitOfMeasure_RUM [RUM] <- szConteudo_CNLS [CNLS]
+               RV Linha -> szRegistro_TXVC [TXVC]
+               VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+          F4101.FetchSingle  [Index 2: 2nd Item Number]
+               VA evt_mnIdentifierShortItem_ITM [ITM] <- TK Item Number - Short [ITM]
+               VA evt_szIdentifier2ndItem_LITM [LITM] = TK 2nd Item Number [LITM]
+          F41021.Select  [Index 1: Item, Branch, +A]
+               VA evt_mnIdentifierShortItem_ITM [ITM] = TK Item Number - Short [ITM]
+               VA evt_FC_Branch [MMCU] = TK Business Unit [MCU]
+               VA evt_cPrimaryBinPS_PBIN [PBIN] = TK Primary Location (P/S) [PBIN]
+          F41021.FetchNext  [Index 1: Item, Branch, +A]
+               VA evt_Location [LOCN] <- TK Location [LOCN]
+          If SV File_IO_Status is not equal to CO SUCCESS
+               F41021.Select  [Index 1: Item, Branch, +A]
+                    VA evt_mnIdentifierShortItem_ITM [ITM] = TK Item Number - Short [ITM]
+                    VA evt_FC_Branch [MMCU] = TK Business Unit [MCU]
+               F41021.FetchNext  [Index 1: Item, Branch, +A]
+                    VA evt_Location [LOCN] <- TK Location [LOCN]
+          End If
+          //
+          If RV Quantidade is greater than "0"
+               VA evt_szFromTo_FRTO [FRTO] = "T"
+          Else
+               VA evt_szFromTo_FRTO [FRTO] = "F"
+          End If
+          VA evt_mnAmountUnitCost_UNCS [UNCS] = [RV Valor]/[RV Quantidade]
+          If PO cEstoqueNegativo [EV01] is equal to "1"
+               ! F4114EditLine(XT4114Z1.F4114EditLine)
+               !      VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+               !      VA evt_ev06RcdWritten [EV06] -> cRecordWrittenToWorkFile [EV04]
+               !      VA evt_lnidLineNumber [LNID] <> mnLineNumber [LNID]
+               !      VA evt_FC_GLDate [DGJ] <> jdGLDate [DGL]
+               !      VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+               !      VA evt_cUpdateQuantityOnHand_EV01 [EV01] -> cUpdateQuantityOnHand [EV01]
+               !      "1" -> cAllowQtyOverAvailable [EV01]
+               !      PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+               !      VA evt_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+               !      VA evt_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+               !      VA evt_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+               !      VA evt_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+               !      VA evt_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+               !      VA evt_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+               !      PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+               !      VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+               !      VA evt_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+               !      VA evt_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+               !      VA evt_FC_Branch [MMCU] -> szBranchPlant [MCU]
+               !      VA evt_szIdentifier2ndItem_LITM [LITM] -> szItemNumber [UITM]
+               !      VA evt_mnIdentifierShortItem_ITM [ITM] <- mnShortItemNumber [ITM]
+               !      VA evt_Location [LOCN] -> szDisplayedLocation [LOCNE1]
+               !      VA evt_LocationFile [LOCN] <- szLocation [LOCN]
+               !      VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szTransactionUOM [TRUM]
+               !      RV Quantidade -> mnTransactionQty [TRQT]
+               !      VA evt_mnAmountUnitCost_UNCS [UNCS] -> mnTransactionUnitCost [UNCS]
+               !      RV Valor -> mnExtendedAmount [PAID]
+               !      VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+               !      VA evt_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+               !      VA evt_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+               !      VA evt_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+               !      VA evt_STKTStockingType [STKT] <> cStockingType [STKT]
+               !      VA evt_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+               !      VA evt_ev09CostEntered [EV09] -> cCostEntered [ENTC]
+               !      VA evt_WMSLine [MATH05] <> mnWMSLineNumber [MATH02]
+               !      "1" -> cProcessJE [EV01]
+               !      VA evt_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+               F4114EditLine(XT4114Z1.F4114EditLine)
+                    VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+                    VA evt_ev06RcdWritten [EV06] -> cRecordWrittenToWorkFile [EV04]
+                    VA evt_lnidLineNumber [LNID] <> mnLineNumber [LNID]
+                    VA evt_FC_GLDate [DGJ] <> jdGLDate [DGL]
+                    VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+                    VA evt_cAllowQtyOverAvailabl_EV01 [EV01] -> cAllowQtyOverAvailable [EV01]
+                    PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+                    VA evt_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+                    VA evt_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+                    VA evt_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+                    VA evt_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+                    VA evt_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+                    VA evt_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+                    PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+                    VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+                    VA evt_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+                    VA evt_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+                    VA evt_FC_Branch [MMCU] -> szBranchPlant [MCU]
+                    VA evt_szIdentifier2ndItem_LITM [LITM] -> szItemNumber [UITM]
+                    VA evt_mnIdentifierShortItem_ITM [ITM] <- mnShortItemNumber [ITM]
+                    VA evt_Location [LOCN] -> szDisplayedLocation [LOCNE1]
+                    VA evt_LocationFile [LOCN] <- szLocation [LOCN]
+                    VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szTransactionUOM [TRUM]
+                    RV Quantidade -> mnTransactionQty [TRQT]
+                    VA evt_mnAmountUnitCost_UNCS [UNCS] -> mnTransactionUnitCost [UNCS]
+                    RV Valor -> mnExtendedAmount [PAID]
+                    VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+                    VA evt_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+                    VA evt_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+                    VA evt_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+                    VA evt_STKTStockingType [STKT] <> cStockingType [STKT]
+                    VA evt_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+                    VA evt_ev09CostEntered [EV09] -> cCostEntered [ENTC]
+                    VA evt_WMSLine [MATH05] <> mnWMSLineNumber [MATH02]
+                    "1" -> cProcessJE [EV01]
+                    VA evt_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+          Else
+               ! F4114EditLine(XT4114Z1.F4114EditLine)
+               !      VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+               !      VA evt_ev06RcdWritten [EV06] -> cRecordWrittenToWorkFile [EV04]
+               !      VA evt_lnidLineNumber [LNID] <> mnLineNumber [LNID]
+               !      VA evt_FC_GLDate [DGJ] <> jdGLDate [DGL]
+               !      VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+               !      VA evt_cUpdateQuantityOnHand_EV01 [EV01] -> cUpdateQuantityOnHand [EV01]
+               !      PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+               !      VA evt_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+               !      VA evt_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+               !      VA evt_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+               !      VA evt_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+               !      VA evt_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+               !      VA evt_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+               !      PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+               !      VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+               !      VA evt_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+               !      VA evt_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+               !      VA evt_FC_Branch [MMCU] -> szBranchPlant [MCU]
+               !      VA evt_szIdentifier2ndItem_LITM [LITM] -> szItemNumber [UITM]
+               !      VA evt_mnIdentifierShortItem_ITM [ITM] <- mnShortItemNumber [ITM]
+               !      VA evt_Location [LOCN] -> szDisplayedLocation [LOCNE1]
+               !      VA evt_LocationFile [LOCN] <- szLocation [LOCN]
+               !      VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szTransactionUOM [TRUM]
+               !      RV Quantidade -> mnTransactionQty [TRQT]
+               !      VA evt_mnAmountUnitCost_UNCS [UNCS] -> mnTransactionUnitCost [UNCS]
+               !      RV Valor -> mnExtendedAmount [PAID]
+               !      VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+               !      VA evt_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+               !      VA evt_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+               !      VA evt_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+               !      VA evt_STKTStockingType [STKT] <> cStockingType [STKT]
+               !      VA evt_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+               !      VA evt_ev09CostEntered [EV09] -> cCostEntered [ENTC]
+               !      VA evt_WMSLine [MATH05] <> mnWMSLineNumber [MATH02]
+               !      "1" -> cProcessJE [EV01]
+               !      VA evt_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+               F4114EditLine(XT4114Z1.F4114EditLine)
+                    VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+                    VA evt_ev06RcdWritten [EV06] -> cRecordWrittenToWorkFile [EV04]
+                    VA evt_lnidLineNumber [LNID] <> mnLineNumber [LNID]
+                    VA evt_FC_GLDate [DGJ] <> jdGLDate [DGL]
+                    VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+                    VA evt_cAllowQtyOverAvailabl_EV01 [EV01] -> cAllowQtyOverAvailable [EV01]
+                    PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+                    VA evt_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+                    VA evt_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+                    VA evt_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+                    VA evt_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+                    VA evt_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+                    VA evt_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+                    PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+                    VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+                    VA evt_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+                    VA evt_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+                    VA evt_FC_Branch [MMCU] -> szBranchPlant [MCU]
+                    VA evt_szIdentifier2ndItem_LITM [LITM] -> szItemNumber [UITM]
+                    VA evt_mnIdentifierShortItem_ITM [ITM] <- mnShortItemNumber [ITM]
+                    VA evt_Location [LOCN] -> szDisplayedLocation [LOCNE1]
+                    VA evt_LocationFile [LOCN] <- szLocation [LOCN]
+                    VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szTransactionUOM [TRUM]
+                    RV Quantidade -> mnTransactionQty [TRQT]
+                    VA evt_mnAmountUnitCost_UNCS [UNCS] -> mnTransactionUnitCost [UNCS]
+                    RV Valor -> mnExtendedAmount [PAID]
+                    VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+                    VA evt_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+                    VA evt_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+                    VA evt_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+                    VA evt_STKTStockingType [STKT] <> cStockingType [STKT]
+                    VA evt_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+                    VA evt_ev09CostEntered [EV09] -> cCostEntered [ENTC]
+                    VA evt_WMSLine [MATH05] <> mnWMSLineNumber [MATH02]
+                    "1" -> cProcessJE [EV01]
+                    VA evt_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+          End If
+          //
+          V55QUEUE.FetchNext
+               RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+               RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+               RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+     End While
+     V55QUEUE.Select
+          VA rpt_szChave2_OBNM [OBNM] = TK Object Name [OBNM][F55QUEUE.0]
+          VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY][F55QUEUE.0]
+     V55QUEUE.FetchNext
+          RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+          RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+          RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+     While SV File_IO_Status is equal to CO SUCCESS
+          VA evt_szExplicacao_EXA [EXA] = "Inclusao por manufatura"
+          VA evt_mnUniqueKeyIDInternal_UKID [UKID] = 1
+          BuscaCampoRegistro(N55760Z1.BuscaCampoRegistro)
+               "|" -> cSeparador_EV01 [EV01]
+               VA evt_szIdentifier2ndItem_LITM [LITM] <- szConteudo_CNLS [CNLS]
+               RV Linha -> szRegistro_TXVC [TXVC]
+               VA evt_mnUniqueKeyIDInternal_UKID [UKID] <> mnSegmento_UKID [UKID]
+          F4101.FetchSingle  [Index 2: 2nd Item Number]
+               VA evt_mnIdentifierShortItem_ITM [ITM] <- TK Item Number - Short [ITM]
+               VA evt_szIdentifier2ndItem_LITM [LITM] = TK 2nd Item Number [LITM]
+               VA evt_szRelatedUnitOfMeasure_RUM [RUM] <- TK Unit of Measure - Primary [UOM1]
+          F41021.Select  [Index 1: Item, Branch, +A]
+               VA evt_mnIdentifierShortItem_ITM [ITM] = TK Item Number - Short [ITM]
+               VA evt_FC_Branch [MMCU] = TK Business Unit [MCU]
+               VA evt_cPrimaryBinPS_PBIN [PBIN] = TK Primary Location (P/S) [PBIN]
+          F41021.FetchNext  [Index 1: Item, Branch, +A]
+               VA evt_Location [LOCN] <- TK Location [LOCN]
+          If SV File_IO_Status is not equal to CO SUCCESS
+               F41021.Select  [Index 1: Item, Branch, +A]
+                    VA evt_mnIdentifierShortItem_ITM [ITM] = TK Item Number - Short [ITM]
+                    VA evt_FC_Branch [MMCU] = TK Business Unit [MCU]
+               F41021.FetchNext  [Index 1: Item, Branch, +A]
+                    VA evt_Location [LOCN] <- TK Location [LOCN]
+          End If
+          //
+          If RV Quantidade is greater than "0"
+               VA evt_szFromTo_FRTO [FRTO] = "T"
+          Else
+               VA evt_szFromTo_FRTO [FRTO] = "F"
+          End If
+          VA evt_mnAmountUnitCost_UNCS [UNCS] = [RV Valor]/[RV Quantidade]
+          If PO cEstoqueNegativo [EV01] is equal to "1"
+               ! F4114EditLine(XT4114Z1.F4114EditLine)
+               !      VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+               !      VA evt_ev06RcdWritten [EV06] -> cRecordWrittenToWorkFile [EV04]
+               !      VA evt_lnidLineNumber [LNID] <> mnLineNumber [LNID]
+               !      VA evt_FC_GLDate [DGJ] <> jdGLDate [DGL]
+               !      VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+               !      VA evt_cUpdateQuantityOnHand_EV01 [EV01] -> cUpdateQuantityOnHand [EV01]
+               !      "1" -> cAllowQtyOverAvailable [EV01]
+               !      "0" -> mnParentShortItemNumber [KIT]
+               !      PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+               !      VA evt_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+               !      VA evt_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+               !      VA evt_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+               !      VA evt_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+               !      VA evt_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+               !      VA evt_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+               !      PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+               !      VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+               !      VA evt_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+               !      VA evt_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+               !      VA evt_FC_Branch [MMCU] -> szBranchPlant [MCU]
+               !      VA evt_szIdentifier2ndItem_LITM [LITM] -> szItemNumber [UITM]
+               !      VA evt_mnIdentifierShortItem_ITM [ITM] <- mnShortItemNumber [ITM]
+               !      VA evt_Location [LOCN] -> szDisplayedLocation [LOCNE1]
+               !      VA evt_LocationFile [LOCN] <- szLocation [LOCN]
+               !      VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szTransactionUOM [TRUM]
+               !      RV Quantidade -> mnTransactionQty [TRQT]
+               !      VA evt_mnAmountUnitCost_UNCS [UNCS] -> mnTransactionUnitCost [UNCS]
+               !      RV Valor -> mnExtendedAmount [PAID]
+               !      VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+               !      VA evt_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+               !      VA evt_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+               !      VA evt_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+               !      VA evt_STKTStockingType [STKT] <> cStockingType [STKT]
+               !      VA evt_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+               !      VA evt_ev09CostEntered [EV09] -> cCostEntered [ENTC]
+               !      VA evt_WMSLine [MATH05] <> mnWMSLineNumber [MATH02]
+               !      "1" -> cProcessJE [EV01]
+               !      VA evt_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+               F4114EditLine(XT4114Z1.F4114EditLine)
+                    VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+                    VA evt_ev06RcdWritten [EV06] -> cRecordWrittenToWorkFile [EV04]
+                    VA evt_lnidLineNumber [LNID] <> mnLineNumber [LNID]
+                    VA evt_FC_GLDate [DGJ] <> jdGLDate [DGL]
+                    VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+                    VA evt_cAllowQtyOverAvailabl_EV01 [EV01] -> cAllowQtyOverAvailable [EV01]
+                    PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+                    VA evt_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+                    VA evt_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+                    VA evt_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+                    VA evt_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+                    VA evt_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+                    VA evt_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+                    PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+                    VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+                    VA evt_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+                    VA evt_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+                    VA evt_FC_Branch [MMCU] -> szBranchPlant [MCU]
+                    VA evt_szIdentifier2ndItem_LITM [LITM] -> szItemNumber [UITM]
+                    VA evt_mnIdentifierShortItem_ITM [ITM] <- mnShortItemNumber [ITM]
+                    VA evt_Location [LOCN] -> szDisplayedLocation [LOCNE1]
+                    VA evt_LocationFile [LOCN] <- szLocation [LOCN]
+                    VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szTransactionUOM [TRUM]
+                    RV Quantidade -> mnTransactionQty [TRQT]
+                    VA evt_mnAmountUnitCost_UNCS [UNCS] -> mnTransactionUnitCost [UNCS]
+                    RV Valor -> mnExtendedAmount [PAID]
+                    VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+                    VA evt_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+                    VA evt_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+                    VA evt_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+                    VA evt_STKTStockingType [STKT] <> cStockingType [STKT]
+                    VA evt_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+                    VA evt_ev09CostEntered [EV09] -> cCostEntered [ENTC]
+                    VA evt_WMSLine [MATH05] <> mnWMSLineNumber [MATH02]
+                    "1" -> cProcessJE [EV01]
+                    VA evt_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+               VA rpt_szChave_DCT [DCT] = <NULL>
+          Else
+               ! F4114EditLine(XT4114Z1.F4114EditLine)
+               !      VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+               !      VA evt_ev06RcdWritten [EV06] -> cRecordWrittenToWorkFile [EV04]
+               !      VA evt_lnidLineNumber [LNID] <> mnLineNumber [LNID]
+               !      VA evt_FC_GLDate [DGJ] <> jdGLDate [DGL]
+               !      VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+               !      VA evt_cUpdateQuantityOnHand_EV01 [EV01] -> cUpdateQuantityOnHand [EV01]
+               !      PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+               !      VA evt_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+               !      VA evt_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+               !      VA evt_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+               !      VA evt_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+               !      VA evt_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+               !      VA evt_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+               !      PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+               !      VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+               !      VA evt_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+               !      VA evt_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+               !      VA evt_FC_Branch [MMCU] -> szBranchPlant [MCU]
+               !      VA evt_szIdentifier2ndItem_LITM [LITM] -> szItemNumber [UITM]
+               !      VA evt_mnIdentifierShortItem_ITM [ITM] <- mnShortItemNumber [ITM]
+               !      VA evt_Location [LOCN] -> szDisplayedLocation [LOCNE1]
+               !      VA evt_LocationFile [LOCN] <- szLocation [LOCN]
+               !      VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szTransactionUOM [TRUM]
+               !      RV Quantidade -> mnTransactionQty [TRQT]
+               !      VA evt_mnAmountUnitCost_UNCS [UNCS] -> mnTransactionUnitCost [UNCS]
+               !      RV Valor -> mnExtendedAmount [PAID]
+               !      VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+               !      VA evt_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+               !      VA evt_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+               !      VA evt_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+               !      VA evt_STKTStockingType [STKT] <> cStockingType [STKT]
+               !      VA evt_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+               !      VA evt_ev09CostEntered [EV09] -> cCostEntered [ENTC]
+               !      VA evt_WMSLine [MATH05] <> mnWMSLineNumber [MATH02]
+               !      "1" -> cProcessJE [EV01]
+               !      VA evt_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+               F4114EditLine(XT4114Z1.F4114EditLine)
+                    VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+                    VA evt_ev06RcdWritten [EV06] -> cRecordWrittenToWorkFile [EV04]
+                    VA evt_lnidLineNumber [LNID] <> mnLineNumber [LNID]
+                    VA evt_FC_GLDate [DGJ] <> jdGLDate [DGL]
+                    VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+                    VA evt_cAllowQtyOverAvailabl_EV01 [EV01] -> cAllowQtyOverAvailable [EV01]
+                    PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+                    VA evt_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+                    VA evt_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+                    VA evt_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+                    VA evt_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+                    VA evt_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+                    VA evt_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+                    PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+                    VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+                    VA evt_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+                    VA evt_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+                    VA evt_FC_Branch [MMCU] -> szBranchPlant [MCU]
+                    VA evt_szIdentifier2ndItem_LITM [LITM] -> szItemNumber [UITM]
+                    VA evt_mnIdentifierShortItem_ITM [ITM] <- mnShortItemNumber [ITM]
+                    VA evt_Location [LOCN] -> szDisplayedLocation [LOCNE1]
+                    VA evt_LocationFile [LOCN] <- szLocation [LOCN]
+                    VA evt_szRelatedUnitOfMeasure_RUM [RUM] -> szTransactionUOM [TRUM]
+                    RV Quantidade -> mnTransactionQty [TRQT]
+                    VA evt_mnAmountUnitCost_UNCS [UNCS] -> mnTransactionUnitCost [UNCS]
+                    RV Valor -> mnExtendedAmount [PAID]
+                    VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+                    VA evt_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+                    VA evt_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+                    VA evt_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+                    VA evt_STKTStockingType [STKT] <> cStockingType [STKT]
+                    VA evt_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+                    VA evt_ev09CostEntered [EV09] -> cCostEntered [ENTC]
+                    VA evt_WMSLine [MATH05] <> mnWMSLineNumber [MATH02]
+                    "1" -> cProcessJE [EV01]
+                    VA evt_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+          End If
+          //
+          V55QUEUE.FetchNext
+               RV Linha <- TK Description 11 [DL011][F55QUEUE.0]
+               RV Quantidade <- TK Units - Order/Transaction Quantity [UORG][F55QUEUE.0]
+               RV Valor <- TK Amount - Extended Price [AEXP][F55QUEUE.0]
+     End While
+     VA evt_szExplicacao_EXA [EXA] = "Manufatura BTI"
+     F0911FSBeginDoc(B0900049.F0911FSBeginDoc)
+          VA evt_FC_jobsJobNoF0911 [JOBS] <> mnJobNumber [MATH06]
+          "1" -> cDocAction [ACTN]
+          "1" -> cEditInstructionFlag [EV01]
+          VA evt_FC_LastJELinE [JELN] <> mnLastLineNumber [JELN]
+          VA evt_FC_kcoDocKeyComp [KCO] -> szCompanyKey [KCO]
+          PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+          VA evt_mnNumeroDocumento_DOC [DOC] -> mnDocNumber [DOC]
+          VA evt_FC_GLDate [DGJ] -> jdGLDate [DGJ]
+          VA evt_mnNumeroLote_ICU [ICU] -> mnBatchNumber [ICU]
+          VA evt_szTipoLote_ICUT [ICUT] -> szBatchType [ICUT]
+          VA evt_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+          VA evt_FC_dicjBatchDate [DICJ] <- jdBatchSystemDate [DSYJ]
+          "0" -> mnBatchTime [TICU]
+          VA evt_szCurrencyCodeFrom_CRCD [CRCD] -> szTransactionCurrency [CRCD]
+          "0" -> mnCurrencyRate [CRR]
+          VA evt_szExplicacao_EXA [EXA] -> szExplanation [EXA]
+          "0" -> mnHistoricalRate [HCRR]
+          VA evt_szCurrencyCodeFrom_CRCD [CRCD] -> szBaseCoCurrency [CRDC]
+          "0" -> mnAmountToDistribute [ATAD]
+          "0" -> mnCurAmountToDistribute [CTAD]
+          "Y" -> cCurrencyFlag [CRYR]
+          VA evt_GLMBFVersion_VER [VER] <> szJEVersion [VER]
+          "0" -> cExchangeRateDateFlag [EV01]
+     GetNextUniqueKeyID(X00022.GetNextUniqueKeyID)
+          "F41021WF" -> szObjectName [OBNM]
+          VA evt_mnUniqueKeyIDF41021WF_UKID [UKID] <> mnUniqueKeyID [UKID]
+     CacheProcessUniqueF41021WF(B4902110.CacheProcessUniqueF41021WF)
+          VA evt_FC_JOBSInvJobNumber [JOBS] -> mnJobnumber [JOBS]
+          VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          VA evt_mnUniqueKeyIDF41021WF_UKID [UKID] -> mnUniqueKeyIDInternal [UKID]
+          "2" -> szCacheActionCode [CACTN]
+          "3" -> mnNumberKeys [NKEYS]
+          "1" -> idCacheCursor [GENLNG]
+     CacheLicensePlateTransHeader(B46L0200.CacheLicensePlateTransHeader)
+          "2" -> szCacheActionCode [CACTN]
+          "1" -> mnNumberKeys [NKEYS]
+          "1" -> nIndex [INT01]
+          "1" -> cSuppressErrorMessage [SUPPS]
+          VA evt_FC_JOBSInvJobNumber [JOBS] <> mnJobNumber [JOBS]
+          "N" -> cPartialsAllowedYN [PRTA]
+          VA evt_szProgramId_PID [PID] -> szProgramId [PID]
+          "IA" -> szLicensePlateTransactionT [LPTT]
+     F4114EndDocument(XT4114Z1.F4114EndDocument)
+          VA evt_szProgramId_PID [PID] -> szProgramID [PID]
+          VA evt_mnNumeroDocumento_DOC [DOC] -> mnDocumentNumber [DOC]
+          VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          "1" -> cWriteCardex [EV01]
+          PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+          VA evt_szTipo_FUAN1 [FUAN1] -> mnTransactionProcessType [MATH01]
+          VA evt_FC_jobsJobNoF0911 [JOBS] -> mnF0911Jobnumber [JOBS]
+          VA evt_mnNumeroLote_ICU [ICU] -> mnBatchNumber [ICU]
+          VA evt_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+          "1" -> cProcessCloseBatch [EV01]
+          VA evt_PO_cSummaryMode [EV03] -> cSummarizeF0911 [EV01]
+          VA evt_FC_JOBSInvJobNumber [JOBS] -> mnInvJobNumber [JOBS]
+          VA evt_PO_OutInteroperabilityType [TYTN] -> szEDITransactionType [TYTN]
+     F4114ClearDetailStack(XT4114Z1.F4114ClearDetailStack)
+          VA evt_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+          "1" -> cProcessCloseBatch [EV01]
+          VA evt_mnNumeroLote_ICU [ICU] -> mnBatchNumber [ICU]
+          VA evt_FC_jobsJobNoF0911 [JOBS] -> mnF0911Jobnumber [JOBS]
+          VA evt_FC_JOBSInvJobNumber [JOBS] -> mnInvJobNumber [JOBS]
+     GetGLMBFVersionFromJEVersion(B4101430.GetGLMBFVersionFromJEVersion)
+     //
+     VA rpt_mnChave_ICU [ICU] = VA evt_mnNumeroLote_ICU [ICU]
+     VA rpt_szChave_ICUT [ICUT] = "N"
+     ValidateAccountNumber(XX0901.ValidateAccountNumber)
+          PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+          VA evt_szF4111_AID [AID] <> szAccountID [AID]
+          VA evt_szF4111_MCUZ [MCUZ] <> szDatabaseBusinessUnit [MCU]
+          VA evt_szF4111_OBJ [OBJ] <> szDatabaseObject [OBJ]
+          VA evt_szF4111_SUB [SUB] <> szDatabaseSubsidiary [SUB]
+          "2" -> cBasedOnFormat [EV01]
+     F0911.Select  [Index 1: Doc Type, Number, +]
+          VA rpt_mnChave_ICU [ICU] = TK Batch Number [ICU]
+          VA rpt_szChave_ICUT [ICUT] = TK Batch Type [ICUT]
+     F0911.FetchNext  [Index 1: Doc Type, Number, +]
+          VA rpt_szChave_KCO [KCO] <- TK Document Company [KCO]
+          VA rpt_szChave_DCT [DCT] <- TK Document Type [DCT]
+          VA rpt_mnChave_DOC [DOC] <- TK Document (Voucher, Invoice, etc.) [DOC]
+     //
+     F4111.Select  [Index 1: Unique Key ID]
+          VA rpt_szChave_KCO [KCO] = TK Document Company [KCO]
+          VA rpt_mnChave_DOC [DOC] = TK Document (Voucher, Invoice, etc.) [DOC]
+          VA rpt_szChave_DCT [DCT] = TK Document Type [DCT]
+     F4111.FetchNext  [Index 1: Unique Key ID]
+          VA evt_mnChave_ITM [ITM] <- TK Item Number - Short [ITM]
+          VA evt_mnLinha_UKID [UKID] <- TK Unique Key ID (Internal) [UKID]
+     While SV File_IO_Status is equal to CO SUCCESS
+          VA evt_szTransactionReferenc_TREF [TREF] = "**BTI**"
+          F4111.Update  [Index 1: Unique Key ID]
+               VA evt_szTransactionReferenc_TREF [TREF] -> TK Transaction Reference [TREF]
+               VA evt_mnLinha_UKID [UKID] = TK Unique Key ID (Internal) [UKID]
+               VA evt_szF4111_AID [AID] -> TK Account ID [AID]
+               VA evt_szF4111_MCUZ [MCUZ] -> TK Business Unit - Alt [MCUZ]
+               VA evt_szF4111_OBJ [OBJ] -> TK Object Account [OBJ]
+               VA evt_szF4111_SUB [SUB] -> TK Subsidiary [SUB]
+          //
+          VA rpt_mnChave_ICU [ICU] = VA rpt_mnNN_ICU [ICU]
+          VA rpt_szChave_ICUT [ICUT] = "T"
+          F5576B21.Select  [Index 3: ICU, ICUT]
+               VA evt_mnChave_ITM [ITM] = TK Item Number - Short [ITM]
+               VA rpt_mnChave_ICU [ICU] = TK Batch Number [ICU]
+               VA rpt_szChave_ICUT [ICUT] = TK Batch Type [ICUT]
+          F5576B21.FetchNext  [Index 3: ICU, ICUT]
+               VA rpt_mnLinha_EDOC [EDOC] <- TK EDI - Document Number [EDOC]
+               VA rpt_cChave_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+               VA rpt_jdLinha_TRDJ [TRDJ] <- TK Date - Order/Transaction [TRDJ]
+               VA rpt_szLinha_MMCU [MMCU] <- TK Branch [MMCU]
+               VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+               VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+               VA rpt_szLinha_Z5576B04 [Z5576B04] <- TK Centro de Custo [Z5576B04]
+               VA rpt_szLinha_Z5576B14 [Z5576B14] <- TK Caderno [Z5576B14]
+          While SV File_IO_Status is equal to CO SUCCESS
+               If VA rpt_cChave_EV01 [EV01] is equal to "T"
+                    VA rpt_cChave_EV01 [EV01] = "M"
+                    VA rpt_mnChave_ICU [ICU] = VA evt_mnNumeroLote_ICU [ICU]
+                    VA rpt_szChave_ICUT [ICUT] = "N"
+                    F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+                         VA rpt_mnLinha_EDOC [EDOC] = TK EDI - Document Number [EDOC]
+                         VA rpt_cChave_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+                         VA rpt_jdLinha_TRDJ [TRDJ] = TK Date - Order/Transaction [TRDJ]
+                         VA rpt_szLinha_MMCU [MMCU] = TK Branch [MMCU]
+                         VA rpt_mnLinha_KIT [KIT] = TK Parent (short) Item Number [KIT]
+                         VA rpt_mnLinha_ITM [ITM] = TK Item Number - Short [ITM]
+                         VA rpt_szLog_USER [USER] -> TK User ID [USER]
+                         VA rpt_szLog_PID [PID] -> TK Program ID [PID]
+                         VA rpt_szLog_VL01 [VL01] -> TK Selection Values 01 [VL01]
+                         VA rpt_szLog_JOBN [JOBN] -> TK Work Station ID [JOBN]
+                         VA rpt_jdLog_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+                         VA rpt_mnLog_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+                         VA rpt_szLinha_Z5576B04 [Z5576B04] = TK Centro de Custo [Z5576B04]
+                         VA rpt_szLinha_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+                         VA rpt_mnChave_ICU [ICU] -> TK Batch Number [ICU]
+                         VA rpt_szChave_ICUT [ICUT] -> TK Batch Type [ICUT]
+                         VA rpt_szChave_KCO [KCO] -> TK Document Company [KCO]
+                         VA rpt_mnChave_DOC [DOC] -> TK Document (Voucher, Invoice, etc.) [DOC]
+                         VA rpt_szChave_DCT [DCT] -> TK Document Type [DCT]
+               End If
+               F5576B21.FetchNext  [Index 3: ICU, ICUT]
+                    VA rpt_mnLinha_EDOC [EDOC] <- TK EDI - Document Number [EDOC]
+                    VA rpt_cChave_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+                    VA rpt_jdLinha_TRDJ [TRDJ] <- TK Date - Order/Transaction [TRDJ]
+                    VA rpt_szLinha_MMCU [MMCU] <- TK Branch [MMCU]
+                    VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+                    VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+                    VA rpt_szLinha_Z5576B04 [Z5576B04] <- TK Centro de Custo [Z5576B04]
+                    VA rpt_szLinha_Z5576B14 [Z5576B14] <- TK Caderno [Z5576B14]
+          End While
+          //
+          F4111.FetchNext  [Index 1: Unique Key ID]
+               VA evt_mnChave_ITM [ITM] <- TK Item Number - Short [ITM]
+               VA evt_mnLinha_UKID [UKID] <- TK Unique Key ID (Internal) [UKID]
+     End While
+Else
+     F5576B21.Select  [Index 3: ICU, ICUT]
+          VA rpt_mnChave_ICU [ICU] = TK Batch Number [ICU]
+          VA rpt_szChave_ICUT [ICUT] = TK Batch Type [ICUT]
+     F5576B21.FetchNext  [Index 3: ICU, ICUT]
+          VA rpt_mnLinha_EDOC [EDOC] <- TK EDI - Document Number [EDOC]
+          VA rpt_jdLinha_TRDJ [TRDJ] <- TK Date - Order/Transaction [TRDJ]
+          VA rpt_szLinha_MMCU [MMCU] <- TK Branch [MMCU]
+          VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+          VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+          VA rpt_szLinha_Z5576B04 [Z5576B04] <- TK Centro de Custo [Z5576B04]
+          VA rpt_szLinha_Z5576B14 [Z5576B14] <- TK Caderno [Z5576B14]
+     While SV File_IO_Status is equal to CO SUCCESS
+          VA rpt_cChave_EV01 [EV01] = "W"
+          VA rpt_mnChave_DOC [DOC] = <NULL>
+          VA rpt_mnChave_ICU [ICU] = <NULL>
+          VA rpt_szChave_DCT [DCT] = <NULL>
+          VA rpt_szChave_ICUT [ICUT] = <NULL>
+          VA rpt_szChave_KCO [KCO] = <NULL>
+          //
+          F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+               VA rpt_mnLinha_EDOC [EDOC] = TK EDI - Document Number [EDOC]
+               VA rpt_cChave_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+               VA rpt_jdLinha_TRDJ [TRDJ] = TK Date - Order/Transaction [TRDJ]
+               VA rpt_szLinha_MMCU [MMCU] = TK Branch [MMCU]
+               VA rpt_mnLinha_KIT [KIT] = TK Parent (short) Item Number [KIT]
+               VA rpt_mnLinha_ITM [ITM] = TK Item Number - Short [ITM]
+               VA rpt_szLog_USER [USER] -> TK User ID [USER]
+               VA rpt_szLog_PID [PID] -> TK Program ID [PID]
+               VA rpt_szLog_VL01 [VL01] -> TK Selection Values 01 [VL01]
+               VA rpt_szLog_JOBN [JOBN] -> TK Work Station ID [JOBN]
+               VA rpt_jdLog_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+               VA rpt_mnLog_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+               VA rpt_szLinha_Z5576B04 [Z5576B04] = TK Centro de Custo [Z5576B04]
+               VA rpt_szLinha_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+               VA rpt_mnChave_ICU [ICU] -> TK Batch Number [ICU]
+               VA rpt_szChave_ICUT [ICUT] -> TK Batch Type [ICUT]
+               VA rpt_szChave_KCO [KCO] -> TK Document Company [KCO]
+               VA rpt_mnChave_DOC [DOC] -> TK Document (Voucher, Invoice, etc.) [DOC]
+               VA rpt_szChave_DCT [DCT] -> TK Document Type [DCT]
+          //
+          F5576B21.FetchNext  [Index 3: ICU, ICUT]
+               VA rpt_mnLinha_EDOC [EDOC] <- TK EDI - Document Number [EDOC]
+               VA rpt_jdLinha_TRDJ [TRDJ] <- TK Date - Order/Transaction [TRDJ]
+               VA rpt_szLinha_MMCU [MMCU] <- TK Branch [MMCU]
+               VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+               VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+               VA rpt_szLinha_Z5576B04 [Z5576B04] <- TK Centro de Custo [Z5576B04]
+               VA rpt_szLinha_Z5576B14 [Z5576B14] <- TK Caderno [Z5576B14]
+     End While
+End If
+//
+ProcessErrorsToPPAT(B0100011.ProcessErrorsToPPAT)
+     "1" -> mnLeveloftotaling [LTOT]
+     VA rpt_lGenericLong_GENLNG [GENLNG] -> idDataBaseWorkField [GENLNG]
+     SL UserID -> szUserid [USER]
+//
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave1_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave2_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave3_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave4_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave5_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szChave6_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnChave_TDAY [TDAY] = TK Time of Day [TDAY]
+//
+VA evt_cEverestEventPoint01_EV01 [EV01] = "I"
+VA rpt_cChave_EV01 [EV01] = "A"
+VA rpt_szLinha_Z5576B14 [Z5576B14] = ":total:"
+VA evt_mnUnitsTransactionQ_UORG [UORG] = 0
+F5576B21.Select  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+     VA rpt_cChave_EV01 [EV01] = TK J.D. EnterpriseOne Event Point 01 [EV01]
+     VA evt_mnUnitsTransactionQ_UORG [UORG] = TK Units - Order/Transaction Quantity [UORG]
+     VA rpt_szLinha_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+F5576B21.FetchNext  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+     VA rpt_mnLinha_EDOC [EDOC] <- TK EDI - Document Number [EDOC]
+     VA rpt_jdLinha_TRDJ [TRDJ] <- TK Date - Order/Transaction [TRDJ]
+     VA rpt_szLinha_MMCU [MMCU] <- TK Branch [MMCU]
+     VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+     VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+     VA rpt_szLinha_Z5576B04 [Z5576B04] <- TK Centro de Custo [Z5576B04]
+     VA rpt_szLinha_Z5576B14 [Z5576B14] <- TK Caderno [Z5576B14]
+While SV File_IO_Status is equal to CO SUCCESS
+     F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          VA rpt_mnLinha_EDOC [EDOC] = TK EDI - Document Number [EDOC]
+          VA evt_cEverestEventPoint01_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+          VA rpt_jdLinha_TRDJ [TRDJ] = TK Date - Order/Transaction [TRDJ]
+          VA rpt_szLinha_MMCU [MMCU] = TK Branch [MMCU]
+          VA rpt_mnLinha_KIT [KIT] = TK Parent (short) Item Number [KIT]
+          VA rpt_mnLinha_ITM [ITM] = TK Item Number - Short [ITM]
+          VA rpt_szLog_USER [USER] -> TK User ID [USER]
+          VA rpt_szLog_PID [PID] -> TK Program ID [PID]
+          VA rpt_szLog_VL01 [VL01] -> TK Selection Values 01 [VL01]
+          VA rpt_szLog_JOBN [JOBN] -> TK Work Station ID [JOBN]
+          VA rpt_jdLog_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+          VA rpt_mnLog_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+          VA rpt_szLinha_Z5576B04 [Z5576B04] = TK Centro de Custo [Z5576B04]
+          VA rpt_szLinha_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+     //
+     F5576B21.FetchNext  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          VA rpt_mnLinha_EDOC [EDOC] <- TK EDI - Document Number [EDOC]
+          VA rpt_jdLinha_TRDJ [TRDJ] <- TK Date - Order/Transaction [TRDJ]
+          VA rpt_szLinha_MMCU [MMCU] <- TK Branch [MMCU]
+          VA rpt_mnLinha_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+          VA rpt_mnLinha_ITM [ITM] <- TK Item Number - Short [ITM]
+          VA rpt_szLinha_Z5576B04 [Z5576B04] <- TK Centro de Custo [Z5576B04]
+          VA rpt_szLinha_Z5576B14 [Z5576B14] <- TK Caderno [Z5576B14]
+End While
+
+=============================================
+Section: BSVW Manufatura BTI                                          [1] 
+Event: After Last Object Printed
+Event GUID: bf3a4a39-e3a6-477f-967d-ef77ecb49327
+=============================================
+If VA rpt_szErroConversion_DTAI [DTAI] is not equal to <Blank>
+And VA rpt_szErroConversion_DTAI [DTAI] is not equal to <NULL>
+And VA rpt_szErroConversion_DTAI [DTAI] is not equal to "0"
+     GetDDErrorDescription(B1800320.GetDDErrorDescription)
+          VA rpt_szErroConversion_DTAI [DTAI] -> szDataItem [DTAI]
+          RV MensagemErro <> szDescriptionAlpha [DSCA]
+     Do Custom Section(RS Erro)
+End If
+If VA rpt_szErroCusto_DTAI [DTAI] is not equal to <Blank>
+And VA rpt_szErroCusto_DTAI [DTAI] is not equal to <NULL>
+And VA rpt_szErroCusto_DTAI [DTAI] is not equal to "0"
+     GetDDErrorDescription(B1800320.GetDDErrorDescription)
+          VA rpt_szErroCusto_DTAI [DTAI] -> szDataItem [DTAI]
+          RV MensagemErro <> szDescriptionAlpha [DSCA]
+     Do Custom Section(RS Erro)
+End If
+If VA rpt_szErroDMAAI4122_DTAI [DTAI] is not equal to <Blank>
+And VA rpt_szErroDMAAI4122_DTAI [DTAI] is not equal to <NULL>
+And VA rpt_szErroDMAAI4122_DTAI [DTAI] is not equal to "0"
+     GetDDErrorDescription(B1800320.GetDDErrorDescription)
+          VA rpt_szErroDMAAI4122_DTAI [DTAI] -> szDataItem [DTAI]
+          RV MensagemErro <> szDescriptionAlpha [DSCA]
+     Do Custom Section(RS Erro)
+End If
+If VA rpt_szErroDMAAI4124_DTAI [DTAI] is not equal to <Blank>
+And VA rpt_szErroDMAAI4124_DTAI [DTAI] is not equal to <NULL>
+And VA rpt_szErroDMAAI4124_DTAI [DTAI] is not equal to "0"
+     GetDDErrorDescription(B1800320.GetDDErrorDescription)
+          VA rpt_szErroDMAAI4124_DTAI [DTAI] -> szDataItem [DTAI]
+          RV MensagemErro <> szDescriptionAlpha [DSCA]
+     Do Custom Section(RS Erro)
+End If
+
+
+

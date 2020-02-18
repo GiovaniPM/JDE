@@ -1,0 +1,323 @@
+﻿
+=============================================
+Form: Pré manufaturas - W5576B03A
+Event: Form Variables
+Event GUID: 2b7cab08-2290-4320-811b-0e44fd261801
+=============================================
+frm_szLog_USER [USER]
+frm_szLog_PID [PID]
+frm_szLog_JOBN [JOBN]
+frm_szLog_VL01 [VL01]
+frm_jdLog_UPMJ [UPMJ]
+frm_mnLog_UPMT [UPMT]
+
+=============================================
+EVENTS
+=============================================
+Form: Pré manufaturas - W5576B03A
+Object: HC &Refazer Pré Manufatura
+Event: Button Clicked
+Event GUID: 6ef3bd77-3dd7-4b4d-a360-d189e085ef57
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_cStatus_EV01 [EV01]
+evt_cOpcao_EV01 [EV01]
+----------------------------------------
+If GC Status [EV01] is equal to ("A","P","W")
+     Call App:P5576B03 Form:W5576B03B Version:SL VersionName
+          GC Lote Manufatura [EDOC] -> mnEdiDocumentNumber [EDOC]
+          VA evt_cOpcao_EV01 [EV01] <> cOpcao [EV01]
+          "D" -> cAcao [EV01]
+     If VA evt_cOpcao_EV01 [EV01] is equal to "S"
+          VA evt_cStatus_EV01 [EV01] = "R"
+          F5576B20.Update  [Index 8: EDOC]
+               VA evt_cStatus_EV01 [EV01] -> TK EDI - Successfully Processed [EDSP]
+               VA frm_szLog_USER [USER] -> TK User ID [USER]
+               VA frm_szLog_PID [PID] -> TK Program ID [PID]
+               VA frm_szLog_VL01 [VL01] -> TK Selection Values 01 [VL01]
+               VA frm_szLog_JOBN [JOBN] -> TK Work Station ID [JOBN]
+               VA frm_jdLog_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+               VA frm_mnLog_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+               GC Lote Manufatura [EDOC] = TK EDI - Document Number [EDOC]
+          VA evt_cStatus_EV01 [EV01] = "I"
+          F5576B22.Update  [Index 2: EDOC,Ch NF]
+               GC Lote Manufatura [EDOC] = TK EDI - Document Number [EDOC]
+               VA evt_cStatus_EV01 [EV01] -> TK EDI - Successfully Processed [EDSP]
+               VA frm_szLog_USER [USER] -> TK User ID [USER]
+               VA frm_szLog_PID [PID] -> TK Program ID [PID]
+               VA frm_szLog_VL01 [VL01] -> TK Selection Values 01 [VL01]
+               VA frm_szLog_JOBN [JOBN] -> TK Work Station ID [JOBN]
+               VA frm_jdLog_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+               VA frm_mnLog_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+          ! F5576B21.Delete  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          !      GC Lote Manufatura [EDOC] = TK EDI - Document Number [EDOC]
+          F5576B21.Update  [Index 5: EDBT]
+               GC Lote Manufatura [EDOC] = TK EDI - Document Number [EDOC]
+               VA evt_cStatus_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+               VA frm_szLog_USER [USER] -> TK User ID [USER]
+               VA frm_szLog_PID [PID] -> TK Program ID [PID]
+               VA frm_szLog_VL01 [VL01] -> TK Selection Values 01 [VL01]
+               VA frm_szLog_JOBN [JOBN] -> TK Work Station ID [JOBN]
+               VA frm_jdLog_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+               VA frm_mnLog_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+     End If
+Else
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Pré manufaturas - W5576B03A
+Object: HC &Aprovar Pré Manufatura
+Event: Button Clicked
+Event GUID: 9822d93e-63ed-4634-aaf7-19917d01dec8
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_cAcao_EV01 [EV01]
+evt_cStatus_EV01 [EV01]
+evt_UsuarioAprovador [Z5576B17]
+evt_DataAprovacao [Z5576B18]
+evt_HoraAprovacao [Z5576B19]
+----------------------------------------
+If GC Status [EV01] is equal to ("P")
+     Call App:P5576B03 Form:W5576B03B Version:SL VersionName
+          GC Lote Manufatura [EDOC] -> mnEdiDocumentNumber [EDOC]
+          VA evt_cAcao_EV01 [EV01] <> cOpcao [EV01]
+          "A" -> cAcao [EV01]
+     If VA evt_cAcao_EV01 [EV01] is equal to "S"
+          VA evt_cStatus_EV01 [EV01] = "A"
+          GetAuditInfo(B9800100.GetAuditInfo)
+               VA evt_UsuarioAprovador [Z5576B17] <> szUserName [USER]
+               VA evt_DataAprovacao [Z5576B18] <> jdDate [DTE]
+               VA evt_HoraAprovacao [Z5576B19] <> mnTime [TME0]
+          F5576B21.Update  [Index 2: EDOC, Z5576B04, Z5576B14]
+               GC Lote Manufatura [EDOC] = TK EDI - Document Number [EDOC]
+               VA evt_cStatus_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+               VA evt_UsuarioAprovador [Z5576B17] -> TK Usuario Aprovador [Z5576B17]
+               VA evt_DataAprovacao [Z5576B18] -> TK Data Aprovacao [Z5576B18]
+               VA evt_HoraAprovacao [Z5576B19] -> TK Hora Aprovacao [Z5576B19]
+     End If
+Else
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Pré manufaturas - W5576B03A
+Object: HC &Invalida Lote
+Event: Button Clicked
+Event GUID: aa50f3b4-d9f0-4ca1-91ac-f756c91ec165
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_cEverestEventPoint01_EV01 [EV01]
+evt_cAcao_EV01 [EV01]
+evt_szDescription011_DL011 [DL011]
+----------------------------------------
+If GC Status [EV01] is not equal to("M")
+     VA evt_cEverestEventPoint01_EV01 [EV01] = "M"
+     F5576B21.Select  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          GC Lote Manufatura [EDOC] = TK EDI - Document Number [EDOC]
+          VA evt_cEverestEventPoint01_EV01 [EV01] = TK J.D. EnterpriseOne Event Point 01 [EV01]
+     F5576B21.FetchNext  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          VA evt_cEverestEventPoint01_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+     If SV File_IO_Status is not equal to CO SUCCESS
+          Call App:P5576B03 Form:W5576B03B Version:SL VersionName
+               GC Lote Manufatura [EDOC] -> mnEdiDocumentNumber [EDOC]
+               VA evt_cAcao_EV01 [EV01] <> cOpcao [EV01]
+               "I" -> cAcao [EV01]
+          If VA evt_cAcao_EV01 [EV01] is equal to "S"
+               VA evt_cEverestEventPoint01_EV01 [EV01] = "I"
+               F5576B21.Update  [Index 2: EDOC, Z5576B04, Z5576B14]
+                    GC Lote Manufatura [EDOC] = TK EDI - Document Number [EDOC]
+                    VA evt_cEverestEventPoint01_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+                    VA frm_szLog_USER [USER] -> TK User ID [USER]
+                    VA frm_szLog_PID [PID] -> TK Program ID [PID]
+                    VA frm_szLog_VL01 [VL01] -> TK Selection Values 01 [VL01]
+                    VA frm_szLog_JOBN [JOBN] -> TK Work Station ID [JOBN]
+                    VA frm_jdLog_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+                    VA frm_mnLog_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+          End If
+     Else
+          VA evt_szDescription011_DL011 [DL011] = "Não é possível invalidar lote com registros manufaturados!"
+          Call App:P5576B03 Form:W5576B03D Version:Undefined
+               VA evt_szDescription011_DL011 [DL011] <> szMensagem [DL011]
+     End If
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Pré manufaturas - W5576B03A
+Event: Dialog is Initialized
+Event GUID: 3200ef4c-3dfb-44e1-b2b8-cda300a7e5aa
+=============================================
+FC Modos de Exibição BTI [Z5576B20] = 2
+GetAuditInfo(B9800100.GetAuditInfo)
+     VA frm_szLog_USER [USER] <> szUserName [USER]
+     VA frm_jdLog_UPMJ [UPMJ] <> jdDate [DTE]
+     VA frm_mnLog_UPMT [UPMT] <> mnTime [TME0]
+     VA frm_szLog_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+VA frm_szLog_PID [PID] = "P5576B03"
+VA frm_szLog_VL01 [VL01] = SL VersionName
+
+=============================================
+Form: Pré manufaturas - W5576B03A
+Event: Grid Record is Fetched
+Event GUID: 1ba97e8d-5a1d-45b6-aa7c-c016569166c8
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnConversionFactor_CONV [CONV]
+evt_szDataItem_DTAI [DTAI]
+evt_mnUnitsTransactionQty_UORG [UORG]
+----------------------------------------
+//
+! MDDebug(MD_DEBUG.MDDebug)
+!      "teste" -> szComment [DSC1]
+!      FC Modos de Exibição BTI [Z5576B20] -> szString_1 [DSC1]
+If FC Modos de Exibição BTI [Z5576B20] is equal to "2"
+And BC Caderno (F5576B21.0) [Z5576B14] is not equal to(":nf:",":total:")
+     Suppress Grid Line(FC Grid)
+Else
+     If FC Modos de Exibição BTI [Z5576B20] is equal to "3"
+     And BC Caderno (F5576B21.0) [Z5576B14] is equal to (":nf:",":total:")
+          Suppress Grid Line(FC Grid)
+     Else
+          If FC Modos de Exibição BTI [Z5576B20] is equal to "4"
+          And BC Caderno (F5576B21.0) [Z5576B14] is not equal to ":nf:"
+               Suppress Grid Line(FC Grid)
+          Else
+               If FC Modos de Exibição BTI [Z5576B20] is equal to "5"
+               And BC Caderno (F5576B21.0) [Z5576B14] is not equal to ":total:"
+                    Suppress Grid Line(FC Grid)
+               Else
+                    If BC Units - Order/Transaction Quantity (F5576B21.0) [UORG] is equal to <Blank>
+                    Or BC Units - Order/Transaction Quantity (F5576B21.0) [UORG] is equal to <NULL>
+                    Or BC Units - Order/Transaction Quantity (F5576B21.0) [UORG] is equal to "0"
+                         Suppress Grid Line(FC Grid)
+                    End If
+                    If BC J.D. EnterpriseOne Event Point 01 (F5576B21.0) [EV01] is equal to "P"
+                         GC Descrição [DL01] = "Pré Manufatura"
+                    Else
+                         If BC J.D. EnterpriseOne Event Point 01 (F5576B21.0) [EV01] is equal to "A"
+                              GC Descrição [DL01] = "Pré Manufatura Aprovada"
+                         Else
+                              If BC J.D. EnterpriseOne Event Point 01 (F5576B21.0) [EV01] is equal to "W"
+                                   GC Descrição [DL01] = "Revertida"
+                              Else
+                                   If BC J.D. EnterpriseOne Event Point 01 (F5576B21.0) [EV01] is equal to "I"
+                                        GC Descrição [DL01] = "Invalidada"
+                                   Else
+                                        GC Descrição [DL01] = "Manufaturada"
+                                   End If
+                              End If
+                         End If
+                    End If
+                    //
+                    F4101.FetchSingle  [Index 1: Item Master]
+                         BC Item Number - Short (F5576B21.0) [ITM] = TK Item Number - Short [ITM]
+                         GC UM Padrão [UOM1] <- TK Unit of Measure - Primary [UOM1]
+                    GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+                         BC Branch (F5576B21.0) [MMCU] -> szBranchPlant [MCU]
+                         BC Unit of Measure (F5576B21.0) [UM] -> szFromUnitOfMeasure [UOM]
+                         GC UM Padrão [UOM1] -> szToUnitOfMeasure [RUM]
+                         VA evt_mnConversionFactor_CONV [CONV] <> mnConversionFactorFrom_to_To [CONV]
+                         VA evt_szDataItem_DTAI [DTAI] <> szErrorMessageID [DTAI]
+                         BC Item Number - Short (F5576B21.0) [ITM] -> mnShortItemNumber [ITM]
+                    GC Quantidade p/ UM padrão [QAVAL] = [BC Units - Order/Transaction Quantity (F5576B21.0) [UORG]]*[VA evt_mnConversionFactor_CONV [CONV]]
+                    ItemAvailability(BCW07.ItemAvailability)
+                         BC Item Number - Short (F5576B21.0) [ITM] -> mnShortItemNumber [ITM]
+                         BC Branch (F5576B21.0) [MMCU] -> szBranchPlant [MCU]
+                         GC Quantidade em Estoque [QAVAL] <- mnTotQtyAvailable [QAVAL]
+                    VA evt_mnUnitsTransactionQty_UORG [UORG] = [GC Quantidade em Estoque [QAVAL]]+[GC Quantidade p/ UM padrão [QAVAL]]
+                    If VA evt_mnUnitsTransactionQty_UORG [UORG] is less than "0"
+                         Set Grid Color(FC Grid,  <Currently Selected Row>, GC Quantidadeem Estoque, <Red>)
+                    End If
+               End If
+          End If
+     End If
+End If
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Confirmacao - W5576B03B
+Object: FC Yes
+Event: Button Clicked
+Event GUID: 24f756db-fec2-4de8-bbc4-51420a6b2b50
+=============================================
+FI cOpcao [EV01] = "S"
+
+
+=============================================
+EVENTS
+=============================================
+Form: Confirmacao - W5576B03B
+Object: FC No
+Event: Button Clicked
+Event GUID: c9b19ba7-807d-4de4-ba50-549c57da7ea0
+=============================================
+FI mnEdiDocumentNumber [EDOC] = "N"
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Confirmacao - W5576B03B
+Event: Dialog is Initialized
+Event GUID: 3d22efd4-aa3c-4bea-bec1-74d78c20c5f0
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szMensagem_DL011 [DL011]
+----------------------------------------
+VA evt_szMensagem_DL011 [DL011] = <NULL>
+! MDDebug(MD_DEBUG.MDDebug)
+!      FI mnEdiDocumentNumber [EDOC] <> mnMathNumeric_1 [ITM]
+!      FI cAcao [EV01] <> cCharacter_1 [PRTA]
+!      FI cOpcao [EV01] <> cCharacter_2 [PRTA]
+If FI cAcao [EV01] is equal to "D"
+     VA evt_szMensagem_DL011 [DL011] = concat([VA evt_szMensagem_DL011 [DL011]], "Deseja reprocessar o lote ")
+Else
+     If FI cAcao [EV01] is equal to "A"
+          VA evt_szMensagem_DL011 [DL011] = concat([VA evt_szMensagem_DL011 [DL011]], "Deseja aprovar o lote ")
+     Else
+          VA evt_szMensagem_DL011 [DL011] = concat([VA evt_szMensagem_DL011 [DL011]], "Deseja Invalidar todo lote ")
+     End If
+End If
+VA evt_szMensagem_DL011 [DL011] = concat([VA evt_szMensagem_DL011 [DL011]], [FI mnEdiDocumentNumber [EDOC]])
+VA evt_szMensagem_DL011 [DL011] = concat([VA evt_szMensagem_DL011 [DL011]], " ?")
+Set Control Text(FC Mensagem, VA evt_szMensagem_DL011)
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Message - W5576B03D
+Event: Dialog is Initialized
+Event GUID: 8e16f89b-4569-48c1-8abc-8b956631d484
+=============================================
+Set Control Text(FC Insert Text Here, FI szMensagem)
+
+
+
+

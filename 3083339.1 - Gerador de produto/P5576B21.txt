@@ -1,0 +1,101 @@
+﻿
+=============================================
+EVENTS
+=============================================
+Form: Manutenção BTI Importado - W5576B21A
+Object: FC Grid
+Event: Row Exit & Changed - Inline
+Event GUID: fc63419e-b30c-4af0-9ecf-7831ca35b32e
+=============================================
+If GC Codigo do BTI [Z5576B02] is not equal to <Blank>
+And GC Codigo do BTI [Z5576B02] is not equal to <NULL>
+And GC Codigo do BTI [Z5576B02] is not equal to "0"
+     GetAuditInfo(B9800100.GetAuditInfo)
+          GC User ID [USER] <> szUserName [USER]
+          GC Date Updated [UPMJ] <> jdDate [DTE]
+          GC Time Updated [UPMT] <> mnTime [TME0]
+          GC Work Stn ID [JOBN] <> szWorkstation_UserId [JOBN]
+     GC Program ID [PID] = "P5576B21"
+     GC Selection Values [VL01] = SL VersionName
+End If
+
+=============================================
+Form: Manutenção BTI Importado - W5576B21A
+Object: FC Grid
+Event: Row is Exited
+Event GUID: e8214416-65f6-402b-b07e-16d9e882b117
+=============================================
+If GC Codigo do BTI [Z5576B02] is not equal to <Blank>
+And GC Codigo do BTI [Z5576B02] is not equal to <NULL>
+And GC Codigo do BTI [Z5576B02] is not equal to "0"
+     GetAuditInfo(B9800100.GetAuditInfo)
+          GC User ID [USER] <> szUserName [USER]
+          GC Date Updated [UPMJ] <> jdDate [DTE]
+          GC Time Updated [UPMT] <> mnTime [TME0]
+          GC Work Stn ID [JOBN] <> szWorkstation_UserId [JOBN]
+     GC Program ID [PID] = "P5576B21"
+     GC Selection Values [VL01] = SL VersionName
+End If
+
+=============================================
+Form: Manutenção BTI Importado - W5576B21A
+Object: FC Grid
+Event: Row Exit & Changed - Asynch
+Event GUID: 991d10aa-ef2e-47d5-8ae2-e6681bb90777
+=============================================
+If GC Codigo do BTI [Z5576B02] is not equal to <Blank>
+And GC Codigo do BTI [Z5576B02] is not equal to <NULL>
+And GC Codigo do BTI [Z5576B02] is not equal to "0"
+     GetAuditInfo(B9800100.GetAuditInfo)
+          GC User ID [USER] <> szUserName [USER]
+          GC Date Updated [UPMJ] <> jdDate [DTE]
+          GC Time Updated [UPMT] <> mnTime [TME0]
+          GC Work Stn ID [JOBN] <> szWorkstation_UserId [JOBN]
+     GC Program ID [PID] = "P5576B21"
+     GC Selection Values [VL01] = SL VersionName
+End If
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: BTI Importado - W5576B21B
+Object: HC Manutenção
+Event: Button Clicked
+Event GUID: 43c370e3-b4ef-471f-bca2-54e80a6db94f
+=============================================
+Call App:P5576B21 Form:W5576B21A Version:Undefined
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: BTI Importado - W5576B21B
+Event: Grid Record is Fetched
+Event GUID: 8c52aeb3-f238-4c55-a1ba-fa6cd3fea45b
+=============================================
+If BC EDI - Successfully Processed (F5576B20.0) [EDSP] is equal to "S"
+     GC Description  [DL01] = "Processado"
+Else
+     If BC EDI - Successfully Processed (F5576B20.0) [EDSP] is equal to "R"
+          GC Description  [DL01] = "Reprocessar"
+     Else
+          If BC EDI - Successfully Processed (F5576B20.0) [EDSP] is equal to "N"
+               GC Description  [DL01] = "Com erro"
+          Else
+               If BC EDI - Successfully Processed (F5576B20.0) [EDSP] is equal to "I"
+                    GC Description  [DL01] = "BTI invalidado"
+               Else
+                    GC Description  [DL01] = "A processar"
+               End If
+          End If
+     End If
+End If
+
+
+
+

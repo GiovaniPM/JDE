@@ -1,0 +1,27 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: T5576B04 PO Manufatura de BTI
+Type: Processing Options
+---------------------------------------------------------------------------------
+PAGE: 0                                - Parâmetros                    
+  szCostCenter                   [MCU]
+    1. Unidade Fabril  	Default - MIPG004
+    VALUE: []
+  cModoRelatorio                 [EV01]
+    2. Modo do relatório  	1 - Final  	Default - Teste
+    VALUE: []
+  szTipoDocumento                [DCT]
+    3. Tipo de documento  	Default - II
+    VALUE: []
+  cEstoqueNegativo               [EV01]
+    4. Permite estoque negativo  	1 - Sim  	Default - Não
+    VALUE: []
+  szAcctNoInputMode              [ANI]
+    5. Conta de Contrapartida  	Default - DMAAI 4124
+    VALUE: []
+  mnDiasPesquisa_IA04            [IA04]
+    6. Dias para o período de pesquisarem NFs avulsas  	Default - 0 dias
+    VALUE: []
+  mnDiasRetroativo_IA04          [IA04]
+    7. Dias para cálculo retroativo para a data de contabilização  	Default - 0 dias
+    VALUE: []
+

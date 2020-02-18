@@ -1,0 +1,63 @@
+﻿---------------------------------------------------------------------------------
+Business View: V5576B20 (BSVW Importação de BTI - Browse)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F5576B20 - TBLE Importação de BTI
+  F0006 - Business Unit Master
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+MCU        Business Unit                            String          12(0)      F0006(0)     
+Z5576B04   Centro de Custo                          String          12(0)      F5576B20(0)  
+UKID       Unique Key ID (Internal)                 Math Numeric    15(0)      F5576B20(0)  X
+TRDJ       Date - Order/Transaction                 Date            6(0)       F5576B20(0)  
+EDSP       EDI - Successfully Processed             Char            1(0)       F5576B20(0)  
+Z5576B01   Codigo Parque Grafico                    String          30(0)      F5576B20(0)  
+Z5576B02   Codigo do BTI                            String          30(0)      F5576B20(0)  
+Z5576B03   Quantidade de Chapas                     Math Numeric    12(0)      F5576B20(0)  
+Z5576B05   Quantidade de Paginas com Tinta Preta    Math Numeric    12(0)      F5576B20(0)  
+Z5576B06   Quantidade de Paginas com Tinta Colorida Math Numeric    12(0)      F5576B20(0)  
+Z5576B07   Codigo da Rotativa                       String          30(0)      F5576B20(0)  
+Z5576B08   Quantidade paginas Spot                  Math Numeric    12(0)      F5576B20(0)  
+Z5576B09   Quantidade total de exemplares           Math Numeric    12(0)      F5576B20(0)  
+Z5576B10   Quantidade total de exemplares estragado Math Numeric    12(0)      F5576B20(0)  
+Z5576B11   Data de Circulacao                       Date            6(0)       F5576B20(0)  
+Z5576B12   Tipo de papel                            String          30(0)      F5576B20(0)  
+Z5576B13   Acabamento                               String          30(0)      F5576B20(0)  
+Z5576B14   Caderno                                  String          30(0)      F5576B20(0)  
+Z5576B15   Refilado                                 String          30(0)      F5576B20(0)  
+GS3A       Generic String x 30                      String          30(0)      F5576B20(0)  
+GS3B       Generic String x 30                      String          30(0)      F5576B20(0)  
+GS3C       Generic String x 30                      String          30(0)      F5576B20(0)  
+GS3D       Generic String x 30                      String          30(0)      F5576B20(0)  
+GS3E       Generic String x 30                      String          30(0)      F5576B20(0)  
+CFAMT1     Generic Amount 1                         Math Numeric    15(2)      F5576B20(0)  
+CFAMT2     Generic Amount 2                         Math Numeric    15(2)      F5576B20(0)  
+CFAMT3     Generic Amount 3                         Math Numeric    15(2)      F5576B20(0)  
+CFAMT4     Generic Amount 4                         Math Numeric    15(2)      F5576B20(0)  
+CFAMT5     Generic Amount 5                         Math Numeric    15(2)      F5576B20(0)  
+CFFLG1     Generic Flag 1                           Char            1(0)       F5576B20(0)  
+CFFLG2     Generic Flag 2                           Char            1(0)       F5576B20(0)  
+CFFLG3     Generic Flag 3                           Char            1(0)       F5576B20(0)  
+CFFLG4     Generic Flag 4                           Char            1(0)       F5576B20(0)  
+CFFLG5     Generic Flag 5                           Char            1(0)       F5576B20(0)  
+CFDTE1     Generic Date 1                           Date            6(0)       F5576B20(0)  
+CFDTE2     Generic Date 2                           Date            6(0)       F5576B20(0)  
+CFDTE3     Generic Date 3                           Date            6(0)       F5576B20(0)  
+CFDTE4     Generic Date 4                           Date            6(0)       F5576B20(0)  
+FDATE01    Farm Generic Date 01                     Date            6(0)       F5576B20(0)  
+USER       User ID                                  String          10(0)      F5576B20(0)  
+PID        Program ID                               String          10(0)      F5576B20(0)  
+VL01       Selection Values 01                      String          25(0)      F5576B20(0)  
+JOBN       Work Station ID                          String          10(0)      F5576B20(0)  
+UPMJ       Date - Updated                           Date            6(0)       F5576B20(0)  
+UPMT       Time - Last Updated                      Math Numeric    6(0)       F5576B20(0)  
+RP33       Category Code - Business Unit 33         String          10(0)      F0006(0)     
+DL01       Description                              String          30(0)      F0006(0)     
+DC         Description - Compressed                 String          40(0)      F0006(0)     
+EDBT       EDI - Batch Number                       String          15(0)      F5576B20(0)  
+EDOC       EDI - Document Number                    Math Numeric    9(0)       F5576B20(0)  
+
+Joins:
+F0006.MCU Right Outer(=*) = F5576B20.Z5576B04
+

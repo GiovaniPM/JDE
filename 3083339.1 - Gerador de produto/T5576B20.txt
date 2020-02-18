@@ -1,0 +1,18 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: T5576B20 PO Gerador kit por manufatura
+Type: Processing Options
+---------------------------------------------------------------------------------
+PAGE: 0                                - Parâmetros                    
+  szMetodoCusto                  [LEDG]
+    1. Custo a ser utilizado:  	Default - 02 - Custo Médio
+    VALUE: []
+  cPermiteBaixaNegativa          [EV01]
+    2. Permite baixa negativa:  	S - Sim  	Default - Não
+    VALUE: []
+  szDocumentType_DCT             [DCT]
+    3. Tipo de documento:  	Default - IM
+    VALUE: []
+  mnMathNumeric01                [MATH01]
+    4. Dias para conabilização retroativa:  	Default - -1
+    VALUE: []
+

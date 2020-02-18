@@ -1,0 +1,62 @@
+﻿---------------------------------------------------------------------------------
+Business View: V5576B04 (BSVW Manufatura BTI)
+Type: Standard
+---------------------------------------------------------------------------------
+Tables:
+  F5576B21 - BTI Consumo por insumo
+  F00092 - Supplemental Data
+
+ALIAS      DESCRIPTION                              TYPE            SIZE       TABLE        PK
+EDOC       EDI - Document Number                    Math Numeric    9(0)       F5576B21(0)  X
+TRDJ       Date - Order/Transaction                 Date            6(0)       F5576B21(0)  X
+MMCU       Branch                                   String          12(0)      F5576B21(0)  X
+KIT        Parent (short) Item Number               Math Numeric    8(0)       F5576B21(0)  X
+ITM        Item Number - Short                      Math Numeric    8(0)       F5576B21(0)  X
+Z5576B04   Centro de Custo                          String          12(0)      F5576B21(0)  X
+Z5576B14   Caderno                                  String          30(0)      F5576B21(0)  X
+EV01       J.D. EnterpriseOne Event Point 01        Char            1(0)       F5576B21(0)  
+KITL       Kit - 2nd Item Number                    String          25(0)      F5576B21(0)  
+LITM       2nd Item Number                          String          25(0)      F5576B21(0)  
+DL01       Description                              String          30(0)      F5576B21(0)  
+QNTY       Quantity - Standard Required Quantity    Math Numeric    15(0)      F5576B21(0)  
+UM         Unit of Measure                          String          2(0)       F5576B21(0)  
+Z5576B03   Quantidade de Chapas                     Math Numeric    12(0)      F5576B21(0)  
+Z5576B09   Quantidade total de exemplares           Math Numeric    12(0)      F5576B21(0)  
+Z5576B10   Quantidade total de exemplares estragado Math Numeric    12(0)      F5576B21(0)  
+Z5576B05   Quantidade de Paginas com Tinta Preta    Math Numeric    12(0)      F5576B21(0)  
+Z5576B06   Quantidade de Paginas com Tinta Colorida Math Numeric    12(0)      F5576B21(0)  
+Z5576B08   Quantidade paginas Spot                  Math Numeric    12(0)      F5576B21(0)  
+UORG       Units - Order/Transaction Quantity       Math Numeric    15(0)      F5576B21(0)  
+USER       User ID                                  String          10(0)      F5576B21(0)  
+PID        Program ID                               String          10(0)      F5576B21(0)  
+VL01       Selection Values 01                      String          25(0)      F5576B21(0)  
+JOBN       Work Station ID                          String          10(0)      F5576B21(0)  
+UPMJ       Date - Updated                           Date            6(0)       F5576B21(0)  
+UPMT       Time - Last Updated                      Math Numeric    6(0)       F5576B21(0)  
+Z5576B16   Base de Cálculo                          String          3(0)       F5576B21(0)  
+Z5576B17   Usuario Aprovador                        String          10(0)      F5576B21(0)  
+Z5576B18   Data Aprovacao                           Date            6(0)       F5576B21(0)  
+Z5576B19   Hora Aprovacao                           Math Numeric    6(0)       F5576B21(0)  
+ICU        Batch Number                             Math Numeric    8(0)       F5576B21(0)  
+ICUT       Batch Type                               String          2(0)       F5576B21(0)  
+KCO        Document Company                         String          5(0)       F5576B21(0)  
+DOC        Document (Voucher, Invoice, etc.)        Math Numeric    8(0)       F5576B21(0)  
+DCT        Document Type                            String          2(0)       F5576B21(0)  
+SDB        Supplemental Database Code               String          4(0)       F00092(0)    
+TYDT       Type Data                                String          2(0)       F00092(0)    
+SBA1       Supplemental Data Alpha Key 1            String          10(0)      F00092(0)    
+KCO        Document Company                         String          5(0)       F00092(0)    
+SBA2       Supplemental Data Alpha Key 2            String          10(0)      F00092(0)    
+MCU        Business Unit                            String          12(0)      F00092(0)    
+SBN1       Supplemental Data Numeric Key 1          Math Numeric    8(0)       F00092(0)    
+SBN2       Supplementat Data Numeric Key 2          Math Numeric    8(0)       F00092(0)    
+UKID       Unique Key ID (Internal)                 Math Numeric    15(0)      F00092(0)    
+RMK        Name - Remark                            String          30(0)      F00092(0)    
+RMK2       Name - Remark                            String          30(0)      F00092(0)    
+RMK3       Text Remark                              String          50(0)      F00092(0)    
+
+Joins:
+F5576B21.MMCU Simple(==) = F00092.MCU
+F5576B21.Z5576B04 Simple(==) = F00092.RMK
+F5576B21.Z5576B14 Simple(==) = F00092.RMK2
+

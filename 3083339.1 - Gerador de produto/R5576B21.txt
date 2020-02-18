@@ -1,0 +1,550 @@
+﻿=============================================
+EVENTS
+=============================================
+UBE: R5576B21
+Event: Report Variables
+Event GUID: 11c1ac37-5a74-48aa-bc06-bb52cea10a78
+=============================================
+rpt_cPrimeiroRegistro_EV01 [EV01]
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Finalização [5] 
+Event: Do Section
+Event GUID: 3f929426-fb39-4c94-b009-ece267a8f694
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szExplicacao_EXA [EXA]
+----------------------------------------
+If PO cModoRelatorio [EV01] is equal to "1"
+     VA evt_szExplicacao_EXA [EXA] = "Baixa por NF"
+     F0911FSBeginDoc(B0900049.F0911FSBeginDoc)
+          RV FC_jobsJobNoF0911 [JOBS] <> mnJobNumber [MATH06]
+          "1" -> cDocAction [ACTN]
+          "1" -> cEditInstructionFlag [EV01]
+          RV FC_JELNLastJELine [JELN] <> mnLastLineNumber [JELN]
+          RV FC_kcoDocKeyComp [KCO] -> szCompanyKey [KCO]
+          PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+          RV mnNumeroDocumento_DOC [DOC] -> mnDocNumber [DOC]
+          RV FC_G/LDate [DGJ] -> jdGLDate [DGJ]
+          RV mnNumeroLote_ICU [ICU] -> mnBatchNumber [ICU]
+          RV szTipoLote_ICUT [ICUT] -> szBatchType [ICUT]
+          RV FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+          RV FC_dicjBatchDate [DICJ] -> jdBatchSystemDate [DSYJ]
+          "0" -> mnBatchTime [TICU]
+          RV szCurrencyCodeFrom_CRCD [CRCD] -> szTransactionCurrency [CRCD]
+          "0" -> mnCurrencyRate [CRR]
+          VA evt_szExplicacao_EXA [EXA] -> szExplanation [EXA]
+          "0" -> mnHistoricalRate [HCRR]
+          RV szCurrencyCodeFrom_CRCD [CRCD] -> szBaseCoCurrency [CRDC]
+          "0" -> mnAmountToDistribute [ATAD]
+          "0" -> mnCurAmountToDistribute [CTAD]
+          "Y" -> cCurrencyFlag [CRYR]
+          RV GLMBFVersion_VER [VER] <> szJEVersion [VER]
+          "0" -> cExchangeRateDateFlag [EV01]
+     GetNextUniqueKeyID(X00022.GetNextUniqueKeyID)
+          "F41021WF" -> szObjectName [OBNM]
+          RV mnUniqueKeyIDF41021WF_UKID [UKID] <> mnUniqueKeyID [UKID]
+     CacheProcessUniqueF41021WF(B4902110.CacheProcessUniqueF41021WF)
+          RV FC_JOBSInvJobNumber [JOBS] -> mnJobnumber [JOBS]
+          RV szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          RV mnUniqueKeyIDF41021WF_UKID [UKID] -> mnUniqueKeyIDInternal [UKID]
+          "2" -> szCacheActionCode [CACTN]
+          "3" -> mnNumberKeys [NKEYS]
+          "1" -> idCacheCursor [GENLNG]
+     CacheLicensePlateTransHeader(B46L0200.CacheLicensePlateTransHeader)
+          "2" -> szCacheActionCode [CACTN]
+          "1" -> mnNumberKeys [NKEYS]
+          "1" -> nIndex [INT01]
+          "1" -> cSuppressErrorMessage [SUPPS]
+          RV FC_JOBSInvJobNumber [JOBS] <> mnJobNumber [JOBS]
+          "N" -> cPartialsAllowedYN [PRTA]
+          RV szProgramId_PID [PID] -> szProgramId [PID]
+          "IA" -> szLicensePlateTransactionT [LPTT]
+     F4114EndDocument(XT4114Z1.F4114EndDocument)
+          RV szProgramId_PID [PID] -> szProgramID [PID]
+          RV mnNumeroDocumento_DOC [DOC] -> mnDocumentNumber [DOC]
+          RV szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          "1" -> cWriteCardex [EV01]
+          PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+          RV szTipo_FUAN1 [FUAN1] -> mnTransactionProcessType [MATH01]
+          RV FC_jobsJobNoF0911 [JOBS] -> mnF0911Jobnumber [JOBS]
+          RV mnNumeroLote_ICU [ICU] -> mnBatchNumber [ICU]
+          RV FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+          "1" -> cProcessCloseBatch [EV01]
+          RV PO_cSummaryMode [EV03] -> cSummarizeF0911 [EV01]
+          RV FC_JOBSInvJobNumber [JOBS] -> mnInvJobNumber [JOBS]
+          RV PO_OutInteroperabilityType [TYTN] -> szEDITransactionType [TYTN]
+     F4114ClearDetailStack(XT4114Z1.F4114ClearDetailStack)
+          RV szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+          "1" -> cProcessCloseBatch [EV01]
+          RV mnNumeroLote_ICU [ICU] -> mnBatchNumber [ICU]
+          RV FC_jobsJobNoF0911 [JOBS] -> mnF0911Jobnumber [JOBS]
+          RV FC_JOBSInvJobNumber [JOBS] -> mnInvJobNumber [JOBS]
+     GetGLMBFVersionFromJEVersion(B4101430.GetGLMBFVersionFromJEVersion)
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Inicialização [4] 
+Event: Do Section
+Event GUID: 77dc25c4-57b1-4ed6-9558-c3e0320eae5a
+=============================================
+If PO cModoRelatorio [EV01] is equal to "1"
+     RV mnNumeroLote_ICU [ICU] = 0
+     RV mnDocVoucherInvoiceE_DOC [DOC] = 0
+     RV szTipoLote_ICUT [ICUT] = "N"
+     RV szStatusLote_IST [IST] = "U"
+     RV szLoteAprovado_IAPP [IAPP] = "P"
+     RV szPostOutOfBalance_POB [POB] = "N"
+     RV szCurrencyCodeFrom_CRCD [CRCD] = "R$"
+     RV PO_cAllowQtyOverAvailable [EV05] = "1"
+     RV PO_cAllowHeldLots [EV06] = <NULL>
+     RV PO_cSummaryMode [EV03] = <NULL>
+     RV PO_OutInteroperabilityType [TYTN] = <NULL>
+     RV FC_OrderDate [TRDJ] = SL DateToday
+     RetrieveCompanyFromBusUnit(B0000130.RetrieveCompanyFromBusUnit)
+          RV FC_Branch [MMCU] -> szCostCenter [MCU0]
+          RV szCompany_CO [CO] <- szCompany [CO]
+     F4114BeginDocument(XT4114Z1.F4114BeginDocument)
+          RV szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          RV FC_Branch [MMCU] <> szBranchPlant [MCU]
+          RV mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+          RV FC_dicjBatchDate [DICJ] <> jdBatchDate [DICJ]
+          RV mnJournalEntryLineNo_JELN [JELN] <> mnLastJELineNumber [JELN]
+          RV szCompany_CO [CO] <> szDocumentKeyCompany [KCO]
+          PO szTipoDocumento [DCT] <> szDocumentType [DCT]
+          RV mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+          RV jdDateForGLandVoucherJ_DGJ [DGJ] <> jdGLDate [DGL]
+          RV jdDateTransactionJuli_TRDJ [TRDJ] <> jdTransactionDate [TRDJ]
+End If
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: BSVW Join F7601B x F7601B All columns                        [1] 
+Event: Initialize Section
+Event GUID: bed2ff8d-003e-4f7e-8ee0-8e925534ccd1
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_jdDataPesquisa_UPMJ [UPMJ]
+----------------------------------------
+VA evt_jdDataPesquisa_UPMJ [UPMJ] = add_days(date_today(), ([PO mnDiasPesquisa_IA04 [IA04]]*-1))
+Set Selection Append Flag( <Yes>)
+Set User Selection(BC Date - Issue (F7611B)(ISSU),  <Greater Than or Equal To>, VA evt_jdDataPesquisa_UPMJ, <And>)
+//
+VA rpt_cPrimeiroRegistro_EV01 [EV01] = "S"
+If PO szTipoDocumento [DCT] is equal to <Blank>
+Or PO szTipoDocumento [DCT] is equal to <NULL>
+Or PO szTipoDocumento [DCT] is equal to "0"
+     PO szTipoDocumento [DCT] = "II"
+End If
+If PO szLedgType [LEDG] is equal to <Blank>
+Or PO szLedgType [LEDG] is equal to <NULL>
+Or PO szLedgType [LEDG] is equal to "0"
+     PO szLedgType [LEDG] = "02"
+End If
+//
+GetAuditInfo(B9800100.GetAuditInfo)
+     RV szUsuario_USER [USER] <> szUserName [USER]
+     RV jdDateUpdated_UPMJ [UPMJ] <> jdDate [DTE]
+     RV mnTimeLastUpdated_UPMT [UPMT] <> mnTime [TME0]
+     RV szWorkStationId_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+RV szProgramId_PID [PID] = "R5576B21"
+RV szVersao_VL01 [VL01] = SL VersionName
+
+=============================================
+Section: BSVW Join F7601B x F7601B All columns                        [1] 
+Event: Do Section
+Event GUID: 52f486f9-f74a-4628-b900-ab3e64704795
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szErroCusto_DTAI [DTAI]
+evt_cErro_EV01 [EV01]
+evt_szLedgType_LEDG [LEDG]
+evt_szErroDMAAI4122_DTAI [DTAI]
+evt_szErroConversao_DTAI [DTAI]
+evt_mnConversionFactor_CONV [CONV]
+evt_szErroQuantidade_DTAI [DTAI]
+evt_mnQuantityAvailable_QAVAL [QAVAL]
+evt_cReturnCode_EV01 [EV01]
+evt_szErroDMAAI4124_DTAI [DTAI]
+evt_szInformacao_VL01 [VL01]
+evt_mnQuantityTransaction_TRQT [TRQT]
+evt_mnTransactioProcess_MATH01 [MATH01]
+evt_szStatusCodeLast_LTTR [LTTR]
+evt_szStatusCodeNext_NXTR [NXTR]
+evt_szExplicacao_EXA [EXA]
+evt_szLink_F2T [F2T]
+evt_mnLink_F2A [F2A]
+evt_szLink_URRF [URRF]
+----------------------------------------
+VA evt_cErro_EV01 [EV01] = "N"
+VA evt_cReturnCode_EV01 [EV01] = "1"
+VA evt_mnQuantityAvailable_QAVAL [QAVAL] = 0
+VA evt_mnTransactioProcess_MATH01 [MATH01] = 2
+VA evt_szErroConversao_DTAI [DTAI] = <NULL>
+VA evt_szErroCusto_DTAI [DTAI] = <NULL>
+VA evt_szErroDMAAI4122_DTAI [DTAI] = <NULL>
+VA evt_szErroDMAAI4124_DTAI [DTAI] = <NULL>
+VA evt_szErroQuantidade_DTAI [DTAI] = <NULL>
+VA evt_szExplicacao_EXA [EXA] = concat([BC Nota Fiscal Number (F7611B.0) [BNNF]], concat("|", concat([BC Nota Fiscal Series (F7611B.0) [BSER]], concat("|", concat([BC Document Type (F7611B.0) [DCT]], concat("|", [BC Unique Key ID (Internal) (F7611B.0) [UKID]]))))))
+VA evt_szInformacao_VL01 [VL01] = <NULL>
+VA evt_szLedgType_LEDG [LEDG] = [PO szLedgType [LEDG]]
+VA evt_szStatusCodeLast_LTTR [LTTR] = BC Status Code - Last (F7611B.0) [LTTR]
+VA evt_szStatusCodeNext_NXTR [NXTR] = BC Status Code - Next (F7611B.0) [NXTR]
+RV 2nd Item Number [LITM] = BC 2nd Item Number (F7611B.0) [LITM]
+RV Document Type [DCT] = BC Document Type (F7611B.0) [DCT]
+RV Extended Price [AEXP] = [BC Amount - Extended Price (F7611B.0) [AEXP]]*-1
+! RV G/L Category [GLPT] = BC Category - G/L (F4101.0) [GLPT]
+RV G/L Category [GLPT] = BC Category - G/L (F4102.0) [GLPT]
+RV Issue Date [ISSU] = BC Date - Issue (F7611B.0) [ISSU]
+RV Location [LOCN] = BC Location (F7611B.0) [LOCN]
+RV N.F. Number [BNNF] = BC Nota Fiscal Number (F7611B.0) [BNNF]
+RV N.F. Series [BSER] = BC Nota Fiscal Series (F7611B.0) [BSER]
+RV Quantity [UORG] = [BC Units - Order/Transaction Quantity (F7611B.0) [UORG]]*-1
+RV Unit Cost [UNCS] = BC Amount - Price per Unit (F7611B.0) [UPRC]
+RV U/M [UOM] = BC Unit of Measure as Input (F7611B.0) [UOM]
+RV FC_Branch [MMCU] = BC Business Unit (F7611B.0) [MCU]
+RV ev06 - Rcd Written [EV06] = <Blank>
+RV FC_G/LDate [DGJ] = SL DateToday
+RV PO_cAllowHeldLots [EV06] = <Blank>
+RV FC_G/LDate [DGJ] = add_days(date_today(), ([PO mnDiasRetroativo_IA04 [IA04]]*-1))
+//
+RetrieveCompanyFromBusUnit(B0000130.RetrieveCompanyFromBusUnit)
+     BC Business Unit (F7611B.0) [MCU] -> szCostCenter [MCU0]
+     RV FC_kcoDocKeyComp [KCO] <- szCompany [CO]
+//
+// Verifica se existe DMAAI para este lançamento
+// 4122
+RetrieveDistAAIwF4095Cache(B4000351.RetrieveDistAAIwF4095Cache)
+     "4122" -> mnAAITableNumber [ANUM]
+     BC Company (F7611B.0) [CO] -> szCompanyNumber [CO]
+     PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+     BC Category - G/L (F4101.0) [GLPT] -> szGLCategory [GLPT]
+     BC Business Unit (F7611B.0) [MCU] -> szBranchPlant [MCU]
+     VA evt_szErroDMAAI4122_DTAI [DTAI] <> szErrorMessageID [DTAI]
+If SV Error_Status is equal to CO ERROR
+     VA evt_cErro_EV01 [EV01] = "S"
+End If
+// 4124
+If PO szAcctNoInputMode [ANI] is not equal to <Blank>
+And PO szAcctNoInputMode [ANI] is not equal to <NULL>
+And PO szAcctNoInputMode [ANI] is not equal to "0"
+     VA evt_szErroDMAAI4124_DTAI [DTAI] = <NULL>
+Else
+     RetrieveDistAAIwF4095Cache(B4000351.RetrieveDistAAIwF4095Cache)
+          "4124" -> mnAAITableNumber [ANUM]
+          BC Company (F7611B.0) [CO] -> szCompanyNumber [CO]
+          PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+          BC Category - G/L (F4101.0) [GLPT] -> szGLCategory [GLPT]
+          BC Business Unit (F7611B.0) [MCU] -> szBranchPlant [MCU]
+          VA evt_szErroDMAAI4124_DTAI [DTAI] <> szErrorMessageID [DTAI]
+     If SV Error_Status is equal to CO ERROR
+          VA evt_cErro_EV01 [EV01] = "S"
+     End If
+End If
+//
+// Verifico o tipo do custo a ser utilizado
+If PO cCustoBaixa [EV01] is not equal to "1"
+     F4105.Select  [Index 1: Item No,Branch, +A]
+          BC Item Number - Short (F4101.0) [ITM] = TK Item Number - Short [ITM]
+          BC Business Unit (F7611B.0) [MCU] = TK Business Unit [MCU]
+          VA evt_szLedgType_LEDG [LEDG] = TK Cost Method [LEDG]
+     F4105.FetchNext  [Index 1: Item No,Branch, +A]
+          RV Unit Cost [UNCS] <- TK Amount - Unit Cost [UNCS]
+     If SV File_IO_Status is equal to CO SUCCESS
+     And RV Unit Cost [UNCS] is not equal to "0"
+          RV Extended Price [AEXP] = [RV Unit Cost [UNCS]]*[RV Quantity [UORG]]
+     Else
+          RV Unit Cost [UNCS] = 0
+          RV Extended Price [AEXP] = 0
+          VA evt_szErroCusto_DTAI [DTAI] = "096J"
+          VA evt_cErro_EV01 [EV01] = "S"
+     End If
+End If
+//
+// Verifica conversão de unidade de medida
+If BC Unit of Measure - Primary (F4101.0) [UOM1] is not equal to BC Unit of Measure as Input (F7611B.0) [UOM]
+     GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+          BC Business Unit (F7611B.0) [MCU] -> szBranchPlant [MCU]
+          BC Unit of Measure as Input (F7611B.0) [UOM] -> szFromUnitOfMeasure [UOM]
+          BC Unit of Measure - Primary (F4101.0) [UOM1] -> szToUnitOfMeasure [RUM]
+          VA evt_mnConversionFactor_CONV [CONV] <> mnConversionFactorFrom_to_To [CONV]
+          VA evt_szErroConversao_DTAI [DTAI] <> szErrorMessageID [DTAI]
+          BC Item Number - Short (F7611B.0) [ITM] -> mnShortItemNumber [ITM]
+     If SV Error_Status is equal to CO ERROR
+          VA evt_cErro_EV01 [EV01] = "S"
+     End If
+Else
+     VA evt_mnConversionFactor_CONV [CONV] = 1
+End If
+//
+// Verifica se tem quantidade disponível
+If PO cEstoqueNegativo [EV01] is not equal to "1"
+     ItemAvailability(BCW07.ItemAvailability)
+          BC Item Number - Short (F7611B.0) [ITM] -> mnShortItemNumber [ITM]
+          BC Business Unit (F7611B.0) [MCU] -> szBranchPlant [MCU]
+          BC Location (F7611B.0) [LOCN] -> szLocation [LOCN]
+          VA evt_cReturnCode_EV01 [EV01] <> cReturnCode [EV01]
+          VA evt_mnQuantityAvailable_QAVAL [QAVAL] <- mnTotQtyAvailable [QAVAL]
+     VA evt_mnQuantityAvailable_QAVAL [QAVAL] = [VA evt_mnQuantityAvailable_QAVAL [QAVAL]]*[VA evt_mnConversionFactor_CONV [CONV]]
+     If VA evt_mnQuantityAvailable_QAVAL [QAVAL] is less than BC Units - Order/Transaction Quantity (F7611B.0) [UORG]
+          VA evt_szErroQuantidade_DTAI [DTAI] = "CW0034"
+          VA evt_cErro_EV01 [EV01] = "S"
+     End If
+End If
+//
+// Imprime relatório
+Do Custom Section(RS Linha)
+If VA evt_szErroDMAAI4122_DTAI [DTAI] is not equal to <Blank>
+And VA evt_szErroDMAAI4122_DTAI [DTAI] is not equal to <NULL>
+And VA evt_szErroDMAAI4122_DTAI [DTAI] is not equal to "0"
+     RetornaMsgErro(N58N9203.RetornaMsgErro)
+          VA evt_szErroDMAAI4122_DTAI [DTAI] <> szDataItem [DTAI]
+          RV Mensagem <> szDescriptionAlpha [DSCA]
+     VA evt_szInformacao_VL01 [VL01] = concat("4122|", [PO szTipoDocumento [DCT]])
+     RV Mensagem = concat(concat([VA evt_szInformacao_VL01 [VL01]], " - "), [RV Mensagem])
+     RV Mensagem = concat(concat([VA evt_szErroDMAAI4122_DTAI [DTAI]], " - "), [RV Mensagem])
+     Do Custom Section(RS Mensagem)
+End If
+If VA evt_szErroDMAAI4124_DTAI [DTAI] is not equal to <Blank>
+And VA evt_szErroDMAAI4124_DTAI [DTAI] is not equal to <NULL>
+And VA evt_szErroDMAAI4124_DTAI [DTAI] is not equal to "0"
+     RetornaMsgErro(N58N9203.RetornaMsgErro)
+          VA evt_szErroDMAAI4124_DTAI [DTAI] <> szDataItem [DTAI]
+          RV Mensagem <> szDescriptionAlpha [DSCA]
+     VA evt_szInformacao_VL01 [VL01] = concat("4124|", [PO szTipoDocumento [DCT]])
+     RV Mensagem = concat(concat([VA evt_szInformacao_VL01 [VL01]], " - "), [RV Mensagem])
+     RV Mensagem = concat(concat([VA evt_szErroDMAAI4124_DTAI [DTAI]], " - "), [RV Mensagem])
+     Do Custom Section(RS Mensagem)
+End If
+If VA evt_szErroCusto_DTAI [DTAI] is not equal to <Blank>
+And VA evt_szErroCusto_DTAI [DTAI] is not equal to <NULL>
+And VA evt_szErroCusto_DTAI [DTAI] is not equal to "0"
+     RetornaMsgErro(N58N9203.RetornaMsgErro)
+          VA evt_szErroCusto_DTAI [DTAI] <> szDataItem [DTAI]
+          RV Mensagem <> szDescriptionAlpha [DSCA]
+     VA evt_szInformacao_VL01 [VL01] = VA evt_szLedgType_LEDG [LEDG]
+     RV Mensagem = concat(concat([VA evt_szInformacao_VL01 [VL01]], " - "), [RV Mensagem])
+     RV Mensagem = concat(concat([VA evt_szErroCusto_DTAI [DTAI]], " - "), [RV Mensagem])
+     Do Custom Section(RS Mensagem)
+End If
+If VA evt_szErroConversao_DTAI [DTAI] is not equal to <Blank>
+And VA evt_szErroConversao_DTAI [DTAI] is not equal to <NULL>
+And VA evt_szErroConversao_DTAI [DTAI] is not equal to "0"
+     RetornaMsgErro(N58N9203.RetornaMsgErro)
+          VA evt_szErroConversao_DTAI [DTAI] <> szDataItem [DTAI]
+          RV Mensagem <> szDescriptionAlpha [DSCA]
+     VA evt_szInformacao_VL01 [VL01] = concat(concat([BC Unit of Measure as Input (F7611B.0) [UOM]], "|"), [BC Unit of Measure - Primary (F4101.0) [UOM1]])
+     RV Mensagem = concat(concat([VA evt_szInformacao_VL01 [VL01]], " - "), [RV Mensagem])
+     RV Mensagem = concat(concat([VA evt_szErroConversao_DTAI [DTAI]], " - "), [RV Mensagem])
+     Do Custom Section(RS Mensagem)
+End If
+If VA evt_szErroQuantidade_DTAI [DTAI] is not equal to <Blank>
+And VA evt_szErroQuantidade_DTAI [DTAI] is not equal to <NULL>
+And VA evt_szErroQuantidade_DTAI [DTAI] is not equal to "0"
+     RetornaMsgErro(N58N9203.RetornaMsgErro)
+          VA evt_szErroQuantidade_DTAI [DTAI] <> szDataItem [DTAI]
+          RV Mensagem <> szDescriptionAlpha [DSCA]
+     RV Mensagem = concat(concat([VA evt_szErroQuantidade_DTAI [DTAI]], " - "), [RV Mensagem])
+     Do Custom Section(RS Mensagem)
+End If
+//
+// Processamento
+RV Lidos [CFNO2] = [RV Lidos [CFNO2]]+1
+If VA evt_cErro_EV01 [EV01] is equal to "N"
+     If VA rpt_cPrimeiroRegistro_EV01 [EV01] is equal to "S"
+          Do Custom Section(RS Inicialização)
+          VA rpt_cPrimeiroRegistro_EV01 [EV01] = "N"
+     End If
+     //
+     If PO cModoRelatorio [EV01] is equal to "1"
+          VA evt_mnQuantityTransaction_TRQT [TRQT] = [VA evt_mnQuantityTransaction_TRQT [TRQT]]*-1
+          If VA evt_mnQuantityTransaction_TRQT [TRQT] is greater than "0"
+               RV szFromTo_FRTO [FRTO] = "T"
+          Else
+               RV szFromTo_FRTO [FRTO] = "F"
+          End If
+          If PO cEstoqueNegativo [EV01] is equal to "1"
+               F4114EditLine(XT4114Z1.F4114EditLine)
+                    RV szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+                    RV ev06 - Rcd Written [EV06] <> cRecordWrittenToWorkFile [EV04]
+                    RV lnid - Line Number [LNID] <> mnLineNumber [LNID]
+                    RV FC_G/LDate [DGJ] -> jdGLDate [DGL]
+                    VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+                    RV PO_cAllowQtyOverAvailable [EV05] -> cUpdateQuantityOnHand [EV01]
+                    "1" -> cAllowQtyOverAvailable [EV01]
+                    PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+                    RV FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+                    RV szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+                    RV FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+                    RV PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+                    RV PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+                    RV FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+                    PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+                    RV FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+                    RV mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+                    RV FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+                    RV FC_Branch [MMCU] -> szBranchPlant [MCU]
+                    BC 2nd Item Number (F7611B.0) [LITM] -> szItemNumber [UITM]
+                    RV itm - Short Item No [ITM] <- mnShortItemNumber [ITM]
+                    BC Location (F7611B.0) [LOCN] -> szDisplayedLocation [LOCNE1]
+                    RV Location - File [LOCN] <- szLocation [LOCN]
+                    BC Unit of Measure as Input (F7611B.0) [UOM] -> szTransactionUOM [TRUM]
+                    RV Quantity [UORG] -> mnTransactionQty [TRQT]
+                    RV Unit Cost [UNCS] -> mnTransactionUnitCost [UNCS]
+                    RV Extended Price [AEXP] -> mnExtendedAmount [PAID]
+                    VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+                    RV mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+                    RV FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+                    RV FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+                    RV STKT - Stocking Type [STKT] <> cStockingType [STKT]
+                    RV FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+                    RV ev09CostEntered [EV09] -> cCostEntered [ENTC]
+                    RV WMS Line [MATH05] <> mnWMSLineNumber [MATH02]
+                    "1" -> cProcessJE [EV01]
+                    RV GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+          Else
+               F4114EditLine(XT4114Z1.F4114EditLine)
+                    RV szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+                    RV ev06 - Rcd Written [EV06] <> cRecordWrittenToWorkFile [EV04]
+                    RV lnid - Line Number [LNID] <> mnLineNumber [LNID]
+                    RV FC_G/LDate [DGJ] -> jdGLDate [DGL]
+                    VA evt_szExplicacao_EXA [EXA] -> szGLExplanation [DSC1]
+                    PV PO_cAllowQtyOverAvailable [EV05] -> cAllowQtyOverAvailable [EV01]
+                    PO szAcctNoInputMode [ANI] -> szAccountNumber [ANI]
+                    RV FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+                    RV szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+                    RV FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+                    RV PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+                    RV PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+                    RV FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+                    PO szTipoDocumento [DCT] -> szDocumentType [DCT]
+                    RV FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+                    RV mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+                    RV FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+                    RV FC_Branch [MMCU] -> szBranchPlant [MCU]
+                    BC 2nd Item Number (F7611B.0) [LITM] -> szItemNumber [UITM]
+                    RV itm - Short Item No [ITM] <- mnShortItemNumber [ITM]
+                    BC Location (F7611B.0) [LOCN] -> szDisplayedLocation [LOCNE1]
+                    RV Location - File [LOCN] <- szLocation [LOCN]
+                    BC Unit of Measure as Input (F7611B.0) [UOM] -> szTransactionUOM [TRUM]
+                    RV Quantity [UORG] -> mnTransactionQty [TRQT]
+                    RV Unit Cost [UNCS] -> mnTransactionUnitCost [UNCS]
+                    RV Extended Price [AEXP] -> mnExtendedAmount [PAID]
+                    VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+                    RV mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+                    RV FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+                    RV FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+                    RV STKT - Stocking Type [STKT] <> cStockingType [STKT]
+                    RV FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+                    RV ev09CostEntered [EV09] -> cCostEntered [ENTC]
+                    RV WMS Line [MATH05] <> mnWMSLineNumber [MATH02]
+                    "1" -> cProcessJE [EV01]
+                    RV GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+          End If
+          If SV Error_Status is equal to CO ERROR
+               VA evt_szErroQuantidade_DTAI [DTAI] = "S74E0101"
+               RetornaMsgErro(N58N9203.RetornaMsgErro)
+                    VA evt_szErroQuantidade_DTAI [DTAI] <> szDataItem [DTAI]
+                    RV Mensagem <> szDescriptionAlpha [DSCA]
+               Do Custom Section(RS Mensagem)
+          Else
+               RV Processados [CFNO2] = [RV Processados [CFNO2]]+1
+               RV NumeroLote [ICU] = RV mnNumeroLote_ICU [ICU]
+               If PO szStatusCodeNext [NXTR] is not equal to <Blank>
+               And PO szStatusCodeNext [NXTR] is not equal to <NULL>
+               And PO szStatusCodeNext [NXTR] is not equal to "0"
+                    VA evt_szStatusCodeLast_LTTR [LTTR] = BC Status Code - Next (F7611B.0) [NXTR]
+                    VA evt_szStatusCodeNext_NXTR [NXTR] = PO szStatusCodeNext [NXTR]
+               Else
+                    GetNextStatusCodeShell(B4200410.GetNextStatusCodeShell)
+                         RV Document Type [DCT] -> szOrderType [DCTO]
+                         BC Line Type (F7611B.0) [LNTY] -> szLineType [LNTY]
+                         VA evt_szStatusCodeLast_LTTR [LTTR] <> szLastStatusCode [LTTR]
+                         VA evt_szStatusCodeNext_NXTR [NXTR] <> szNextStatusCode [NXTR]
+               End If
+               ! VA evt_szLink_F2T [F2T] = [RV mnNumeroLote_ICU [ICU]]
+               ! VA evt_mnLink_F2A [F2A] = RV mnNumeroLote_ICU [ICU]
+               F7611B.Update  [Index 1: NotaFiscalDet]
+                    BC Nota Fiscal Number (F7611B.0) [BNNF] = TK Nota Fiscal Number [BNNF]
+                    BC Nota Fiscal Series (F7611B.0) [BSER] = TK Nota Fiscal Series [BSER]
+                    BC Next Number Range 1 (F7611B.0) [N001] = TK Next Number Range 1 [N001]
+                    BC Document Type (F7611B.0) [DCT] = TK Document Type [DCT]
+                    BC Unique Key ID (Internal) (F7611B.0) [UKID] = TK Unique Key ID (Internal) [UKID]
+                    VA evt_szStatusCodeNext_NXTR [NXTR] -> TK Status Code - Next [NXTR]
+                    VA evt_szStatusCodeLast_LTTR [LTTR] -> TK Status Code - Last [LTTR]
+                    RV szUsuario_USER [USER] -> TK User ID [USER]
+                    RV szProgramId_PID [PID] -> TK Program ID [PID]
+                    RV szWorkStationId_JOBN [JOBN] -> TK Work Station ID [JOBN]
+                    RV jdDateUpdated_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+                    RV mnTimeLastUpdated_UPMT [UPMT] -> TK Time of Day [TDAY]
+               F5576B1E.Select  [Index 1: Bnnf,Bser,N001,Dct,Ukid]
+                    BC Nota Fiscal Number (F7611B.0) [BNNF] = TK Nota Fiscal Number [BNNF]
+                    BC Nota Fiscal Series (F7611B.0) [BSER] = TK Nota Fiscal Series [BSER]
+                    BC Next Number Range 1 (F7611B.0) [N001] = TK Next Number Range 1 [N001]
+                    BC Document Type (F7611B.0) [DCT] = TK Document Type [DCT]
+                    BC Unique Key ID (Internal) (F7611B.0) [UKID] = TK Unique Key ID (Internal) [UKID]
+               F5576B1E.FetchNext  [Index 1: Bnnf,Bser,N001,Dct,Ukid]
+                    VA evt_szLink_URRF [URRF] <- TK User Reserved Reference [URRF]
+               If SV File_IO_Status is equal to CO SUCCESS
+                    VA evt_szLink_URRF [URRF] = [RV mnNumeroLote_ICU [ICU]]
+                    F5576B1E.Update  [Index 1: Bnnf,Bser,N001,Dct,Ukid]
+                         BC Nota Fiscal Number (F7611B.0) [BNNF] = TK Nota Fiscal Number [BNNF]
+                         BC Nota Fiscal Series (F7611B.0) [BSER] = TK Nota Fiscal Series [BSER]
+                         BC Next Number Range 1 (F7611B.0) [N001] = TK Next Number Range 1 [N001]
+                         BC Document Type (F7611B.0) [DCT] = TK Document Type [DCT]
+                         BC Unique Key ID (Internal) (F7611B.0) [UKID] = TK Unique Key ID (Internal) [UKID]
+                         VA evt_szLink_URRF [URRF] -> TK User Reserved Reference [URRF]
+                         RV szUsuario_USER [USER] -> TK User ID [USER]
+                         RV szProgramId_PID [PID] -> TK Program ID [PID]
+                         RV szWorkStationId_JOBN [JOBN] -> TK Work Station ID [JOBN]
+                         RV jdDateUpdated_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+                         RV mnTimeLastUpdated_UPMT [UPMT] -> TK Time of Day [TDAY]
+               Else
+                    VA evt_szLink_URRF [URRF] = [RV mnNumeroLote_ICU [ICU]]
+                    F5576B1E.Insert  [Index 1: Bnnf,Bser,N001,Dct,Ukid]
+                         BC Nota Fiscal Number (F7611B.0) [BNNF] -> TK Nota Fiscal Number [BNNF]
+                         BC Nota Fiscal Series (F7611B.0) [BSER] -> TK Nota Fiscal Series [BSER]
+                         BC Next Number Range 1 (F7611B.0) [N001] -> TK Next Number Range 1 [N001]
+                         BC Document Type (F7611B.0) [DCT] -> TK Document Type [DCT]
+                         BC Unique Key ID (Internal) (F7611B.0) [UKID] -> TK Unique Key ID (Internal) [UKID]
+                         VA evt_szLink_URRF [URRF] -> TK User Reserved Reference [URRF]
+                         RV szUsuario_USER [USER] -> TK User ID [USER]
+                         RV szProgramId_PID [PID] -> TK Program ID [PID]
+                         RV szWorkStationId_JOBN [JOBN] -> TK Work Station ID [JOBN]
+                         RV jdDateUpdated_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+                         RV mnTimeLastUpdated_UPMT [UPMT] -> TK Time of Day [TDAY]
+               End If
+          End If
+     End If
+End If
+
+=============================================
+Section: BSVW Join F7601B x F7601B All columns                        [1] 
+Event: End Section
+Event GUID: 732f3e1d-1d97-4d9f-8f01-79de2fb9a9ac
+=============================================
+Do Custom Section(RS Finalização)
+
+
+

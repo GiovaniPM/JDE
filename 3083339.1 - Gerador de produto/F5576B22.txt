@@ -1,0 +1,48 @@
+﻿---------------------------------------------------------------------------------
+Table: F5576B22 BTI NFs de venda
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   BNNF       Nota Fiscal Number                       NotaFiscalNumber          Math Numeric    6(0)       X
+2   BSER       Nota Fiscal Series                       NotaFiscalSeries          String          2(0)       X
+3   N001       Next Number Range 1                      NextNumber001             Math Numeric    8(0)       X
+4   DCT        Document Type                            DocumentType              String          2(0)       X
+5   UKID       Unique Key ID (Internal)                 UniqueKeyIDInternal       Math Numeric    15(0)      X
+6   EDOC       EDI - Document Number                    EdiDocumentNumber         Math Numeric    9(0)       X
+7   EDSP       EDI - Successfully Processed             EdiSuccessfullyProcess    Char            1(0)       
+8   USER       User ID                                  UserId                    String          10(0)      
+9   PID        Program ID                               ProgramId                 String          10(0)      
+10  VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+11  JOBN       Work Station ID                          WorkStationId             String          10(0)      
+12  UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+13  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+Ch NF,EDOC                               1      PRIMARY UNIQUE
+                                         BNNF      
+                                         BSER      
+                                         N001      
+                                         DCT       
+                                         UKID      
+                                         EDOC      
+
+EDOC,Ch NF                               2     
+                                         EDOC      
+                                         BNNF      
+                                         BSER      
+                                         N001      
+                                         DCT       
+                                         UKID      
+
+EDSP,EDOC                                3     
+                                         EDSP      
+                                         EDOC      
+
+EDSP,Ch NF                               4     
+                                         EDSP      
+                                         BNNF      
+                                         BSER      
+                                         N001      
+                                         DCT       
+                                         UKID      
+

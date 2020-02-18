@@ -1,0 +1,24 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: T5576B03A PO Pré manufatura (kits por produto)
+Type: Processing Options
+---------------------------------------------------------------------------------
+PAGE: 0                                - Parâmetros                    
+  jdDataCorte                    [Z5576B11]
+    1. Data de corte BTI  	Default - Dia atual - 1
+    VALUE: []
+  mnDiasBTI                      [IA04]
+    	1.1. Dias de atraso BTI  		Default - 0
+    VALUE: []
+  jdDataCorteNF                  [ISSU]
+    2. Data de corte NF  	Default - Dia atual - 1
+    VALUE: []
+  mnDiasNF                       [IA04]
+    	2.1. Dias de atraso NF  		Default - 0
+    VALUE: []
+  szFilialNF                     [MCU]
+    3. Filial/Fábrica de envio das NF
+    VALUE: []
+  szParqueGrafico                [MCU]
+    4. Filial/Fabrica do Parque Gráfico
+    VALUE: []
+

@@ -1,0 +1,18 @@
+﻿---------------------------------------------------------------------------------
+Table: F55QUEUE Queue para aplicacoes
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   OBNM       Object Name                              NameObject                String          10(0)      X
+2   TDAY       Time of Day                              TimeOfDay                 Math Numeric    6(0)       X
+3   DL011      Description 11                           Description011            String          100(0)     X
+4   DRES       Filler da Transm. Bancaria               FillerMovtoBancario       String          1260(0)    
+5   UORG       Units - Order/Transaction Quantity       UnitsTransactionQty       Math Numeric    15(0)      
+6   AEXP       Amount - Extended Price                  AmountExtendedPrice       Math Numeric    15(2)      
+
+INDICIES
+OBNM, TDAY, DL011                        1      PRIMARY UNIQUE
+                                         OBNM      
+                                         TDAY      
+                                         DL011     
+

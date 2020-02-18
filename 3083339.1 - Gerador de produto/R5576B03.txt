@@ -1,0 +1,905 @@
+﻿=============================================
+EVENTS
+=============================================
+UBE: R5576B03
+Event: Report Variables
+Event GUID: fa150301-dde7-471c-a5be-c791389956f6
+=============================================
+rpt_cPrimeiraLinha_EV01 [EV01]
+rpt_mnKit_ITM [ITM]
+rpt_mnEdiBatchNumber_EDBT [EDBT]
+rpt_cPegou_EV01 [EV01]
+rpt_szQueue_DL01 [DL01]
+rpt_szQueue_OBNM [OBNM]
+rpt_mnQueue_TDAY [TDAY]
+rpt_mnEdiDocumentNumber_EDOC [EDOC]
+rpt_szQueue_DL011 [DL011]
+rpt_cParticipaBase_EV01 [EV01]
+rpt_szQueue2_OBNM [OBNM]
+rpt_szCentroCusto_Z5576B04 [Z5576B04]
+rpt_szCaderno_Z5576B14 [Z5576B14]
+rpt_cTitulo_EV01 [EV01]
+rpt_cEverestEventPoint01_EV01 [EV01]
+rpt_szLog_USER [USER]
+rpt_szLog_PID [PID]
+rpt_szLog_JOBN [JOBN]
+rpt_szLog_VL01 [VL01]
+rpt_jdLog_UPMJ [UPMJ]
+rpt_mnLog_UPMT [UPMT]
+
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: On 2nd Item Number [31] 
+Event: After Last Object Printed
+Event GUID: ed559197-776d-4483-aa4a-5496291332ff
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szUserId_USER [USER]
+evt_szProgramId_PID [PID]
+evt_szWorkStationId_JOBN [JOBN]
+evt_szVersao_VL01 [VL01]
+evt_jdDateUpdated_UPMJ [UPMJ]
+evt_mnTimeLastUpdated_UPMT [UPMT]
+evt_szMarcador_DL01 [DL01]
+evt_mnIdentifierShortItem_ITM [ITM]
+evt_szUnitOfMeasure_UM [UM]
+evt_szProductCode_SY [SY]
+evt_szUserDefinedCodes_RT [RT]
+evt_szUserDefinedCode_KY [KY]
+evt_mnQtyRequiredStandard_QNTY [QNTY]
+evt_szSupplementalDatabase_SDB [SDB]
+evt_szTypeofData_TYDT [TYDT]
+evt_mnSuppDataNumericKey1_SBN1 [SBN1]
+evt_szItemNumber2ndKit_KITL [KITL]
+----------------------------------------
+GetAuditInfo(B9800100.GetAuditInfo)
+     VA evt_szUserId_USER [USER] <> szUserName [USER]
+     VA evt_jdDateUpdated_UPMJ [UPMJ] <> jdDate [DTE]
+     VA evt_mnTimeLastUpdated_UPMT [UPMT] <> mnTime [TME0]
+     VA evt_szWorkStationId_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+VA evt_szVersao_VL01 [VL01] = SL VersionName
+VA evt_szMarcador_DL01 [DL01] = ":nf:"
+VA evt_mnQtyRequiredStandard_QNTY [QNTY] = 0
+F4101.FetchSingle  [Index 2: 2nd Item Number]
+     VA evt_mnIdentifierShortItem_ITM [ITM] <- TK Item Number - Short [ITM]
+     RV Tot 2nd Item Number [LITM] = TK 2nd Item Number [LITM]
+     VA evt_szUnitOfMeasure_UM [UM] <- TK Unit of Measure - Primary [UOM1]
+//
+VA evt_szSupplementalDatabase_SDB [SDB] = "KIT"
+VA evt_szTypeofData_TYDT [TYDT] = "KT"
+F00092.Select  [Index 2: SuppDB]
+     VA evt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+     VA evt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+     RV Tot 2nd Item Number [LITM] = TK Name - Remark [RMK]
+F00092.FetchNext  [Index 2: SuppDB]
+     VA evt_mnSuppDataNumericKey1_SBN1 [SBN1] <- TK Supplemental Data Numeric Key 1 [SBN1]
+F4101.FetchSingle  [Index 1: Item Master]
+     VA evt_mnSuppDataNumericKey1_SBN1 [SBN1] = TK Item Number - Short [ITM]
+     VA evt_szItemNumber2ndKit_KITL [KITL] <- TK 2nd Item Number [LITM]
+//
+F5576B21.Insert  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+     VA rpt_mnEdiDocumentNumber_EDOC [EDOC] -> TK EDI - Document Number [EDOC]
+     VA evt_jdDateUpdated_UPMJ [UPMJ] -> TK Date - Order/Transaction [TRDJ]
+     PO szParqueGrafico [MCU] -> TK Branch [MMCU]
+     VA evt_mnSuppDataNumericKey1_SBN1 [SBN1] -> TK Parent (short) Item Number [KIT]
+     VA evt_szItemNumber2ndKit_KITL [KITL] -> TK Kit - 2nd Item Number [KITL]
+     VA evt_mnIdentifierShortItem_ITM [ITM] -> TK Item Number - Short [ITM]
+     RV Tot 2nd Item Number [LITM] -> TK 2nd Item Number [LITM]
+     VA evt_mnQtyRequiredStandard_QNTY [QNTY] -> TK Quantity - Standard Required Quantity [QNTY]
+     VA evt_szUnitOfMeasure_UM [UM] -> TK Unit of Measure [UM]
+     RV Tot Quantity [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+     VA evt_szUserId_USER [USER] -> TK User ID [USER]
+     VA evt_szProgramId_PID [PID] -> TK Program ID [PID]
+     VA evt_szVersao_VL01 [VL01] -> TK Selection Values 01 [VL01]
+     VA evt_szWorkStationId_JOBN [JOBN] -> TK Work Station ID [JOBN]
+     VA evt_jdDateUpdated_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+     VA evt_mnTimeLastUpdated_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+     VA evt_szMarcador_DL01 [DL01] -> TK Centro de Custo [Z5576B04]
+     VA evt_szMarcador_DL01 [DL01] -> TK Caderno [Z5576B14]
+RV Tot Quantity [UORG] = 0
+RV Tot Extended Price [AEXP] = 0
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Processa NF [12] 
+Event: Initialize Section
+Event GUID: 9686028b-4b6a-40c5-9eb9-d64eb50cdefa
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_jdIssueDate_ISSU [ISSU]
+----------------------------------------
+Set Selection Append Flag( <Yes>)
+Set User Selection(BC Date - Issue (F7601B)(ISSU), <Equal To>, PO jdDataCorteNF, <And>)
+Set User Selection(BC Business Unit (F7601B)(MCU), <Equal To>, PO szFilialNF, <And>)
+
+=============================================
+Section: Processa NF [12] 
+Event: Do Section
+Event GUID: 358886f3-770a-4a66-9d76-3368afd92632
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szProductCode_SY [SY]
+evt_szUserDefinedCodes_RT [RT]
+evt_szUserDefinedCode_KY [KY]
+evt_cEdiSuccessfullyProce_EDSP [EDSP]
+----------------------------------------
+If VA rpt_mnEdiDocumentNumber_EDOC [EDOC] is not equal to "0"
+     VA evt_szProductCode_SY [SY] = "57"
+     VA evt_szUserDefinedCodes_RT [RT] = "BV"
+     VA evt_szUserDefinedCode_KY [KY] = concat("    ", concat([BC Code - Transaction Nature (F7611B.0) [BNOP]], concat("|", [BC Suffix - Transaction Nature (F7611B.0) [BSOP]])))
+     F0005.Select  [Index 1: System, Type, Code]
+          VA evt_szProductCode_SY [SY] = TK Product Code [SY]
+          VA evt_szUserDefinedCodes_RT [RT] = TK User Defined Codes [RT]
+          VA evt_szUserDefinedCode_KY [KY] = TK User Defined Code [KY]
+     F0005.FetchNext  [Index 1: System, Type, Code]
+          VA evt_szProductCode_SY [SY] <- TK Product Code [SY]
+     If SV File_IO_Status is equal to CO SUCCESS
+          VA evt_cEdiSuccessfullyProce_EDSP [EDSP] = "S"
+          F5576B22.Select  [Index 1: Ch NF,EDOC]
+               BC Nota Fiscal Number (F7611B.0) [BNNF] = TK Nota Fiscal Number [BNNF]
+               BC Nota Fiscal Series (F7611B.0) [BSER] = TK Nota Fiscal Series [BSER]
+               BC Next Number Range 1 (F7611B.0) [N001] = TK Next Number Range 1 [N001]
+               BC Document Type (F7611B.0) [DCT] = TK Document Type [DCT]
+               BC Unique Key ID (Internal) (F7611B.0) [UKID] = TK Unique Key ID (Internal) [UKID]
+               VA evt_cEdiSuccessfullyProce_EDSP [EDSP] = TK EDI - Successfully Processed [EDSP]
+          F5576B22.FetchNext  [Index 1: Ch NF,EDOC]
+               VA evt_cEdiSuccessfullyProce_EDSP [EDSP] <- TK EDI - Successfully Processed [EDSP]
+          If SV File_IO_Status is not equal to CO SUCCESS
+               VA evt_cEdiSuccessfullyProce_EDSP [EDSP] = "S"
+               F5576B22.Insert  [Index 1: Ch NF,EDOC]
+                    BC Nota Fiscal Number (F7611B.0) [BNNF] -> TK Nota Fiscal Number [BNNF]
+                    BC Nota Fiscal Series (F7611B.0) [BSER] -> TK Nota Fiscal Series [BSER]
+                    BC Next Number Range 1 (F7611B.0) [N001] -> TK Next Number Range 1 [N001]
+                    BC Document Type (F7611B.0) [DCT] -> TK Document Type [DCT]
+                    BC Unique Key ID (Internal) (F7611B.0) [UKID] -> TK Unique Key ID (Internal) [UKID]
+                    VA rpt_mnEdiDocumentNumber_EDOC [EDOC] -> TK EDI - Document Number [EDOC]
+                    VA evt_cEdiSuccessfullyProce_EDSP [EDSP] -> TK EDI - Successfully Processed [EDSP]
+                    VA rpt_szLog_USER [USER] -> TK User ID [USER]
+                    VA rpt_szLog_PID [PID] -> TK Program ID [PID]
+                    VA rpt_szLog_VL01 [VL01] -> TK Selection Values 01 [VL01]
+                    VA rpt_szLog_JOBN [JOBN] -> TK Work Station ID [JOBN]
+                    VA rpt_jdLog_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+                    VA rpt_mnLog_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+               RV Tot 2nd Item Number [LITM] = BC 2nd Item Number (F7611B.0) [LITM]
+               RV Tot Quantity [UORG] = [RV Tot Quantity [UORG]]+[BC Units - Order/Transaction Quantity (F7611B.0) [UORG]]
+               RV Tot Extended Price [AEXP] = [RV Tot Extended Price [AEXP]]+[BC Amount - Extended Price (F7611B.0) [AEXP]]
+          Else
+               Suppress Section Write
+          End If
+     Else
+          Suppress Section Write
+     End If
+Else
+     Suppress Section Write
+End If
+
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Calcula quantidade total [10] 
+Event: Initialize Section
+Event GUID: e8b48896-eba1-47c0-a2dd-6128f1f2d914
+=============================================
+Set Selection Append Flag( <No>)
+Set User Selection(BC EDI - Document Number (F5576B21)(EDOC), <Equal To>, BC EDI - Document Number (F5576B21)(EDOC), <And>)
+
+=============================================
+Section: Calcula quantidade total [10] 
+Event: Do Section
+Event GUID: fc2c8346-e267-4c31-b4f9-29cecd609fb6
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnConsumido_UORG [UORG]
+----------------------------------------
+! If BC Description (F5576B21.0) [DL01] is equal to "PAG"
+     ! VA evt_mnConsumido_UORG [UORG] = ((([BC Quantidade de Paginas com Tinta Preta (F5576B21.0) [Z5576B05]]+[BC Quantidade de Paginas com Tinta Colorida (F5576B21.0) [Z5576B06]])+[BC Quantidade paginas Spot (F5576B21.0) [Z5576B08]])*[BC Quantidade total de exemplares (F5576B21.0) [Z5576B09]])*[BC Quantity - Standard Required Quantity (F5576B21.0) [QNTY]]
+! End If
+! If BC Description (F5576B21.0) [DL01] is equal to "COR"
+     ! VA evt_mnConsumido_UORG [UORG] = (([BC Quantidade de Paginas com Tinta Colorida (F5576B21.0) [Z5576B06]]+[BC Quantidade paginas Spot (F5576B21.0) [Z5576B08]])*[BC Quantidade total de exemplares (F5576B21.0) [Z5576B09]])*[BC Quantity - Standard Required Quantity (F5576B21.0) [QNTY]]
+! End If
+! If BC Description (F5576B21.0) [DL01] is equal to "PBO"
+     ! VA evt_mnConsumido_UORG [UORG] = ([BC Quantidade de Paginas com Tinta Preta (F5576B21.0) [Z5576B05]]*[BC Quantidade total de exemplares (F5576B21.0) [Z5576B09]])*[BC Quantity - Standard Required Quantity (F5576B21.0) [QNTY]]
+! End If
+! If BC Description (F5576B21.0) [DL01] is equal to "CHP"
+     ! VA evt_mnConsumido_UORG [UORG] = [BC Quantidade de Chapas (F5576B21.0) [Z5576B03]]*[BC Quantity - Standard Required Quantity (F5576B21.0) [QNTY]]
+! End If
+! If BC Description (F5576B21.0) [DL01] is equal to "EXE"
+     ! VA evt_mnConsumido_UORG [UORG] = [RV Quantidade total de exemplares [Z5576B09]]*[BC Quantity - Standard Required Quantity (F5576B21.0) [QNTY]]
+! End If
+CalculoConsumoInsumoBTI(N5576B05.CalculoConsumoInsumoBTI)
+     BC Quantity - Standard Required Quantity (F5576B21.0) [QNTY] -> mnQuantidadePorExemplar [QNTY]
+     BC Quantidade de Chapas (F5576B21.0) [Z5576B03] -> mnQuantidadeChapas [Z5576B03]
+     BC Quantidade total de exemplares (F5576B21.0) [Z5576B09] -> mnExemplaresTotal [Z5576B09]
+     BC Quantidade de Paginas com Tinta Preta (F5576B21.0) [Z5576B05] -> mnExemplaresEstragados [Z5576B10]
+     BC Quantidade de Paginas com Tinta Preta (F5576B21.0) [Z5576B05] -> mnPaginasTintaPreta [Z5576B05]
+     BC Quantidade de Paginas com Tinta Colorida (F5576B21.0) [Z5576B06] -> mnPaginasTintaColorida [Z5576B06]
+     BC Quantidade paginas Spot (F5576B21.0) [Z5576B08] -> mnPaginasSpot [Z5576B08]
+     BC Units - Order/Transaction Quantity (F5576B21.0) [UORG] <- mnQuantidadeConsumida [UORG]
+     BC Base de Cálculo (F5576B21.0) [Z5576B16] -> szBaseCalculo [DL01]
+F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+     BC EDI - Document Number (F5576B21.0) [EDOC] = TK EDI - Document Number [EDOC]
+     BC Date - Order/Transaction (F5576B21.0) [TRDJ] = TK Date - Order/Transaction [TRDJ]
+     BC Branch (F5576B21.0) [MMCU] = TK Branch [MMCU]
+     BC Parent (short) Item Number (F5576B21.0) [KIT] = TK Parent (short) Item Number [KIT]
+     BC Item Number - Short (F5576B21.0) [ITM] = TK Item Number - Short [ITM]
+     VA evt_mnConsumido_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+     BC Centro de Custo (F5576B21.0) [Z5576B04] = TK Centro de Custo [Z5576B04]
+     BC Caderno (F5576B21.0) [Z5576B14] = TK Caderno [Z5576B14]
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Monta BOM [9] 
+Event: Initialize Section
+Event GUID: 93df4c4e-35bc-4576-bbe2-902e61082668
+=============================================
+VA rpt_szCentroCusto_Z5576B04 [Z5576B04] = ":total:"
+VA rpt_szCaderno_Z5576B14 [Z5576B14] = ":total:"
+
+=============================================
+Section: Monta BOM [9] 
+Event: Do Section
+Event GUID: dc45d9e9-7e84-4f67-af7d-c35985bb58f9
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_jdData_TRDJ [TRDJ]
+evt_cValido_AING [AING]
+evt_mnItemNumberShortKit_KIT [KIT]
+evt_szItemNumber2ndKit_KITL [KITL]
+evt_mnIdentifierShortItem_ITM [ITM]
+evt_szIdentifier2ndItem_LITM [LITM]
+evt_szDescription001_DL01 [DL01]
+evt_mnQtyRequiredStandard_QNTY [QNTY]
+evt_szUnitOfMeasure_UM [UM]
+evt_szSupplementalDatabase_SDB [SDB]
+evt_szTypeofData_TYDT [TYDT]
+evt_szBaseCalculo_DL01 [DL01]
+----------------------------------------
+VA evt_cValido_AING [AING] = "1"
+VA evt_jdData_TRDJ [TRDJ] = SL DateToday
+F3002.Select  [Index 1: Parent Item, Branch, Type, +]
+     RV Type Bill of Material [TBM] = TK Type Bill of Material [TBM]
+     RV Parent Item Number [KIT] = TK Parent (short) Item Number [KIT]
+     RV Branch [MMCU] = TK Branch [MMCU]
+     VA evt_jdData_TRDJ [TRDJ] >= TK Effective - From Date [EFFF]
+     VA evt_jdData_TRDJ [TRDJ] <= TK Effective - Thru Date [EFFT]
+     VA evt_cValido_AING [AING] = TK Active Ingredient Flag [AING]
+F3002.FetchNext  [Index 1: Parent Item, Branch, Type, +]
+     VA evt_mnItemNumberShortKit_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+     VA evt_szItemNumber2ndKit_KITL [KITL] <- TK Kit - 2nd Item Number [KITL]
+     VA evt_mnIdentifierShortItem_ITM [ITM] <- TK Item Number - Short [ITM]
+     VA evt_szIdentifier2ndItem_LITM [LITM] <- TK 2nd Item Number [LITM]
+     VA evt_mnQtyRequiredStandard_QNTY [QNTY] <- TK Quantity - Standard Required Quantity [QNTY]
+     VA evt_szUnitOfMeasure_UM [UM] <- TK Unit of Measure [UM]
+While SV File_IO_Status is equal to CO SUCCESS
+     //
+     // Base de cálculo
+     VA evt_szSupplementalDatabase_SDB [SDB] = "BTI"
+     VA evt_szTypeofData_TYDT [TYDT] = "BC"
+     F00092.Select  [Index 2: SuppDB]
+          VA evt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+          VA evt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+          RV Branch [MMCU] = TK Business Unit [MCU]
+          VA evt_szIdentifier2ndItem_LITM [LITM] = TK Name - Remark [RMK]
+     F00092.FetchNext  [Index 2: SuppDB]
+          VA evt_szBaseCalculo_DL01 [DL01] <- TK User Defined Code [KY]
+     If SV File_IO_Status is not equal to CO SUCCESS
+          VA evt_szBaseCalculo_DL01 [DL01] = "PAG"
+     End If
+     //
+     VA evt_mnQtyRequiredStandard_QNTY [QNTY] = [VA evt_mnQtyRequiredStandard_QNTY [QNTY]]*-1
+     F5576B21.Insert  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          VA rpt_mnEdiDocumentNumber_EDOC [EDOC] -> TK EDI - Document Number [EDOC]
+          VA evt_jdData_TRDJ [TRDJ] -> TK Date - Order/Transaction [TRDJ]
+          RV Branch [MMCU] -> TK Branch [MMCU]
+          VA evt_mnItemNumberShortKit_KIT [KIT] -> TK Parent (short) Item Number [KIT]
+          VA evt_szItemNumber2ndKit_KITL [KITL] -> TK Kit - 2nd Item Number [KITL]
+          VA evt_mnIdentifierShortItem_ITM [ITM] -> TK Item Number - Short [ITM]
+          VA evt_szIdentifier2ndItem_LITM [LITM] -> TK 2nd Item Number [LITM]
+          VA evt_mnQtyRequiredStandard_QNTY [QNTY] -> TK Quantity - Standard Required Quantity [QNTY]
+          VA evt_szUnitOfMeasure_UM [UM] -> TK Unit of Measure [UM]
+          VA rpt_szCentroCusto_Z5576B04 [Z5576B04] -> TK Centro de Custo [Z5576B04]
+          VA rpt_szCaderno_Z5576B14 [Z5576B14] -> TK Caderno [Z5576B14]
+          VA evt_szBaseCalculo_DL01 [DL01] -> TK Base de Cálculo [Z5576B16]
+     F3002.FetchNext  [Index 1: Parent Item, Branch, Type, +]
+          VA evt_mnItemNumberShortKit_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+          VA evt_szItemNumber2ndKit_KITL [KITL] <- TK Kit - 2nd Item Number [KITL]
+          VA evt_mnIdentifierShortItem_ITM [ITM] <- TK Item Number - Short [ITM]
+          VA evt_szIdentifier2ndItem_LITM [LITM] <- TK 2nd Item Number [LITM]
+          VA evt_mnQtyRequiredStandard_QNTY [QNTY] <- TK Quantity - Standard Required Quantity [QNTY]
+          VA evt_szUnitOfMeasure_UM [UM] <- TK Unit of Measure [UM]
+End While
+F3002.Close
+     
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Linha BTI [7] 
+Event: Do Section
+Event GUID: ea9c5156-392d-4822-8f67-d5401229cd48
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szSupplementalDatabase_SDB [SDB]
+evt_szTypeofData_TYDT [TYDT]
+evt_szNameRemarksLine2_RMK2 [RMK2]
+evt_szInsumo_LITM [LITM]
+evt_mnQuantidadeChapa_Z5576B03 [Z5576B03]
+evt_mnExemplaresTotal_Z5576B09 [Z5576B09]
+evt_mnExemplaresEstra_Z5576B10 [Z5576B10]
+evt_mnPaginasTintaPre_Z5576B05 [Z5576B05]
+evt_mnPaginasTintaCol_Z5576B06 [Z5576B06]
+evt_mnPaginasSpot_Z5576B08 [Z5576B08]
+evt_szRetorno_RMK [RMK]
+evt_szChave_EDBT [EDBT]
+evt_szChave_MMCU [MMCU]
+evt_jd_Chave_TRDJ [TRDJ]
+evt_mnChave_KIT [KIT]
+evt_mnChave_ITM [ITM]
+evt_mnQueue_UKID [UKID]
+evt_szQueue_EDBT [EDBT]
+evt_szChave_KITL [KITL]
+evt_szChave_DL01 [DL01]
+evt_mnChave_QNTY [QNTY]
+evt_szChave_UM [UM]
+evt_mnProduto_Z5576B03 [Z5576B03]
+evt_mnProduto_Z5576B09 [Z5576B09]
+evt_mnProduto_Z5576B10 [Z5576B10]
+evt_mnProduto_Z5576B05 [Z5576B05]
+evt_mnProduto_Z5576B06 [Z5576B06]
+evt_mnProduto_Z5576B08 [Z5576B08]
+evt_szChave_Z5576B04 [Z5576B04]
+evt_szChave_Z5576B14 [Z5576B14]
+evt_mnQuantidade_UORG [UORG]
+evt_mnProduto_QNTY [QNTY]
+evt_mnProduto_UORG [UORG]
+----------------------------------------
+// Possui Kit cadastrado a este BTI
+If RV Category Code 33 [RP33] is not equal to <Blank>
+And RV Category Code 33 [RP33] is not equal to <NULL>
+And RV Category Code 33 [RP33] is not equal to "0"
+     RV Mensagem = <NULL>
+     F5576B21.Select  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          VA rpt_mnEdiDocumentNumber_EDOC [EDOC] = TK EDI - Document Number [EDOC]
+          VA rpt_szCentroCusto_Z5576B04 [Z5576B04] = TK Centro de Custo [Z5576B04]
+          VA rpt_szCaderno_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+     F5576B21.FetchNext  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+          VA evt_jd_Chave_TRDJ [TRDJ] <- TK Date - Order/Transaction [TRDJ]
+          VA evt_szChave_MMCU [MMCU] <- TK Branch [MMCU]
+          VA evt_mnChave_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+          VA evt_szChave_KITL [KITL] <- TK Kit - 2nd Item Number [KITL]
+          VA evt_mnChave_ITM [ITM] <- TK Item Number - Short [ITM]
+          VA evt_szInsumo_LITM [LITM] <- TK 2nd Item Number [LITM]
+          VA evt_mnChave_QNTY [QNTY] <- TK Quantity - Standard Required Quantity [QNTY]
+          VA evt_szChave_UM [UM] <- TK Unit of Measure [UM]
+          VA evt_mnQuantidadeChapa_Z5576B03 [Z5576B03] <- TK Quantidade de Chapas [Z5576B03]
+          VA evt_mnExemplaresTotal_Z5576B09 [Z5576B09] <- TK Quantidade total de exemplares [Z5576B09]
+          VA evt_mnExemplaresEstra_Z5576B10 [Z5576B10] <- TK Quantidade total de exemplares estragado [Z5576B10]
+          VA evt_mnPaginasTintaPre_Z5576B05 [Z5576B05] <- TK Quantidade de Paginas com Tinta Preta [Z5576B05]
+          VA evt_mnPaginasTintaCol_Z5576B06 [Z5576B06] <- TK Quantidade de Paginas com Tinta Colorida [Z5576B06]
+          VA evt_mnPaginasSpot_Z5576B08 [Z5576B08] <- TK Quantidade paginas Spot [Z5576B08]
+          VA evt_mnQuantidade_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+          VA evt_szChave_DL01 [DL01] <- TK Base de Cálculo [Z5576B16]
+     While SV File_IO_Status is equal to CO SUCCESS
+          VA rpt_cParticipaBase_EV01 [EV01] = "S"
+          // Máquina rotativa
+          // 1) Verifico se item tem regra
+          // 2) Se tiver regra, verifico se aplica ao caso especifico
+          VA evt_szSupplementalDatabase_SDB [SDB] = "BTI"
+          VA evt_szTypeofData_TYDT [TYDT] = "MQ"
+          F00092.Select  [Index 2: SuppDB]
+               VA evt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+               VA evt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+               RV Business Unit [MCU] = TK Business Unit [MCU]
+               VA evt_szInsumo_LITM [LITM] = TK Name - Remark [RMK]
+          F00092.FetchNext  [Index 2: SuppDB]
+               VA evt_szRetorno_RMK [RMK] <- TK Name - Remark [RMK2]
+          If SV File_IO_Status is equal to CO SUCCESS
+               F00092.Select  [Index 2: SuppDB]
+                    VA evt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+                    VA evt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+                    RV Business Unit [MCU] = TK Business Unit [MCU]
+                    VA evt_szInsumo_LITM [LITM] = TK Name - Remark [RMK]
+                    RV Codigo da Rotativa [Z5576B07] = TK Name - Remark [RMK2]
+               F00092.FetchNext  [Index 2: SuppDB]
+                    VA evt_szRetorno_RMK [RMK] <- TK Name - Remark [RMK2]
+               If SV File_IO_Status is not equal to CO SUCCESS
+                    VA rpt_cParticipaBase_EV01 [EV01] = "N"
+               End If
+          End If
+          // Tipo de papel
+          // 1) Verifico se item tem regra
+          // 2) Se tiver regra, verifico se aplica ao caso especifico
+          VA evt_szSupplementalDatabase_SDB [SDB] = "BTI"
+          VA evt_szTypeofData_TYDT [TYDT] = "PP"
+          F00092.Select  [Index 2: SuppDB]
+               VA evt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+               VA evt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+               RV Business Unit [MCU] = TK Business Unit [MCU]
+               VA evt_szInsumo_LITM [LITM] = TK Name - Remark [RMK]
+          F00092.FetchNext  [Index 2: SuppDB]
+               VA evt_szRetorno_RMK [RMK] <- TK Name - Remark [RMK2]
+          If SV File_IO_Status is equal to CO SUCCESS
+               F00092.Select  [Index 2: SuppDB]
+                    VA evt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+                    VA evt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+                    RV Business Unit [MCU] = TK Business Unit [MCU]
+                    VA evt_szInsumo_LITM [LITM] = TK Name - Remark [RMK]
+                    RV Tipo de papel [Z5576B12] = TK Name - Remark [RMK2]
+               F00092.FetchNext  [Index 2: SuppDB]
+                    VA evt_szRetorno_RMK [RMK] <- TK Name - Remark [RMK2]
+               If SV File_IO_Status is not equal to CO SUCCESS
+                    VA rpt_cParticipaBase_EV01 [EV01] = "N"
+               End If
+          End If
+          // Acabamento
+          // 1) Verifico se item tem regra
+          // 2) Se tiver regra, verifico se aplica ao caso especifico
+          VA evt_szSupplementalDatabase_SDB [SDB] = "BTI"
+          VA evt_szTypeofData_TYDT [TYDT] = "PA"
+          F00092.Select  [Index 2: SuppDB]
+               VA evt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+               VA evt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+               RV Business Unit [MCU] = TK Business Unit [MCU]
+               VA evt_szInsumo_LITM [LITM] = TK Name - Remark [RMK]
+          F00092.FetchNext  [Index 2: SuppDB]
+               VA evt_szRetorno_RMK [RMK] <- TK Name - Remark [RMK2]
+          If SV File_IO_Status is equal to CO SUCCESS
+               F00092.Select  [Index 2: SuppDB]
+                    VA evt_szSupplementalDatabase_SDB [SDB] = TK Supplemental Database Code [SDB]
+                    VA evt_szTypeofData_TYDT [TYDT] = TK Type Data [TYDT]
+                    RV Business Unit [MCU] = TK Business Unit [MCU]
+                    VA evt_szInsumo_LITM [LITM] = TK Name - Remark [RMK]
+                    RV Acabamento [Z5576B13] = TK Name - Remark [RMK2]
+               F00092.FetchNext  [Index 2: SuppDB]
+                    VA evt_szRetorno_RMK [RMK] <- TK Name - Remark [RMK2]
+               If SV File_IO_Status is not equal to CO SUCCESS
+                    VA rpt_cParticipaBase_EV01 [EV01] = "N"
+               End If
+          End If
+          //
+          If VA rpt_cParticipaBase_EV01 [EV01] is equal to "S"
+               //
+               // Grava por item e produto
+               V5576B21.Select
+                    VA evt_jd_Chave_TRDJ [TRDJ] = TK Date - Order/Transaction [TRDJ][F5576B21.0]
+                    VA evt_szChave_MMCU [MMCU] = TK Branch [MMCU][F5576B21.0]
+                    VA evt_mnChave_KIT [KIT] = TK Parent (short) Item Number [KIT][F5576B21.0]
+                    VA evt_mnChave_ITM [ITM] = TK Item Number - Short [ITM][F5576B21.0]
+                    VA rpt_mnEdiDocumentNumber_EDOC [EDOC] = TK EDI - Document Number [EDOC][F5576B21.0]
+                    RV Centro de Custo [Z5576B04] = TK Centro de Custo [Z5576B04][F5576B21.0]
+                    RV Caderno [Z5576B14] = TK Caderno [Z5576B14][F5576B21.0]
+               V5576B21.FetchNext
+                    VA evt_mnProduto_Z5576B03 [Z5576B03] <- TK Quantidade de Chapas [Z5576B03][F5576B21.0]
+                    VA evt_mnProduto_Z5576B09 [Z5576B09] <- TK Quantidade total de exemplares [Z5576B09][F5576B21.0]
+                    VA evt_mnProduto_Z5576B10 [Z5576B10] <- TK Quantidade total de exemplares estragado [Z5576B10][F5576B21.0]
+                    VA evt_mnProduto_Z5576B05 [Z5576B05] <- TK Quantidade de Paginas com Tinta Preta [Z5576B05][F5576B21.0]
+                    VA evt_mnProduto_Z5576B06 [Z5576B06] <- TK Quantidade de Paginas com Tinta Colorida [Z5576B06][F5576B21.0]
+                    VA evt_mnProduto_Z5576B08 [Z5576B08] <- TK Quantidade paginas Spot [Z5576B08][F5576B21.0]
+                    VA evt_mnProduto_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG][F5576B21.0]
+               If SV File_IO_Status is equal to CO SUCCESS
+                    VA evt_mnProduto_Z5576B03 [Z5576B03] = [VA evt_mnProduto_Z5576B03 [Z5576B03]]+[RV Quantidade de Chapas [Z5576B03]]
+                    VA evt_mnProduto_Z5576B05 [Z5576B05] = [VA evt_mnProduto_Z5576B05 [Z5576B05]]+([RV Quantidade de Paginas com Tinta Preta [Z5576B05]]*[RV Quantidade total de exemplares [Z5576B09]])
+                    VA evt_mnProduto_Z5576B06 [Z5576B06] = [VA evt_mnProduto_Z5576B06 [Z5576B06]]+([RV Quantidade de Paginas com Tinta Colorida [Z5576B06]]*[RV Quantidade total de exemplares [Z5576B09]])
+                    VA evt_mnProduto_Z5576B08 [Z5576B08] = [VA evt_mnProduto_Z5576B08 [Z5576B08]]+([RV Quantidade paginas Spot [Z5576B08]]*[RV Quantidade total de exemplares [Z5576B09]])
+                    VA evt_mnProduto_Z5576B09 [Z5576B09] = [VA evt_mnProduto_Z5576B09 [Z5576B09]]+[RV Quantidade total de exemplares [Z5576B09]]
+                    VA evt_mnProduto_Z5576B10 [Z5576B10] = [VA evt_mnProduto_Z5576B10 [Z5576B10]]+[RV Quantidade total de exemplares estragado [Z5576B10]]
+                    CalculoConsumoInsumoBTI(N5576B05.CalculoConsumoInsumoBTI)
+                         VA evt_mnChave_QNTY [QNTY] -> mnQuantidadePorExemplar [QNTY]
+                         RV Quantidade de Chapas [Z5576B03] -> mnQuantidadeChapas [Z5576B03]
+                         RV Quantidade total de exemplares [Z5576B09] -> mnExemplaresTotal [Z5576B09]
+                         RV Quantidade total de exemplares estragado [Z5576B10] -> mnExemplaresEstragados [Z5576B10]
+                         RV Quantidade de Paginas com Tinta Preta [Z5576B05] -> mnPaginasTintaPreta [Z5576B05]
+                         RV Quantidade de Paginas com Tinta Colorida [Z5576B06] -> mnPaginasTintaColorida [Z5576B06]
+                         RV Quantidade paginas Spot [Z5576B08] -> mnPaginasSpot [Z5576B08]
+                         RV I_Quantity [UORG] <- mnQuantidadeConsumida [UORG]
+                         VA evt_szChave_DL01 [DL01] -> szBaseCalculo [DL01]
+                    VA evt_mnProduto_UORG [UORG] = [VA evt_mnProduto_UORG [UORG]]+[RV I_Quantity [UORG]]
+                    F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+                         VA rpt_mnEdiDocumentNumber_EDOC [EDOC] = TK EDI - Document Number [EDOC]
+                         VA evt_jd_Chave_TRDJ [TRDJ] = TK Date - Order/Transaction [TRDJ]
+                         VA evt_szChave_MMCU [MMCU] = TK Branch [MMCU]
+                         VA evt_mnChave_KIT [KIT] = TK Parent (short) Item Number [KIT]
+                         VA evt_mnChave_ITM [ITM] = TK Item Number - Short [ITM]
+                         VA evt_mnProduto_Z5576B03 [Z5576B03] -> TK Quantidade de Chapas [Z5576B03]
+                         VA evt_mnProduto_Z5576B09 [Z5576B09] -> TK Quantidade total de exemplares [Z5576B09]
+                         VA evt_mnProduto_Z5576B10 [Z5576B10] -> TK Quantidade total de exemplares estragado [Z5576B10]
+                         VA evt_mnProduto_Z5576B05 [Z5576B05] -> TK Quantidade de Paginas com Tinta Preta [Z5576B05]
+                         VA evt_mnProduto_Z5576B06 [Z5576B06] -> TK Quantidade de Paginas com Tinta Colorida [Z5576B06]
+                         VA evt_mnProduto_Z5576B08 [Z5576B08] -> TK Quantidade paginas Spot [Z5576B08]
+                         VA evt_mnProduto_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+                         RV Centro de Custo [Z5576B04] = TK Centro de Custo [Z5576B04]
+                         RV Caderno [Z5576B14] = TK Caderno [Z5576B14]
+               Else
+                    VA evt_mnProduto_Z5576B03 [Z5576B03] = [RV Quantidade de Chapas [Z5576B03]]
+                    VA evt_mnProduto_Z5576B05 [Z5576B05] = [RV Quantidade de Paginas com Tinta Preta [Z5576B05]]*[RV Quantidade total de exemplares [Z5576B09]]
+                    VA evt_mnProduto_Z5576B06 [Z5576B06] = [RV Quantidade de Paginas com Tinta Colorida [Z5576B06]]*[RV Quantidade total de exemplares [Z5576B09]]
+                    VA evt_mnProduto_Z5576B08 [Z5576B08] = [RV Quantidade paginas Spot [Z5576B08]]*[RV Quantidade total de exemplares [Z5576B09]]
+                    VA evt_mnProduto_Z5576B09 [Z5576B09] = [RV Quantidade total de exemplares [Z5576B09]]
+                    VA evt_mnProduto_Z5576B10 [Z5576B10] = [RV Quantidade total de exemplares estragado [Z5576B10]]
+                    CalculoConsumoInsumoBTI(N5576B05.CalculoConsumoInsumoBTI)
+                         VA evt_mnChave_QNTY [QNTY] -> mnQuantidadePorExemplar [QNTY]
+                         RV Quantidade de Chapas [Z5576B03] -> mnQuantidadeChapas [Z5576B03]
+                         RV Quantidade total de exemplares [Z5576B09] -> mnExemplaresTotal [Z5576B09]
+                         RV Quantidade total de exemplares estragado [Z5576B10] -> mnExemplaresEstragados [Z5576B10]
+                         RV Quantidade de Paginas com Tinta Preta [Z5576B05] -> mnPaginasTintaPreta [Z5576B05]
+                         RV Quantidade de Paginas com Tinta Colorida [Z5576B06] -> mnPaginasTintaColorida [Z5576B06]
+                         RV Quantidade paginas Spot [Z5576B08] -> mnPaginasSpot [Z5576B08]
+                         RV I_Quantity [UORG] <- mnQuantidadeConsumida [UORG]
+                         VA evt_szChave_DL01 [DL01] -> szBaseCalculo [DL01]
+                    VA evt_mnProduto_UORG [UORG] = [RV I_Quantity [UORG]]
+                    F5576B21.Insert  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+                         VA rpt_mnEdiDocumentNumber_EDOC [EDOC] -> TK EDI - Document Number [EDOC]
+                         VA evt_jd_Chave_TRDJ [TRDJ] -> TK Date - Order/Transaction [TRDJ]
+                         VA evt_szChave_MMCU [MMCU] -> TK Branch [MMCU]
+                         VA evt_mnChave_KIT [KIT] -> TK Parent (short) Item Number [KIT]
+                         VA evt_szChave_KITL [KITL] -> TK Kit - 2nd Item Number [KITL]
+                         VA evt_mnChave_ITM [ITM] -> TK Item Number - Short [ITM]
+                         VA evt_szInsumo_LITM [LITM] -> TK 2nd Item Number [LITM]
+                         VA evt_mnChave_QNTY [QNTY] -> TK Quantity - Standard Required Quantity [QNTY]
+                         VA evt_szChave_UM [UM] -> TK Unit of Measure [UM]
+                         VA evt_mnProduto_Z5576B03 [Z5576B03] -> TK Quantidade de Chapas [Z5576B03]
+                         VA evt_mnProduto_Z5576B09 [Z5576B09] -> TK Quantidade total de exemplares [Z5576B09]
+                         VA evt_mnProduto_Z5576B10 [Z5576B10] -> TK Quantidade total de exemplares estragado [Z5576B10]
+                         VA evt_mnProduto_Z5576B05 [Z5576B05] -> TK Quantidade de Paginas com Tinta Preta [Z5576B05]
+                         VA evt_mnProduto_Z5576B06 [Z5576B06] -> TK Quantidade de Paginas com Tinta Colorida [Z5576B06]
+                         VA evt_mnProduto_Z5576B08 [Z5576B08] -> TK Quantidade paginas Spot [Z5576B08]
+                         VA evt_mnProduto_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+                         RV Centro de Custo [Z5576B04] -> TK Centro de Custo [Z5576B04]
+                         RV Caderno [Z5576B14] -> TK Caderno [Z5576B14]
+                         VA evt_szChave_DL01 [DL01] -> TK Base de Cálculo [Z5576B16]
+               End If
+               //
+               VA rpt_szQueue_DL011 [DL011] = <NULL>
+               VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], rpad(ltrim(rtrim([VA evt_szInsumo_LITM [LITM]], <Blank>), <Blank>), <Blank>, "13"))
+               VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], rpad([RV Quantidade de Chapas [Z5576B03]], <Blank>, "12"))
+               VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], rpad([RV Quantidade de Paginas com Tinta Colorida [Z5576B06]], <Blank>, "12"))
+               VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], rpad([RV Quantidade de Paginas com Tinta Preta [Z5576B05]], <Blank>, "12"))
+               VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], rpad([RV Quantidade paginas Spot [Z5576B08]], <Blank>, "12"))
+               VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], rpad([RV Quantidade total de exemplares [Z5576B09]], <Blank>, "12"))
+               VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], rpad([RV Quantidade total de exemplares estragado [Z5576B10]], <Blank>, "12"))
+               VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], rpad([RV I_Quantity [UORG]], <Blank>, "12"))
+               F55QUEUE.Insert  [Index 1: OBNM, TDAY, DL011]
+                    VA rpt_szQueue2_OBNM [OBNM] -> TK Object Name [OBNM]
+                    VA rpt_mnQueue_TDAY [TDAY] -> TK Time of Day [TDAY]
+                    VA rpt_szQueue_DL011 [DL011] -> TK Description 11 [DL011]
+               //
+               RV Quantity [UORG] = [RV Quantity [UORG]]+[RV I_Quantity [UORG]]
+               //
+               // Grava por item
+               VA evt_mnQuantidadeChapa_Z5576B03 [Z5576B03] = [VA evt_mnQuantidadeChapa_Z5576B03 [Z5576B03]]+[RV Quantidade de Chapas [Z5576B03]]
+               VA evt_mnPaginasTintaPre_Z5576B05 [Z5576B05] = [VA evt_mnPaginasTintaPre_Z5576B05 [Z5576B05]]+([RV Quantidade total de exemplares [Z5576B09]]*[RV Quantidade de Paginas com Tinta Preta [Z5576B05]])
+               VA evt_mnPaginasTintaCol_Z5576B06 [Z5576B06] = [VA evt_mnPaginasTintaCol_Z5576B06 [Z5576B06]]+([RV Quantidade total de exemplares [Z5576B09]]*[RV Quantidade de Paginas com Tinta Colorida [Z5576B06]])
+               VA evt_mnPaginasSpot_Z5576B08 [Z5576B08] = [VA evt_mnPaginasSpot_Z5576B08 [Z5576B08]]+([RV Quantidade total de exemplares [Z5576B09]]*[RV Quantidade paginas Spot [Z5576B08]])
+               VA evt_mnExemplaresTotal_Z5576B09 [Z5576B09] = [VA evt_mnExemplaresTotal_Z5576B09 [Z5576B09]]+[RV Quantidade total de exemplares [Z5576B09]]
+               VA evt_mnExemplaresEstra_Z5576B10 [Z5576B10] = [VA evt_mnExemplaresEstra_Z5576B10 [Z5576B10]]+[RV Quantidade total de exemplares estragado [Z5576B10]]
+               VA evt_mnQuantidade_UORG [UORG] = [VA evt_mnQuantidade_UORG [UORG]]+[RV I_Quantity [UORG]]
+               F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+                    VA rpt_mnEdiDocumentNumber_EDOC [EDOC] = TK EDI - Document Number [EDOC]
+                    VA evt_jd_Chave_TRDJ [TRDJ] = TK Date - Order/Transaction [TRDJ]
+                    VA evt_szChave_MMCU [MMCU] = TK Branch [MMCU]
+                    VA evt_mnChave_KIT [KIT] = TK Parent (short) Item Number [KIT]
+                    VA evt_mnChave_ITM [ITM] = TK Item Number - Short [ITM]
+                    VA evt_mnQuantidadeChapa_Z5576B03 [Z5576B03] -> TK Quantidade de Chapas [Z5576B03]
+                    VA evt_mnExemplaresTotal_Z5576B09 [Z5576B09] -> TK Quantidade total de exemplares [Z5576B09]
+                    VA evt_mnExemplaresEstra_Z5576B10 [Z5576B10] -> TK Quantidade total de exemplares estragado [Z5576B10]
+                    VA evt_mnPaginasTintaPre_Z5576B05 [Z5576B05] -> TK Quantidade de Paginas com Tinta Preta [Z5576B05]
+                    VA evt_mnPaginasTintaCol_Z5576B06 [Z5576B06] -> TK Quantidade de Paginas com Tinta Colorida [Z5576B06]
+                    VA evt_mnPaginasSpot_Z5576B08 [Z5576B08] -> TK Quantidade paginas Spot [Z5576B08]
+                    VA evt_mnQuantidade_UORG [UORG] -> TK Units - Order/Transaction Quantity [UORG]
+                    VA rpt_szCentroCusto_Z5576B04 [Z5576B04] = TK Centro de Custo [Z5576B04]
+                    VA rpt_szCaderno_Z5576B14 [Z5576B14] = TK Caderno [Z5576B14]
+          End If
+          //
+          F5576B21.FetchNext  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+               VA evt_jd_Chave_TRDJ [TRDJ] <- TK Date - Order/Transaction [TRDJ]
+               VA evt_szChave_MMCU [MMCU] <- TK Branch [MMCU]
+               VA evt_mnChave_KIT [KIT] <- TK Parent (short) Item Number [KIT]
+               VA evt_szChave_KITL [KITL] <- TK Kit - 2nd Item Number [KITL]
+               VA evt_mnChave_ITM [ITM] <- TK Item Number - Short [ITM]
+               VA evt_szInsumo_LITM [LITM] <- TK 2nd Item Number [LITM]
+               VA evt_mnChave_QNTY [QNTY] <- TK Quantity - Standard Required Quantity [QNTY]
+               VA evt_szChave_UM [UM] <- TK Unit of Measure [UM]
+               VA evt_mnQuantidadeChapa_Z5576B03 [Z5576B03] <- TK Quantidade de Chapas [Z5576B03]
+               VA evt_mnExemplaresTotal_Z5576B09 [Z5576B09] <- TK Quantidade total de exemplares [Z5576B09]
+               VA evt_mnExemplaresEstra_Z5576B10 [Z5576B10] <- TK Quantidade total de exemplares estragado [Z5576B10]
+               VA evt_mnPaginasTintaPre_Z5576B05 [Z5576B05] <- TK Quantidade de Paginas com Tinta Preta [Z5576B05]
+               VA evt_mnPaginasTintaCol_Z5576B06 [Z5576B06] <- TK Quantidade de Paginas com Tinta Colorida [Z5576B06]
+               VA evt_mnPaginasSpot_Z5576B08 [Z5576B08] <- TK Quantidade paginas Spot [Z5576B08]
+               VA evt_mnQuantidade_UORG [UORG] <- TK Units - Order/Transaction Quantity [UORG]
+               VA evt_szChave_DL01 [DL01] <- TK Base de Cálculo [Z5576B16]
+     End While
+     RV Processed (Y/N) [EDSP] = "S"
+     F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szQueue_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnQueue_TDAY [TDAY] = TK Time of Day [TDAY]
+     F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szQueue_DL011 [DL011] <- TK Description 11 [DL011]
+     While SV File_IO_Status is equal to CO SUCCESS
+          VA evt_szQueue_EDBT [EDBT] = substr([VA rpt_szQueue_DL011 [DL011]], "0", "15")
+          VA evt_mnQueue_UKID [UKID] = substr([VA rpt_szQueue_DL011 [DL011]], "16", "9")
+          F5576B20.Update  [Index 1: EDBT, UKID]
+               VA evt_mnQueue_UKID [UKID] = TK Unique Key ID (Internal) [UKID]
+               RV Processed (Y/N) [EDSP] -> TK EDI - Successfully Processed [EDSP]
+               VA evt_szQueue_EDBT [EDBT] = TK EDI - Batch Number [EDBT]
+               VA rpt_mnEdiDocumentNumber_EDOC [EDOC] -> TK EDI - Document Number [EDOC]
+          F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+               VA rpt_szQueue_DL011 [DL011] <- TK Description 11 [DL011]
+     End While
+Else
+     RV Mensagem = "Centro de custo sem kit configurado!"
+     ! Do Custom Section(RS Erro)
+     RV Chave = <NULL>
+     RV Chave = concat([RV Chave], [RV Centro de Custo [Z5576B04]])
+     RV Chave = concat([RV Chave], "|")
+     RV Chave = concat([RV Chave], [RV Caderno [Z5576B14]])
+     RV Processed (Y/N) [EDSP] = "N"
+     F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szQueue_OBNM [OBNM] = TK Object Name [OBNM]
+          VA rpt_mnQueue_TDAY [TDAY] = TK Time of Day [TDAY]
+     F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szQueue_DL011 [DL011] <- TK Description 11 [DL011]
+     While SV File_IO_Status is equal to CO SUCCESS
+          VA evt_szQueue_EDBT [EDBT] = substr([VA rpt_szQueue_DL011 [DL011]], "0", "15")
+          VA evt_mnQueue_UKID [UKID] = substr([VA rpt_szQueue_DL011 [DL011]], "16", "9")
+          F5576B20.Update  [Index 1: EDBT, UKID]
+               VA evt_mnQueue_UKID [UKID] = TK Unique Key ID (Internal) [UKID]
+               RV Processed (Y/N) [EDSP] -> TK EDI - Successfully Processed [EDSP]
+               VA evt_szQueue_EDBT [EDBT] = TK EDI - Batch Number [EDBT]
+          F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+               VA rpt_szQueue_DL011 [DL011] <- TK Description 11 [DL011]
+     End While
+End If
+//
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szQueue_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnQueue_TDAY [TDAY] = TK Time of Day [TDAY]
+
+=============================================
+Section: Linha BTI [7] 
+Event: End Section
+Event GUID: 57117f29-59d6-4d09-9041-5afeaec12ddf
+=============================================
+F55QUEUE.Select  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szQueue2_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnQueue_TDAY [TDAY] = TK Time of Day [TDAY]
+F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szQueue_DL011 [DL011] <- TK Description 11 [DL011]
+While SV File_IO_Status is equal to CO SUCCESS
+     RV I_2nd Item Number [LITM] = substr([VA rpt_szQueue_DL011 [DL011]], "0", "13")
+     RV I_Quantidade de Chapas [Z5576B03] = substr([VA rpt_szQueue_DL011 [DL011]], "13", "12")
+     RV I_Quantidade de Paginas com Tinta Colorida [Z5576B06] = substr([VA rpt_szQueue_DL011 [DL011]], "25", "12")
+     RV I_Quantidade de Paginas com Tinta Preta [Z5576B05] = substr([VA rpt_szQueue_DL011 [DL011]], "37", "12")
+     RV I_Quantidade paginas Spot [Z5576B08] = substr([VA rpt_szQueue_DL011 [DL011]], "49", "12")
+     RV I_Quantidade total de exemplares [Z5576B09] = substr([VA rpt_szQueue_DL011 [DL011]], "61", "12")
+     RV I_Quantidade total de exemplares estragado [Z5576B10] = substr([VA rpt_szQueue_DL011 [DL011]], "73", "12")
+     RV I_Quantity [UORG] = substr([VA rpt_szQueue_DL011 [DL011]], "85", "12")
+     Do Custom Section(RS Linha Insumo)
+     F55QUEUE.FetchNext  [Index 1: OBNM, TDAY, DL011]
+          VA rpt_szQueue_DL011 [DL011] <- TK Description 11 [DL011]
+End While
+F55QUEUE.Delete  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szQueue2_OBNM [OBNM] = TK Object Name [OBNM]
+     VA rpt_mnQueue_TDAY [TDAY] = TK Time of Day [TDAY]
+
+=============================================
+Section: Linha BTI [7] 
+Event: After Last Object Printed
+Event GUID: fdcbd859-0f23-482d-a18b-1a138edf750b
+=============================================
+If RV Mensagem is not equal to <Blank>
+And RV Mensagem is not equal to <NULL>
+And RV Mensagem is not equal to "0"
+     Do Custom Section(RS Erro)
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Page Header [2] 
+Event: After Last Object Printed
+Event GUID: be752fdd-d3e1-49d4-9a41-ec9740df8791
+=============================================
+If VA rpt_cTitulo_EV01 [EV01] is equal to "1"
+     Do Custom Section(RS Titulo BTI)
+Else
+     If VA rpt_cTitulo_EV01 [EV01] is equal to "2"
+          Do Custom Section(RS Titulo NF)
+     End If
+End If
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: BSVW F5576B20xF0006xF00092                                   [1] 
+Event: Initialize Section
+Event GUID: a40f14cf-c1e6-4a14-9664-a3a5af0b295e
+=============================================
+If PO mnDiasBTI [IA04] is equal to <Blank>
+Or PO mnDiasBTI [IA04] is equal to <NULL>
+Or PO mnDiasBTI [IA04] is equal to "0"
+     PO mnDiasBTI [IA04] = 0
+End If
+If PO mnDiasNF [IA04] is equal to <Blank>
+Or PO mnDiasNF [IA04] is equal to <NULL>
+Or PO mnDiasNF [IA04] is equal to "0"
+     PO mnDiasNF [IA04] = 0
+End If
+If PO jdDataCorte [Z5576B11] is equal to Null Date
+     PO mnDiasBTI [IA04] = [PO mnDiasBTI [IA04]]*-1
+     PO jdDataCorte [Z5576B11] = add_days([SL DateToday], [PO mnDiasBTI [IA04]])
+End If
+If PO jdDataCorteNF [ISSU] is equal to Null Date
+     PO mnDiasNF [IA04] = [PO mnDiasNF [IA04]]*-1
+     PO jdDataCorteNF [ISSU] = add_days([SL DateToday], [PO mnDiasNF [IA04]])
+End If
+//
+Set Selection Append Flag( <Yes>)
+Set User Selection(BC EDI - Successfully Processed (F5576B20)(EDSP),  <Not Equal To>, "S",  <And>)
+Set User Selection(BC EDI - Successfully Processed (F5576B20)(EDSP), <Not Equal To>, "I", <And>)
+Set User Selection(BC Supplemental Database Code (F00092)(SDB),  <Equal To>, "BTI", <And>)
+Set User Selection(BC Type Data (F00092)(TYDT), <Equal To>, "UF", <And>)
+Set User Selection(BC Business Unit (F00092)(MCU), <Equal To>, PO szParqueGrafico, <And>)
+Set User Selection(BC Data de Circulacao (F5576B20)(Z5576B11), <Equal To>, PO jdDataCorte, <And>)
+//
+VA rpt_cPrimeiraLinha_EV01 [EV01] = "S"
+VA rpt_szQueue_OBNM [OBNM] = "R5576B21"
+VA rpt_szQueue2_OBNM [OBNM] = "R5576B21_"
+GetAuditInfo(B9800100.GetAuditInfo)
+     VA rpt_mnQueue_TDAY [TDAY] <- mnTime [TME0]
+VA rpt_cTitulo_EV01 [EV01] = "1"
+//
+GetAuditInfo(B9800100.GetAuditInfo)
+     VA rpt_szLog_USER [USER] <> szUserName [USER]
+     VA rpt_jdLog_UPMJ [UPMJ] <> jdDate [DTE]
+     VA rpt_mnLog_UPMT [UPMT] <> mnTime [TME0]
+     VA rpt_szLog_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+VA rpt_szLog_VL01 [VL01] = SL VersionName
+VA rpt_szLog_PID [PID] = "R5576B03"
+
+=============================================
+Section: BSVW F5576B20xF0006xF00092                                   [1] 
+Event: Do Section
+Event GUID: b4500113-e050-41b8-8b6a-2f45708d6b9e
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnUniqueKeyIDInternal_UKID [UKID]
+evt_szProvisorio_EDBT [EDBT]
+----------------------------------------
+//
+F4101.FetchSingle  [Index 2: 2nd Item Number]
+     VA rpt_mnKit_ITM [ITM] <- TK Item Number - Short [ITM]
+     BC Category Code - Business Unit 33 (F0006.0) [RP33] = TK 2nd Item Number [LITM]
+If RV Branch [MMCU] is not equal to BC Business Unit (F00092.0) [MCU]
+Or RV Parent Item Number [KIT] is not equal to VA rpt_mnKit_ITM [ITM]
+     RV Branch [MMCU] = BC Business Unit (F00092.0) [MCU]
+     RV Parent Item Number [KIT] = VA rpt_mnKit_ITM [ITM]
+     RV Type Bill of Material [TBM] = "M"
+     If VA rpt_cPrimeiraLinha_EV01 [EV01] is not equal to "S"
+          // Pega NN para a tabela F5576B21 para o EDOC
+          GetNextUniqueKeyID(X00022.GetNextUniqueKeyID)
+               "F5576B21" -> szObjectName [OBNM]
+               VA rpt_mnEdiDocumentNumber_EDOC [EDOC] <- mnUniqueKeyID [UKID]
+          Do Custom Section(RS Monta BOM)
+     End If
+End If
+//
+If VA rpt_cPrimeiraLinha_EV01 [EV01] is equal to "S"
+     VA rpt_cPrimeiraLinha_EV01 [EV01] = "N"
+Else
+     Do Custom Section(RS Linha BTI)
+End If
+//
+RV Category Code 33 [RP33] = BC Category Code - Business Unit 33 (F0006.0) [RP33]
+RV Business Unit [MCU] = BC Business Unit (F00092.0) [MCU]
+RV Data de Circulacao [Z5576B11] = BC Data de Circulacao (F5576B20.0) [Z5576B11]
+RV Centro de Custo [Z5576B04] = BC Centro de Custo (F5576B20.0) [Z5576B04]
+RV Caderno [Z5576B14] = BC Caderno (F5576B20.0) [Z5576B14]
+RV Tipo de papel [Z5576B12] = BC Tipo de papel (F5576B20.0) [Z5576B12]
+RV Refilado [Z5576B15] = BC Refilado (F5576B20.0) [Z5576B15]
+RV Acabamento [Z5576B13] = BC Acabamento (F5576B20.0) [Z5576B13]
+RV Codigo da Rotativa [Z5576B07] = BC Codigo da Rotativa (F5576B20.0) [Z5576B07]
+RV Quantidade de Chapas [Z5576B03] = BC Quantidade de Chapas (F5576B20.0) [Z5576B03]
+RV Quantidade total de exemplares [Z5576B09] = BC Quantidade total de exemplares (F5576B20.0) [Z5576B09]
+RV Quantidade total de exemplares estragado [Z5576B10] = BC Quantidade total de exemplares estragado (F5576B20.0) [Z5576B10]
+RV Quantidade de Paginas com Tinta Preta [Z5576B05] = BC Quantidade de Paginas com Tinta Preta (F5576B20.0) [Z5576B05]
+RV Quantidade de Paginas com Tinta Colorida [Z5576B06] = BC Quantidade de Paginas com Tinta Colorida (F5576B20.0) [Z5576B06]
+RV Quantidade paginas Spot [Z5576B08] = BC Quantidade paginas Spot (F5576B20.0) [Z5576B08]
+RV Quantity [UORG] = 0
+//
+VA rpt_szQueue_DL011 [DL011] = rpad([BC EDI - Batch Number (F5576B20.0) [EDBT]], <Blank>, "15")
+VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], "|")
+VA rpt_szQueue_DL011 [DL011] = concat([VA rpt_szQueue_DL011 [DL011]], rpad([BC Unique Key ID (Internal) (F5576B20.0) [UKID]], <Blank>, "9"))
+F55QUEUE.Insert  [Index 1: OBNM, TDAY, DL011]
+     VA rpt_szQueue_OBNM [OBNM] -> TK Object Name [OBNM]
+     VA rpt_mnQueue_TDAY [TDAY] -> TK Time of Day [TDAY]
+     VA rpt_szQueue_DL011 [DL011] -> TK Description 11 [DL011]
+//
+
+=============================================
+Section: BSVW F5576B20xF0006xF00092                                   [1] 
+Event: End Section
+Event GUID: d0174dd1-11f9-49cb-89dc-81d3bf214a3f
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szUserId_USER [USER]
+evt_szProgramId_PID [PID]
+evt_szWorkStationId_JOBN [JOBN]
+evt_szSelectionValues001_VL01 [VL01]
+evt_jdDateUpdated_UPMJ [UPMJ]
+evt_mnTimeLastUpdated_UPMT [UPMT]
+evt_cStatus_EV01 [EV01]
+----------------------------------------
+Do Custom Section(RS Linha BTI)
+! Do Custom Section(RS Calcula quantidade total)
+! GetAuditInfo(B9800100.GetAuditInfo)
+!      VA evt_szUserId_USER [USER] <> szUserName [USER]
+!      VA evt_jdDateUpdated_UPMJ [UPMJ] <> jdDate [DTE]
+!      VA evt_mnTimeLastUpdated_UPMT [UPMT] <> mnTime [TME0]
+!      VA evt_szWorkStationId_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+! VA evt_szProgramId_PID [PID] = "R5576B21"
+! VA evt_szSelectionValues001_VL01 [VL01] = SL VersionName
+//
+VA rpt_cTitulo_EV01 [EV01] = "2"
+Do Custom Section(RS Quebra página)
+Do Custom Section(RS Processa NF)
+//
+VA evt_cStatus_EV01 [EV01] = "P"
+F5576B21.Update  [Index 1: EDBT, TRDJ, MMCU, KIT, ITM]
+     VA rpt_mnEdiDocumentNumber_EDOC [EDOC] = TK EDI - Document Number [EDOC]
+     VA evt_cStatus_EV01 [EV01] -> TK J.D. EnterpriseOne Event Point 01 [EV01]
+     VA rpt_szLog_USER [USER] -> TK User ID [USER]
+     VA rpt_szLog_PID [PID] -> TK Program ID [PID]
+     VA rpt_szLog_VL01 [VL01] -> TK Selection Values 01 [VL01]
+     VA rpt_szLog_JOBN [JOBN] -> TK Work Station ID [JOBN]
+     VA rpt_jdLog_UPMJ [UPMJ] -> TK Date - Updated [UPMJ]
+     VA rpt_mnLog_UPMT [UPMT] -> TK Time - Last Updated [UPMT]
+
+
+
+=============================================
+EVENTS
+=============================================
+Section: Erro [32] 
+Event: Do Section
+Event GUID: efbceca4-a636-4a26-8fb7-f818c50e23f4
+=============================================
+Set UBE Error("TESTE")
+
+
+

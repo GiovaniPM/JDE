@@ -1,0 +1,68 @@
+﻿---------------------------------------------------------------------------------
+Table: F5576B21 BTI Consumo por insumo
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   EDOC       EDI - Document Number                    EdiDocumentNumber         Math Numeric    9(0)       X
+2   EV01       J.D. EnterpriseOne Event Point 01        EverestEventPoint01       Char            1(0)       
+3   TRDJ       Date - Order/Transaction                 DateTransactionJulian     Date            6(0)       X
+4   MMCU       Branch                                   CostCenterAlt             String          12(0)      X
+5   KIT        Parent (short) Item Number               ItemNumberShortKit        Math Numeric    8(0)       X
+6   KITL       Kit - 2nd Item Number                    ItemNumber2ndKit          String          25(0)      
+7   ITM        Item Number - Short                      IdentifierShortItem       Math Numeric    8(0)       X
+8   LITM       2nd Item Number                          Identifier2ndItem         String          25(0)      
+9   DL01       Description                              Description001            String          30(0)      
+10  QNTY       Quantity - Standard Required Quantity    QtyRequiredStandard       Math Numeric    15(0)      
+11  UM         Unit of Measure                          UnitOfMeasure             String          2(0)       
+12  Z5576B03   Quantidade de Chapas                     QuantidadeChapas          Math Numeric    12(0)      
+13  Z5576B09   Quantidade total de exemplares           ExemplaresTotal           Math Numeric    12(0)      
+14  Z5576B10   Quantidade total de exemplares estragado ExemplaresEstragados      Math Numeric    12(0)      
+15  Z5576B05   Quantidade de Paginas com Tinta Preta    PaginasTintaPreta         Math Numeric    12(0)      
+16  Z5576B06   Quantidade de Paginas com Tinta Colorida PaginasTintaColorida      Math Numeric    12(0)      
+17  Z5576B08   Quantidade paginas Spot                  PaginasSpot               Math Numeric    12(0)      
+18  UORG       Units - Order/Transaction Quantity       UnitsTransactionQty       Math Numeric    15(0)      
+19  USER       User ID                                  UserId                    String          10(0)      
+20  PID        Program ID                               ProgramId                 String          10(0)      
+21  VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+22  JOBN       Work Station ID                          WorkStationId             String          10(0)      
+23  UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+24  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+25  Z5576B04   Centro de Custo                          CentroCusto               String          12(0)      X
+26  Z5576B14   Caderno                                  Caderno                   String          30(0)      X
+27  Z5576B16   Base de Cálculo                          BaseCalculo               String          3(0)       
+28  Z5576B17   Usuario Aprovador                        UsuarioAprovador          String          10(0)      
+29  Z5576B18   Data Aprovacao                           DataAprovacao             Date            6(0)       
+30  Z5576B19   Hora Aprovacao                           HoraAprovacao             Math Numeric    6(0)       
+31  ICU        Batch Number                             BatchNumber               Math Numeric    8(0)       
+32  ICUT       Batch Type                               BatchType                 String          2(0)       
+33  KCO        Document Company                         CompanyKey                String          5(0)       
+34  DOC        Document (Voucher, Invoice, etc.)        DocVoucherInvoiceE        Math Numeric    8(0)       
+35  DCT        Document Type                            DocumentType              String          2(0)       
+
+INDICIES
+EDBT, TRDJ, MMCU, KIT, ITM               1      PRIMARY UNIQUE
+                                         EDOC      
+                                         TRDJ      
+                                         MMCU      
+                                         KIT       
+                                         ITM       
+                                         Z5576B04  
+                                         Z5576B14  
+
+EDOC, Z5576B04, Z5576B14                 2     
+                                         EDOC      
+                                         Z5576B04  
+                                         Z5576B14  
+
+ICU, ICUT                                3     
+                                         ICU       
+                                         ICUT      
+
+KCO, DOC, DCT                            4     
+                                         KCO       
+                                         DOC       
+                                         DCT       
+
+EDBT                                     5     
+                                         EDOC      
+

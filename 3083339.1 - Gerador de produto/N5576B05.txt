@@ -1,0 +1,42 @@
+﻿---------------------------------------------------------------------------------
+Business Function: N5576B05 - BSFN - Funcoes para BTI
+Function Type: NER
+---------------------------------------------------------------------------------
+=============================================
+EVENTS
+=============================================
+NER: CalculoConsumoInsumoBTI 
+Event GUID: f5c3869a-06c7-4fc7-980d-9d5146eb6e67
+=============================================
+=====================================================
+Data Structure: D5576B05A - DS Calculo consumo insumo BTI                               
+=====================================================
+BF mnQuantidadePorExemplar [QNTY]
+BF mnQuantidadeChapas [Z5576B03]
+BF mnExemplaresTotal [Z5576B09]
+BF mnExemplaresEstragados [Z5576B10]
+BF mnPaginasTintaPreta [Z5576B05]
+BF mnPaginasTintaColorida [Z5576B06]
+BF mnPaginasSpot [Z5576B08]
+BF mnQuantidadeConsumida [UORG]
+BF szBaseCalculo [DL01]
+
+//
+If BF szBaseCalculo [DL01] is equal to "PAG"
+     BF mnQuantidadeConsumida [UORG] = ((([BF mnPaginasTintaPreta [Z5576B05]]+[BF mnPaginasTintaColorida [Z5576B06]])+[BF mnPaginasSpot [Z5576B08]])*[BF mnExemplaresTotal [Z5576B09]])*[BF mnQuantidadePorExemplar [QNTY]]
+End If
+If BF szBaseCalculo [DL01] is equal to "COR"
+     BF mnQuantidadeConsumida [UORG] = (([BF mnPaginasTintaColorida [Z5576B06]]+[BF mnPaginasSpot [Z5576B08]])*[BF mnExemplaresTotal [Z5576B09]])*[BF mnQuantidadePorExemplar [QNTY]]
+End If
+If BF szBaseCalculo [DL01] is equal to "PBO"
+     BF mnQuantidadeConsumida [UORG] = ([BF mnPaginasTintaColorida [Z5576B06]]*[BF mnExemplaresTotal [Z5576B09]])*[BF mnQuantidadePorExemplar [QNTY]]
+End If
+If BF szBaseCalculo [DL01] is equal to "CHP"
+     BF mnQuantidadeConsumida [UORG] = [BF mnQuantidadeChapas [Z5576B03]]*[BF mnQuantidadePorExemplar [QNTY]]
+End If
+If BF szBaseCalculo [DL01] is equal to "EXE"
+     BF mnQuantidadeConsumida [UORG] = [BF mnExemplaresTotal [Z5576B09]]*[BF mnQuantidadePorExemplar [QNTY]]
+End If
+
+
+

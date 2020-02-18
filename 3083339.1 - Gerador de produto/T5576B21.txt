@@ -1,0 +1,33 @@
+﻿---------------------------------------------------------------------------------
+Data Structure: T5576B21 PO Baixa de estoque para NF autonomas
+Type: Processing Options
+---------------------------------------------------------------------------------
+PAGE: 0                                - Parâmetros                    
+  cModoRelatorio                 [EV01]
+    1. Modo do relatório  	1 - Final  	Default - Teste
+    VALUE: []
+  cCustoBaixa                    [EV01]
+    2. Custo da Baixa  	1 - Valor da NF  	Default - Tipo do custo do sistema
+    VALUE: []
+  szLedgType                     [LEDG]
+    	2.1 Tipo do custo a ser utilizado  		Default - '02' custo médio
+    VALUE: []
+  szTipoDocumento                [DCT]
+    3. Tipo de documento  	Default - II
+    VALUE: []
+  cEstoqueNegativo               [EV01]
+    4. Permite estoque negativo  	1 - Sim  	Default - Não
+    VALUE: []
+  szAcctNoInputMode              [ANI]
+    5. Conta de Contrapartida  	Default - DMAAI 4124
+    VALUE: []
+  szStatusCodeNext               [NXTR]
+    6. Código para sobreescrever o próximo status da NF (somente modo final)  	Default - Regra definida na P40204
+    VALUE: []
+  mnDiasPesquisa_IA04            [IA04]
+    7. Dias para o período de pesquisarem NFs avulsas  	Default - 0 dias
+    VALUE: []
+  mnDiasRetroativo_IA04          [IA04]
+    8. Dias para cálculo retroativo para a data de contabilização  	Default - 0 dias
+    VALUE: []
+

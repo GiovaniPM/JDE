@@ -1,0 +1,84 @@
+﻿---------------------------------------------------------------------------------
+Table: F5576B20 TBLE Importação de BTI
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   UKID       Unique Key ID (Internal)                 UniqueKeyIDInternal       Math Numeric    15(0)      X
+2   TRDJ       Date - Order/Transaction                 DateTransactionJulian     Date            6(0)       
+3   EDSP       EDI - Successfully Processed             EdiSuccessfullyProcess    Char            1(0)       
+4   Z5576B01   Codigo Parque Grafico                    CodigoParqueGrafico       String          30(0)      
+5   Z5576B02   Codigo do BTI                            CodigoBTI                 String          30(0)      
+6   Z5576B03   Quantidade de Chapas                     QuantidadeChapas          Math Numeric    12(0)      
+7   Z5576B04   Centro de Custo                          CentroCusto               String          12(0)      
+8   Z5576B05   Quantidade de Paginas com Tinta Preta    PaginasTintaPreta         Math Numeric    12(0)      
+9   Z5576B06   Quantidade de Paginas com Tinta Colorida PaginasTintaColorida      Math Numeric    12(0)      
+10  Z5576B07   Codigo da Rotativa                       CodigoRotativa            String          30(0)      
+11  Z5576B08   Quantidade paginas Spot                  PaginasSpot               Math Numeric    12(0)      
+12  Z5576B09   Quantidade total de exemplares           ExemplaresTotal           Math Numeric    12(0)      
+13  Z5576B10   Quantidade total de exemplares estragado ExemplaresEstragados      Math Numeric    12(0)      
+14  Z5576B11   Data de Circulacao                       DataCirculacao            Date            6(0)       
+15  Z5576B12   Tipo de papel                            TipoPapel                 String          30(0)      
+16  Z5576B13   Acabamento                               Acabamento                String          30(0)      
+17  Z5576B14   Caderno                                  Caderno                   String          30(0)      
+18  Z5576B15   Refilado                                 Refilado                  String          30(0)      
+19  GS3A       Generic String x 30                      szGenericStr30A           String          30(0)      
+20  GS3B       Generic String x 30                      szGenericStr30B           String          30(0)      
+21  GS3C       Generic String x 30                      szGenericStr30C           String          30(0)      
+22  GS3D       Generic String x 30                      szGenericStr30D           String          30(0)      
+23  GS3E       Generic String x 30                      szGenericStr30E           String          30(0)      
+24  CFAMT1     Generic Amount 1                         GenericAmount1            Math Numeric    15(2)      
+25  CFAMT2     Generic Amount 2                         GenericAmount2            Math Numeric    15(2)      
+26  CFAMT3     Generic Amount 3                         GenericAmount3            Math Numeric    15(2)      
+27  CFAMT4     Generic Amount 4                         GenericAmount4            Math Numeric    15(2)      
+28  CFAMT5     Generic Amount 5                         GenericAmount5            Math Numeric    15(2)      
+29  CFFLG1     Generic Flag 1                           GenericFlag1              Char            1(0)       
+30  CFFLG2     Generic Flag 2                           GenericFlag2              Char            1(0)       
+31  CFFLG3     Generic Flag 3                           GenericFlag3              Char            1(0)       
+32  CFFLG4     Generic Flag 4                           GenericFlag4              Char            1(0)       
+33  CFFLG5     Generic Flag 5                           GenericFlag5              Char            1(0)       
+34  CFDTE1     Generic Date 1                           GenericDate1              Date            6(0)       
+35  CFDTE2     Generic Date 2                           GenericDate2              Date            6(0)       
+36  CFDTE3     Generic Date 3                           GenericDate3              Date            6(0)       
+37  CFDTE4     Generic Date 4                           GenericDate4              Date            6(0)       
+38  FDATE01    Farm Generic Date 01                     FarmGenericDate01         Date            6(0)       
+39  USER       User ID                                  UserId                    String          10(0)      
+40  PID        Program ID                               ProgramId                 String          10(0)      
+41  VL01       Selection Values 01                      SelectionValues001        String          25(0)      
+42  JOBN       Work Station ID                          WorkStationId             String          10(0)      
+43  UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+44  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+45  EDBT       EDI - Batch Number                       EdiBatchNumber            String          15(0)      X
+46  EDOC       EDI - Document Number                    EdiDocumentNumber         Math Numeric    9(0)       
+
+INDICIES
+EDBT, UKID                               1      PRIMARY UNIQUE
+                                         EDBT      
+                                         UKID      
+
+TRDJ, EDSP                               2     
+                                         TRDJ      
+                                         EDSP      
+
+Z5576B02                                 3     
+                                         Z5576B02  
+
+Z5576B(01,11,04,14,07,12,13,15           5     
+                                         Z5576B01  
+                                         Z5576B11  
+                                         Z5576B04  
+                                         Z5576B14  
+                                         Z5576B07  
+                                         Z5576B12  
+                                         Z5576B13  
+                                         Z5576B15  
+                                         EDSP      
+
+EDBT                                     6     
+                                         EDBT      
+
+EDSP                                     7     
+                                         EDSP      
+
+EDOC                                     8     
+                                         EDOC      
+

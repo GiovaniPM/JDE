@@ -1,0 +1,527 @@
+﻿
+=============================================
+EVENTS
+=============================================
+Form: Gerar produto por manufatura - W5576B20A
+Object: HC Add record
+Event: Button Clicked
+Event GUID: 5748e12f-b3e9-4093-ab3b-e48f47777fc7
+=============================================
+Call App:P5576B20 Form:W5576B20B Version:SL VersionName
+
+
+
+
+
+=============================================
+Form: Gerador de kit por manufatura - W5576B20B
+Event: Form Variables
+Event GUID: 52d0d6aa-93f7-46e8-af2c-fa1343980b8f
+=============================================
+frm_mnNumeroLote_ICU [ICU]
+frm_szTipoLote_ICUT [ICUT]
+frm_szStatusLote_IST [IST]
+frm_szLoteAprovado_IAPP [IAPP]
+frm_szUsuario_USER [USER]
+frm_szProgramId_PID [PID]
+frm_szWorkStationId_JOBN [JOBN]
+frm_szVersao_VL01 [VL01]
+frm_jdDateUpdated_UPMJ [UPMJ]
+frm_mnTimeLastUpdated_UPMT [UPMT]
+frm_szPostOutOfBalance_POB [POB]
+frm_szCompany_CO [CO]
+frm_mnNumeroDocumento_DOC [DOC]
+frm_szTipo_FUAN1 [FUAN1]
+frm_mnJobnumberA_JOBS [JOBS]
+frm_mnInvJobNumber_JOBS [JOBS]
+frm_szCurrencyCodeFrom_CRCD [CRCD]
+frm_jdDateForGLandVoucherJ_DGJ [DGJ]
+frm_FC_dicjBatchDate [DICJ]
+frm_mnJournalEntryLineNo_JELN [JELN]
+frm_mnDocVoucherInvoiceE_DOC [DOC]
+frm_szFromTo_FRTO [FRTO]
+frm_PO_cAllowQtyOverAvailable [EV05]
+frm_FC_PrevLineNo [LNID]
+frm_FC_LastJELinE [JELN]
+frm_PO_cEntera1todefaultfrompr [EV01]
+frm_PO_cAllowHeldLots [EV06]
+frm_jdDateTransactionJuli_TRDJ [TRDJ]
+frm_FC_OrderDate [TRDJ]
+frm_FC_EV01Batchstat [EV01]
+frm_FC_jobsJobNoF0911 [JOBS]
+frm_FC_kcoDocKeyComp [KCO]
+frm_FC_JOBSInvJobNumber [JOBS]
+frm_FCJELNLastJELine [JELN]
+frm_GLMBFVersion_VER [VER]
+frm_PO_szJournalEntriesVersion [VL01]
+frm_PO_cSummaryMode [EV03]
+frm_PO_OutInteroperabilityType [TYTN]
+frm_mnUniqueKeyIDF41021WF_UKID [UKID]
+frm_cLicensePlateBranchPlant [CHAR]
+
+=============================================
+EVENTS
+=============================================
+Form: Gerador de kit por manufatura - W5576B20B
+Object: HC Find records
+Event: Button Clicked
+Event GUID: 9d6d3a81-c55a-4b26-8e1b-9b7987a50430
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnIdentifierShortItem_ITM [ITM]
+----------------------------------------
+Clear Control Error(FC U/M [UOM])
+F4101.FetchSingle  [Index 2: 2nd Item Number]
+     VA evt_mnIdentifierShortItem_ITM [ITM] <- TK Item Number - Short [ITM]
+     FC 2nd Item Number [KITL] = TK 2nd Item Number [LITM]
+GetItemMasterDescUOM(B4001040.GetItemMasterDescUOM)
+     VA evt_mnIdentifierShortItem_ITM [ITM] -> mnShortItemNumber [ITM]
+     FC U/M [UOM] <- szPrimaryUOM [UOM1]
+     FC Branch [MMCU] -> szBranchPlant [MCU]
+
+
+=============================================
+EVENTS
+=============================================
+Form: Gerador de kit por manufatura - W5576B20B
+Object: HC &Gera
+Event: Button Clicked
+Event GUID: d8b94c77-7b82-4f20-a758-301d8d2c3b04
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_cErro_EV01 [EV01]
+----------------------------------------
+VA evt_cErro_EV01 [EV01] = "N"
+VA frm_szTipo_FUAN1 [FUAN1] = "2"
+If FC Transaction Quantity [TRQT] is equal to "0"
+     VA evt_cErro_EV01 [EV01] = "S"
+     Set Control Error(FC Transaction Quantity, "4330")
+End If
+If FC Extended Price [AEXP] is equal to "0"
+     VA evt_cErro_EV01 [EV01] = "S"
+     Set Control Error(FC Extended Price, "4330")
+End If
+//
+If VA evt_cErro_EV01 [EV01] is equal to "N"
+     RetrieveCompanyFromBusUnit(B0000130.RetrieveCompanyFromBusUnit)
+          FC Branch [MMCU] -> szCostCenter [MCU0]
+          VA frm_szCompany_CO [CO] <- szCompany [CO]
+     VA frm_mnNumeroLote_ICU [ICU] = 0
+     VA frm_mnDocVoucherInvoiceE_DOC [DOC] = 0
+     VA frm_szTipoLote_ICUT [ICUT] = "N"
+     VA frm_szStatusLote_IST [IST] = "U"
+     VA frm_szLoteAprovado_IAPP [IAPP] = "P"
+     VA frm_szPostOutOfBalance_POB [POB] = "N"
+     VA frm_szCurrencyCodeFrom_CRCD [CRCD] = "R$"
+     VA frm_PO_cAllowQtyOverAvailable [EV05] = "1"
+     VA frm_PO_cAllowHeldLots [EV06] = <Blank>
+     VA frm_PO_cSummaryMode [EV03] = <Blank>
+     VA frm_PO_OutInteroperabilityType [TYTN] = <Blank>
+     VA frm_FC_OrderDate [TRDJ] = SL DateToday
+     //
+     F4114BeginDocument(XT4114Z1.F4114BeginDocument)
+          VA frm_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          FC Branch [MMCU] -> szBranchPlant [MCU]
+          VA frm_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+          VA frm_FC_dicjBatchDate [DICJ] <> jdBatchDate [DICJ]
+          VA frm_mnJournalEntryLineNo_JELN [JELN] <> mnLastJELineNumber [JELN]
+          VA frm_szCompany_CO [CO] <> szDocumentKeyCompany [KCO]
+          PO szDocumentType_DCT [DCT] <> szDocumentType [DCT]
+          VA frm_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+          VA frm_jdDateForGLandVoucherJ_DGJ [DGJ] <> jdGLDate [DGL]
+          VA frm_jdDateTransactionJuli_TRDJ [TRDJ] <> jdTransactionDate [TRDJ]
+          FC Explanation [TREX] <> szGLExplanation [DL01]
+     Press Button(FC Processa Linha)
+     F0911FSBeginDoc(B0900049.F0911FSBeginDoc)
+          VA frm_FC_jobsJobNoF0911 [JOBS] <> mnJobNumber [MATH06]
+          "1" -> cDocAction [ACTN]
+          "1" -> cEditInstructionFlag [EV01]
+          VA frm_FCJELNLastJELine [JELN] <> mnLastLineNumber [JELN]
+          VA frm_FC_kcoDocKeyComp [KCO] -> szCompanyKey [KCO]
+          PO szDocumentType_DCT [DCT] -> szDocumentType [DCT]
+          VA frm_mnNumeroDocumento_DOC [DOC] -> mnDocNumber [DOC]
+          FC G/L Date [DGJ] -> jdGLDate [DGJ]
+          VA frm_mnNumeroLote_ICU [ICU] -> mnBatchNumber [ICU]
+          VA frm_szTipoLote_ICUT [ICUT] -> szBatchType [ICUT]
+          VA frm_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+          VA frm_FC_dicjBatchDate [DICJ] -> jdBatchSystemDate [DSYJ]
+          VA frm_szCurrencyCodeFrom_CRCD [CRCD] -> szTransactionCurrency [CRCD]
+          FC Explanation [TREX] -> szExplanation [EXA]
+          VA frm_szCurrencyCodeFrom_CRCD [CRCD] -> szBaseCoCurrency [CRDC]
+          VA frm_GLMBFVersion_VER [VER] -> szJEVersion [VER]
+     GetNextUniqueKeyID(X00022.GetNextUniqueKeyID)
+          "F41021WF" -> szObjectName [OBNM]
+          VA frm_mnUniqueKeyIDF41021WF_UKID [UKID] <- mnUniqueKeyID [UKID]
+     CacheProcessUniqueF41021WF(B4902110.CacheProcessUniqueF41021WF)
+          VA frm_FC_JOBSInvJobNumber [JOBS] -> mnJobnumber [JOBS]
+          VA frm_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          VA frm_mnUniqueKeyIDF41021WF_UKID [UKID] -> mnUniqueKeyIDInternal [UKID]
+          "2" -> szCacheActionCode [CACTN]
+          "3" -> mnNumberKeys [NKEYS]
+          "1" -> idCacheCursor [GENLNG]
+     GetF46L001Records(B46L0010.GetF46L001Records)
+          FC Branch [MMCU] <> szCostCenter [MCU]
+          VA frm_cLicensePlateBranchPlant [CHAR] <- cLPNMasterSwitch [LPNM]
+     CacheLicensePlateTransHeader(B46L0200.CacheLicensePlateTransHeader)
+          "2" -> szCacheActionCode [CACTN]
+          "1" -> mnNumberKeys [NKEYS]
+          "1" -> nIndex [INT01]
+          "1" -> cSuppressErrorMessage [SUPPS]
+          VA frm_FC_JOBSInvJobNumber [JOBS] <> mnJobNumber [JOBS]
+          "N" -> cPartialsAllowedYN [PRTA]
+          VA frm_szProgramId_PID [PID] -> szProgramId [PID]
+          "IA" -> szLicensePlateTransactionT [LPTT]
+     F4114EndDocument(XT4114Z1.F4114EndDocument)
+          VA frm_szProgramId_PID [PID] -> szProgramID [PID]
+          VA frm_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+          VA frm_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          "1" -> cWriteCardex [EV01]
+          PO szDocumentType_DCT [DCT] -> szDocumentType [DCT]
+          VA frm_szTipo_FUAN1 [FUAN1] -> mnTransactionProcessType [MATH01]
+          VA frm_FC_jobsJobNoF0911 [JOBS] -> mnF0911Jobnumber [JOBS]
+          VA frm_mnNumeroLote_ICU [ICU] -> mnBatchNumber [ICU]
+          VA frm_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+          VA frm_PO_cSummaryMode [EV03] -> cSummarizeF0911 [EV01]
+          VA frm_FC_JOBSInvJobNumber [JOBS] -> mnInvJobNumber [JOBS]
+          VA frm_PO_OutInteroperabilityType [TYTN] <> szEDITransactionType [TYTN]
+     FC Batch Number [ICU] = VA frm_mnNumeroLote_ICU [ICU]
+     FC Document Number [DOC] = VA frm_mnDocVoucherInvoiceE_DOC [DOC]
+     F4114ClearDetailStack(XT4114Z1.F4114ClearDetailStack)
+          VA frm_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+          PO szDocumentType_DCT [DCT] -> szDocumentType [DCT]
+          "1" -> cProcessCloseBatch [EV01]
+          VA frm_mnNumeroLote_ICU [ICU] -> mnBatchNumber [ICU]
+          VA frm_FC_jobsJobNoF0911 [JOBS] -> mnF0911Jobnumber [JOBS]
+          VA frm_FC_JOBSInvJobNumber [JOBS] -> mnInvJobNumber [JOBS]
+     //
+     If SV Error_Status is equal to CO SUCCESS
+     Or SV Error_Status is equal to CO WARNING
+          VA frm_PO_szJournalEntriesVersion [VL01] = <Blank>
+          GetGLMBFVersionFromJEVersion(B4101430.GetGLMBFVersionFromJEVersion)
+               VA frm_GLMBFVersion_VER [VER] <- szGLMBFVersion [VER]
+               VA frm_PO_szJournalEntriesVersion [VL01] -> szJEVersion [VER]
+          FC 2nd Item Number [KITL] = <NULL>
+          FC Extended Price [AEXP] = <NULL>
+          FC Location [LOCN] = <NULL>
+          FC Transaction Quantity [TRQT] = <NULL>
+          FC U/M [UOM] = <NULL>
+          FC Explanation [TREX] = <NULL>
+          Delete Grid Row(FC Grid,  <All Rows>)
+          ! Stop Processing
+          Press Button(HC Cancel/Close)
+          Press Button(HC Cancel/Close)
+     End If
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Gerador de kit por manufatura - W5576B20B
+Object: FC 2nd Item Number
+Event: Control is Exited
+Event GUID: da70cf40-7a75-4956-abfb-00dfe8a3752a
+=============================================
+F4101.Select  [Index 1: Item Master]
+     FC 2nd Item Number [KITL] = TK 2nd Item Number [LITM]
+F4101.FetchNext  [Index 1: Item Master]
+     FC U/M [UOM] <- TK Unit of Measure - Primary [UOM1]
+If SV File_IO_Status is not equal to CO SUCCESS
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Gerador de kit por manufatura - W5576B20B
+Object: FC Grid
+Event: Row is Exited
+Event GUID: c825be03-26c5-4c6c-a172-fe4b4b0f89a8
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnIdentifierShortItem_ITM [ITM]
+evt_mnQuantityAvailable_QAVAL [QAVAL]
+evt_cErro_EV01 [EV01]
+evt_mnConvertido_QAVAL [QAVAL]
+evt_mnConversionFactor_CONV [CONV]
+evt_szLedgType_LEDG [LEDG]
+evt_mnAmountUnitCost_UNCS [UNCS]
+evt_mnPadrao_UOM1 [UOM1]
+evt_szDataItem_DTAI [DTAI]
+evt_mnAnterior_AEXP [AEXP]
+evt_szAnterior_UOM1 [UOM1]
+----------------------------------------
+If GC Número do Componente [LITM] is not equal to <Blank>
+And GC Número do Componente [LITM] is not equal to <NULL>
+And GC Número do Componente [LITM] is not equal to "0"
+     VA evt_cErro_EV01 [EV01] = "0"
+     VA evt_mnAnterior_AEXP [AEXP] = GC Valor [AEXP]
+     F4101.FetchSingle  [Index 2: 2nd Item Number]
+          VA evt_mnIdentifierShortItem_ITM [ITM] <- TK Item Number - Short [ITM]
+          GC Número do Componente [LITM] = TK 2nd Item Number [LITM]
+          VA evt_mnPadrao_UOM1 [UOM1] <- TK Unit of Measure - Primary [UOM1]
+     ItemAvailability(BCW07.ItemAvailability)
+          VA evt_mnIdentifierShortItem_ITM [ITM] -> mnShortItemNumber [ITM]
+          FC Branch [MMCU] -> szBranchPlant [MCU]
+          GC Location  [LOCN] -> szLocation [LOCN]
+          VA evt_cErro_EV01 [EV01] <> cReturnCode [EV01]
+          VA evt_mnQuantityAvailable_QAVAL [QAVAL] <- mnTotQtyAvailable [QAVAL]
+     If VA evt_mnPadrao_UOM1 [UOM1] is not equal to FC U/M [UOM]
+          GetItemUoMConversionFactor(B4000520.GetItemUoMConversionFactor)
+               FC Branch [MMCU] -> szBranchPlant [MCU]
+               GC UM  [UOM] -> szFromUnitOfMeasure [UOM]
+               VA evt_mnPadrao_UOM1 [UOM1] -> szToUnitOfMeasure [RUM]
+               VA evt_mnConversionFactor_CONV [CONV] <- mnConversionFactorFrom_to_To [CONV]
+               VA evt_mnIdentifierShortItem_ITM [ITM] -> mnShortItemNumber [ITM]
+     Else
+          VA evt_mnConversionFactor_CONV [CONV] = 1
+     End If
+     If VA evt_mnConversionFactor_CONV [CONV] is not equal to "0"
+          GC Existente [QAVAL] = [VA evt_mnQuantityAvailable_QAVAL [QAVAL]]*(1/[VA evt_mnConversionFactor_CONV [CONV]])
+          If GC Quantidade [TRQT] is not equal to <Blank>
+          And GC Quantidade [TRQT] is not equal to <NULL>
+          And GC Quantidade [TRQT] is not equal to "0"
+               VA evt_mnConvertido_QAVAL [QAVAL] = [GC Quantidade [TRQT]]*[VA evt_mnConversionFactor_CONV [CONV]]
+               If VA evt_mnQuantityAvailable_QAVAL [QAVAL] is less than VA evt_mnConvertido_QAVAL [QAVAL]
+               And PO cPermiteBaixaNegativa [EV01] is not equal to "S"
+                    Set Grid Cell Error(FC Grid, <Currently Selected Row>, GC Quantidade, "CW0034")
+               Else
+                    VA evt_szLedgType_LEDG [LEDG] = [PO szMetodoCusto [LEDG]]
+                    F4105.Select  [Index 1: Item No,Branch, +A]
+                         VA evt_mnIdentifierShortItem_ITM [ITM] = TK Item Number - Short [ITM]
+                         FC Branch [MMCU] = TK Business Unit [MCU]
+                         VA evt_szLedgType_LEDG [LEDG] = TK Cost Method [LEDG]
+                    F4105.FetchNext  [Index 1: Item No,Branch, +A]
+                         VA evt_mnAmountUnitCost_UNCS [UNCS] <- TK Amount - Unit Cost [UNCS]
+                    GC Custo [UNCS] = [VA evt_mnAmountUnitCost_UNCS [UNCS]]*[VA evt_mnConversionFactor_CONV [CONV]]
+                    If GC Custo [UNCS] is greater than ",0001"
+                         GC Valor [AEXP] = [GC Custo [UNCS]]*[GC Quantidade [TRQT]]
+                         FC Extended Price [AEXP] = ([FC Extended Price [AEXP]]+[GC Valor [AEXP]])-[VA evt_mnAnterior_AEXP [AEXP]]
+                    Else
+                         FC Extended Price [AEXP] = [FC Extended Price [AEXP]]+[GC Valor [AEXP]]
+                    End If
+               End If
+          Else
+               GC Custo [UNCS] = 0
+               GC Valor [AEXP] = 0
+               FC Extended Price [AEXP] = [FC Extended Price [AEXP]]-[VA evt_mnAnterior_AEXP [AEXP]]
+          End If
+     Else
+          Set Grid Cell Error(FC Grid, <Currently Selected Row>, GC UM, "5517K")
+     End If
+End If
+
+
+=============================================
+EVENTS
+=============================================
+Form: Gerador de kit por manufatura - W5576B20B
+Object: FC Processa Linha
+Event: Button Clicked
+Event GUID: 953f1c97-fc54-4e91-bad2-9694dfe15b51
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnTransactioProcess_MATH01 [MATH01]
+evt_mnLineGrid_LNID [LNID]
+evt_mnGridMax_LNID [LNID]
+evt_mnQuantityTransaction_TRQT [TRQT]
+----------------------------------------
+Get Max Grid Rows(FC Grid, VA evt_mnGridMax_LNID)
+VA evt_mnLineGrid_LNID [LNID] = 1
+While VA evt_mnGridMax_LNID [LNID] is greater than or equal to VA evt_mnLineGrid_LNID [LNID]
+     Get Grid Row(FC Grid, VA evt_mnLineGrid_LNID)
+     If GC Quantidade [TRQT] is not equal to "0"
+          If GC Número do Componente [LITM] is not equal to <Blank>
+          And GC Número do Componente [LITM] is not equal to <NULL>
+          And GC Número do Componente [LITM] is not equal to "0"
+               VA evt_mnQuantityTransaction_TRQT [TRQT] = [GC Quantidade [TRQT]]*-1
+               If VA evt_mnQuantityTransaction_TRQT [TRQT] is greater than "0"
+                    VA frm_szFromTo_FRTO [FRTO] = "T"
+               Else
+                    VA frm_szFromTo_FRTO [FRTO] = "F"
+               End If
+               VA evt_mnTransactioProcess_MATH01 [MATH01] = 2
+               F4114EditLine(XT4114Z1.F4114EditLine)
+                    VA frm_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+                    GC ev06 - Rcd Written [EV06] <> cRecordWrittenToWorkFile [EV04]
+                    GC lnid - Line Number [LNID] <> mnLineNumber [LNID]
+                    FC G/L Date [DGJ] -> jdGLDate [DGL]
+                    FC Explanation [TREX] -> szGLExplanation [DSC1]
+                    VA frm_PO_cAllowQtyOverAvailable [EV05] -> cAllowQtyOverAvailable [EV01]
+                    VA frm_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+                    VA frm_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+                    VA frm_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+                    VA frm_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+                    VA frm_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+                    VA frm_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+                    PO szDocumentType_DCT [DCT] -> szDocumentType [DCT]
+                    VA frm_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+                    VA frm_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+                    VA frm_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+                    FC Branch [MMCU] -> szBranchPlant [MCU]
+                    GC Número do Componente [LITM] -> szItemNumber [UITM]
+                    GC itm - Short Item No [ITM] <- mnShortItemNumber [ITM]
+                    GC Location  [LOCN] <> szDisplayedLocation [LOCNE1]
+                    GC Location - File [LOCN] <- szLocation [LOCN]
+                    GC UM  [UOM] -> szTransactionUOM [TRUM]
+                    VA evt_mnQuantityTransaction_TRQT [TRQT] -> mnTransactionQty [TRQT]
+                    GC Custo [UNCS] -> mnTransactionUnitCost [UNCS]
+                    GC Valor [AEXP] -> mnExtendedAmount [PAID]
+                    VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+                    VA frm_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+                    VA frm_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+                    VA frm_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+                    GC STKT - Stocking Type [STKT] <> cStockingType [STKT]
+                    VA frm_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+                    GC ev09CostEntered [EV09] -> cCostEntered [ENTC]
+                    GC WMS Line [MATH05] <> mnWMSLineNumber [MATH02]
+                    "1" -> cProcessJE [EV01]
+                    VA frm_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+          End If
+     End If
+     VA evt_mnLineGrid_LNID [LNID] = [VA evt_mnLineGrid_LNID [LNID]]+1
+End While
+//
+VA evt_mnQuantityTransaction_TRQT [TRQT] = [FC Transaction Quantity [TRQT]]
+If VA evt_mnQuantityTransaction_TRQT [TRQT] is greater than "0"
+     VA frm_szFromTo_FRTO [FRTO] = "T"
+Else
+     VA frm_szFromTo_FRTO [FRTO] = "F"
+End If
+F4114EditLine(XT4114Z1.F4114EditLine)
+     VA frm_szWorkStationId_JOBN [JOBN] -> szComputerID [CTID]
+     GC ev06 - Rcd Written [EV06] <> cRecordWrittenToWorkFile [EV04]
+     GC lnid - Line Number [LNID] <> mnLineNumber [LNID]
+     FC G/L Date [DGJ] -> jdGLDate [DGL]
+     FC Explanation [TREX] -> szGLExplanation [DSC1]
+     VA frm_PO_cAllowQtyOverAvailable [EV05] -> cAllowQtyOverAvailable [EV01]
+     VA frm_FC_PrevLineNo [LNID] <> mnPreviousLinenumber [LNID]
+     VA frm_szFromTo_FRTO [FRTO] -> cFromTo [FRTO]
+     VA frm_FC_LastJELinE [JELN] <> mnLastJELine [JELN]
+     VA frm_PO_cEntera1todefaultfrompr [EV01] -> cDefaultFromPrimaryLocation [EV01]
+     VA frm_PO_cAllowHeldLots [EV06] -> cAllowHeldLots [EV01]
+     VA frm_FC_OrderDate [TRDJ] -> jdTransactionDate [TRDJ]
+     PO szDocumentType_DCT [DCT] -> szDocumentType [DCT]
+     VA frm_FC_dicjBatchDate [DICJ] -> jdBatchDate [DICJ]
+     VA frm_mnNumeroLote_ICU [ICU] <> mnBatchNumber [ICU]
+     VA frm_FC_EV01Batchstat [EV01] -> cBatchStatus [IST]
+     FC Branch [MMCU] -> szBranchPlant [MCU]
+     FC 2nd Item Number [KITL] -> szItemNumber [UITM]
+     GC itm - Short Item No [ITM] <- mnShortItemNumber [ITM]
+     FC Location [LOCN] -> szDisplayedLocation [LOCNE1]
+     GC Location - File [LOCN] <- szLocation [LOCN]
+     FC U/M [UOM] -> szTransactionUOM [TRUM]
+     FC Transaction Quantity [TRQT] -> mnTransactionQty [TRQT]
+     FC Extended Price [AEXP] -> mnExtendedAmount [PAID]
+     VA evt_mnTransactioProcess_MATH01 [MATH01] -> mnTransactionProcessType [MATH01]
+     VA frm_mnNumeroDocumento_DOC [DOC] <> mnDocumentNumber [DOC]
+     VA frm_FC_jobsJobNoF0911 [JOBS] <> mnF0911JobNumber [JOBS]
+     VA frm_FC_kcoDocKeyComp [KCO] <> szKeyCompany [KCO]
+     GC STKT - Stocking Type [STKT] <> cStockingType [STKT]
+     VA frm_FC_JOBSInvJobNumber [JOBS] <> mnInvJobNumber [JOBS]
+     GC ev09CostEntered [EV09] -> cCostEntered [ENTC]
+     GC WMS Line [MATH05] <> mnWMSLineNumber [MATH02]
+     "1" -> cProcessJE [EV01]
+     VA frm_GLMBFVersion_VER [VER] -> szGLMBFVersion [VER]
+
+
+
+=============================================
+EVENTS
+=============================================
+Form: Gerador de kit por manufatura - W5576B20B
+Event: Dialog is Initialized
+Event GUID: eff5c939-2919-4646-a7e5-ab821bd764ce
+=============================================
+If PO cPermiteBaixaNegativa [EV01] is equal to <Blank>
+Or PO cPermiteBaixaNegativa [EV01] is equal to <NULL>
+Or PO cPermiteBaixaNegativa [EV01] is equal to "0"
+     PO cPermiteBaixaNegativa [EV01] = "N"
+End If
+If PO szMetodoCusto [LEDG] is equal to <Blank>
+Or PO szMetodoCusto [LEDG] is equal to <NULL>
+Or PO szMetodoCusto [LEDG] is equal to "0"
+     PO szMetodoCusto [LEDG] = "02"
+End If
+If PO szDocumentType_DCT [DCT] is equal to <Blank>
+Or PO szDocumentType_DCT [DCT] is equal to <NULL>
+Or PO szDocumentType_DCT [DCT] is equal to "0"
+     PO szDocumentType_DCT [DCT] = "IM"
+End If
+If PO mnMathNumeric01 [MATH01] is equal to <Blank>
+Or PO mnMathNumeric01 [MATH01] is equal to <NULL>
+Or PO mnMathNumeric01 [MATH01] is equal to "0"
+     PO mnMathNumeric01 [MATH01] = -1
+End If
+FC Type Bill of Material [TBM] = "M"
+FC Effective From Date [EFFF] = SL DateToday
+FC Effective Thru Date [EFFT] = SL DateToday
+FC G/L Date [DGJ] = add_days([SL DateToday], [PO mnMathNumeric01 [MATH01]])
+! MDDebug(MD_DEBUG.MDDebug)
+!      "teste" -> szComment [DSC1]
+!      PO szDocumentType_DCT [DCT] -> szString_1 [DSC1]
+!      PO szMetodoCusto [LEDG] -> szString_2 [DSC1]
+!      PO mnMathNumeric01 [MATH01] -> mnMathNumeric_1 [ITM]
+!      PO cPermiteBaixaNegativa [EV01] -> cCharacter_1 [PRTA]
+!      FC G/L Date [DGJ] -> jdDate_1 [EFFT]
+!      FC Effective From Date [EFFF] -> jdDate_2 [EFFT]
+!      FC Effective Thru Date [EFFT] -> jdDate_3 [EFFT]
+GetAuditInfo(B9800100.GetAuditInfo)
+     VA frm_szUsuario_USER [USER] <> szUserName [USER]
+     VA frm_jdDateUpdated_UPMJ [UPMJ] <> jdDate [DTE]
+     VA frm_mnTimeLastUpdated_UPMT [UPMT] <> mnTime [TME0]
+     VA frm_szWorkStationId_JOBN [JOBN] <> szWorkstation_UserId [JOBN]
+VA frm_szProgramId_PID [PID] = "P5576B20"
+VA frm_szVersao_VL01 [VL01] = SL VersionName
+
+=============================================
+Form: Gerador de kit por manufatura - W5576B20B
+Event: Post Dialog is Initialized
+Event GUID: 7cb94b11-3aba-4aa0-b455-3a3387fbf69b
+=============================================
+VA frm_PO_szJournalEntriesVersion [VL01] = <Blank>
+GetGLMBFVersionFromJEVersion(B4101430.GetGLMBFVersionFromJEVersion)
+     VA frm_GLMBFVersion_VER [VER] <- szGLMBFVersion [VER]
+     VA frm_PO_szJournalEntriesVersion [VL01] -> szJEVersion [VER]
+
+=============================================
+Form: Gerador de kit por manufatura - W5576B20B
+Event: Grid Record is Fetched
+Event GUID: 6744d79f-f598-4ceb-8038-5772271ba762
+=============================================
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_mnItem_ITM [ITM]
+evt_szPadrao_UOM [UOM]
+evt_szLocation_LOCN [LOCN]
+evt_szLot_LOTN [LOTN]
+evt_cErro_EV01 [EV01]
+----------------------------------------
+VA evt_cErro_EV01 [EV01] = "0"
+F4101.FetchSingle  [Index 2: 2nd Item Number]
+     VA evt_mnItem_ITM [ITM] <- TK Item Number - Short [ITM]
+     BC 2nd Item Number (F3002.0) [LITM] = TK 2nd Item Number [LITM]
+GetItemMasterDescUOM(B4001040.GetItemMasterDescUOM)
+     VA evt_mnItem_ITM [ITM] -> mnShortItemNumber [ITM]
+     GC UM  [UOM] <- szPrimaryUOM [UOM1]
+     FC Branch [MMCU] -> szBranchPlant [MCU]
+ItemAvailability(BCW07.ItemAvailability)
+     VA evt_mnItem_ITM [ITM] -> mnShortItemNumber [ITM]
+     FC Branch [MMCU] -> szBranchPlant [MCU]
+     VA evt_szLocation_LOCN [LOCN] -> szLocation [LOCN]
+     VA evt_cErro_EV01 [EV01] <> cReturnCode [EV01]
+     GC Existente [QAVAL] <- mnTotQtyAvailable [QAVAL]
+GC Custo [UNCS] = 0
+
+
+
+
