@@ -1,0 +1,62 @@
+﻿---------------------------------------------------------------------------------
+Table: F570870 Regras de Pagamento
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   AAID       Parent Number                            ParentNumber              Math Numeric    8(0)       X
+2   NUMB       Asset Item Number                        AssetItemNumber           Math Numeric    8(0)       X
+3   ANMESENT   Ano e Mês de Entrada                     AnoMesEntrada             Math Numeric    6(0)       X
+4   ANMEEMI    Ano/mês de Emissão                       AnoMesEmissao             Math Numeric    6(0)       
+5   ALPH       Name - Alpha                             NameAlpha                 String          40(0)      
+6   BDS4       Description                              DescriptionBR             String          400(0)     
+7   A111       Generic Character11                      GenericChar11             Char            1(0)       
+8   A112       Cross Docking Supply                     CrossDockingSupply        Char            1(0)       
+9   A113       Generic Character13                      GenericChar13             Char            1(0)       
+10  A114       Generic Character14                      GenericChar14             Char            1(0)       
+11  A115       Generic Character15                      GenericChar15             Char            1(0)       
+12  A116       Generic Character16                      GenericChar16             Char            1(0)       
+13  A117       Generic Character17                      GenericChar17             Char            1(0)       
+14  A118       Generic Character18                      GenericChar18             Char            1(0)       
+15  A119       Generic Character19                      GenericChar19             Char            1(0)       
+16  A120       Generic Character20                      GenericChar20             Char            1(0)       
+17  MATH01     Math Numeric 01                          MathNumeric01             Math Numeric    15(2)      
+18  MATH02     Math Numeric 02                          MathNumeric02             Math Numeric    15(2)      
+19  MATH03     Math Numeric 03                          MathNumeric03             Math Numeric    15(2)      
+20  MATH04     Math Numeric 04                          MathNumeric04             Math Numeric    15(2)      
+21  MATH05     Math Numeric 05                          MathNumeric05             Math Numeric    15(2)      
+22  EV01       J.D. EnterpriseOne Event Point 01        EverestEventPoint01       Char            1(0)       
+23  EV02       J.D. EnterpriseOne Event Point 02        EverestEventPoint02       Char            1(0)       
+24  EV03       J.D. EnterpriseOne Point 03              EverestEventPoint03       Char            1(0)       
+25  EV04       EnterpriseOne Point 04                   EverestEventPoint04       Char            1(0)       
+26  EV05       EnterpriseOne Point 05                   EverestEventPoint05       Char            1(0)       
+27  EV06       EnterpriseOne Point 06                   EverestEventPoint06       Char            1(0)       
+28  EV07       EnterpriseOne Point 07                   EverestEventPoint07       Char            1(0)       
+29  EV08       EnterpriseOne Point 08                   EverestEventPoint08       Char            1(0)       
+30  EV09       EnterpriseOne Point 09                   EverestEventPoint09       Char            1(0)       
+31  EV10       EnterpriseOne Point 10                   EverestEventPoint10       Char            1(0)       
+32  EV11       EnterpriseOne Event Point 11             EverestEventPoint11       Char            1(0)       
+33  EV12       EnterpriseOne Event Point 12             EverestEventPoint12       Char            1(0)       
+34  EV13       EnterpriseOne Event Point 13             EverestEventPoint13       Char            1(0)       
+35  EV14       EnterpriseOne Event Point 14             EverestEventPoint14       Char            1(0)       
+36  EV15       EnterpriseOne Event Point 15             EverestEventPoint15       Char            1(0)       
+37  EV16       EnterpriseOne Event Point 16             EverestEventPoint16       Char            1(0)       
+38  EV17       EnterpriseOne Event Point 17             EverestEventPoint17       Char            1(0)       
+39  EV18       EnterpriseOne Event Point 18             EverestEventPoint18       Char            1(0)       
+40  EV19       EnterpriseOne Event Point 19             EverestEventPoint19       Char            1(0)       
+41  EV20       EnterpriseOne Event Point 20             EverestEventPoint20       Char            1(0)       
+42  USER       User ID                                  UserId                    String          10(0)      
+43  PID        Program ID                               ProgramId                 String          10(0)      
+44  JOBN       Work Station ID                          WorkStationId             String          10(0)      
+45  UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+46  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+Primary                                  1      PRIMARY UNIQUE
+                                         AAID      
+                                         NUMB      
+                                         ANMESENT  
+
+Regra                                    2     
+                                         AAID      
+                                         NUMB      
+

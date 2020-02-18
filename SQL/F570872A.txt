@@ -1,0 +1,22 @@
+﻿---------------------------------------------------------------------------------
+Table: F570872A Unidades/Regras
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   UNID1      Unidade de produto 1                     Unid1                     String          3(0)       X
+2   CUP        Codigo da Unidade Padrao                 Cod_Und_Padrao            String          8(0)       X
+3   NIVC       Nível Corrente Árvore Premiações         Nivel Corrente            Math Numeric    8(0)       X
+4   ALPH       Name - Alpha                             NameAlpha                 String          40(0)      X
+5   USER       User ID                                  UserId                    String          10(0)      
+6   JOBN       Work Station ID                          WorkStationId             String          10(0)      
+7   PID        Program ID                               ProgramId                 String          10(0)      
+8   UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+9   UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+PK                                       1      PRIMARY UNIQUE
+                                         UNID1     
+                                         CUP       
+                                         NIVC      
+                                         ALPH      
+

@@ -1,0 +1,1190 @@
+﻿---------------------------------------------------------------------------------
+Business Function: B57ODBC - Função para Trabalhar com ODBC
+Function Type: C
+---------------------------------------------------------------------------------
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC - Estrutura de dados para função B57ODBC - Conexao            
+=====================================================
+BF idStatementHandle [GENLNG]
+BF idConnectionHandle [GENLNG]
+BF idEnvironmentHandle [GENLNG]
+BF szStringConexao [CF500]
+BF cCodigoErro [ERRC]
+
+=====================================================
+Header File: b57odbc.h
+=====================================================
+
+/*****************************************************************************
+ *    Header File:  B57ODBC.h
+ *
+ *    Description:  Função para Trabalhar com ODBC Header File
+ *
+ *        History:
+ *          Date        Programmer  SAR# - Description
+ *          ----------  ----------  -------------------------------------------
+ *   Author 20/01/11                Unknown  - Created  
+ *
+ *
+ * Copyright (c) J.D. Edwards World Source Company, 1996
+ *
+ * This unpublished material is proprietary to J.D. Edwards World Source 
+ * Company.  All rights reserved.  The methods and techniques described 
+ * herein are considered trade secrets and/or confidential.  Reproduction
+ * or distribution, in whole or in part, is forbidden except by express
+ * written permission of J.D. Edwards World Source Company.
+ ****************************************************************************/
+
+#ifndef __B57ODBC_H
+#define __B57ODBC_H
+
+/*****************************************************************************
+ * Table Header Inclusions
+ ****************************************************************************/
+
+/*****************************************************************************
+ * External Business Function Header Inclusions
+ ****************************************************************************/
+
+/*****************************************************************************
+ * Global Definitions
+ ****************************************************************************/
+
+/*****************************************************************************
+ * Structure Definitions
+ ****************************************************************************/
+
+/*****************************************************************************
+ * DS Template Type Definitions
+ ****************************************************************************/
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC
+ *    Template ID:   D57ODBC
+ *    Generated:     Thu Jan 20 14:01:10 2011
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC
+#define DATASTRUCTURE_D57ODBC
+
+typedef struct tagDSD57ODBC
+{
+  ID                idStatementHandle;                   
+  ID                idConnectionHandle;                  
+  ID                idEnvironmentHandle;                 
+  JCHAR              szStringConexao[501];                
+  JCHAR              cCodigoErro;                         
+} DSD57ODBC, *LPDSD57ODBC;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRidConnectionHandle_2                 2L
+#define IDERRidEnvironmentHandle_3                3L
+#define IDERRszStringConexao_5                    5L
+#define IDERRcCodigoErro_6                        6L
+
+#endif
+
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC - Executa SQL
+ *    Template ID:   D57ODBC1
+ *    Generated:     Mon Aug 06 09:54:07 2012
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC1
+#define DATASTRUCTURE_D57ODBC1
+
+typedef struct tagDSD57ODBC1
+{
+  ID                idStatementHandle;                   
+  JCHAR              cCodigoErro;                         
+  JCHAR              szComandoSQL[30001];                 
+} DSD57ODBC1, *LPDSD57ODBC1;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRcCodigoErro_6                        6L
+#define IDERRszComandoSQL_9                       9L
+
+#endif
+
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC - Fecha Conexao
+ *    Template ID:   D57ODBC2
+ *    Generated:     Thu Jan 20 14:01:38 2011
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC2
+#define DATASTRUCTURE_D57ODBC2
+
+typedef struct tagDSD57ODBC2
+{
+  ID                idStatementHandle;                   
+  ID                idConnectionHandle;                  
+  ID                idEnvironmentHandle;                 
+  JCHAR              cCodigoErro;                         
+} DSD57ODBC2, *LPDSD57ODBC2;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRidConnectionHandle_2                 2L
+#define IDERRidEnvironmentHandle_3                3L
+#define IDERRcCodigoErro_6                        6L
+
+#endif
+
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC - Retorna Data
+ *    Template ID:   D57ODBC3
+ *    Generated:     Thu Jan 20 14:13:15 2011
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC3
+#define DATASTRUCTURE_D57ODBC3
+
+typedef struct tagDSD57ODBC3
+{
+  ID                idStatementHandle;                   
+  JCHAR              cCodigoErro;                         
+  int               nColuna;                             
+  JDEDATE           jdValorData;                         
+} DSD57ODBC3, *LPDSD57ODBC3;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRcCodigoErro_6                        6L
+#define IDERRnColuna_8                            8L
+#define IDERRjdValorData_10                       10L
+
+#endif
+
+
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC - Retorna Numerico
+ *    Template ID:   D57ODBC4
+ *    Generated:     Thu Jan 20 14:01:55 2011
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC4
+#define DATASTRUCTURE_D57ODBC4
+
+typedef struct tagDSD57ODBC4
+{
+  ID                idStatementHandle;                   
+  JCHAR              cCodigoErro;                         
+  int               nColuna;                             
+  MATH_NUMERIC      mnValorNumerico;                     
+} DSD57ODBC4, *LPDSD57ODBC4;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRcCodigoErro_6                        6L
+#define IDERRnColuna_8                            8L
+#define IDERRmnValorNumerico_10                   10L
+
+#endif
+
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC - Retorna String
+ *    Template ID:   D57ODBC5
+ *    Generated:     Thu Jan 20 14:14:19 2011
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC5
+#define DATASTRUCTURE_D57ODBC5
+
+typedef struct tagDSD57ODBC5
+{
+  ID                idStatementHandle;                   
+  JCHAR              cCodigoErro;                         
+  int               nColuna;                             
+  JCHAR              szValorString[201];                  
+} DSD57ODBC5, *LPDSD57ODBC5;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRcCodigoErro_6                        6L
+#define IDERRnColuna_8                            8L
+#define IDERRszValorString_11                     11L
+
+#endif
+
+
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC - Fech
+ *    Template ID:   D57ODBC6
+ *    Generated:     Thu Jan 20 14:02:20 2011
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC6
+#define DATASTRUCTURE_D57ODBC6
+
+typedef struct tagDSD57ODBC6
+{
+  ID                idStatementHandle;                   
+  JCHAR              cCodigoErro;                         
+} DSD57ODBC6, *LPDSD57ODBC6;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRcCodigoErro_6                        6L
+
+#endif
+
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC - Retorna Mensagem
+ *    Template ID:   D57ODBC7
+ *    Generated:     Thu Jan 20 14:02:28 2011
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC7
+#define DATASTRUCTURE_D57ODBC7
+
+typedef struct tagDSD57ODBC7
+{
+  ID                idStatementHandle;                   
+  JCHAR              cCodigoErro;                         
+  JCHAR              szMensagemErro[501];                 
+} DSD57ODBC7, *LPDSD57ODBC7;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRcCodigoErro_6                        6L
+#define IDERRszMensagemErro_7                     7L
+
+#endif
+
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC - Fecha Cursor
+ *    Template ID:   D57ODBC8
+ *    Generated:     Thu Jan 20 14:02:36 2011
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC8
+#define DATASTRUCTURE_D57ODBC8
+
+typedef struct tagDSD57ODBC8
+{
+  ID                idStatementHandle;                   
+  JCHAR              cCodigoErro;                         
+} DSD57ODBC8, *LPDSD57ODBC8;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRcCodigoErro_6                        6L
+
+#endif
+
+/*****************************************
+ * TYPEDEF for Data Structure
+ *    Template Name: Estrutura de dados para função B57ODBC - Seta Parametro
+ *    Template ID:   D57ODBC9
+ *    Generated:     Wed Jul 18 15:19:16 2012
+ *
+ * DO NOT EDIT THE FOLLOWING TYPEDEF
+ *    To make modifications, use the OneWorld Data Structure
+ *    Tool to Generate a revised version, and paste from
+ *    the clipboard.
+ *
+ **************************************/
+
+#ifndef DATASTRUCTURE_D57ODBC9
+#define DATASTRUCTURE_D57ODBC9
+
+typedef struct tagDSD57ODBC9
+{
+  ID                idStatementHandle;                   
+  JCHAR              cCodigoErro;                         
+  JCHAR              szValorString[201];                  
+  JCHAR              szTipoParametro[12];                 
+  JCHAR              szParametro[49];                     
+} DSD57ODBC9, *LPDSD57ODBC9;
+
+#define IDERRidStatementHandle_1                  1L
+#define IDERRcCodigoErro_6                        6L
+#define IDERRszValorString_11                     11L
+#define IDERRszTipoParametro_12                   12L
+#define IDERRszParametro_13                       13L
+
+#endif
+
+/*****************************************************************************
+ * Source Preprocessor Definitions
+ ****************************************************************************/
+#if defined (JDEBFRTN)
+	#undef JDEBFRTN
+#endif
+
+#if defined (WIN32)
+	#if defined (WIN32)
+		#define JDEBFRTN(r) __declspec(dllexport) r
+	#else
+		#define JDEBFRTN(r) __declspec(dllimport) r
+	#endif
+#else
+	#define JDEBFRTN(r) r
+#endif
+
+/*****************************************************************************
+ * Business Function Prototypes
+ ****************************************************************************/
+JDEBFRTN (ID) JDEBFWINAPI ConectaBanco                     (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC lpDS);
+JDEBFRTN (ID) JDEBFWINAPI ExecutaSQL                       (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC1 lpDS);
+JDEBFRTN (ID) JDEBFWINAPI FechaConexao                     (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC2 lpDS);
+JDEBFRTN (ID) JDEBFWINAPI FechaCursor                      (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC8 lpDS);
+JDEBFRTN (ID) JDEBFWINAPI Fetch                            (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC6 lpDS);
+JDEBFRTN (ID) JDEBFWINAPI RetornaData                      (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC3 lpDS);
+JDEBFRTN (ID) JDEBFWINAPI RetornaMSG                       (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC7 lpDS);
+JDEBFRTN (ID) JDEBFWINAPI RetornaNumerico                  (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC4 lpDS);
+JDEBFRTN (ID) JDEBFWINAPI RetornaString                    (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC5 lpDS);
+JDEBFRTN (ID) JDEBFWINAPI SetaParametro                    (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC9 lpDS);
+
+/*****************************************************************************
+ * Internal Function Prototypes
+ ****************************************************************************/
+void I57ODBC_LogErros (SQLHANDLE      hHandle, SQLSMALLINT    hType, RETCODE        RetCode); 
+
+#endif    /* __B57ODBC_H */
+
+=====================================================
+Source File: b57odbc.c
+=====================================================
+#include <jde.h>
+
+#define b57odbc_c
+
+
+/*****************************************************************************
+ *    Source File:  b57odbc
+ *
+ *    Description:  Função para Trabalhar com ODBC Source File
+ *
+ *        History:
+ *          Date        Programmer  SAR# - Description
+ *          ----------  ----------  -------------------------------------------
+ *   Author 20/01/11                Unknown  - Created  
+ *
+ * Copyright (c) J.D. Edwards World Source Company, 1996
+ *
+ * This unpublished material is proprietary to J.D. Edwards World Source Company.
+ * All rights reserved.  The methods and techniques described herein are
+ * considered trade secrets and/or confidential.  Reproduction or
+ * distribution, in whole or in part, is forbidden except by express
+ * written permission of J.D. Edwards World Source Company.
+ ****************************************************************************/
+/**************************************************************************
+ * Notes:
+ *
+ **************************************************************************/
+
+#include <b57odbc.h>
+
+
+/**************************************************************************
+ *  Business Function:  ConectaBanco
+ *
+ *        Description:  Efetua Conexao ODBC
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC         lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI ConectaBanco (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+    int       rcode;
+	//
+	JCHAR      szBaseDados[300]       = {_J('\0')};
+	JCHAR      *szDriver;
+    SQLHENV   EnvironmentHandle    = _J('\0'); 
+    SQLHSTMT  StatementHandle      = _J('\0');
+    SQLHDBC   ConnectionHandle;
+	HUSER     hUser                = (HUSER) NULL;
+	JDEDB_RESULT  nJDBReturn;
+	/*short teste = 0;*/
+	//
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+       (lpVoid    == (LPVOID)    NULL) ||
+       (lpDS      == (LPDSD57ODBC )	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+    rcode = JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//Seta Host
+	if (IsStringBlank (lpDS->szStringConexao))
+	{  
+		//sprintf(szBaseDados,"Driver={SQL Server};Server=CANSWEB08;Database=AGCONETDB;Uid=usr_aol;Pwd=gk29*4b;");
+	}
+	else
+	{
+      jdeStrncpy(szBaseDados,(const JCHAR *)lpDS->szStringConexao,DIM(szBaseDados));
+	};
+	/* Pega um Enrinoment Handle pro ODBC */
+    rcode = SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &EnvironmentHandle);
+    // 
+    /* Atributos ODBC  */
+    rcode =SQLSetEnvAttr(EnvironmentHandle,SQL_ATTR_ODBC_VERSION,(SQLPOINTER *)SQL_OV_ODBC3 ,0);
+	//
+    //* Pega um Handle de Conexao */
+    rcode =SQLAllocHandle(SQL_HANDLE_DBC, EnvironmentHandle, &ConnectionHandle);
+    /* Cria a Conexao */
+	/*teste = jdeStrlen(szBaseDados); */ 
+	rcode = SQLDriverConnect(ConnectionHandle, 
+							 NULL, 
+		                     (SQLWCHAR *) szBaseDados, 
+							 (short) (jdeStrlen(szBaseDados)+1), 
+							 NULL, 
+							 300, 
+							 NULL, 
+							 SQL_DRIVER_NOPROMPT);
+	/*rcode = SQLDriverConnect(ConnectionHandle, 
+							 lpBhvrCom->hDlg, 
+		                     NULL, 
+							 300, 
+							 NULL, 
+							 300, 
+							 NULL,
+							 SQL_DRIVER_PROMPT);*/
+    //
+	if (rcode != SQL_SUCCESS) 
+	{ 
+		I57ODBC_LogErros(ConnectionHandle, SQL_HANDLE_DBC,(RETCODE) rcode); 
+	}
+	else 
+	{
+		rcode =SQLAllocHandle(SQL_HANDLE_STMT, ConnectionHandle, &StatementHandle);
+		//
+	    lpDS->idStatementHandle   = jdeStoreDataPtr(hUser, StatementHandle);
+		lpDS->idConnectionHandle  = jdeStoreDataPtr(hUser, ConnectionHandle);
+	    lpDS->idEnvironmentHandle = jdeStoreDataPtr(hUser, EnvironmentHandle);
+		//
+	}
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+
+   return (ER_SUCCESS);
+}
+
+
+/**************************************************************************
+ *  Business Function:  ExecutaSQL
+ *
+ *        Description:  Executa Comando SQL
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC1        lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI ExecutaSQL (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC1 lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+	int rcode                      = 0;
+	//
+	HUSER     hUser                = (HUSER) NULL;
+    SQLHSTMT  StatementHandle      = _J('\0');
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+       (lpVoid    == (LPVOID)    NULL) ||
+       (lpDS      == (LPDSD57ODBC1 )	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+	//
+    rcode = JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//
+	StatementHandle =(SQLHSTMT *) jdeRetrieveDataPtr(hUser, lpDS->idStatementHandle);
+	//
+    rcode =SQLExecDirect(StatementHandle,
+                        (SQLWCHAR *) lpDS->szComandoSQL,
+                        (SQLINTEGER) sizeof(lpDS->szComandoSQL));
+	//
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+
+   return (ER_SUCCESS);
+}
+
+
+/**************************************************************************
+ *  Business Function:  FechaConexao
+ *
+ *        Description:  Fecha Conexao ODBC
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC2        lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI FechaConexao (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC2 lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+    SQLHENV   EnvironmentHandle    = (_J('\0')); 
+    SQLHSTMT  StatementHandle      = (_J('\0'));
+    SQLHDBC   ConnectionHandle;
+    HUSER hUser;
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+       (lpVoid    == (LPVOID)    NULL) ||
+       (lpDS      == (LPDSD57ODBC2 )	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+    JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//Remove os Handle da Memoria
+	StatementHandle =(SQLHSTMT *) jdeRemoveDataPtr(hUser,lpDS->idStatementHandle);
+	ConnectionHandle =(SQLHSTMT *) jdeRemoveDataPtr(hUser,lpDS->idConnectionHandle);
+	EnvironmentHandle =(SQLHSTMT *) jdeRemoveDataPtr(hUser,lpDS->idEnvironmentHandle);
+	//Disconecto do ODBC
+    SQLFreeHandle(SQL_HANDLE_STMT,StatementHandle);
+    SQLDisconnect(ConnectionHandle);
+    SQLFreeHandle(SQL_HANDLE_DBC,ConnectionHandle);
+    SQLFreeHandle(SQL_HANDLE_ENV,EnvironmentHandle);
+	//Volto Zero em tudo
+	lpDS->idStatementHandle=0;
+	lpDS->idConnectionHandle=0;
+	lpDS->idEnvironmentHandle=0;
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+
+   return (ER_SUCCESS);
+}
+
+
+/**************************************************************************
+ *  Business Function:  FechaCursor
+ *
+ *        Description:  Fecha Cursor ODBC
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC8        lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI FechaCursor (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC8 lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+    SQLHSTMT   StatementHandle      = _J('\0');
+    HUSER      hUser;
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+        (lpVoid    == (LPVOID)    NULL) ||
+        (lpDS      == (LPDSD57ODBC8)	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+    JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//
+	StatementHandle =(SQLHSTMT *) jdeRetrieveDataPtr(hUser, lpDS->idStatementHandle);
+    //
+    SQLCloseCursor(StatementHandle);
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+    return (ER_SUCCESS);
+}
+
+
+/**************************************************************************
+ *  Business Function:  Fetch
+ *
+ *        Description:  Executa Fetch
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC6        lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI Fetch (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC6 lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+    SQLHSTMT  StatementHandle      = (_J('\0'));
+    HUSER     hUser;
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+       (lpVoid    == (LPVOID)    NULL) ||
+       (lpDS      == (LPDSD57ODBC6 )	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+    JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//
+	StatementHandle =(SQLHSTMT *) jdeRetrieveDataPtr(hUser, lpDS->idStatementHandle);
+	//
+    lpDS->cCodigoErro = (JCHAR)SQLFetch(StatementHandle);  
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+
+   return (ER_SUCCESS);
+}
+
+
+/**************************************************************************
+ *  Business Function:  RetornaData
+ *
+ *        Description:  Retorna Coluna Do Tipo Data
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC3        lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI RetornaData (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC3 lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+	int                  rcode                = 0;
+    SQLHSTMT             StatementHandle      = (_J('\0'));
+    SQL_TIMESTAMP_STRUCT jdValorData          = {0};	
+    HUSER                hUser;
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+       (lpVoid    == (LPVOID)    NULL) ||
+       (lpDS      == (LPDSD57ODBC3)	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+    JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//
+	StatementHandle =(SQLHSTMT *) jdeRetrieveDataPtr(hUser, lpDS->idStatementHandle);
+    //
+	rcode = SQLGetData(StatementHandle, 
+		               (unsigned short)lpDS->nColuna,
+					   SQL_C_TYPE_TIMESTAMP, 
+					   &jdValorData, 
+					   0, 
+					   NULL);
+	//
+	lpDS->jdValorData.nYear = jdValorData.year;
+	lpDS->jdValorData.nMonth = jdValorData.month;
+	lpDS->jdValorData.nDay = jdValorData.day;
+	//
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+
+   return (ER_SUCCESS);
+}
+
+
+/**************************************************************************
+ *  Business Function:  RetornaMSG
+ *
+ *        Description:  Retorna Mensagem de Erro
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC7        lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI RetornaMSG (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC7 lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+    SQLHSTMT   StatementHandle      = _J('\0');
+    HUSER      hUser;
+	//
+	SQLCHAR       SqlState[6], Msg[SQL_MAX_MESSAGE_LENGTH];
+	SQLINTEGER    NativeError;
+ 	SQLSMALLINT   MsgLen;
+    //
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+       (lpVoid    == (LPVOID)    NULL) ||
+       (lpDS      == (LPDSD57ODBC7)	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+    JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//
+	StatementHandle =(SQLHSTMT *) jdeRetrieveDataPtr(hUser, lpDS->idStatementHandle);
+    //
+    SQLGetDiagRec(SQL_HANDLE_STMT, 
+	              StatementHandle, 
+	 		      1, 
+	 		      (SQLWCHAR *)SqlState, 
+			      &NativeError, 
+			      (SQLWCHAR *)Msg, 
+			      sizeof(Msg), 
+				  &MsgLen);
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+
+    return (ER_SUCCESS);
+}
+
+
+/**************************************************************************
+ *  Business Function:  RetornaNumerico
+ *
+ *        Description:  Retorna Coluna Do Tipo Numerico
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC4        lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI RetornaNumerico (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC4 lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+	int        rcode                = 0;
+    SQLHSTMT   StatementHandle      = (_J('\0'));
+    SQLDOUBLE  dValorNumerico      = 0;
+    HUSER      hUser;
+
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+       (lpVoid    == (LPVOID)    NULL) ||
+       (lpDS      == (LPDSD57ODBC4)	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+    JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//
+	StatementHandle =(SQLHSTMT *) jdeRetrieveDataPtr(hUser, lpDS->idStatementHandle);
+    //
+	rcode = SQLGetData(StatementHandle, 
+		               (unsigned short)lpDS->nColuna, 
+					   SQL_C_DOUBLE, 
+					   &dValorNumerico, 
+					   0, 
+					   NULL);
+	//
+	DoubleToMathNumeric (dValorNumerico,&lpDS->mnValorNumerico);	
+	//
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+
+   return (ER_SUCCESS);
+}
+
+
+/**************************************************************************
+ *  Business Function:  RetornaString
+ *
+ *        Description:  Retorna Coluna Do Tipo String
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC5        lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI RetornaString (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC5 lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+	int        rcode                = 0;
+    SQLHSTMT   StatementHandle      = _J('\0');
+	SQLCHAR    szValorString[1000];
+    HUSER      hUser;
+
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+       (lpVoid    == (LPVOID)    NULL) ||
+       (lpDS      == (LPDSD57ODBC5)	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+    JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//
+	StatementHandle =(SQLHSTMT *) jdeRetrieveDataPtr(hUser, lpDS->idStatementHandle);
+    //
+	rcode = SQLGetData(StatementHandle, 
+		               (unsigned short)lpDS->nColuna, 
+					   SQL_C_CHAR, 
+					   &szValorString, 
+					   1000, 
+					   NULL);
+    //
+	jdeStrcpy (lpDS->szValorString, (const JCHAR *) szValorString);
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+
+    return (ER_SUCCESS);
+}
+
+/**************************************************************************
+ *  Business Function:  SetaParametro
+ *
+ *        Description:  Seta Parametro SQL
+ *
+ *         Parameters:
+ *           LPBHVRCOM           lpBhvrCom    Business Function Communications
+ *           LPVOID              lpVoid       Void Parameter - DO NOT USE!
+ *           LPDSD57ODBC9        lpDS         Parameter Data Structure Pointer  
+ *
+ *************************************************************************/
+
+JDEBFRTN (ID) JDEBFWINAPI SetaParametro (LPBHVRCOM lpBhvrCom, LPVOID lpVoid, LPDSD57ODBC9 lpDS)  
+{
+   /************************************************************************
+    *  Variable declarations
+    ************************************************************************/
+	int        rcode                = 0;
+    SQLHSTMT   StatementHandle      = _J('\0');
+	SQLCHAR    szValorString[1000];
+    HUSER      hUser;
+
+   /************************************************************************
+    * Check for NULL pointers
+    ************************************************************************/
+    if ((lpBhvrCom == (LPBHVRCOM) NULL) ||
+       (lpVoid    == (LPVOID)    NULL) ||
+       (lpDS      == (LPDSD57ODBC9)	NULL))
+    {
+      jdeErrorSet (lpBhvrCom, lpVoid, (ID) 0, _J("4363"), (LPVOID) NULL);
+      return ER_ERROR;
+    }
+   /************************************************************************
+    * Main Processing
+    ************************************************************************/
+    JDB_InitBhvr(lpBhvrCom, &hUser, NULL, JDEDB_COMMIT_AUTO);
+	//
+	StatementHandle =(SQLHSTMT *) jdeRetrieveDataPtr(hUser, lpDS->idStatementHandle);
+    //
+	/*SQLBindParameter(hstmt1, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 10, 0,
+                  SalesPerson, sizeof(SalesPerson), &SalesPersonLenOrInd);
+	SQLBindParameter(hstmt1, 2, SQL_PARAM_INPUT, SQL_C_ULONG, SQL_INTEGER, 10, 0,
+                 &CustID, 0, &CustIDInd);*/
+    //
+	jdeStrcpy (lpDS->szValorString, (const JCHAR *) szValorString);
+	//
+   /************************************************************************
+    * Function Clean Up
+    ************************************************************************/
+	//
+    return (ER_SUCCESS);
+}
+
+
+/* Internal function comment block */
+/**************************************************************************
+ *   Function:  Ixxxxxxx_a   // Replace "xxxxxxx" with source file number
+ *                           // and "a" with the function name
+ *      Notes:
+ *
+ *    Returns:
+ *
+ * Parameters:
+ **************************************************************************/
+
+void I57ODBC_LogErros (SQLHANDLE      hHandle,     
+                             SQLSMALLINT    hType,   
+                             RETCODE        RetCode) 
+{ 
+    SQLSMALLINT iRec = 0; 
+    SQLINTEGER  iError; 
+    SQLWCHAR     szMessage[3000]; 
+    SQLWCHAR     szState[SQL_SQLSTATE_SIZE+1]; 
+ 	SQLSMALLINT   MsgLen;
+ 
+ 
+    if (RetCode == SQL_INVALID_HANDLE) 
+    { 
+		jdeWriteLogEntry(JDELOG,_J("B57ODBC"), __FILE__, __LINE__, 0, _J("Invalid handle!"));
+        return; 
+    } 
+ 
+    while (SQLGetDiagRec(hType, 
+                         hHandle, 
+                         ++iRec, 
+                         szState, 
+                         &iError, 
+                         szMessage, 
+                         (SQLSMALLINT)(sizeof(szMessage) / sizeof(SQLCHAR)), 
+                         &MsgLen) == SQL_SUCCESS) 
+    { 
+		jdeWriteLogEntry(JDELOG,_J("B57ODBC"), __FILE__, __LINE__, 0, szMessage);
+    } 
+ 
+} 
+
+
+
+
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC1 - Estrutura de dados para função B57ODBC - Executa SQL        
+=====================================================
+BF idStatementHandle [GENLNG]
+BF cCodigoErro [ERRC]
+BF szComandoSQL [CMTS]
+
+
+
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC2 - Estrutura de dados para função B57ODBC - Fecha Conexao      
+=====================================================
+BF idStatementHandle [GENLNG]
+BF idConnectionHandle [GENLNG]
+BF idEnvironmentHandle [GENLNG]
+BF cCodigoErro [ERRC]
+
+
+
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC8 - Estrutura de dados para função B57ODBC - Fecha Cursor       
+=====================================================
+BF idStatementHandle [GENLNG]
+BF cCodigoErro [ERRC]
+
+
+
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC6 - Estrutura de dados para função B57ODBC - Fech               
+=====================================================
+BF idStatementHandle [GENLNG]
+BF cCodigoErro [ERRC]
+
+
+
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC3 - Estrutura de dados para função B57ODBC - Retorna Data       
+=====================================================
+BF idStatementHandle [GENLNG]
+BF cCodigoErro [ERRC]
+BF nColuna [CIP]
+BF jdValorData [UPMJ]
+
+
+
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC7 - Estrutura de dados para função B57ODBC - Retorna Mensagem   
+=====================================================
+BF idStatementHandle [GENLNG]
+BF cCodigoErro [ERRC]
+BF szMensagemErro [SGTXT]
+
+
+
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC4 - Estrutura de dados para função B57ODBC - Retorna Numerico   
+=====================================================
+BF idStatementHandle [GENLNG]
+BF cCodigoErro [ERRC]
+BF nColuna [CIP]
+BF mnValorNumerico [AA]
+
+
+
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC5 - Estrutura de dados para função B57ODBC - Retorna String     
+=====================================================
+BF idStatementHandle [GENLNG]
+BF cCodigoErro [ERRC]
+BF nColuna [CIP]
+BF szValorString [D200]
+
+
+
+=============================================
+EVENTS
+=============================================
+C Function: Função para Trabalhar com ODBC 
+=============================================
+=====================================================
+Data Structure: D57ODBC9 - Estrutura de dados para função B57ODBC - Seta Parametro     
+=====================================================
+BF idStatementHandle [GENLNG]
+BF cCodigoErro [ERRC]
+BF szValorString [D200]
+BF szTipoParametro [OBND]
+BF szParametro [PF]
+
+
+
+

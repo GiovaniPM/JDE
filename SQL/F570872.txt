@@ -1,0 +1,20 @@
+﻿---------------------------------------------------------------------------------
+Table: F570872 Cabecalho Regra Pagamento
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   ALPH       Name - Alpha                             NameAlpha                 String          40(0)      X
+2   BIEXDTIV   Data Início Vigência                     DataInicioVigencia        Date            6(0)       
+3   BIEXDTFV   Data Fim Vigência                        DataFimVigencia           Date            6(0)       
+4   CMTS       Comments                                 Comments                  VarString       30000(0)   
+5   EV01       J.D. EnterpriseOne Event Point 01        EverestEventPoint01       Char            1(0)       
+6   USER       User ID                                  UserId                    String          10(0)      
+7   JOBN       Work Station ID                          WorkStationId             String          10(0)      
+8   PID        Program ID                               ProgramId                 String          10(0)      
+9   UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+10  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+PK                                       1      PRIMARY UNIQUE
+                                         ALPH      
+

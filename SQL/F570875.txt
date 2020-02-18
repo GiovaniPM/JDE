@@ -1,0 +1,24 @@
+﻿---------------------------------------------------------------------------------
+Table: F570875 Campos Tabela  - Calculo Pagamento
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   OBNM       Object Name                              NameObject                String          10(0)      X
+2   OBND       D.D. Object Name - EnterpriseOne         DDObjectNameEverest       String          11(0)      X
+3   VALU       Data Field Value                         DataFieldValue            String          60(0)      
+4   SQLC       SQL Column Name - EnterpriseOne          SQLColumnNameEverest      String          30(0)      
+5   USER       User ID                                  UserId                    String          10(0)      
+6   JOBN       Work Station ID                          WorkStationId             String          10(0)      
+7   PID        Program ID                               ProgramId                 String          10(0)      
+8   UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+9   UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+pk                                       1      PRIMARY UNIQUE
+                                         OBNM      
+                                         OBND      
+
+Valu                                     2     
+                                         OBNM      
+                                         VALU      
+

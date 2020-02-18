@@ -1,0 +1,22 @@
+﻿---------------------------------------------------------------------------------
+Table: F570873B Detalhe Regra de Pagamento - From
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   ALPH       Name - Alpha                             NameAlpha                 String          40(0)      X
+2   SEQ        Sequence Number                          SequenceNumber1           Math Numeric    6(0)       X
+3   CKY2       Composite Key                            ExpandedCompositeKey      String          120(0)     
+4   USER       User ID                                  UserId                    String          10(0)      
+5   JOBN       Work Station ID                          WorkStationId             String          10(0)      
+6   PID        Program ID                               ProgramId                 String          10(0)      
+7   UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+8   UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+PK                                       1      PRIMARY UNIQUE
+                                         ALPH      
+                                         SEQ       
+
+CKY2                                     3     
+                                         CKY2      
+

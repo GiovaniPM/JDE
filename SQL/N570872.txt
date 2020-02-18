@@ -1,0 +1,510 @@
+﻿---------------------------------------------------------------------------------
+Business Function: N570872 - Executa Regras
+Function Type: NER
+---------------------------------------------------------------------------------
+=============================================
+EVENTS
+=============================================
+NER: ExecutaRegra 
+Event GUID: 197766fb-a643-406d-aca1-40eecd45369e
+=============================================
+=====================================================
+Data Structure: D570872 - Estrutura de dados N570872                                  
+=====================================================
+BF szNomeRegra [ALPH]
+BF cCodigoErro [ERRC]
+BF mnAnoMesPlacar [ANMESENT]
+BF szUnidadePlacar [UNID1]
+BF szOrigemPlacar [CUP]
+BF mnPaiPlacar [NIVP]
+BF mnExecutivoCorrente [NIVC]
+BF szUnidadePaiPlacar [UNID2]
+BF szOrigemPaiPlacar [A801]
+BF mnPercentualCalculado [CLA]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szSQL_CMTS [CMTS]
+evt_idStatement_GENLNG [GENLNG]
+evt_idConnectionHandle_GENLNG [GENLNG]
+evt_idEnviromentHandle_GENLNG [GENLNG]
+evt_szStringConexao_CF500 [CF500]
+evt_szExecutivoPlacar_AA08 [AA08]
+evt_szPaiPlacar_AA08 [AA08]
+evt_szAnoMes_AA08 [AA08]
+evt_szTempString_AA10 [AA10]
+evt_szEnvironmentName_ENHV [ENHV]
+evt_mnPercentual_CLA [CLA]
+----------------------------------------
+F570872.FetchSingle  [Index 1: PK]
+     BF szNomeRegra [ALPH] = TK Name - Alpha [ALPH]
+     VA evt_szSQL_CMTS [CMTS] <- TK Comments [CMTS]
+If SV File_IO_Status is equal to CO SUCCESS
+     // 
+     ConvertMath_NumericToString(B8000094.ConvertMath_NumericToString)
+          BF mnAnoMesPlacar [ANMESENT] -> mnMathNumeric01 [MATH01]
+          VA evt_szAnoMes_AA08 [AA08] <- szString [PV01]
+     SubstString(B57SSTR.SubstString)
+          VA evt_szSQL_CMTS [CMTS] <> szString [CMTS]
+          "AnoMesPlacar" -> szStringaSubstituir [LU]
+          VA evt_szAnoMes_AA08 [AA08] -> szStringSubstituta [LU]
+     VA evt_szTempString_AA10 [AA10] = concat(concat("'", [BF szUnidadePlacar [UNID1]]), "'")
+     SubstString(B57SSTR.SubstString)
+          VA evt_szSQL_CMTS [CMTS] <> szString [CMTS]
+          "UnidadePlacar" -> szStringaSubstituir [LU]
+          VA evt_szTempString_AA10 [AA10] -> szStringSubstituta [LU]
+     VA evt_szTempString_AA10 [AA10] = concat(concat("'", [BF szOrigemPlacar [CUP]]), "'")
+     SubstString(B57SSTR.SubstString)
+          VA evt_szSQL_CMTS [CMTS] <> szString [CMTS]
+          "OrigemPlacar" -> szStringaSubstituir [LU]
+          VA evt_szTempString_AA10 [AA10] -> szStringSubstituta [LU]
+     VA evt_szTempString_AA10 [AA10] = concat(concat("'", [BF szUnidadePaiPlacar [UNID2]]), "'")
+     SubstString(B57SSTR.SubstString)
+          VA evt_szSQL_CMTS [CMTS] <> szString [CMTS]
+          "UnidadePaiPlacar" -> szStringaSubstituir [LU]
+          VA evt_szTempString_AA10 [AA10] -> szStringSubstituta [LU]
+     VA evt_szTempString_AA10 [AA10] = concat(concat("'", [BF szOrigemPaiPlacar [A801]]), "'")
+     SubstString(B57SSTR.SubstString)
+          VA evt_szSQL_CMTS [CMTS] <> szString [CMTS]
+          "OrigemPaiPlacar" -> szStringaSubstituir [LU]
+          VA evt_szTempString_AA10 [AA10] -> szStringSubstituta [LU]
+     ConvertMath_NumericToString(B8000094.ConvertMath_NumericToString)
+          BF mnExecutivoCorrente [NIVC] -> mnMathNumeric01 [MATH01]
+          VA evt_szExecutivoPlacar_AA08 [AA08] <- szString [PV01]
+     SubstString(B57SSTR.SubstString)
+          VA evt_szSQL_CMTS [CMTS] <> szString [CMTS]
+          "ExecutivoPlacar" -> szStringaSubstituir [LU]
+          VA evt_szExecutivoPlacar_AA08 [AA08] -> szStringSubstituta [LU]
+     ConvertMath_NumericToString(B8000094.ConvertMath_NumericToString)
+          BF mnPaiPlacar [NIVP] -> mnMathNumeric01 [MATH01]
+          VA evt_szPaiPlacar_AA08 [AA08] <- szString [PV01]
+     SubstString(B57SSTR.SubstString)
+          VA evt_szSQL_CMTS [CMTS] <> szString [CMTS]
+          "PaiPlacar" -> szStringaSubstituir [LU]
+          VA evt_szPaiPlacar_AA08 [AA08] -> szStringSubstituta [LU]
+     // 
+     CheckServerDetails(B7602110.CheckServerDetails)
+          UNDEFINED <> szWorkStationId [JOBN]
+          UNDEFINED <> szUserId [USER]
+          UNDEFINED <> szDateformat [FRMT]
+          UNDEFINED <> cDateSeparator [DSEP]
+          UNDEFINED <> cDecimalFormat [DECF]
+          UNDEFINED <> szCountry [CTR]
+          UNDEFINED <> szCompany [CO]
+          VA evt_szEnvironmentName_ENHV [ENHV] <- szEnvironmentName [ENHV]
+          UNDEFINED <> szComputerID [CTID]
+     F57ODBC.FetchSingle  [Index 1: PK]
+          VA evt_szEnvironmentName_ENHV [ENHV] = TK Object Owner ID [OOWN]
+          VA evt_szStringConexao_CF500 [CF500] <- TK Configured String [CFGS]
+     ConectaBanco(B57ODBC.ConectaBanco)
+          VA evt_idStatement_GENLNG [GENLNG] <- idStatementHandle [GENLNG]
+          VA evt_idConnectionHandle_GENLNG [GENLNG] <- idConnectionHandle [GENLNG]
+          VA evt_idEnviromentHandle_GENLNG [GENLNG] <- idEnvironmentHandle [GENLNG]
+          VA evt_szStringConexao_CF500 [CF500] -> szStringConexao [CF500]
+          UNDEFINED <- cCodigoErro [ERRC]
+     // 
+     ExecutaSQL(B57ODBC.ExecutaSQL)
+          VA evt_idStatement_GENLNG [GENLNG] <> idStatementHandle [GENLNG]
+          UNDEFINED <> cCodigoErro [ERRC]
+          VA evt_szSQL_CMTS [CMTS] -> szComandoSQL [CMTS]
+     Fetch(B57ODBC.Fetch)
+          VA evt_idStatement_GENLNG [GENLNG] <> idStatementHandle [GENLNG]
+          UNDEFINED <> cCodigoErro [ERRC]
+     RetornaNumerico(B57ODBC.RetornaNumerico)
+          VA evt_idStatement_GENLNG [GENLNG] -> idStatementHandle [GENLNG]
+          UNDEFINED <> cCodigoErro [ERRC]
+          "1" -> nColuna [CIP]
+          VA evt_mnPercentual_CLA [CLA] <- mnValorNumerico [AA]
+     FechaCursor(B57ODBC.FechaCursor)
+          VA evt_idStatement_GENLNG [GENLNG] <> idStatementHandle [GENLNG]
+          UNDEFINED <> cCodigoErro [ERRC]
+     FechaConexao(B57ODBC.FechaConexao)
+          VA evt_idStatement_GENLNG [GENLNG] <> idStatementHandle [GENLNG]
+          VA evt_idConnectionHandle_GENLNG [GENLNG] <> idConnectionHandle [GENLNG]
+          VA evt_idEnviromentHandle_GENLNG [GENLNG] <> idEnvironmentHandle [GENLNG]
+          UNDEFINED <> cCodigoErro [ERRC]
+     // 
+     BF mnPercentualCalculado [CLA] = VA evt_mnPercentual_CLA [CLA]
+End If
+
+
+=============================================
+EVENTS
+=============================================
+NER: MontaSQLRegraPag 
+Event GUID: 673aa433-55bd-475f-a273-7fc4e9a0e30c
+=============================================
+=====================================================
+Data Structure: D570872 - Estrutura de dados N570872                                  
+=====================================================
+BF szNomeRegra [ALPH]
+BF cCodigoErro [ERRC]
+BF mnAnoMesPlacar [ANMESENT]
+BF szUnidadePlacar [UNID1]
+BF szOrigemPlacar [CUP]
+BF mnPaiPlacar [NIVP]
+BF mnExecutivoCorrente [NIVC]
+BF szUnidadePaiPlacar [UNID2]
+BF szOrigemPaiPlacar [A801]
+BF mnPercentualCalculado [CLA]
+
+----------------------------------------
+Event Level Variables
+----------------------------------------
+evt_szValor_VALU [VALU]
+evt_szFuncao_FVPN [FVPN]
+evt_szStringCampo_Q150 [Q150]
+evt_szTabela_CKY2 [CKY2]
+evt_szTabelaJDE_OBNM [OBNM]
+evt_szSQL_CMTS [CMTS]
+evt_szSubSQL_CMTS [CMTS]
+evt_cFlag_EV01 [EV01]
+evt_szTabela_MD [MD]
+evt_cGroup_EV01 [EV01]
+evt_szGroupBY_DESC2000 [DESC2000]
+evt_cFuncao_EV01 [EV01]
+evt_mnSequencia_SEQ [SEQ]
+evt_szCampoSQL_SQLC [SQLC]
+----------------------------------------
+VA evt_szSQL_CMTS [CMTS] = <NULL>
+VA evt_szGroupBY_DESC2000 [DESC2000] = <NULL>
+VA evt_cGroup_EV01 [EV01] = "N"
+VA evt_szStringCampo_Q150 [Q150] = <NULL>
+VA evt_cFuncao_EV01 [EV01] = <NULL>
+F570873.Select  [Index 1: PK]
+     BF szNomeRegra [ALPH] = TK Name - Alpha [ALPH]
+F570873.FetchNext  [Index 1: PK]
+     VA evt_szValor_VALU [VALU] <- TK Data Field Value [VALU]
+     VA evt_mnSequencia_SEQ [SEQ] <- TK Sequence Number [SEQ]
+     VA evt_szFuncao_FVPN [FVPN] <- TK Formula Value [FVPN]
+     VA evt_szTabela_MD [MD] <- TK Description [MD]
+     VA evt_cFlag_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+If SV File_IO_Status is equal to CO SUCCESS
+     // 
+     VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], "select ")
+     While SV File_IO_Status is equal to CO SUCCESS
+          // 
+          If VA evt_cFlag_EV01 [EV01] is equal to "C"
+               // 
+               VA evt_szTabelaJDE_OBNM [OBNM] = <NULL>
+               VA evt_szCampoSQL_SQLC [SQLC] = <NULL>
+               F570874.FetchSingle  [Index 2: cky2]
+                    VA evt_szTabelaJDE_OBNM [OBNM] <- TK Object Name [OBNM]
+                    VA evt_szTabela_MD [MD] = TK Composite Key [CKY2]
+               F570875.FetchSingle  [Index 2: Valu]
+                    VA evt_szTabelaJDE_OBNM [OBNM] = TK Object Name [OBNM]
+                    VA evt_szValor_VALU [VALU] = TK Data Field Value [VALU]
+                    VA evt_szCampoSQL_SQLC [SQLC] <- TK SQL Column Name - EnterpriseOne [SQLC]
+               VA evt_szStringCampo_Q150 [Q150] = concat(ltrim(rtrim([VA evt_szTabelaJDE_OBNM [OBNM]], <Blank>), <Blank>), concat(".", rtrim(ltrim([VA evt_szCampoSQL_SQLC [SQLC]], <Blank>), <Blank>)))
+               // 
+          Else
+               If VA evt_szValor_VALU [VALU] is equal to ("-","!=","(",")","*","/","+","<","<=","=",">",">=")
+               Or VA evt_cFlag_EV01 [EV01] is equal to ("E","L")
+                    // 
+                    VA evt_szStringCampo_Q150 [Q150] = ltrim(rtrim([VA evt_szValor_VALU [VALU]], <Blank>), <Blank>)
+                    // 
+               Else
+                    // 
+                    If VA evt_szValor_VALU [VALU] is equal to "E"
+                         // 
+                         VA evt_szStringCampo_Q150 [Q150] = "and"
+                         // 
+                    Else
+                         If VA evt_szValor_VALU [VALU] is equal to "CASO"
+                              // 
+                              VA evt_szStringCampo_Q150 [Q150] = "case"
+                              // 
+                         Else
+                              // 
+                              If VA evt_szValor_VALU [VALU] is equal to "QUANTOS"
+                                   // 
+                                   VA evt_szStringCampo_Q150 [Q150] = "count"
+                                   VA evt_cFuncao_EV01 [EV01] = "S"
+                                   // 
+                              Else
+                                   // 
+                                   If VA evt_szValor_VALU [VALU] is equal to "SOMATORIO"
+                                        // 
+                                        VA evt_szStringCampo_Q150 [Q150] = "sum"
+                                        VA evt_cFuncao_EV01 [EV01] = "S"
+                                        // 
+                                   Else
+                                        If VA evt_szValor_VALU [VALU] is equal to "MAIOR"
+                                             // 
+                                             VA evt_szStringCampo_Q150 [Q150] = "max"
+                                             // 
+                                        Else
+                                             If VA evt_szValor_VALU [VALU] is equal to "MENOR"
+                                                  // 
+                                                  VA evt_szStringCampo_Q150 [Q150] = "min"
+                                                  // 
+                                             Else
+                                                  If VA evt_szValor_VALU [VALU] is equal to "MEDIA"
+                                                       // 
+                                                       VA evt_szStringCampo_Q150 [Q150] = "avg"
+                                                       // 
+                                                  Else
+                                                       If VA evt_szValor_VALU [VALU] is equal to "RENOMEAR"
+                                                            // 
+                                                            VA evt_szStringCampo_Q150 [Q150] = "as"
+                                                            // 
+                                                       Else
+                                                            If VA evt_szValor_VALU [VALU] is equal to "ARREDONDAR"
+                                                                 // 
+                                                                 VA evt_szStringCampo_Q150 [Q150] = "round"
+                                                            Else
+                                                                 If VA evt_szValor_VALU [VALU] is equal to "QUANDO"
+                                                                      // 
+                                                                      VA evt_szStringCampo_Q150 [Q150] = "when"
+                                                                      // 
+                                                                 Else
+                                                                      If VA evt_szValor_VALU [VALU] is equal to "ENTAO"
+                                                                           // 
+                                                                           VA evt_szStringCampo_Q150 [Q150] = "then"
+                                                                           // 
+                                                                      Else
+                                                                           If VA evt_szValor_VALU [VALU] is equal to "ENTRE"
+                                                                                // 
+                                                                                VA evt_szStringCampo_Q150 [Q150] = "between"
+                                                                                // 
+                                                                           Else
+                                                                                If VA evt_szValor_VALU [VALU] is equal to "SENAO"
+                                                                                     // 
+                                                                                     VA evt_szStringCampo_Q150 [Q150] = "else"
+                                                                                     // 
+                                                                                Else
+                                                                                     If VA evt_szValor_VALU [VALU] is equal to "FIM"
+                                                                                          // 
+                                                                                          VA evt_szStringCampo_Q150 [Q150] = "end"
+                                                                                          // 
+                                                                                     End If
+                                                                                End If
+                                                                           End If
+                                                                      End If
+                                                                 End If
+                                                                 // 
+                                                            End If
+                                                            // 
+                                                       End If
+                                                       // 
+                                                  End If
+                                                  // 
+                                             End If
+                                             // 
+                                        End If
+                                        // 
+                                   End If
+                                   // 
+                              End If
+                              // 
+                         End If
+                         // 
+                    End If
+                    // 
+               End If
+          End If
+          // 
+          VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], concat(concat(<Blank>, [VA evt_szStringCampo_Q150 [Q150]]), <Blank>))
+          F570873.FetchNext  [Index 1: PK]
+               VA evt_szValor_VALU [VALU] <- TK Data Field Value [VALU]
+               VA evt_mnSequencia_SEQ [SEQ] <- TK Sequence Number [SEQ]
+               VA evt_szFuncao_FVPN [FVPN] <- TK Formula Value [FVPN]
+               VA evt_szTabela_MD [MD] <- TK Description [MD]
+               VA evt_cFlag_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+          VA evt_szStringCampo_Q150 [Q150] = <NULL>
+          // 
+     End While
+     // 
+End If
+// 
+// From
+F570873B.Select  [Index 1: PK]
+     BF szNomeRegra [ALPH] = TK Name - Alpha [ALPH]
+F570873B.FetchNext  [Index 1: PK]
+     VA evt_szTabela_CKY2 [CKY2] <- TK Composite Key [CKY2]
+If SV File_IO_Status is equal to CO SUCCESS
+     // 
+     VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], " from ")
+     While SV File_IO_Status is equal to CO SUCCESS
+          // 
+          F570872.FetchSingle  [Index 1: PK]
+               VA evt_szTabela_CKY2 [CKY2] = TK Name - Alpha [ALPH]
+               VA evt_szSubSQL_CMTS [CMTS] <- TK Comments [CMTS]
+          If SV File_IO_Status is equal to CO SUCCESS
+               // 
+               VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], "(")
+               VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], ltrim(rtrim([VA evt_szSubSQL_CMTS [CMTS]], <Blank>), <Blank>))
+               VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], ")")
+               // 
+          Else
+               // 
+               F570874.FetchSingle  [Index 2: cky2]
+                    VA evt_szTabelaJDE_OBNM [OBNM] <- TK Object Name [OBNM]
+                    VA evt_szTabela_CKY2 [CKY2] = TK Composite Key [CKY2]
+               VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], ltrim(rtrim([VA evt_szTabelaJDE_OBNM [OBNM]], <Blank>), <Blank>))
+               // 
+          End If
+          // 
+          F570873B.FetchNext  [Index 1: PK]
+               VA evt_szTabela_CKY2 [CKY2] <- TK Composite Key [CKY2]
+          If SV File_IO_Status is equal to CO SUCCESS
+               VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], ",")
+          End If
+     End While
+     // 
+End If
+// 
+// Where
+F570873A.Select  [Index 1: PK]
+     BF szNomeRegra [ALPH] = TK Name - Alpha [ALPH]
+F570873A.FetchNext  [Index 1: PK]
+     VA evt_szValor_VALU [VALU] <- TK Data Field Value [VALU]
+     VA evt_szTabela_MD [MD] <- TK Description [MD]
+     VA evt_cFlag_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+If SV File_IO_Status is equal to CO SUCCESS
+     // 
+     VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], " where ")
+     While SV File_IO_Status is equal to CO SUCCESS
+          // 
+          VA evt_szStringCampo_Q150 [Q150] = <NULL>
+          If VA evt_cFlag_EV01 [EV01] is equal to ("C")
+               // 
+               VA evt_szTabelaJDE_OBNM [OBNM] = <NULL>
+               VA evt_szCampoSQL_SQLC [SQLC] = <NULL>
+               F570874.FetchSingle  [Index 2: cky2]
+                    VA evt_szTabelaJDE_OBNM [OBNM] <- TK Object Name [OBNM]
+                    VA evt_szTabela_MD [MD] = TK Composite Key [CKY2]
+               F570875.FetchSingle  [Index 2: Valu]
+                    VA evt_szTabelaJDE_OBNM [OBNM] = TK Object Name [OBNM]
+                    VA evt_szValor_VALU [VALU] = TK Data Field Value [VALU]
+                    VA evt_szCampoSQL_SQLC [SQLC] <- TK SQL Column Name - EnterpriseOne [SQLC]
+               VA evt_szStringCampo_Q150 [Q150] = concat(ltrim(rtrim([VA evt_szTabelaJDE_OBNM [OBNM]], <Blank>), <Blank>), concat(".", rtrim(ltrim([VA evt_szCampoSQL_SQLC [SQLC]], <Blank>), <Blank>)))
+               // 
+          Else
+               // 
+               If VA evt_szValor_VALU [VALU] is equal to ("-","!=","(",")","*","/","+","<","<=","=",">",">=")
+               Or VA evt_cFlag_EV01 [EV01] is equal to ("E","L","P")
+                    // 
+                    VA evt_szStringCampo_Q150 [Q150] = ltrim(rtrim([VA evt_szValor_VALU [VALU]], <Blank>), <Blank>)
+                    // 
+               Else
+                    // 
+                    If VA evt_szValor_VALU [VALU] is equal to "E"
+                         // 
+                         VA evt_szStringCampo_Q150 [Q150] = "and"
+                         // 
+                    Else
+                         If VA evt_szValor_VALU [VALU] is equal to "CASO"
+                              // 
+                              VA evt_szStringCampo_Q150 [Q150] = "case"
+                              // 
+                         Else
+                              // 
+                              If VA evt_szValor_VALU [VALU] is equal to "QUANTOS"
+                                   // 
+                                   VA evt_szStringCampo_Q150 [Q150] = "count"
+                                   VA evt_cFuncao_EV01 [EV01] = "S"
+                                   // 
+                              Else
+                                   // 
+                                   If VA evt_szValor_VALU [VALU] is equal to "SOMATORIO"
+                                        // 
+                                        VA evt_szStringCampo_Q150 [Q150] = "sum"
+                                        VA evt_cFuncao_EV01 [EV01] = "S"
+                                        // 
+                                   Else
+                                        If VA evt_szValor_VALU [VALU] is equal to "MAIOR"
+                                             // 
+                                             VA evt_szStringCampo_Q150 [Q150] = "max"
+                                             // 
+                                        Else
+                                             If VA evt_szValor_VALU [VALU] is equal to "MENOR"
+                                                  // 
+                                                  VA evt_szStringCampo_Q150 [Q150] = "min"
+                                                  // 
+                                             Else
+                                                  If VA evt_szValor_VALU [VALU] is equal to "MEDIA"
+                                                       // 
+                                                       VA evt_szStringCampo_Q150 [Q150] = "avg"
+                                                       // 
+                                                  Else
+                                                       If VA evt_szValor_VALU [VALU] is equal to "RENOMEAR"
+                                                            // 
+                                                            VA evt_szStringCampo_Q150 [Q150] = "as"
+                                                            // 
+                                                       Else
+                                                            If VA evt_szValor_VALU [VALU] is equal to "ARREDONDAR"
+                                                                 // 
+                                                                 VA evt_szStringCampo_Q150 [Q150] = "round"
+                                                            Else
+                                                                 If VA evt_szValor_VALU [VALU] is equal to "QUANDO"
+                                                                      // 
+                                                                      VA evt_szStringCampo_Q150 [Q150] = "when"
+                                                                      // 
+                                                                 Else
+                                                                      If VA evt_szValor_VALU [VALU] is equal to "ENTAO"
+                                                                           // 
+                                                                           VA evt_szStringCampo_Q150 [Q150] = "then"
+                                                                           // 
+                                                                      Else
+                                                                           If VA evt_szValor_VALU [VALU] is equal to "ENTRE"
+                                                                                // 
+                                                                                VA evt_szStringCampo_Q150 [Q150] = "between"
+                                                                                // 
+                                                                           Else
+                                                                                If VA evt_szValor_VALU [VALU] is equal to "SENAO"
+                                                                                     // 
+                                                                                     VA evt_szStringCampo_Q150 [Q150] = "else"
+                                                                                     // 
+                                                                                Else
+                                                                                     If VA evt_szValor_VALU [VALU] is equal to "OU"
+                                                                                          // 
+                                                                                          VA evt_szStringCampo_Q150 [Q150] = "or"
+                                                                                          // 
+                                                                                     End If
+                                                                                End If
+                                                                           End If
+                                                                      End If
+                                                                 End If
+                                                                 // 
+                                                            End If
+                                                            // 
+                                                       End If
+                                                       // 
+                                                  End If
+                                                  // 
+                                             End If
+                                             // 
+                                        End If
+                                        // 
+                                   End If
+                                   // 
+                              End If
+                              // 
+                         End If
+                         // 
+                    End If
+                    // 
+               End If
+               // 
+          End If
+          // 
+          VA evt_szSQL_CMTS [CMTS] = concat([VA evt_szSQL_CMTS [CMTS]], concat(concat(<Blank>, [VA evt_szStringCampo_Q150 [Q150]]), <Blank>))
+          // 
+          F570873A.FetchNext  [Index 1: PK]
+               VA evt_szValor_VALU [VALU] <- TK Data Field Value [VALU]
+               VA evt_szTabela_MD [MD] <- TK Description [MD]
+               VA evt_cFlag_EV01 [EV01] <- TK J.D. EnterpriseOne Event Point 01 [EV01]
+     End While
+     // 
+End If
+// 
+// group by
+// 
+F570872.Update  [Index 1: PK]
+     BF szNomeRegra [ALPH] = TK Name - Alpha [ALPH]
+     VA evt_szSQL_CMTS [CMTS] -> TK Comments [CMTS]
+
+
+

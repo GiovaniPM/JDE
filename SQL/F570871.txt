@@ -1,0 +1,25 @@
+﻿---------------------------------------------------------------------------------
+Table: F570871 Associa pagamentos
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   ANMESENT   Ano e Mês de Entrada                     AnoMesEntrada             Math Numeric    6(0)       X
+2   UNID1      Unidade de produto 1                     Unid1                     String          3(0)       X
+3   CUP        Codigo da Unidade Padrao                 Cod_Und_Padrao            String          8(0)       X
+4   NIVC       Nível Corrente Árvore Premiações         Nivel Corrente            Math Numeric    8(0)       X
+5   ASC        Sales Associate Number                   SalesAssociateNumber      Math Numeric    8(0)       
+6   ASC2       Sales Associate Number 2                 SalesAssociateNumber2     Math Numeric    8(0)       
+7   ASC3       Sales Associate Number 3                 SalesAssociateNumber3     Math Numeric    8(0)       
+8   PID        Program ID                               ProgramId                 String          10(0)      
+9   USER       User ID                                  UserId                    String          10(0)      
+10  JOBN       Work Station ID                          WorkStationId             String          10(0)      
+11  UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+12  UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+Primary                                  1      PRIMARY UNIQUE
+                                         ANMESENT  
+                                         UNID1     
+                                         CUP       
+                                         NIVC      
+

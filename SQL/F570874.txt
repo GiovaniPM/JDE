@@ -1,0 +1,20 @@
+﻿---------------------------------------------------------------------------------
+Table: F570874 Calculo Pagamento - Tabelas
+---------------------------------------------------------------------------------
+
+SEQ ALIAS      DESCRIPTION                              NAME                      TYPE            SIZE       PK
+1   OBNM       Object Name                              NameObject                String          10(0)      X
+2   CKY2       Composite Key                            ExpandedCompositeKey      String          120(0)     
+3   USER       User ID                                  UserId                    String          10(0)      
+4   JOBN       Work Station ID                          WorkStationId             String          10(0)      
+5   PID        Program ID                               ProgramId                 String          10(0)      
+6   UPMJ       Date - Updated                           DateUpdated               Date            6(0)       
+7   UPMT       Time - Last Updated                      TimeLastUpdated           Math Numeric    6(0)       
+
+INDICIES
+pk                                       1      PRIMARY UNIQUE
+                                         OBNM      
+
+cky2                                     2     
+                                         CKY2      
+
