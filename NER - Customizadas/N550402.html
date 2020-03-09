@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html><html lang = "en"><head><meta charset = "utf-8"><meta name = "viewport" content = "width=device-width, initial-scale=1"><title>JDE Object Browser HTML Extract</title>
+<style type='text/css'>body,th{font-family: Courier New, Courier, mono;font-size: 12px; width:auto}
+.section{font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: bold;border: thin groove #CC9966;width: 100%;padding-left: 5px;padding-top: 5px;padding-bottom: 5px; padding-right: 5px; box-sizing: border-box }
+.objectheader {font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: bold;border: thin groove #CC9966;width:auto;background-color: #FFFFCC;padding-left: 5px;padding-top: 5px;padding-bottom: 5px;padding-right: 5px; box-sizing: border-box }
+.details{font-family: Arial, Helvetica, sans-serif;font-size: 11px;font-weight: normal;border: thin groove #CC9966;width:100%;padding-left: 5px;padding-top: 5px;padding-bottom: 5px;padding-right: 5px;box-sizing: border-box }
+.er {background-color: #FFFFFF;font-family: Courier New, Courier, mono;font-size: 12px; font-weight: normal; border: thin solid #CCCCCC; width:auto; padding-left: 5px;padding-top: 5px;padding-bottom: 5px; padding-right: 5px; box-sizing: border-box }
+.dstrmembers {background-color: #FFFDDD;font-family: Courier New, Courier, mono;font-size: 12px;border: thin groove #CC9966;padding-left: 5px;padding-top: 5px;padding-bottom: 5px;padding-right: 5px; box-sizing: border-box }
+.disabled {font-family: Courier New, Courier, mono;font-size: 12px;	font-style: italic; color:#CC9933}
+.parameters {font-family: Courier New, Courier, mono;font-size: 12px; color:#3333FF}
+.comment {font-family: Courier New, Courier, mono;font-size: 12px;	color: #339933}
+.subtable {font-family: Arial, Helvetica, sans-serif;font-size: 11px;font-weight: normal;width:100%}
+.lineno {color:#6E6E6E;font-family: Courier New, Courier, mono;font-size: 12px; font-weight: normal;}
+.iokey {color:#FF6905;font-family: Courier New, Courier, mono;font-size: 12px; font-weight: normal;}
+.logicline {color:#000000;font-family: Courier New, Courier, mono;font-size: 12px; font-weight: normal;}
+.versionoverride {background-color: #FFCC99;}
+.overrideflags{font-family: Arial, Helvetica, sans-serif;font-size: 11px;font-weight: normal;border: thin groove #CC9966;width:auto;padding-left: 5px;padding-top: 5px;padding-bottom: 5px;padding-right: 5px; background-color: #FFCC99; box-sizing: border-box }
+.bsfnprops {font-family: Courier New, Courier, mono;font-size: 12px; color:#E01B4C}
+.searchresult {font-family: Courier New, Courier, mono;font-size: 12px; font-weight: bold; background-color:#8BF3A0}
+.expand {font-family: Courier New, Courier, mono;font-size: 11px; font-weight: bold; cursor:pointer; border: 1px solid gray; position: relative; left: -3px; display:inline; line-height:8px;}
+.expand2 { display:inline; cursor:pointer; font-size: 9px; border: 1px solid gray; position: relative; left: -3px;}
+</style>
+<script type='text/javascript'>function load(){location.href = '#result';}</script>
+<script language='JavaScript' type='text/javascript'>function ExpandCollapse(ElementId){ var ClickedElement = document.getElementById(ElementId); var SectionName = ElementId + ':hide'; var Section = document.getElementById(SectionName); if (ClickedElement.innerHTML == '-') { 	 ClickedElement.innerHTML = '+';	Section.style.display = 'none'; }  else  { 		ClickedElement.innerHTML = '-'; 	Section.style.display = 'inline';}} </script>
+<base target = "_parent"></head><body onload='load()'>
+<div class ='objectheader'>Business Function: N550402 - Le F0901 atraves do terceiro codigo<BR>Function Type: NER</div><div class='section'>EVENTS<div class='objectheader'>NER: LeCadastroContas <BR>Event GUID: 3fe6eeb4-0475-11d2-b468-00600810c130</div><div class='er'><div class='dstrmembers'><B>Data Structure: D550401 - Estrutura p/ F0101 e F0901                                  </B><BR>BF mnAddressNumber [AN8]<BR>BF szAlternateAddressKey [ALKY]<BR>BF szCompany [CO]<BR>BF szAccountId [AID]<BR>BF szCostCenter [MCU]<BR>BF szObjectAccount [OBJ]<BR>BF szSubsidiary [SUB]<BR>BF szAccountNumber3rd [ANS]<BR></div> <div id='3fe6eeb4-0475-11d2-b468-00600810c130:1' class='expand2' onclick='ExpandCollapse(this.id);'>-</div>F0901.FetchSingle  [Index 4: Account Number 3rd]<div id='3fe6eeb4-0475-11d2-b468-00600810c130:1:hide' style='display: inline;'><br>       BF szCompany [CO] &#60;- TK Company [CO]<br>       BF szAccountId [AID] &#60;- TK Account ID [AID]<br>       BF szCostCenter [MCU] &#60;- TK Business Unit [MCU]<br>       BF szObjectAccount [OBJ] &#60;- TK Object Account [OBJ]<br>       BF szSubsidiary [SUB] &#60;- TK Subsidiary [SUB]<br>       <span class='iokey'>BF szAccountNumber3rd [ANS] = TK Account Number - 3rd [ANS]</span></div></div></div></body></html>
